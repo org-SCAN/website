@@ -1,2 +1,2 @@
 # website
-Site web du projet
+Site web du projet.
