@@ -1,3 +1,3 @@
 # website
 Site web du projet :)
-Nomalement on a une synchro automatique de la branche main sur le serveur
+Nomalement on a une synchro automatique de la branche main sur le serveur, mais il est pas ok
