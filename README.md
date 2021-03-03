@@ -8,4 +8,4 @@ Adresse IP du serveur : 15.236.237.200
 
 Brainstorm sur les choses à implémenter, discussion sur le back et le front rapidement, choix de Laravel et on monte laravel sur le serveur.
 
-![/img/website-brainstorm.png](Brainstorm)
+![Brainstorm](/img/website-brainstorm.png)
