@@ -6,6 +6,8 @@ Adresse IP du serveur : 15.236.237.200
 
 ## Docker
 
+À partir de `.env.example` créer le fichier `.env` avec les bons logs.
+
 Pour lancer le projet, on pourra bientôt utiliser Docker. Pour ce faire, il faut simplement lancer la commande suivante :
 
     docker-compose build && docker-compose up -d
