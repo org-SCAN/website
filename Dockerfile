@@ -25,8 +25,11 @@ RUN apt-get update && apt-get install -y \
 COPY conf/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# RUN chmod -R 777 /var/www/html/storage
+# RUN chmod -R 777 /var/www/html/storage # Run cette commande si une erreur sur laravel
 RUN chown -R www-data:www-data /var/www/html \
     && a2enmod rewrite
+
+#RUN cd /var/www/html
+#RUN php artisan cache:clear && composer dump-autoload && php artisan key:generate ## Si error 500 sur laravel il faut run ces commandes
 
 
