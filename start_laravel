@@ -1,5 +1,9 @@
 # /bin/bash
 
+if [[ ! -f ".env" ]]; then
+    cp .env.example .env
+fi
+
 FILE=src/.env
 if [[ ! -f "$FILE" ]]; then
     mv src/.env.example $FILE
