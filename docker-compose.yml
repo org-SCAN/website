@@ -7,14 +7,14 @@ services:
  mongo:
   image: 'mongo'
   container_name : 'mongo'
-  restart: unless-stopped
   tty: true
+  restart : on-failure
   environment:
    - MONGO_INITDB_DATABASE=${DATABASE_NAME}
    - MONGO_INITDB_ROOT_USERNAME=${DATABASE_USERNAME}
    - MONGO_INITDB_ROOT_PASSWORD=${DATABASE_PASSWORD}
   volumes:
-   - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+   #- ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
    - ./mongo-volume:/data/db
   ports:
    - '27017-27019:27017-27019'
