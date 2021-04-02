@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
         Schema::create($this->table_name, function (Blueprint $table) {
             $table->string($this->table_name . "__" . "id", 36)->unique();
             $table->date($this->table_name . "__" . "last_log_date");
-            $table->date($this->table_name . "__" . "creation_log_date");
+            $table->timestamp(); // creation de champs created_at et updated_at // TODO : voir comment modifier la structure de ces champs
             $table->boolean($this->table_name . "__" . "deleted");
             $table->string($this->table_name . "__" . "relation");
             $table->string($this->table_name . "__" . "rights");
@@ -37,6 +37,7 @@ class CreateUsersTable extends Migration
             $table->string($this->table_name . "__" . "last_name");
             $table->string($this->table_name . "__" . "country");
             $table->string($this->table_name . "__" . "language");
+            $table->rememberToken(); // texte de 100 char pour l'auth
         });
     }
 

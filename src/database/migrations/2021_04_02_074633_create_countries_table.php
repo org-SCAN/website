@@ -31,6 +31,9 @@ class CreateCountriesTable extends Migration
             $table->index($this->table_name . "__" . "ISO3");
             $table->index($this->table_name . "__" . "short");
             $table->index($this->table_name . "__" . "full");
+            $table->index($this->table_name . "__" . "created_at");
+            $table->index($this->table_name . "__" . "updated_at");
+            $table->index($this->table_name . "__" . "deleted_at");
         });
 
 
