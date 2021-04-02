@@ -1,0 +1,10 @@
+[{
+  "route__short": "WM",
+  "route__full": "Western Mediterranean"
+},{
+  "route__short": "CM",
+  "route__full": "Central Mediterranean"
+},{
+  "route__short": "EM",
+  "route__full": "Eastern Mediterranean"
+}]
