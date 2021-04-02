@@ -38,15 +38,14 @@ class CreateRouteTable extends Migration
         $array_json = json_decode($obj_json, true);
 
         // make the inserts
-        foreach($array_json as $gender)
+        foreach($array_json as $route)
         {
-          DB::table($this->table_name)->insert(
-            [
-              $this->table_name."__"."id"  => (string)Str::uuid(),
-              $this->table_name."__"."short" => $gender[$this->table_name."__"."short"],
-              $this->table_name."__"."full" => $gender[$this->table_name."__"."full"]
-            ]
-          );
+            $to_store = array();
+            $to_store[$this->table_name."__"."id"] = (string)Str::uuid();
+            foreach ($route as $routeKey => $routeValue) {
+                $to_store[$routeKey] = $routeValue;
+            }
+          DB::table($this->table_name)->insert($to_store);
         }
     }
 

@@ -38,15 +38,14 @@ class CreateRoleTable extends Migration
         $array_json = json_decode($obj_json, true);
 
         // make the inserts
-        foreach($array_json as $gender)
+        foreach($array_json as $role)
         {
-          DB::table($this->table_name)->insert(
-            [
-              $this->table_name."__"."id"  => (string)Str::uuid(),
-              $this->table_name."__"."short" => $gender[$this->table_name."__"."short"],
-              $this->table_name."__"."descr" => $gender[$this->table_name."__"."descr"]
-            ]
-          );
+            $to_store = array();
+            $to_store[$this->table_name."__"."id"] = (string)Str::uuid();
+            foreach ($role as $roleKey => $roleValue) {
+                $to_store[$roleKey] = $roleValue;
+            }
+          DB::table($this->table_name)->insert($to_store);
         }
     }
 
