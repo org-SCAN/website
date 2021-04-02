@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRefugeeTable extends Migration
+class CreateRefugeesTable extends Migration
 {
       /**
      * Run the migrations.
@@ -18,7 +18,7 @@ class CreateRefugeeTable extends Migration
     {
 
         // read the json file to get the values
-        $this->table_name = "refugee";
+        $this->table_name = "refugees";
         $this->path_role_json =config('jsonDataset.path')."/"."fields".".json";
     }
 

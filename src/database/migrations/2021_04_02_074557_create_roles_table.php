@@ -4,9 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCountryTable extends Migration
+class CreateRolesTable extends Migration
 {
-        /**
+      /**
      * Run the migrations.
      *
      * @return void
@@ -18,7 +18,7 @@ class CreateCountryTable extends Migration
     {
 
         // read the json file to get the values
-        $this->table_name = "country";
+        $this->table_name = "roles";
         $this->path_role_json =config('jsonDataset.path')."/".$this->table_name.".json";
     }
 
@@ -27,10 +27,8 @@ class CreateCountryTable extends Migration
         Schema::dropIfExists($this->table_name);
         Schema::create($this->table_name, function (Blueprint $table) {
             $table->string($this->table_name . "__" . "id", 36)->unique();
-            $table->index($this->table_name . "__" . "ISO2");
-            $table->index($this->table_name . "__" . "ISO3");
             $table->index($this->table_name . "__" . "short");
-            $table->index($this->table_name . "__" . "full");
+            $table->index($this->table_name . "__" . "descr");
         });
 
 
@@ -40,17 +38,14 @@ class CreateCountryTable extends Migration
         $array_json = json_decode($obj_json, true);
 
         // make the inserts
-        foreach($array_json as $gender)
+        foreach($array_json as $role)
         {
-          DB::table($this->table_name)->insert(
-            [
-              $this->table_name."__"."id"  => (string)Str::uuid(),
-              $this->table_name."__"."ISO2" => $gender[$this->table_name."__"."ISO2"],
-              $this->table_name."__"."ISO3" => $gender[$this->table_name."__"."ISO3"],
-              $this->table_name."__"."short" => $gender[$this->table_name."__"."short"],
-              $this->table_name."__"."full" => $gender[$this->table_name."__"."full"]
-            ]
-          );
+            $to_store = array();
+            $to_store[$this->table_name."__"."id"] = (string)Str::uuid();
+            foreach ($role as $roleKey => $roleValue) {
+                $to_store[$roleKey] = $roleValue;
+            }
+          DB::table($this->table_name)->insert($to_store);
         }
     }
 

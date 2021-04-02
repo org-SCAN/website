@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRouteTable extends Migration
+class CreateRoutesTable extends Migration
 {
         /**
      * Run the migrations.
@@ -18,7 +18,7 @@ class CreateRouteTable extends Migration
     {
 
         // read the json file to get the values
-        $this->table_name = "route";
+        $this->table_name = "routes";
         $this->path_role_json =config('jsonDataset.path')."/".$this->table_name.".json";
     }
 
