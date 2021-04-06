@@ -33,6 +33,7 @@ class CreateUsersTable extends Migration
             $table->string($this->table_name . "__" . "rights");
             $table->string($this->table_name . "__" . "password");
             $table->email($this->table_name . "__" . "email");
+            $table->string('username',191)->nullable()->unique();
             $table->string($this->table_name . "__" . "first_name");
             $table->string($this->table_name . "__" . "last_name");
             $table->string($this->table_name . "__" . "country");
