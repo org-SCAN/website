@@ -51,7 +51,6 @@ final class Versions
   'jenssegers/mongodb' => 'v3.8.3@09fcda8d21edfeb49416893bf916e13647d79f4b',
   'laravel/framework' => 'v8.30.0@81ef9850cc388f2f92b868fb35ffb76f0c9a0f46',
   'laravel/tinker' => 'v2.6.1@04ad32c1a3328081097a181875733fa51f402083',
-  'laravel/ui' => 'v3.2.0@a1f82c6283c8373ea1958b8a27c3d5c98cade351',
   'league/commonmark' => '1.5.7@11df9b36fd4f1d2b727a73bf14931d81373b9a54',
   'league/flysystem' => '1.1.3@9be3b16c877d477357c015cec057548cf9b2a14a',
   'league/mime-type-detection' => '1.7.0@3b9dff8aaf7323590c1d2e443db701eb1f9aa0d3',
@@ -143,7 +142,7 @@ final class Versions
   'sebastian/type' => '2.3.1@81cd61ab7bbf2de744aba0ea61fae32f721df3d2',
   'sebastian/version' => '3.0.2@c6c1022351a901512170118436c764e473f6de8c',
   'theseer/tokenizer' => '1.2.0@75a63c33a8577608444246075ea0af0d052e452a',
-  'laravel/laravel' => 'dev-main@66618ed3648a507289032b6809820c4216eaad4f',
+  'laravel/laravel' => '1.0.0+no-version-set@',
 );
 
     private function __construct()
