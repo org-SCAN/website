@@ -21,6 +21,9 @@
             right:15px ;
         }
 
+        a { color: inherit; }
+
+
 
     </style>
     <title>Red Cross menu page</title>
@@ -28,16 +31,7 @@
 
 <body>
 
-<!-- Top of the page with the logo,etc. >
--->
-<div class="panel panel-default" class="fixed-top">
-    <div class="panel-body">
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(226, 222, 222);">
-            <h4 class="navbar-brand color:rgb(226, 222, 222); " href="#">The red Cross</h4>
-            <img src="red_cross.png" style="float:right;" alt="Red_Cross_logo" class="right-abs">
-        </nav>
-    </div>
-</div>
+
 
 
 

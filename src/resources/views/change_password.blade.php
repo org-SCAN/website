@@ -38,22 +38,67 @@
             margin-top: 1rem;
         }
 
+        a { color: inherit; }
+        input[type='submit' ],
+        label {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        #container{
+            width:400px;
+            margin:0 auto;
+            margin-top:10%;
+        }
+        /* Bordered form */
+        form {
+            width:100%;
+            padding: 30px;
+            border: 1px solid#0C2D48;
+            background:rgb(152, 193, 217);
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        }
+
+        #container h1{
+            width: 38%;
+            margin: 0 auto;
+            padding-bottom: 10px;
+        }
+
+        /* Full-width inputs */
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        }
+
+        /* Set a style for all buttons */
+        input[type=submit] {
+            background-color:rgb(248, 249, 250);
+            color: black;
+            padding: 14px 20px;
+            margin: 8px;
+            border: 1px solid rgb(31, 27, 27);
+            cursor: pointer;
+            width: 100%;
+        }
+        input[type=submit]:hover {
+            background-color:rgb(173, 181, 189);
+            color: black;
+            border: 1px solid rgb(31, 27, 27);
+
+        }
+
     </style>
     <title>Red Cross menu page</title>
 </head>
 
 <body>
 
-<!-- Top of the page with the logo,etc. >
--->
-<div class="panel panel-default" class="fixed-top">
-    <div class="panel-body">
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(226, 222, 222);">
-            <h4 class="navbar-brand color:rgb(226, 222, 222); " href="#">The red Cross</h4>
-            <img src="red_cross.png" style="float:right;" alt="Red_Cross_logo" class="right-abs">
-        </nav>
-    </div>
-</div>
 
 
 
@@ -107,26 +152,24 @@
 <!-- The page that we are curently on
        >
 -->
-<div class="container-xxl">
-    <h1 >  Change the password </h1>
+<div class="container">
+    <form>
+        <h1 >  Change the password </h1>
 
-    <div style="text-align:center">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+        <div style="text-align:center">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
 
-        <label for="pass"> New password (8 characters minimum):</label>
-        <input type="password" id="pass" name="password"
+            <label for="pass"> New password (8 characters minimum):</label>
+            <input type="password" id="pass" name="password"
                minlength="8" required>
 
-        <label for="pass"> Rewrite the new password :</label>
-        <input type="password" id="pass" name="password"
+            <label for="pass"> Rewrite the new password :</label>
+            <input type="password" id="pass" name="password"
                minlength="8" required>
-    </div>
-
-
-    <div style="text-align:center">
-        <input type="submit" value="Sign in">
-    </div>
+            <input type="submit" value="Sign in">
+        </div>
+    </form>
 
 
 
