@@ -28,12 +28,15 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
         ])->validate();
-        $session = DB::getMongoClient()->startSession();
-        return User::create([
+
+        return tap(User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-        ]);
+        ]), function (User $user) {
+            print("$user");
+            $this->createTeam($user);
+        });
 
         /*return DB::transaction(function () use ($input) {
             return tap(User::create([
