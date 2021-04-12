@@ -7,5 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
-    'Jenssegers\\Mongodb' => array($vendorDir . '/jenssegers/mongodb/src'),
+    'Detection' => array($vendorDir . '/mobiledetect/mobiledetectlib/namespaced'),
 );

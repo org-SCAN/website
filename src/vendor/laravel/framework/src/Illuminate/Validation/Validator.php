@@ -227,6 +227,9 @@ class Validator implements ValidatorContract
         'RequiredWithAll',
         'RequiredWithout',
         'RequiredWithoutAll',
+        'Prohibited',
+        'ProhibitedIf',
+        'ProhibitedUnless',
         'Same',
         'Unique',
     ];
@@ -526,7 +529,7 @@ class Validator implements ValidatorContract
 
         [$rule, $parameters] = ValidationRuleParser::parse($rule);
 
-        if ($rule == '') {
+        if ($rule === '') {
             return;
         }
 

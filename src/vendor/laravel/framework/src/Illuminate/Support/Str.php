@@ -492,6 +492,18 @@ class Str
     }
 
     /**
+     * Repeat the given string.
+     *
+     * @param  string  $string
+     * @param  int  $times
+     * @return string
+     */
+    public static function repeat(string $string, int $times)
+    {
+        return str_repeat($string, $times);
+    }
+
+    /**
      * Replace a given value in the string sequentially with an array.
      *
      * @param  string  $search
@@ -522,7 +534,7 @@ class Str
      */
     public static function replaceFirst($search, $replace, $subject)
     {
-        if ($search == '') {
+        if ($search === '') {
             return $subject;
         }
 
@@ -554,6 +566,23 @@ class Str
         if ($position !== false) {
             return substr_replace($subject, $replace, $position, strlen($search));
         }
+
+        return $subject;
+    }
+
+    /**
+     * Remove any occurrence of the given string in the subject.
+     *
+     * @param string|array<string> $search
+     * @param string $subject
+     * @param bool $caseSensitive
+     * @return string
+     */
+    public static function remove($search, $subject, $caseSensitive = true)
+    {
+        $subject = $caseSensitive
+                    ? str_replace($search, '', $subject)
+                    : str_ireplace($search, '', $subject);
 
         return $subject;
     }
@@ -760,7 +789,7 @@ class Str
             return call_user_func(static::$uuidFactory);
         }
 
-        $factory = new UuidFactory();
+        $factory = new UuidFactory;
 
         $factory->setRandomGenerator(new CombGenerator(
             $factory->getRandomGenerator(),
