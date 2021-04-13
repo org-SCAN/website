@@ -22,8 +22,8 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install zip \
     && docker-php-source delete
 
-RUN pecl install mongodb \
-    &&  echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongo.ini
+# Install extensions
+RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl gd
 
 COPY conf/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -34,7 +34,7 @@ RUN chown -R www-data:www-data /var/www/html \
 
 
 
-# RUN chmod -R 777 /var/www/html/storage # Run cette commande si une erreur sur laravel
+# RUN chmod -R 775 /var/www/html/storage # Run cette commande si une erreur sur laravel
 #RUN cd /var/www/html
 #RUN php artisan cache:clear && composer dump-autoload && php artisan key:generate ## Si error 500 sur laravel il faut run ces commandes
 
