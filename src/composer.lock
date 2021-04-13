@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a17f3a9456f1516a8ba8cc8192854ce3",
+    "content-hash": "8fc2175e97f381df45a27601c1a7b824",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1093,16 +1093,16 @@
         },
         {
             "name": "laravel/fortify",
-            "version": "v1.7.9",
+            "version": "v1.7.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/fortify.git",
-                "reference": "9ba71f3e448ae44370bdfe72f19952e23b4d6191"
+                "reference": "82c99b6999f7e89f402cfd7eb4074e619382b3b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/fortify/zipball/9ba71f3e448ae44370bdfe72f19952e23b4d6191",
-                "reference": "9ba71f3e448ae44370bdfe72f19952e23b4d6191",
+                "url": "https://api.github.com/repos/laravel/fortify/zipball/82c99b6999f7e89f402cfd7eb4074e619382b3b7",
+                "reference": "82c99b6999f7e89f402cfd7eb4074e619382b3b7",
                 "shasum": ""
             },
             "require": {
@@ -1152,20 +1152,20 @@
                 "issues": "https://github.com/laravel/fortify/issues",
                 "source": "https://github.com/laravel/fortify"
             },
-            "time": "2021-03-30T21:12:39+00:00"
+            "time": "2021-04-13T15:05:45+00:00"
         },
         {
             "name": "laravel/framework",
-            "version": "v8.36.2",
+            "version": "v8.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "0debd8ad6b5aa1f61ccc73910adf049af4ca0444"
+                "reference": "cf4082973abc796ec285190f0603380021f6d26f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/0debd8ad6b5aa1f61ccc73910adf049af4ca0444",
-                "reference": "0debd8ad6b5aa1f61ccc73910adf049af4ca0444",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/cf4082973abc796ec285190f0603380021f6d26f",
+                "reference": "cf4082973abc796ec285190f0603380021f6d26f",
                 "shasum": ""
             },
             "require": {
@@ -1320,20 +1320,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-04-07T12:37:22+00:00"
+            "time": "2021-04-13T13:49:49+00:00"
         },
         {
             "name": "laravel/jetstream",
-            "version": "v2.3.1",
+            "version": "v2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/jetstream.git",
-                "reference": "39d50ec0dda28ae2077baf9df307509a09307d75"
+                "reference": "cf7a8eb8b3b7ea219b9503df87d3ebefa36f335b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/jetstream/zipball/39d50ec0dda28ae2077baf9df307509a09307d75",
-                "reference": "39d50ec0dda28ae2077baf9df307509a09307d75",
+                "url": "https://api.github.com/repos/laravel/jetstream/zipball/cf7a8eb8b3b7ea219b9503df87d3ebefa36f335b",
+                "reference": "cf7a8eb8b3b7ea219b9503df87d3ebefa36f335b",
                 "shasum": ""
             },
             "require": {
@@ -1387,7 +1387,7 @@
                 "issues": "https://github.com/laravel/jetstream/issues",
                 "source": "https://github.com/laravel/jetstream"
             },
-            "time": "2021-04-06T14:26:21+00:00"
+            "time": "2021-04-13T15:08:13+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -2404,6 +2404,85 @@
                 "source": "https://github.com/antonioribeiro/google2fa/tree/8.0.0"
             },
             "time": "2020-04-05T10:47:18+00:00"
+        },
+        {
+            "name": "protonemedia/laravel-form-components",
+            "version": "2.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/protonemedia/laravel-form-components.git",
+                "reference": "c0eb477bddd3b8cdad1a3d3b2995fdcb03237e52"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/protonemedia/laravel-form-components/zipball/c0eb477bddd3b8cdad1a3d3b2995fdcb03237e52",
+                "reference": "c0eb477bddd3b8cdad1a3d3b2995fdcb03237e52",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^7.22.4 || ^8.0",
+                "php": "^7.4 || ^8.0",
+                "symfony/http-foundation": "^5.1.2"
+            },
+            "require-dev": {
+                "livewire/livewire": "^2.0",
+                "mockery/mockery": "^1.3.3",
+                "orchestra/testbench-browser-kit": "^5.1 || ^6.0",
+                "phpunit/phpunit": "^8.5 || ^9.0",
+                "spatie/laravel-translatable": "^4.4",
+                "symfony/dom-crawler": "^5.1.14"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ProtoneMedia\\LaravelFormComponents\\Support\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ProtoneMedia\\LaravelFormComponents\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pascal Baljet",
+                    "email": "pascal@protone.media",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Blade components to rapidly build forms with Tailwind CSS Custom Forms and Bootstrap 4.",
+            "homepage": "https://github.com/protonemedia/laravel-form-components",
+            "keywords": [
+                "Forms",
+                "bootstrap",
+                "bootstrap4",
+                "form",
+                "form-builder",
+                "form-components",
+                "laravel",
+                "laravel-form-builder",
+                "laravel-form-components",
+                "protonemedia",
+                "tailwind",
+                "tailwindcss"
+            ],
+            "support": {
+                "issues": "https://github.com/protonemedia/laravel-form-components/issues",
+                "source": "https://github.com/protonemedia/laravel-form-components/tree/2.5.4"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/pascalbaljet",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-02-15T15:52:42+00:00"
         },
         {
             "name": "psr/container",
@@ -5964,16 +6043,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.4.11",
+            "version": "v1.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "e46a3228da4e95a411a981ac807bd119ab2485fa"
+                "reference": "d1a91b03885c9c29bc2d88d61a4b10bd1f678156"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/e46a3228da4e95a411a981ac807bd119ab2485fa",
-                "reference": "e46a3228da4e95a411a981ac807bd119ab2485fa",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/d1a91b03885c9c29bc2d88d61a4b10bd1f678156",
+                "reference": "d1a91b03885c9c29bc2d88d61a4b10bd1f678156",
                 "shasum": ""
             },
             "require": {
@@ -6020,7 +6099,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2021-04-06T14:00:39+00:00"
+            "time": "2021-04-13T15:35:40+00:00"
         },
         {
             "name": "mockery/mockery",

@@ -23,4 +23,12 @@ class Field extends Model
      */
 
     public $incrementing = false;
+
+    /**
+     * Get all of the owning linked_list models.
+     */
+    public function get_linked_list()
+    {
+        return $this->morphTo();
+    }
 }

@@ -9,8 +9,10 @@ use App\Traits\Uuids;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use PhpParser\Node\Expr\Array_;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Refugee;
+use App\Models\Gender;
 use Illuminate\Support\Facades\View;
 
 class ManageRefugeesController extends Controller
@@ -116,5 +118,19 @@ class ManageRefugeesController extends Controller
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $refugee->delete();
         return redirect()->route("manage_refugees.index");
+    }
+
+    /**
+     * Get all the element from the model name.
+     *
+     * @param  Model  $model
+     * @return array
+     */
+    public static function getLinkedList($model)
+    {
+        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $model = 'App\Models\\'.$model;
+        $list = $model::all()->toArray();
+        return $list;
     }
 }

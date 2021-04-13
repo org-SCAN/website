@@ -23,4 +23,9 @@ class Country extends Model
      */
 
     public $incrementing = false;
+
+    public function fields()
+    {
+        return $this->morphMany('App\Models\Field', 'get_linked_list');
+    }
 }
