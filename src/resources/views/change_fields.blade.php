@@ -30,7 +30,6 @@
 <body>
 
 
-
 <!-- Menu to chose the pages the we are going to access >
 -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-light">
@@ -76,12 +75,10 @@
     </div>
 </nav>
 
-<!-- The page that we are curently on
-       >
+<!-- The page that we are curently on>
 -->
 <div class="container-xxl">
-    The place where we are going to put the messages if you need to give permisions, etc.
-    We will use the messages from bootstrap
+    Change fileds
 </div>
 
 

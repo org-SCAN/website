@@ -20,8 +20,8 @@
             top: 12px;
             right:15px ;
         }
-        a { color: inherit; }
 
+        a { color: inherit; }
 
     </style>
     <title>Red Cross menu page</title>
@@ -29,26 +29,23 @@
 
 <body>
 
-
-
-
 <!-- Menu to chose the pages the we are going to access >
 -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-light">
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <div id="navbarTogglerDemo02">
         <ul class="nav justify-content-center nav-tabs  mr-auto; ">
             <li class="nav-item active">
-                <a class="nav-link" href="home.blade.php"><i class="fas fa-home"></i>
+                <a class="nav-link" href="home"><i class="fas fa-home"></i>
                     Home
-                    <span class="sr-only">(current)</span></a>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="analyse_data.blade.php"><i class="fas fa-server"></i>
+                <a class="nav-link" href="analyse_data"><i class="fas fa-server"></i>
                     Analyse data
-                    </a>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="modify_data.blade.php"><i class="fas fa-mouse-pointer"></i>
+                <a class="nav-link" href="modify_data"><i class="fas fa-mouse-pointer"></i>
                     Modify data
                 </a>
             </li>
@@ -58,16 +55,16 @@
                     Configurations
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="change_password.blade.php"><i class="fas fa-lock"></i>
+                    <a class="dropdown-item" href="change_password"><i class="fas fa-lock"></i>
                         Change Password
                     </a>
-                    <a class="dropdown-item" href="edit_users.blade.php"><i class="fas fa-users"></i>
+                    <a class="dropdown-item" href="edit_users"><i class="fas fa-users"></i>
                         Edit users
                     </a>
-                    <a class="dropdown-item" href="change_fileds.blade.php"><i class="fas fa-database"></i>
+                    <a class="dropdown-item" href="change_fields"><i class="fas fa-database"></i>
                         Change the fields
                     </a>
-                    <a class="dropdown-item" href="new_user.blade.php"><i class="fas fa-user-plus"></i>
+                    <a class="dropdown-item" href="new_user"><i class="fas fa-user-plus"></i>
                         Create a new account
                     </a>
                 </div>
@@ -76,34 +73,6 @@
 
     </div>
 </nav>
-
-
-
-<!-- The page that we are curently on
-       >
--->
-<div class="container-xxl">
-    Change fileds
-</div>
-
-
-
-<!-- Chose the language buttons >
--->
-<div class="panel-body">
-    <nav class="navbar ">
-        <div class="right-abs">
-            <div class="fixed-bottom">
-                <div class="btn-group" class="ribbon" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-secondary">FR</button>
-                    <button type="button" class="btn btn-secondary">EN</button>
-                    <button type="button" class="btn btn-secondary">ES</button>
-                </div>
-            </div>
-        </div>
-    </nav>
-</div>
-
 
 </body>
 </html>

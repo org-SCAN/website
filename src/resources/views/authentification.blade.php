@@ -24,7 +24,7 @@
             width:100%;
             padding: 30px;
             border: 1px solid#0C2D48;
-            background:rgb(152, 193, 217);
+            background: linear-gradient(to top right, #000066 0%, #0099ff 100%);
             box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
         }
 

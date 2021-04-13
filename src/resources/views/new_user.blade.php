@@ -49,7 +49,7 @@
             width:100%;
             padding: 30px;
             border: 1px solid#0C2D48;
-            background:rgb(152, 193, 217);
+            background:  linear-gradient(to top right, #000066 0%, #0099ff 100%);
             box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
         }
 
@@ -96,24 +96,23 @@
 <body>
 
 
-
 <!-- Menu to chose the pages the we are going to access >
- -->
+-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-light">
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <div  id="navbarTogglerDemo02">
         <ul class="nav justify-content-center nav-tabs  mr-auto; ">
             <li class="nav-item active">
-                <a class="nav-link" href="home.blade.php"><i class="fas fa-home"></i>
+                <a class="nav-link" href="home"><i class="fas fa-home"></i>
                     Home
-                    <span class="sr-only">(current)</span></a>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="analyse_data.blade.php"><i class="fas fa-server"></i>
+                <a class="nav-link" href="analyse_data"><i class="fas fa-server"></i>
                     Analyse data
-                    </a>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="modify_data.blade.php"><i class="fas fa-mouse-pointer"></i>
+                <a class="nav-link" href="modify_data"><i class="fas fa-mouse-pointer"></i>
                     Modify data
                 </a>
             </li>
@@ -123,16 +122,16 @@
                     Configurations
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="change_password.blade.php"><i class="fas fa-lock"></i>
+                    <a class="dropdown-item" href="change_password"><i class="fas fa-lock"></i>
                         Change Password
                     </a>
-                    <a class="dropdown-item" href="edit_users.blade.php"><i class="fas fa-users"></i>
+                    <a class="dropdown-item" href="edit_users"><i class="fas fa-users"></i>
                         Edit users
                     </a>
-                    <a class="dropdown-item" href="change_fileds.blade.php"><i class="fas fa-database"></i>
+                    <a class="dropdown-item" href="change_fields"><i class="fas fa-database"></i>
                         Change the fields
                     </a>
-                    <a class="dropdown-item" href="new_user.blade.php"><i class="fas fa-user-plus"></i>
+                    <a class="dropdown-item" href="new_user"><i class="fas fa-user-plus"></i>
                         Create a new account
                     </a>
                 </div>
@@ -141,8 +140,6 @@
 
     </div>
 </nav>
-
-
 
 <!-- The page that we are curently on
        >
@@ -153,17 +150,17 @@
 
         <div style="text-align:center">
             <label for="use">Username:</label>
-            <input type="text" id="username" name="username" required>
+            <input type="text" placeholder="Write the username" id="username" name="username" required>
 
             <label for="use"> Email:</label>
-            <input type="text" id="email" name="email" required>
+            <input type="text"placeholder="Write the email" id="email" name="email" required>
 
             <label for="pass"> Password (8 characters minimum):</label>
-            <input type="password" id="pass" name="password"
+            <input type="password" placeholder="Write the password" id="pass" name="password"
                    minlength="8" required>
 
             <label for="pass"> Rewrite the password :</label>
-            <input type="password" id="pass" name="password"
+            <input type="password" placeholder="Rewrite the password" id="pass" name="password"
                    minlength="8" required>
 
             <input type="submit" value="Sign in">
