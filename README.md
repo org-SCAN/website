@@ -32,15 +32,24 @@ Pour pouvoir bosser avec la database, il est nécessaire de motifier le fichier 
 Voici un exemple de ce qu'il doit contenir, où les valeurs `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` doivent correspondre aux informations saisies dans le `.env` de racine (utilisé par docker pour générer le service de mongodb).
 
 ```
-DB_CONNECTION=mongodb
-DB_HOST=mongo
-DB_PORT=27017
+DB_CONNECTION=mysql
+DB_HOST=sql
+DB_PORT=3306
 DB_DATABASE=DB_DATABASE_NAME
 DB_USERNAME=user_example
 DB_PASSWORD=my_passwd
 ```
 
+# Lancement de Laravel
 
+Après avoir exécuté `./start_laravel`, il faut se connecter à ce conteneur et exécuter les commandes suivantes :
+
+```
+composer update
+php artisan migrate
+```
+
+Cela permet de télécharger les dépendances et de mettre à jour la base de donnée avec les fichiers nécessaires.
 
 
 
