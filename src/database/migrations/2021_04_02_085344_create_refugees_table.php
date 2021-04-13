@@ -37,6 +37,9 @@ class CreateRefugeesTable extends Migration
             $table->boolean("deleted");
             $table->timestamps();
             foreach ($array_json as $field) {
+                if($field["required"] !=1){
+                    $table->{$field["database_type"]}($field["label"])->nullable();
+                }
                 $table->{$field["database_type"]}($field["label"]);
             }
         });

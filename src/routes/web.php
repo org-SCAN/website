@@ -20,5 +20,9 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
-
+/*
+Route::get('manage_refugees/create/{fields}', [
+    'as' => 'manage_refugees.create',
+    'uses' => 'ManageRefugeesController@create'
+]);*/
 Route::resource("manage_refugees", \App\Http\Controllers\ManageRefugeesController::class);

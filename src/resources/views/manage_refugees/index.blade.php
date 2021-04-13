@@ -7,7 +7,9 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <!-- This example requires Tailwind CSS v2.0+ -->
+            <div class="block mb-8">
+                <a href="{{ route("manage_refugees.create") }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add refugee</a>
+            </div>
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -16,10 +18,7 @@
                                 <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        First Name
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Last Name
+                                        Full Name
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Date
@@ -39,10 +38,7 @@
                                 @foreach($refugees as $refugee)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            {{$refugee->first_name}}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            {{$refugee->last_name}}
+                                            {{$refugee->full_name}}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             {{$refugee->date}}
@@ -54,8 +50,8 @@
                                             {{$refugee->role}}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <a href="{{route("manage_refugees.show")}}" class="text-indigo-600 hover:text-blue-900">Edit</a>
-                                            <a href="{{route("manage_refugees.edit")}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                            <a href="{{route("manage_refugees.show", $refugee->id)}}" class="text-indigo-600 hover:text-blue-900">View</a>
+                                            <a href="{{route("manage_refugees.edit", $refugee->id)}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                         </td>
                                     </tr>
                                 @endforeach

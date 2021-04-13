@@ -2,11 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Field;
+use App\Http\Requests\StoreRefugeeRequest;
+use App\Http\Requests\UpdateRefugeeRequest;
+use App\Traits\Uuids;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 use App\Models\Refugee;
+use Illuminate\Support\Facades\View;
 
 class ManageRefugeesController extends Controller
 {
+    public function __construct()
+    {
+        //its just a dummy data object.
+        $fields = Field::all();
+
+        // Sharing is caring
+        View::share('fields', $fields);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,6 +29,8 @@ class ManageRefugeesController extends Controller
      */
     public function index()
     {
+        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $refugees = Refugee::all();
 
         return view("manage_refugees.index", compact("refugees"));
@@ -26,7 +43,9 @@ class ManageRefugeesController extends Controller
      */
     public function create()
     {
-        return view("manage_refugees.create");
+        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $fields = Field::all();
+        return view("manage_refugees.create", compact("fields"));
     }
 
     /**
@@ -35,32 +54,36 @@ class ManageRefugeesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRefugeeRequest $request)
     {
-        Refugee::create($request->validate());
+        Refugee::create($request->validated());
         return redirect()->route("manage_refugees.index");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Refugee  $refugee
+     * @param  Uuid  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Refugee $refugee)
+    public function show(Uuids $id)
     {
-        return view("manage_refugees.show", compact($refugee));
+        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $refugee = Refugee::where("id", $id);
+        return view("manage_refugees.show", compact("refugee"));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Refugee  $refugee
+     * @param  Uuid  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Refugee $refugee)
+    public function edit(Uuid  $id)
     {
-        return view("manage_refugees.edit", compact($refugee));
+        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $refugee = Refugee::where("id", $id);
+        return view("manage_refugees.edit", compact("refugee"));
     }
 
     /**
@@ -70,9 +93,9 @@ class ManageRefugeesController extends Controller
      * @param  Refugee $refugee
      * @return \Illuminate\Http\Response
      */
-    public function update(RequestRefugeeRequest $request, Refugee $refugee)
+    public function update(UpdateRefugeeRequest $request, Refugee $refugee)
     {
-        $refugee->update($request->validate());
+        $refugee->update($request->validated());
         return redirect()->route("manage_refugees.index");
     }
 
@@ -84,6 +107,7 @@ class ManageRefugeesController extends Controller
      */
     public function destroy(Refugee $refugee)
     {
+        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $refugee->delete();
         return redirect()->route("manage_refugees.index");
     }

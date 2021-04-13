@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Models\Field;
+use Illuminate\Support\Facades\Gate;
 class StoreRefugeeRequest extends FormRequest
 {
     /**
@@ -13,7 +14,7 @@ class StoreRefugeeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;//Gate::allows('manage_refugees_access');
     }
 
     /**
@@ -23,8 +24,16 @@ class StoreRefugeeRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        $fields = Field::all(); // TODO : all where not deleted
+        $rules = array();
+
+        foreach ($fields as $field){
+            $rules[$field["label"]]=array();
+            if($field["required"] == 1){
+                array_push($rules[$field["label"]], "required");
+            }
+            //array_push($rules[$field["label"]], $field["html_data_type"]);
+        }
+        return $rules;
     }
 }
