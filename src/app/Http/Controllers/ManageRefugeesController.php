@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Gate;
 use PhpParser\Node\Expr\Array_;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Refugee;
-use App\Models\Gender;
 use Illuminate\Support\Facades\View;
 
 class ManageRefugeesController extends Controller
@@ -129,6 +128,7 @@ class ManageRefugeesController extends Controller
     public static function getLinkedList($model)
     {
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $model = ucfirst($model);
         $model = 'App\Models\\'.$model;
         $list = $model::all()->toArray();
         return $list;
