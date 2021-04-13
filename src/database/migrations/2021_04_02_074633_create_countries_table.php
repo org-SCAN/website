@@ -27,17 +27,15 @@ class CreateCountriesTable extends Migration
         Schema::dropIfExists($this->table_name);
         Schema::create($this->table_name, function (Blueprint $table) {
             $table->string($this->table_name . "__" . "id", 36)->unique();
-            $table->index($this->table_name . "__" . "ISO2");
-            $table->index($this->table_name . "__" . "ISO3");
-            $table->index($this->table_name . "__" . "short");
-            $table->index($this->table_name . "__" . "full");
-            $table->index($this->table_name . "__" . "created_at");
-            $table->index($this->table_name . "__" . "updated_at");
-            $table->index($this->table_name . "__" . "deleted_at");
+            $table->string($this->table_name . "__" . "ISO2");
+            $table->string($this->table_name . "__" . "ISO3");
+            $table->string($this->table_name . "__" . "short");
+            $table->string($this->table_name . "__" . "full");
+            $table->timestamps();
         });
 
 
-        
+
         $obj_json = file_get_contents($this->path_role_json);
         // interpret the json format as an array
         $array_json = json_decode($obj_json, true);

@@ -1,19 +1,19 @@
 [{
-  "role__short": "sought",
-  "role__descr": "the police is looking for this person"
+  "roles__short": "sought",
+  "roles__descr": "the police is looking for this person"
 },{
-  "role__short": "possibly sought",
-  "role__descr": "the police might be looking for this person"
+  "roles__short": "possibly sought",
+  "roles__descr": "the police might be looking for this person"
 },{
-  "role__short": "witness",
-  "role__descr": ""
+  "roles__short": "witness",
+  "roles__descr": ""
 },{
-  "role__short": "survivor",
-  "role__descr": ""
+  "roles__short": "survivor",
+  "roles__descr": ""
 },{
-  "role__short": "informant",
-  "role__descr": ""
+  "roles__short": "informant",
+  "roles__descr": ""
 },{
-  "role__short": "relative",
-  "role__descr": ""
+  "roles__short": "relative",
+  "roles__descr": ""
 }]

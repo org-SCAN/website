@@ -163,7 +163,7 @@
     "fields__html_data_type":"radio",
     "fields__UI_type":"RadioButton",
     "fields__linked_list":"",
-    "fields__required": null,
+    "fields__required": 100,
     "fields__status":0,
 		"fields__attribute":"",
 		"fields__database_type":"boolean"
@@ -173,7 +173,7 @@
     "fields__label":"flight_disease",
     "fields__placeholder":"",
     "fields__html_data_type":"radio",
-    "fields__UI_type":"Spinner", 
+    "fields__UI_type":"Spinner",
     "fields__linked_list":"",
     "fields__required":3,
     "fields__status":0,
@@ -187,7 +187,7 @@
     "fields__html_data_type":"date",
     "fields__UI_type":"EditText",
     "fields__linked_list":"",
-    "fields__required": null,
+    "fields__required": 100,
     "fields__status":0,
 		"fields__attribute":"",
 		"fields__database_type":"date"
@@ -199,7 +199,7 @@
     "fields__html_data_type":"text",
     "fields__UI_type":"AutoCompleteTextView",
     "fields__linked_list":"",
-    "fields__required": null,
+    "fields__required": 100,
     "fields__status":0,
 		"fields__attribute":"",
 		"fields__database_type":"string"

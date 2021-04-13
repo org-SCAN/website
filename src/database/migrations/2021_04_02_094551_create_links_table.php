@@ -22,15 +22,16 @@ class CreateLinksTable extends Migration
 
     public function up()
     {
-        
+
         Schema::dropIfExists($this->table_name);
         Schema::create($this->table_name, function (Blueprint $table) {
             $table->string($this->table_name . "__" . "id", 36)->unique();
-            $table->date($this->table_name . "__" . "date");
+            $table->datetime($this->table_name . "__" . "date");
             $table->boolean($this->table_name . "__" . "deleted");
             $table->string($this->table_name . "__" . "relation");
             $table->string($this->table_name . "__" . "refugee1_id");
             $table->string($this->table_name . "__" . "refugee2_id");
+            $table->timestamps();
         });
     }
 

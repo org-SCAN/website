@@ -1,13 +1,13 @@
 [{
-  "gender__short": "F",
-  "gender__full": "Female"
+  "genders__short": "F",
+  "genders__full": "Female"
 },{
-  "gender__short": "M",
-  "gender__full": "Male"
+  "genders__short": "M",
+  "genders__full": "Male"
 },{
-  "gender__short": "NB",
-  "gender__full": "Non-Binary"
+  "genders__short": "NB",
+  "genders__full": "Non-Binary"
 },{
-  "gender__short": "O",
-  "gender__full": "Other"
+  "genders__short": "O",
+  "genders__full": "Other"
 }]
