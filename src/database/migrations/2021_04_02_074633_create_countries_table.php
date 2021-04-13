@@ -26,11 +26,13 @@ class CreateCountriesTable extends Migration
     {
         Schema::dropIfExists($this->table_name);
         Schema::create($this->table_name, function (Blueprint $table) {
-            $table->string($this->table_name . "__" . "id", 36)->unique();
-            $table->string($this->table_name . "__" . "ISO2");
-            $table->string($this->table_name . "__" . "ISO3");
-            $table->string($this->table_name . "__" . "short");
-            $table->string($this->table_name . "__" . "full");
+            $table->uuid("id")
+                ->unique()
+                ->primary();
+            $table->string("ISO2");
+            $table->string("ISO3");
+            $table->string("short");
+            $table->string("full");
             $table->timestamps();
         });
 
@@ -44,7 +46,7 @@ class CreateCountriesTable extends Migration
         foreach($array_json as $country)
         {
             $to_store = array();
-            $to_store[$this->table_name."__"."id"] = (string)Str::uuid();
+            $to_store["id"] = (string)Str::uuid();
             foreach ($country as $countryKey => $countryValue) {
                 $to_store[$countryKey] = $countryValue;
             }

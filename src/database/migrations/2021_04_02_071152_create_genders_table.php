@@ -26,9 +26,11 @@ class CreateGendersTable extends Migration
     {
         Schema::dropIfExists($this->table_name);
         Schema::create($this->table_name, function (Blueprint $table) {
-            $table->string($this->table_name . "__" . "id", 36)->unique();
-            $table->string($this->table_name . "__" . "short");
-            $table->string($this->table_name . "__" . "full");
+            $table->uuid("id")
+                ->unique()
+                ->primary();
+            $table->string("short");
+            $table->string("full");
             $table->timestamps();
         });
 
@@ -42,7 +44,7 @@ class CreateGendersTable extends Migration
         foreach($array_json as $gender)
         {
             $to_store = array();
-            $to_store[$this->table_name."__"."id"] = (string)Str::uuid();
+            $to_store["id"] = (string)Str::uuid();
             foreach ($gender as $genderKey => $genderValue) {
                 $to_store[$genderKey] = $genderValue;
             }
