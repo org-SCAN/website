@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Refugee;
 
 class ManageRefugeesController extends Controller
 {
@@ -13,7 +14,9 @@ class ManageRefugeesController extends Controller
      */
     public function index()
     {
-        //
+        $refugees = Refugee::all();
+
+        return view("manage_refugees.index", compact("refugees"));
     }
 
     /**
@@ -23,7 +26,7 @@ class ManageRefugeesController extends Controller
      */
     public function create()
     {
-        //
+        return view("manage_refugees.create");
     }
 
     /**
@@ -34,41 +37,43 @@ class ManageRefugeesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Refugee::create($request->validate());
+        return redirect()->route("manage_refugees.index");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Refugee  $refugee
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Refugee $refugee)
     {
-        //
+        return view("manage_refugees.show", compact($refugee));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Refugee  $refugee
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Refugee $refugee)
     {
-        //
+        return view("manage_refugees.edit", compact($refugee));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\RequestRefugeeRequest $request
+     * @param  Refugee $refugee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RequestRefugeeRequest $request, Refugee $refugee)
     {
-        //
+        $refugee->update($request->validate());
+        return redirect()->route("manage_refugees.index");
     }
 
     /**
@@ -77,8 +82,9 @@ class ManageRefugeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Refugee $refugee)
     {
-        //
+        $refugee->delete();
+        return redirect()->route("manage_refugees.index");
     }
 }
