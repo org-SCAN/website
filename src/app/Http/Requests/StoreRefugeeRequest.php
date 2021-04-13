@@ -24,16 +24,8 @@ class StoreRefugeeRequest extends FormRequest
      */
     public function rules()
     {
-        $fields = Field::all(); // TODO : all where not deleted
-        $rules = array();
-
-        foreach ($fields as $field){
-            $rules[$field["label"]]=array();
-            if($field["required"] == 1){
-                array_push($rules[$field["label"]], "required");
-            }
-            //array_push($rules[$field["label"]], $field["html_data_type"]);
-        }
+        $fields = Field::all()->toArray(); // TODO : all where not deleted
+        $rules = array_column($fields, 'validation_laravel', "label");
         return $rules;
     }
 }

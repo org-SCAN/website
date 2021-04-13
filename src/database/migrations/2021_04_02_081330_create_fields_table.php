@@ -39,6 +39,8 @@ class CreateFieldsTable extends Migration
             $table->integer( "status");
             $table->integer( "required");
             $table->string( "attribute");
+            $table->integer("order");
+            $table->string("validation_laravel");
             $table->timestamps();
         });
 

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
 use App\Traits\Uuids;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Refugee;
@@ -16,11 +17,13 @@ class ManageRefugeesController extends Controller
 {
     public function __construct()
     {
-        //its just a dummy data object.
-        $fields = Field::all();
+        /*
+        $fields = Field::where("status", ">", 0)->get();
+        $fields = DB::table('fields')
+            ->orderBy('order')
+            ->get();
 
-        // Sharing is caring
-        View::share('fields', $fields);
+        View::share('fields', $fields);*/
     }
     /**
      * Display a listing of the resource.
@@ -44,7 +47,10 @@ class ManageRefugeesController extends Controller
     public function create()
     {
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $fields = Field::all();
+        $fields = Field::where("status", ">", 0)
+            ->orderBy("required")
+            ->orderBy("order")
+            ->get();
         return view("manage_refugees.create", compact("fields"));
     }
 

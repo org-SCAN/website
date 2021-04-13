@@ -15,7 +15,7 @@
                                 <label for="{{$field->label}}" class="block font-medium text-sm text-gray-700">{{$field->title}}</label>
                                 <input type="{{$field->html_data_type}}" name="{{$field->label}}" id="{{$field->label}}" class="form-input rounded-md shadow-sm mt-1 block w-full"
                                        placeholder="{{$field->placeholder ?? ''}}" />
-                                @error('description')
+                                @error($field->label)
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
