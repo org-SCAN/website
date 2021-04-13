@@ -1,4 +1,3 @@
-init-mongo.js/*
-mongo-volume/*
+sql-volume/*
 save.txt
 .env
