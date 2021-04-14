@@ -14,7 +14,7 @@ class AddTokenToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string("token")
+            $table->string("token", 500)
                 ->unique()
                 ->nullable();
         });

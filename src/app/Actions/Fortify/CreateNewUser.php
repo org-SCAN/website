@@ -66,7 +66,7 @@ class CreateNewUser implements CreatesNewUsers
     protected function genToken(User $user)
     {
         $token = $user->createToken('api_token', ["read","create","update"])->plainTextToken;
-        $user->token = Crypt::encryptString($token);
+        $user->token = Crypt::encryptString(md5($user->id).$token);
         $user->save();
     }
 }
