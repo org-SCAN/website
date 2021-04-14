@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Jenssegers\Agent\Agent;
 use Livewire\Component;
+use Illuminate\Support\Facades\Crypt;
 
 class ViewToken extends Component
 {
@@ -65,7 +66,12 @@ class ViewToken extends Component
     }
     public function render()
     {
-        $user =Auth::user();
-        return view('livewire.view-token')->with(['user' => $user]);
+        $this->user =Auth::user();
+        $encrypted_token = $this->user->token;
+        $id = $this->user->id;
+        $this->userToken = str_replace(md5($id),"", Crypt::decryptString($encrypted_token));
+
+
+        return view('livewire.view-token');
     }
 }

@@ -17,11 +17,6 @@
                 {{ __('View my private token') }}
             </x-jet-button>
         </div>
-        <div class="flex items-center mt-5">
-            <x-jet-action-message class="ml-3" on="DisplayToken">
-                {{ __('Voici ton token :.') }}
-            </x-jet-action-message>
-        </div>
 
         <!-- Log Out Other Devices Confirmation Modal -->
         <x-jet-dialog-modal wire:model="confirmingViewToken">
@@ -40,6 +35,9 @@
 
                     <x-jet-input-error for="password" class="mt-2" />
                 </div>
+                <div>
+                    <label for="Token">{{$this->userToken}}</label>
+                </div>
             </x-slot>
 
             <x-slot name="footer">
@@ -56,41 +54,4 @@
     </x-slot>
 </x-jet-action-section>
 
-
-
-
-
-@php
-      var_dump("coucou");
-        var_dump($user);
-        //$decrypt_token=str_replace(md5($user->id), "", Crypt::decryptString($user->token));
-@endphp
-
-
-<!-- Token
-<div class="col-span-6 sm:col-span-4">
-    <x-jet-label for="token" value="{{ __('Token') }}" />
-
-    <x-jet-button wire:click="confirmViewToken" wire:loading.attr="disabled">
-        {{ __('View token') }}
-    </x-jet-button>
-    <x-jet-dialog-modal wire:model="confirmViewToken">
-        <x-slot name="title">
-            {{ __('View token') }}
-        </x-slot>
-
-        <x-slot name="content">
-            {{ __('Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
-
-
-        </x-slot>
-
-        <x-slot name="footer">
-            <x-jet-secondary-button wire:click="$toggle('confirmingUserDeletion')" wire:loading.attr="disabled">
-                {{ __('Cancel') }}
-            </x-jet-secondary-button>
-        </x-slot>
-    </x-jet-dialog-modal>
-</div>
-
--->
+      {{$this->userToken}}

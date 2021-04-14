@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Refugee;
 use Illuminate\Support\Facades\View;
 
+
 class ManageRefugeesController extends Controller
 {
     public function __construct()
