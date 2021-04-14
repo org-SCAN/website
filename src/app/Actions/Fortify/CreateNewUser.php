@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use Illuminate\Support\Facades\Crypt;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -36,6 +37,7 @@ class CreateNewUser implements CreatesNewUsers
                 'password' => Hash::make($input['password']),
             ]), function (User $user) {
                 $this->createTeam($user);
+                $this->genToken($user);
             });
         });
     }
@@ -53,5 +55,18 @@ class CreateNewUser implements CreatesNewUsers
             'name' => explode(' ', $user->name, 2)[0]."'s Team",
             'personal_team' => true,
         ]));
+    }
+
+    /**
+     * Create a personal Token API.
+     *
+     * @param  \App\Models\User  $user
+     * @return void
+     */
+    protected function genToken(User $user)
+    {
+        $token = $user->createToken('api_token', ["read","create","update"])->plainTextToken;
+        $user->token = Crypt::encryptString($token);
+        $user->save();
     }
 }
