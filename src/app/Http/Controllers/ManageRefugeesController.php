@@ -149,9 +149,12 @@ class ManageRefugeesController extends Controller
     {
         if($request->user()->tokenCan("update")){
             foreach ($request->validated() as $refugee){
-                Refugee::create($refugee);
+                $stored_ref = Refugee::create($refugee);
+                if(!$stored_ref->exists){
+                    return response("Error while creating this refugee :".json_encode($refugee), 500);
+                }
             }
-           return response("Success !", 200);
+           return response("Success !", 201);
         }
 
         return response("Your token can't be use to send datas", 403);
