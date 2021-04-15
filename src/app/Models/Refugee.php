@@ -25,5 +25,5 @@ class Refugee extends Model
     public $incrementing = false;
 
     protected $gards = [""];
-    protected $fillable = ["nationality","full_name"];
+    protected $fillable = ["*"];
 }
