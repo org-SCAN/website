@@ -77,6 +77,6 @@ class User extends Authenticatable
         $id = $this->id;
         $decypted = Crypt::decryptString($encrypted_token);
         $unsalt = preg_replace('/'.md5($id).'/', '', $decypted, 1);
-        return preg_replace('/'.($id-1).'\|/', '', $unsalt, 1);
+        return preg_replace('/[0-9]+\|/', '', $unsalt, 1);
     }
 }
