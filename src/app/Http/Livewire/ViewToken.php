@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Crypt;
 class ViewToken extends Component
 {
     public $user;
+    public $showToken = false;
 
     /**
      * Indicates if logout is being confirmed.
@@ -62,7 +63,7 @@ class ViewToken extends Component
         $guard->user();
         $this->confirmingViewToken = true;
 
-        $this->emit('DisplayToken');
+        $this->showToken = true;
     }
     public function render()
     {
