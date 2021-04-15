@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Crypt;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
@@ -58,4 +59,24 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Create a personal Token API.
+     *
+     * @return void
+     */
+    public function genToken()
+    {
+        $token = $this->createToken('api_token', ["read","create","update"])->plainTextToken;
+        $this->token = Crypt::encryptString(md5($this->id).$token);
+        $this->save();
+    }
+    public function getToken()
+    {
+        $encrypted_token = $this->token;
+        $id = $this->id;
+        $decypted = Crypt::decryptString($encrypted_token);
+        $unsalt = preg_replace('/'.md5($id).'/', '', $decypted, 1);
+        return preg_replace('/'.($id-1).'\|/', '', $unsalt, 1);
+    }
 }

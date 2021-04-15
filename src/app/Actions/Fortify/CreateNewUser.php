@@ -37,7 +37,7 @@ class CreateNewUser implements CreatesNewUsers
                 'password' => Hash::make($input['password']),
             ]), function (User $user) {
                 $this->createTeam($user);
-                $this->genToken($user);
+                $user->genToken();
             });
         });
     }
@@ -57,16 +57,4 @@ class CreateNewUser implements CreatesNewUsers
         ]));
     }
 
-    /**
-     * Create a personal Token API.
-     *
-     * @param  \App\Models\User  $user
-     * @return void
-     */
-    protected function genToken(User $user)
-    {
-        $token = $user->createToken('api_token', ["read","create","update"])->plainTextToken;
-        $user->token = Crypt::encryptString(md5($user->id).$token);
-        $user->save();
-    }
 }

@@ -67,11 +67,8 @@ class ViewToken extends Component
     }
     public function render()
     {
-        $this->user =Auth::user();
-        $encrypted_token = $this->user->token;
-        $id = $this->user->id;
-        $this->userToken = str_replace(md5($id),"", Crypt::decryptString($encrypted_token));
 
+        $this->userToken = Auth::user()->getToken();
 
         return view('livewire.view-token');
     }
