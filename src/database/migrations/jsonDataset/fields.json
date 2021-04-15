@@ -23,7 +23,7 @@
         "required":2,
         "status":2,
         "attribute":"",
-        "database_type":"string|nullable",
+        "database_type":"string",
         "order" : 6,
         "validation_laravel" : "string|nullable"
     },
