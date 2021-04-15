@@ -15,7 +15,7 @@ class RefugeeSeeder extends Seeder
     public function run()
     {
         Refugee::factory()
-            ->count(50)
+            ->count(200)
             ->create();
     }
 }

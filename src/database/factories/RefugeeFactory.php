@@ -29,6 +29,7 @@ class RefugeeFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid,
+            'date' => $this->faker->date("Y-m-d", $max = 'now', $min='- 2 months'),
             'unique_id' => $this->faker->regexify('[A-Z]{3}-[0-9]{6}'),
             'nationality' => Country::inRandomOrder()->first()->id,
             'full_name' => $this->faker->name,
