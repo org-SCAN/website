@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Field;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
+use App\Http\Requests\StoreRefugeeApiRequest;
 use App\Traits\Uuids;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -64,7 +65,7 @@ class ManageRefugeesController extends Controller
      */
     public function store(StoreRefugeeRequest $request)
     {
-        Refugee::create($request->validated());
+        $new_ref = Refugee::create($request->validated());
         return redirect()->route("manage_refugees.index");
     }
 
@@ -135,7 +136,24 @@ class ManageRefugeesController extends Controller
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $model = ucfirst($model);
         $model = 'App\Models\\'.$model;
-        $list = $model::all()->toArray();
+        $list = $model::getLinkedList();//all()->toArray();
         return $list;
+    }
+    /**
+     * Handle the API request
+     *
+     * @param  StoreRefugeeApiRequest  $request
+     * @return array
+     */
+    public static function handleApiRequest(StoreRefugeeApiRequest $request)
+    {
+        if($request->user()->tokenCan("update")){
+            foreach ($request->validated() as $refugee){
+                Refugee::create($refugee);
+            }
+           return response("Success !", 200);
+        }
+
+        return response("Your token can't be use to send datas", 403);
     }
 }

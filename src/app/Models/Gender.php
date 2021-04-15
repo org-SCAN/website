@@ -28,4 +28,9 @@ class Gender extends Model
     {
         return $this->morphMany('App\Models\Field', 'get_linked_list');
     }
+    public static function getLinkedList()
+    {
+        $elem = self::all()->toArray();
+        return array_column($elem, "full", "id");
+    }
 }

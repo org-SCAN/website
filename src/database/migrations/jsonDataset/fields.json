@@ -138,7 +138,7 @@
         "attribute":"min=1 max=120",
         "database_type":"integer",
         "order" : 100,
-        "validation_laravel" : "integer|min:1|max:120"
+        "validation_laravel" : "integer|min:1|max:120|nullable"
     },
     {
         "title":"Place of birth",

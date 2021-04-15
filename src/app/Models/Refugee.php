@@ -24,8 +24,12 @@ class Refugee extends Model
 
     public $incrementing = false;
 
-    protected $gards = [""];
-    protected $fillable = ["*"];
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
 
     /**
      * Indicate the nationality according the UUID stored in DB
@@ -33,7 +37,8 @@ class Refugee extends Model
      * @return String
      */
     public function getNationalityAttribute($value){
-        return Country::find($value)->short;
+        $country = Country::find($value);
+        return empty($country) ? "" : $country->short;
     }
     /**
      * Indicate the role according the UUID stored in DB
@@ -41,7 +46,8 @@ class Refugee extends Model
      * @return String
      */
     public function getRoleAttribute($value){
-        return Role::find($value)->short;
+        $role = Role::find($value);
+        return empty($role) ? "" : $role->short;
     }
     /**
      * Indicate the gender according the UUID stored in DB
@@ -49,7 +55,8 @@ class Refugee extends Model
      * @return String
      */
     public function getGenderAttribute($value){
-        return Gender::find($value)->full;
+        $gender = Gender::find($value);
+        return empty($gender) ? "" : $gender->full;
     }
     /**
      * Indicate the route according the UUID stored in DB
@@ -57,7 +64,8 @@ class Refugee extends Model
      * @return String
      */
     public function getRouteAttribute($value){
-        return Route::find($value)->full;
+        $route = Route::find($value);
+        return empty($route) ? "" : $route->short;
     }
     /**
      * Indicate the residence according the UUID stored in DB
@@ -65,6 +73,7 @@ class Refugee extends Model
      * @return String
      */
     public function getResidenceAttribute($value){
-        return Country::find($value)->short;
+        $country = Country::find($value);
+        return empty($country) ? "" : $country->short;
     }
 }

@@ -16,7 +16,9 @@
                                     <label for="{{$field->label}}" class="block font-medium text-sm text-gray-700">{{$field->title}}</label>
                                     @if($field->linked_list != "")
                                         @php
-                                        $list=array_column(ManageRefugees::getLinkedList($field->linked_list), "full", "id");
+
+                                        $list=ManageRefugees::getLinkedList($field->linked_list);
+                                        array_unshift($list, "Select your ".$field->title) ;
                                         @endphp
                                         <x-form-select name="{{$field->label}}" :options="$list" label="" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                                     @else

@@ -14,7 +14,7 @@ class StoreRefugeeRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;//Gate::allows('manage_refugees_access');
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class StoreRefugeeRequest extends FormRequest
      */
     public function rules()
     {
-        $fields = Field::where("status", ">", 0)->toArray();
+        $fields = Field::where("status", ">", 0)->get()->toArray();
         $rules = array_column($fields, 'validation_laravel', "label");
         return $rules;
     }
