@@ -4,25 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Uuids;
 
 class Country extends Model
 {
-    use HasFactory;
-
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'countries';
-
-    /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
-    protected $primaryKey = "countries"."__"."id";
-
+    use HasFactory, Uuids;
     /**
      * The data type of the auto-incrementing ID.
      *
@@ -37,4 +23,14 @@ class Country extends Model
      */
 
     public $incrementing = false;
+
+    public function fields()
+    {
+        return $this->morphMany('App\Models\Field', 'get_linked_list');
+    }
+    public static function getLinkedList()
+    {
+        $elem = self::all()->toArray();
+        return array_column($elem, "full", "id");
+    }
 }

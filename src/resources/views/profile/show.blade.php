@@ -11,6 +11,12 @@
                 @livewire('profile.update-profile-information-form')
 
                 <x-jet-section-border />
+
+                <div class="mt-10 sm:mt-0">
+                    @livewire('view-token')
+                </div>
+
+                <x-jet-section-border />
             @endif
 
             @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))

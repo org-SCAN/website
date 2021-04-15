@@ -26,9 +26,11 @@ class CreateRolesTable extends Migration
     {
         Schema::dropIfExists($this->table_name);
         Schema::create($this->table_name, function (Blueprint $table) {
-            $table->string($this->table_name . "__" . "id", 36)->unique();
-            $table->string($this->table_name . "__" . "short");
-            $table->string($this->table_name . "__" . "descr");
+            $table->uuid("id")
+                ->unique()
+                ->primary();
+            $table->string("short");
+            $table->string("descr");
             $table->timestamps();
         });
 
@@ -42,7 +44,7 @@ class CreateRolesTable extends Migration
         foreach($array_json as $role)
         {
             $to_store = array();
-            $to_store[$this->table_name."__"."id"] = (string)Str::uuid();
+            $to_store["id"] = (string)Str::uuid();
             foreach ($role as $roleKey => $roleValue) {
                 $to_store[$roleKey] = $roleValue;
             }

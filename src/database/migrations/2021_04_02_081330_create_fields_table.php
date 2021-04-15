@@ -26,17 +26,21 @@ class CreateFieldsTable extends Migration
     {
         Schema::dropIfExists($this->table_name);
         Schema::create($this->table_name, function (Blueprint $table) {
-            $table->string($this->table_name . "__" . "id", 36)->unique();
-            $table->string($this->table_name . "__" . "title");
-            $table->string($this->table_name . "__" . "label");
-            $table->string($this->table_name . "__" . "placeholder");
-            $table->string($this->table_name . "__" . "html_data_type");
-            $table->string($this->table_name . "__" . "database_type");
-            $table->string($this->table_name . "__" . "UI_type");
-            $table->string($this->table_name . "__" . "linked_list");
-            $table->integer($this->table_name . "__" . "status");
-            $table->integer($this->table_name . "__" . "required");
-            $table->string($this->table_name . "__" . "attribute");
+            $table->uuid( "id")
+                ->unique()
+                ->primary();
+            $table->string( "title");
+            $table->string( "label");
+            $table->string( "placeholder");
+            $table->string( "html_data_type");
+            $table->string( "database_type");
+            $table->string( "UI_type");
+            $table->string( "linked_list");
+            $table->integer( "status");
+            $table->integer( "required");
+            $table->string( "attribute");
+            $table->integer("order");
+            $table->string("validation_laravel");
             $table->timestamps();
         });
 
@@ -49,7 +53,7 @@ class CreateFieldsTable extends Migration
         foreach($array_json as $fields)
         {
             $to_store = array();
-            $to_store[$this->table_name."__"."id"] = (string)Str::uuid();
+            $to_store["id"] = (string)Str::uuid();
             foreach ($fields as $keyField => $fieldValue) {
                 $to_store[$keyField] = $fieldValue;
             }

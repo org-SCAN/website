@@ -30,12 +30,17 @@ class CreateRefugeesTable extends Migration
             $obj_json = file_get_contents($this->path_role_json);
             // interpret the json format as an array
             $array_json = json_decode($obj_json, true);
-            $table->string($this->table_name . "__" . "id", 36)->unique();
-            $table->date($this->table_name . "__" . "date");
-            $table->boolean($this->table_name . "__" . "deleted");
+            $table->uuid("id")
+                ->unique()
+                ->primary();
+            $table->date("date");
+            $table->boolean("deleted");
             $table->timestamps();
             foreach ($array_json as $field) {
-                $table->{$field["fields__database_type"]}($this->table_name . "__" .$field["fields__label"]);
+                if($field["required"] !=1){
+                    $table->{$field["database_type"]}($field["label"])->nullable();
+                }
+                $table->{$field["database_type"]}($field["label"]);
             }
         });
     }

@@ -1,1026 +1,1026 @@
 [{
-  "countries__ISO2": "AF",
-  "countries__ISO3": "AFG",
-  "countries__short": "AFGHANISTAN",
-  "countries__full": "ISLAMIC REPUBLIC OF AFGHANISTAN"
-},{
-  "countries__ISO2": "AL",
-  "countries__ISO3": "ALB",
-  "countries__short": "ALBANIA",
-  "countries__full": "REPUBLIC OF ALBANIA"
-},{
-  "countries__ISO2": "DZ",
-  "countries__ISO3": "DZA",
-  "countries__short": "ALGERIA",
-  "countries__full": "PEOPLE'S DEMOCRATIC REPUBLIC OF ALGERIA"
-},{
-  "countries__ISO2": "AD",
-  "countries__ISO3": "AND",
-  "countries__short": "ANDORRA",
-  "countries__full": "PRINCIPALITY OF ANDORRA"
-},{
-  "countries__ISO2": "AO",
-  "countries__ISO3": "AGO",
-  "countries__short": "ANGOLA",
-  "countries__full": "REPUBLIC OF ANGOLA"
-},{
-  "countries__ISO2": "AG",
-  "countries__ISO3": "ATG",
-  "countries__short": "ANTIGUA AND BARBUDA",
-  "countries__full": "ANTIGUA AND BARBUDA"
-},{
-  "countries__ISO2": "PS",
-  "countries__ISO3": "PSE",
-  "countries__short": "AREA UNDER PALESTINIAN AUTHORITY",
-  "countries__full": "AREA UNDER PALESTINIAN AUTHORITY"
-},{
-  "countries__ISO2": "AR",
-  "countries__ISO3": "ARG",
-  "countries__short": "ARGENTINA",
-  "countries__full": "ARGENTINE REPUBLIC"
-},{
-  "countries__ISO2": "AM",
-  "countries__ISO3": "ARM",
-  "countries__short": "ARMENIA",
-  "countries__full": "REPUBLIC OF ARMENIA"
-},{
-  "countries__ISO2": "AU",
-  "countries__ISO3": "AUS",
-  "countries__short": "AUSTRALIA",
-  "countries__full": "AUSTRALIA"
-},{
-  "countries__ISO2": "AT",
-  "countries__ISO3": "AUT",
-  "countries__short": "AUSTRIA",
-  "countries__full": "REPUBLIC OF AUSTRIA"
-},{
-  "countries__ISO2": "AZ",
-  "countries__ISO3": "AZE",
-  "countries__short": "AZERBAIJAN",
-  "countries__full": "REPUBLIC OF AZERBAIJAN"
-},{
-  "countries__ISO2": "BS",
-  "countries__ISO3": "BHS",
-  "countries__short": "BAHAMAS (THE)",
-  "countries__full": "COMMONWEALTH OF THE BAHAMAS"
-},{
-  "countries__ISO2": "BH",
-  "countries__ISO3": "BHR",
-  "countries__short": "BAHRAIN",
-  "countries__full": "KINGDOM OF BAHRAIN"
-},{
-  "countries__ISO2": "BD",
-  "countries__ISO3": "BGD",
-  "countries__short": "BANGLADESH",
-  "countries__full": "PEOPLE'S REPUBLIC OF BANGLADESH"
-},{
-  "countries__ISO2": "BB",
-  "countries__ISO3": "BRB",
-  "countries__short": "BARBADOS",
-  "countries__full": "BARBADOS"
-},{
-  "countries__ISO2": "BY",
-  "countries__ISO3": "BLR",
-  "countries__short": "BELARUS",
-  "countries__full": "REPUBLIC OF BELARUS"
-},{
-  "countries__ISO2": "BE",
-  "countries__ISO3": "BEL",
-  "countries__short": "BELGIUM",
-  "countries__full": "KINGDOM OF BELGIUM"
-},{
-  "countries__ISO2": "BZ",
-  "countries__ISO3": "BLZ",
-  "countries__short": "BELIZE",
-  "countries__full": "BELIZE"
-},{
-  "countries__ISO2": "BJ",
-  "countries__ISO3": "BEN",
-  "countries__short": "BENIN",
-  "countries__full": "REPUBLIC OF BENIN"
-},{
-  "countries__ISO2": "BT",
-  "countries__ISO3": "BTN",
-  "countries__short": "BHUTAN",
-  "countries__full": "KINGDOM OF BHUTAN"
-},{
-  "countries__ISO2": "BO",
-  "countries__ISO3": "BOL",
-  "countries__short": "BOLIVIA",
-  "countries__full": "REPUBLIC OF BOLIVIA"
-},{
-  "countries__ISO2": "BA",
-  "countries__ISO3": "BIH",
-  "countries__short": "BOSNIA AND HERZEGOVINA",
-  "countries__full": "REPUBLIC OF BOSNIA AND HERZEGOVINA (1)"
-},{
-  "countries__ISO2": "BW",
-  "countries__ISO3": "BWA",
-  "countries__short": "BOTSWANA",
-  "countries__full": "REPUBLIC OF BOTSWANA"
-},{
-  "countries__ISO2": "BR",
-  "countries__ISO3": "BRA",
-  "countries__short": "BRAZIL",
-  "countries__full": "FEDERATIVE REPUBLIC OF BRAZIL"
-},{
-  "countries__ISO2": "BN",
-  "countries__ISO3": "BRN",
-  "countries__short": "BRUNEI DARUSSALAM",
-  "countries__full": "BRUNEI DARUSSALAM"
-},{
-  "countries__ISO2": "BG",
-  "countries__ISO3": "BGR",
-  "countries__short": "BULGARIA",
-  "countries__full": "REPUBLIC OF BULGARIA"
-},{
-  "countries__ISO2": "BF",
-  "countries__ISO3": "BFA",
-  "countries__short": "BURKINA FASO",
-  "countries__full": "BURKINA FASO"
-},{
-  "countries__ISO2": "BI",
-  "countries__ISO3": "BDI",
-  "countries__short": "BURUNDI",
-  "countries__full": "REPUBLIC OF BURUNDI"
-},{
-  "countries__ISO2": "KH",
-  "countries__ISO3": "KHM",
-  "countries__short": "CAMBODIA",
-  "countries__full": "KINGDOM OF CAMBODIA"
-},{
-  "countries__ISO2": "CM",
-  "countries__ISO3": "CMR",
-  "countries__short": "CAMEROON",
-  "countries__full": "REPUBLIC OF CAMEROON"
-},{
-  "countries__ISO2": "CA",
-  "countries__ISO3": "CAN",
-  "countries__short": "CANADA",
-  "countries__full": "CANADA"
-},{
-  "countries__ISO2": "CV",
-  "countries__ISO3": "CPV",
-  "countries__short": "CAPE VERDE",
-  "countries__full": "REPUBLIC OF CAPE VERDE"
-},{
-  "countries__ISO2": "CF",
-  "countries__ISO3": "CAF",
-  "countries__short": "CENTRAL AFRICAN REPUBLIC (THE)",
-  "countries__full": "CENTRAL AFRICAN REPUBLIC"
-},{
-  "countries__ISO2": "TD",
-  "countries__ISO3": "TCD",
-  "countries__short": "CHAD",
-  "countries__full": "REPUBLIC OF CHAD"
-},{
-  "countries__ISO2": "CL",
-  "countries__ISO3": "CHL",
-  "countries__short": "CHILE",
-  "countries__full": "REPUBLIC OF CHILE"
-},{
-  "countries__ISO2": "CN",
-  "countries__ISO3": "CHN",
-  "countries__short": "CHINA",
-  "countries__full": "PEOPLE'S REPUBLIC OF CHINA"
-},{
-  "countries__ISO2": "CO",
-  "countries__ISO3": "COL",
-  "countries__short": "COLOMBIA",
-  "countries__full": "REPUBLIC OF COLOMBIA"
-},{
-  "countries__ISO2": "KM",
-  "countries__ISO3": "COM",
-  "countries__short": "COMOROS (THE)",
-  "countries__full": "ISLAMIC FEDERAL REPUBLIC OF THE COMOROS"
-},{
-  "countries__ISO2": "CG",
-  "countries__ISO3": "COG",
-  "countries__short": "CONGO (THE)",
-  "countries__full": "REPUBLIC OF THE CONGO"
-},{
-  "countries__ISO2": "CK",
-  "countries__ISO3": "COK",
-  "countries__short": "COOK ISLANDS",
-  "countries__full": "COOK ISLANDS"
-},{
-  "countries__ISO2": "CR",
-  "countries__ISO3": "CRI",
-  "countries__short": "COSTA RICA",
-  "countries__full": "REPUBLIC OF COSTA RICA"
-},{
-  "countries__ISO2": "CI",
-  "countries__ISO3": "CIV",
-  "countries__short": "CÔTE D'IVOIRE",
-  "countries__full": "REPUBLIC OF CÔTE D'IVOIRE"
-},{
-  "countries__ISO2": "HR",
-  "countries__ISO3": "HRV",
-  "countries__short": "CROATIA",
-  "countries__full": "REPUBLIC OF CROATIA"
-},{
-  "countries__ISO2": "CU",
-  "countries__ISO3": "CUB",
-  "countries__short": "CUBA",
-  "countries__full": "REPUBLIC OF CUBA"
-},{
-  "countries__ISO2": "CY",
-  "countries__ISO3": "CYP",
-  "countries__short": "CYPRUS",
-  "countries__full": "REPUBLIC OF CYPRUS"
-},{
-  "countries__ISO2": "CZ",
-  "countries__ISO3": "CZE",
-  "countries__short": "CZECH REPUBLIC (THE)",
-  "countries__full": "CZECH REPUBLIC"
-},{
-  "countries__ISO2": "KP",
-  "countries__ISO3": "PRK",
-  "countries__short": "DEMOCRATIC PEOPLE'S REPUBLIC OF KOREA (THE)",
-  "countries__full": "DEMOCRATIC PEOPLE'S REPUBLIC OF KOREA"
-},{
-  "countries__ISO2": "CD",
-  "countries__ISO3": "COD",
-  "countries__short": "DEMOCRATIC REPUBLIC OF THE CONGO",
-  "countries__full": "DEMOCRATIC REPUBLIC OF THE CONGO"
-},{
-  "countries__ISO2": "DK",
-  "countries__ISO3": "DNK",
-  "countries__short": "DENMARK",
-  "countries__full": "KINGDOM OF DENMARK"
-},{
-  "countries__ISO2": "DJ",
-  "countries__ISO3": "DJI",
-  "countries__short": "DJIBOUTI",
-  "countries__full": "REPUBLIC OF DJIBOUTI"
-},{
-  "countries__ISO2": "DM",
-  "countries__ISO3": "DMA",
-  "countries__short": "DOMINICA",
-  "countries__full": "COMMONWEALTH OF DOMINICA"
-},{
-  "countries__ISO2": "DO",
-  "countries__ISO3": "DOM",
-  "countries__short": "DOMINICAN REPUBLIC (THE)",
-  "countries__full": "DOMINICAN REPUBLIC"
-},{
-  "countries__ISO2": "EC",
-  "countries__ISO3": "ECU",
-  "countries__short": "ECUADOR",
-  "countries__full": "REPUBLIC OF ECUADOR"
-},{
-  "countries__ISO2": "EG",
-  "countries__ISO3": "EGY",
-  "countries__short": "EGYPT",
-  "countries__full": "ARAB REPUBLIC OF EGYPT"
-},{
-  "countries__ISO2": "SV",
-  "countries__ISO3": "SLV",
-  "countries__short": "EL SALVADOR",
-  "countries__full": "REPUBLIC OF EL SALVADOR"
-},{
-  "countries__ISO2": "GQ",
-  "countries__ISO3": "GNQ",
-  "countries__short": "EQUATORIAL GUINEA",
-  "countries__full": "REPUBLIC OF EQUATORIAL GUINEA"
-},{
-  "countries__ISO2": "ER",
-  "countries__ISO3": "ERI",
-  "countries__short": "ERITREA",
-  "countries__full": "ERITREA"
-},{
-  "countries__ISO2": "EE",
-  "countries__ISO3": "EST",
-  "countries__short": "ESTONIA",
-  "countries__full": "REPUBLIC OF ESTONIA"
-},{
-  "countries__ISO2": "ET",
-  "countries__ISO3": "ETH",
-  "countries__short": "ETHIOPIA",
-  "countries__full": "FEDERAL DEMOCRATIC REPUBLIC OF ETHIOPIA"
-},{
-  "countries__ISO2": "EU",
-  "countries__ISO3": "CEC",
-  "countries__short": "EUROPEAN UNION",
-  "countries__full": "EUROPEAN UNION"
-},{
-  "countries__ISO2": "FK",
-  "countries__ISO3": "FLK",
-  "countries__short": "FALKLAND ISLANDS (MALVINAS)",
-  "countries__full": "FALKLAND ISLANDS (MALVINAS)"
-},{
-  "countries__ISO2": "FJ",
-  "countries__ISO3": "FJI",
-  "countries__short": "FIJI",
-  "countries__full": "REPUBLIC OF THE FIJI ISLANDS"
-},{
-  "countries__ISO2": "FI",
-  "countries__ISO3": "FIN",
-  "countries__short": "FINLAND",
-  "countries__full": "REPUBLIC OF FINLAND"
-},{
-  "countries__ISO2": "FR",
-  "countries__ISO3": "FRA",
-  "countries__short": "FRANCE",
-  "countries__full": "FRENCH REPUBLIC"
-},{
-  "countries__ISO2": "NC",
-  "countries__ISO3": "NCL",
-  "countries__short": "FRANCE - NEW CALEDONIA",
-  "countries__full": "NEW CALEDONIA"
-},{
-  "countries__ISO2": "PF",
-  "countries__ISO3": "PYF",
-  "countries__short": "FRANCE - TAHITI",
-  "countries__full": "TAHITI"
-},{
-  "countries__ISO2": "GA",
-  "countries__ISO3": "GAB",
-  "countries__short": "GABON",
-  "countries__full": "GABONESE REPUBLIC"
-},{
-  "countries__ISO2": "GM",
-  "countries__ISO3": "GMB",
-  "countries__short": "GAMBIA",
-  "countries__full": "REPUBLIC OF THE GAMBIA"
-},{
-  "countries__ISO2": "GE",
-  "countries__ISO3": "GEO",
-  "countries__short": "GEORGIA",
-  "countries__full": "GEORGIA"
-},{
-  "countries__ISO2": "DE",
-  "countries__ISO3": "DEU",
-  "countries__short": "GERMANY",
-  "countries__full": "FEDERAL REPUBLIC OF GERMANY"
-},{
-  "countries__ISO2": "GH",
-  "countries__ISO3": "GHA",
-  "countries__short": "GHANA",
-  "countries__full": "REPUBLIC OF GHANA"
-},{
-  "countries__ISO2": "GR",
-  "countries__ISO3": "GRC",
-  "countries__short": "GREECE",
-  "countries__full": "HELLENIC REPUBLIC"
-},{
-  "countries__ISO2": "GD",
-  "countries__ISO3": "GRD",
-  "countries__short": "GRENADA",
-  "countries__full": "GRENADA"
-},{
-  "countries__ISO2": "GT",
-  "countries__ISO3": "GTM",
-  "countries__short": "GUATEMALA",
-  "countries__full": "REPUBLIC OF GUATEMALA"
-},{
-  "countries__ISO2": "GN",
-  "countries__ISO3": "GIN",
-  "countries__short": "GUINEA",
-  "countries__full": "REPUBLIC OF GUINEA"
-},{
-  "countries__ISO2": "GW",
-  "countries__ISO3": "GNB",
-  "countries__short": "GUINEA-BISSAU",
-  "countries__full": "REPUBLIC OF GUINEA-BISSAU"
-},{
-  "countries__ISO2": "GY",
-  "countries__ISO3": "GUY",
-  "countries__short": "GUYANA",
-  "countries__full": "REPUBLIC OF GUYANA"
-},{
-  "countries__ISO2": "HT",
-  "countries__ISO3": "HTI",
-  "countries__short": "HAITI",
-  "countries__full": "REPUBLIC OF HAITI"
-},{
-  "countries__ISO2": "VA",
-  "countries__ISO3": "VAT",
-  "countries__short": "HOLY SEE (THE)",
-  "countries__full": "HOLY SEE"
-},{
-  "countries__ISO2": "HN",
-  "countries__ISO3": "HND",
-  "countries__short": "HONDURAS",
-  "countries__full": "REPUBLIC OF HONDURAS"
-},{
-  "countries__ISO2": "HU",
-  "countries__ISO3": "HUN",
-  "countries__short": "HUNGARY",
-  "countries__full": "REPUBLIC OF HUNGARY"
-},{
-  "countries__ISO2": "IS",
-  "countries__ISO3": "ISL",
-  "countries__short": "ICELAND",
-  "countries__full": "REPUBLIC OF ICELAND"
-},{
-  "countries__ISO2": "IN",
-  "countries__ISO3": "IND",
-  "countries__short": "INDIA",
-  "countries__full": "REPUBLIC OF INDIA"
-},{
-  "countries__ISO2": "ID",
-  "countries__ISO3": "IDN",
-  "countries__short": "INDONESIA",
-  "countries__full": "REPUBLIC OF INDONESIA"
-},{
-  "countries__ISO2": "IR",
-  "countries__ISO3": "IRN",
-  "countries__short": "IRAN (ISLAMIC REPUBLIC OF)",
-  "countries__full": "ISLAMIC REPUBLIC OF IRAN"
-},{
-  "countries__ISO2": "IQ",
-  "countries__ISO3": "IRQ",
-  "countries__short": "IRAQ",
-  "countries__full": "REPUBLIC OF IRAQ"
-},{
-  "countries__ISO2": "IE",
-  "countries__ISO3": "IRL",
-  "countries__short": "IRELAND",
-  "countries__full": "IRELAND"
-},{
-  "countries__ISO2": "IL",
-  "countries__ISO3": "ISR",
-  "countries__short": "ISRAEL",
-  "countries__full": "STATE OF ISRAEL"
-},{
-  "countries__ISO2": "IT",
-  "countries__ISO3": "ITA",
-  "countries__short": "ITALY",
-  "countries__full": "ITALIAN REPUBLIC"
-},{
-  "countries__ISO2": "JM",
-  "countries__ISO3": "JAM",
-  "countries__short": "JAMAICA",
-  "countries__full": "JAMAICA"
-},{
-  "countries__ISO2": "JP",
-  "countries__ISO3": "JPN",
-  "countries__short": "JAPAN",
-  "countries__full": "JAPAN"
-},{
-  "countries__ISO2": "JO",
-  "countries__ISO3": "JOR",
-  "countries__short": "JORDAN",
-  "countries__full": "HASHEMITE KINGDOM OF JORDAN"
-},{
-  "countries__ISO2": "KZ",
-  "countries__ISO3": "KAZ",
-  "countries__short": "KAZAKHSTAN",
-  "countries__full": "REPUBLIC OF KAZAKHSTAN"
-},{
-  "countries__ISO2": "KE",
-  "countries__ISO3": "KEN",
-  "countries__short": "KENYA",
-  "countries__full": "REPUBLIC OF KENYA"
-},{
-  "countries__ISO2": "KI",
-  "countries__ISO3": "KIR",
-  "countries__short": "KIRIBATI",
-  "countries__full": "REPUBLIC OF KIRIBATI"
-},{
-  "countries__ISO2": "XK",
-  "countries__ISO3": "XXK",
-  "countries__short": "KOSOVO",
-  "countries__full": "REPUBLIC OF KOSOVO*"
-},{
-  "countries__ISO2": "KW",
-  "countries__ISO3": "KWT",
-  "countries__short": "KUWAIT",
-  "countries__full": "STATE OF KUWAIT"
-},{
-  "countries__ISO2": "KG",
-  "countries__ISO3": "KGZ",
-  "countries__short": "KYRGYZSTAN",
-  "countries__full": "KYRGYZ REPUBLIC"
-},{
-  "countries__ISO2": "LA",
-  "countries__ISO3": "LAO",
-  "countries__short": "LAO PEOPLE'S DEMOCRATIC REPUBLIC (THE)",
-  "countries__full": "LAO PEOPLE'S DEMOCRATIC REPUBLIC"
-},{
-  "countries__ISO2": "LV",
-  "countries__ISO3": "LVA",
-  "countries__short": "LATVIA",
-  "countries__full": "REPUBLIC OF LATVIA"
-},{
-  "countries__ISO2": "LB",
-  "countries__ISO3": "LBN",
-  "countries__short": "LEBANON",
-  "countries__full": "LEBANESE REPUBLIC"
-},{
-  "countries__ISO2": "LS",
-  "countries__ISO3": "LSO",
-  "countries__short": "LESOTHO",
-  "countries__full": "KINGDOM OF LESOTHO"
-},{
-  "countries__ISO2": "LR",
-  "countries__ISO3": "LBR",
-  "countries__short": "LIBERIA",
-  "countries__full": "REPUBLIC OF LIBERIA"
-},{
-  "countries__ISO2": "LY",
-  "countries__ISO3": "LBY",
-  "countries__short": "LIBYAN ARAB JAMAHIRIYA (THE)",
-  "countries__full": "SOCIALIST PEOPLE'S LIBYAN ARAB JAMAHIRIYA"
-},{
-  "countries__ISO2": "LI",
-  "countries__ISO3": "LIE",
-  "countries__short": "LIECHTENSTEIN",
-  "countries__full": "PRINCIPALITY OF LIECHTENSTEIN"
-},{
-  "countries__ISO2": "LT",
-  "countries__ISO3": "LTU",
-  "countries__short": "LITHUANIA",
-  "countries__full": "REPUBLIC OF LITHUANIA"
-},{
-  "countries__ISO2": "LU",
-  "countries__ISO3": "LUX",
-  "countries__short": "LUXEMBOURG",
-  "countries__full": "GRAND DUCHY OF LUXEMBOURG"
-},{
-  "countries__ISO2": "MK",
-  "countries__ISO3": "MKD",
-  "countries__short": "MACEDONIA (THE FORMER YUGOSLAV REPUBLIC OF)",
-  "countries__full": "THE FORMER YUGOSLAV REPUBLIC OF MACEDONIA"
-},{
-  "countries__ISO2": "MG",
-  "countries__ISO3": "MDG",
-  "countries__short": "MADAGASCAR",
-  "countries__full": "REPUBLIC OF MADAGASCAR"
-},{
-  "countries__ISO2": "MW",
-  "countries__ISO3": "MWI",
-  "countries__short": "MALAWI",
-  "countries__full": "REPUBLIC OF MALAWI"
-},{
-  "countries__ISO2": "MY",
-  "countries__ISO3": "MYS",
-  "countries__short": "MALAYSIA",
-  "countries__full": "MALAYSIA"
-},{
-  "countries__ISO2": "MV",
-  "countries__ISO3": "MDV",
-  "countries__short": "MALDIVES",
-  "countries__full": "REPUBLIC OF MALDIVES"
-},{
-  "countries__ISO2": "ML",
-  "countries__ISO3": "MLI",
-  "countries__short": "MALI",
-  "countries__full": "REPUBLIC OF MALI"
-},{
-  "countries__ISO2": "MT",
-  "countries__ISO3": "MLT",
-  "countries__short": "MALTA",
-  "countries__full": "REPUBLIC OF MALTA"
-},{
-  "countries__ISO2": "MH",
-  "countries__ISO3": "MHL",
-  "countries__short": "MARSHALL ISLANDS (THE)",
-  "countries__full": "REPUBLIC OF THE MARSHALL ISLANDS"
-},{
-  "countries__ISO2": "MR",
-  "countries__ISO3": "MRT",
-  "countries__short": "MAURITANIA",
-  "countries__full": "ISLAMIC REPUBLIC OF MAURITANIA"
-},{
-  "countries__ISO2": "MU",
-  "countries__ISO3": "MUS",
-  "countries__short": "MAURITIUS",
-  "countries__full": "REPUBLIC OF MAURITIUS"
-},{
-  "countries__ISO2": "MX",
-  "countries__ISO3": "MEX",
-  "countries__short": "MEXICO",
-  "countries__full": "UNITED MEXICAN STATES"
-},{
-  "countries__ISO2": "FM",
-  "countries__ISO3": "FSM",
-  "countries__short": "MICRONESIA (FEDERATED STATES OF)",
-  "countries__full": "FEDERATED STATES OF MICRONESIA"
-},{
-  "countries__ISO2": "MC",
-  "countries__ISO3": "MCO",
-  "countries__short": "MONACO",
-  "countries__full": "PRINCIPALITY OF MONACO"
-},{
-  "countries__ISO2": "MN",
-  "countries__ISO3": "MNG",
-  "countries__short": "MONGOLIA",
-  "countries__full": "MONGOLIA"
-},{
-  "countries__ISO2": "ME",
-  "countries__ISO3": "MNE",
-  "countries__short": "MONTENEGRO",
-  "countries__full": "MONTENEGRO"
-},{
-  "countries__ISO2": "MA",
-  "countries__ISO3": "MAR",
-  "countries__short": "MOROCCO",
-  "countries__full": "KINGDOM OF MOROCCO"
-},{
-  "countries__ISO2": "MZ",
-  "countries__ISO3": "MOZ",
-  "countries__short": "MOZAMBIQUE",
-  "countries__full": "REPUBLIC OF MOZAMBIQUE"
-},{
-  "countries__ISO2": "MM",
-  "countries__ISO3": "MMR",
-  "countries__short": "MYANMAR",
-  "countries__full": "UNION OF MYANMAR"
-},{
-  "countries__ISO2": "NA",
-  "countries__ISO3": "NAM",
-  "countries__short": "NAMIBIA",
-  "countries__full": "REPUBLIC OF NAMIBIA"
-},{
-  "countries__ISO2": "NR",
-  "countries__ISO3": "NRU",
-  "countries__short": "NAURU",
-  "countries__full": "REPUBLIC OF NAURU"
-},{
-  "countries__ISO2": "NP",
-  "countries__ISO3": "NPL",
-  "countries__short": "NEPAL",
-  "countries__full": "FEDERAL DEMOCRATIC REPUBLIC OF NEPAL"
-},{
-  "countries__ISO2": "NL",
-  "countries__ISO3": "NLD",
-  "countries__short": "NETHERLANDS (THE)",
-  "countries__full": "KINGDOM OF THE NETHERLANDS"
-},{
-  "countries__ISO2": "NZ",
-  "countries__ISO3": "NZL",
-  "countries__short": "NEW ZEALAND",
-  "countries__full": "NEW ZEALAND"
-},{
-  "countries__ISO2": "NI",
-  "countries__ISO3": "NIC",
-  "countries__short": "NICARAGUA",
-  "countries__full": "REPUBLIC OF NICARAGUA"
-},{
-  "countries__ISO2": "NE",
-  "countries__ISO3": "NER",
-  "countries__short": "NIGER",
-  "countries__full": "REPUBLIC OF THE NIGER"
-},{
-  "countries__ISO2": "NG",
-  "countries__ISO3": "NGA",
-  "countries__short": "NIGERIA",
-  "countries__full": "FEDERAL REPUBLIC OF NIGERIA"
-},{
-  "countries__ISO2": "NU",
-  "countries__ISO3": "NIU",
-  "countries__short": "NIUE",
-  "countries__full": "REPUBLIC OF NIUE"
-},{
-  "countries__ISO2": "NO",
-  "countries__ISO3": "NOR",
-  "countries__short": "NORWAY",
-  "countries__full": "KINGDOM OF NORWAY"
-},{
-  "countries__ISO2": "OM",
-  "countries__ISO3": "OMN",
-  "countries__short": "OMAN",
-  "countries__full": "SULTANATE OF OMAN"
-},{
-  "countries__ISO2": "PK",
-  "countries__ISO3": "PAK",
-  "countries__short": "PAKISTAN",
-  "countries__full": "ISLAMIC REPUBLIC OF PAKISTAN"
-},{
-  "countries__ISO2": "PW",
-  "countries__ISO3": "PLW",
-  "countries__short": "PALAU",
-  "countries__full": "REPUBLIC OF PALAU"
-},{
-  "countries__ISO2": "PA",
-  "countries__ISO3": "PAN",
-  "countries__short": "PANAMA",
-  "countries__full": "REPUBLIC OF PANAMA"
-},{
-  "countries__ISO2": "PG",
-  "countries__ISO3": "PNG",
-  "countries__short": "PAPUA NEW GUINEA",
-  "countries__full": "PAPUA NEW GUINEA"
-},{
-  "countries__ISO2": "PY",
-  "countries__ISO3": "PRY",
-  "countries__short": "PARAGUAY",
-  "countries__full": "REPUBLIC OF PARAGUAY"
-},{
-  "countries__ISO2": "PE",
-  "countries__ISO3": "PER",
-  "countries__short": "PERU",
-  "countries__full": "REPUBLIC OF PERU"
-},{
-  "countries__ISO2": "PH",
-  "countries__ISO3": "PHL",
-  "countries__short": "PHILIPPINES (THE)",
-  "countries__full": "REPUBLIC OF THE PHILIPPINES"
-},{
-  "countries__ISO2": "PL",
-  "countries__ISO3": "POL",
-  "countries__short": "POLAND",
-  "countries__full": "REPUBLIC OF POLAND"
-},{
-  "countries__ISO2": "PT",
-  "countries__ISO3": "PRT",
-  "countries__short": "PORTUGAL",
-  "countries__full": "PORTUGUESE REPUBLIC"
-},{
-  "countries__ISO2": "QA",
-  "countries__ISO3": "QAT",
-  "countries__short": "QATAR",
-  "countries__full": "STATE OF QATAR"
-},{
-  "countries__ISO2": "TW",
-  "countries__ISO3": "TWN",
-  "countries__short": "REPUBLIC OF CHINA",
-  "countries__full": "REPUBLIC OF CHINA"
-},{
-  "countries__ISO2": "KR",
-  "countries__ISO3": "KOR",
-  "countries__short": "REPUBLIC OF KOREA (THE)",
-  "countries__full": "REPUBLIC OF KOREA"
-},{
-  "countries__ISO2": "MD",
-  "countries__ISO3": "MDA",
-  "countries__short": "REPUBLIC OF MOLDOVA (THE)",
-  "countries__full": "REPUBLIC OF MOLDOVA"
-},{
-  "countries__ISO2": "RO",
-  "countries__ISO3": "ROM",
-  "countries__short": "ROMANIA",
-  "countries__full": "ROMANIA"
-},{
-  "countries__ISO2": "RU",
-  "countries__ISO3": "RUS",
-  "countries__short": "RUSSIAN FEDERATION (THE)",
-  "countries__full": "RUSSIAN FEDERATION"
-},{
-  "countries__ISO2": "RW",
-  "countries__ISO3": "RWA",
-  "countries__short": "RWANDA",
-  "countries__full": "REPUBLIC OF RWANDA"
-},{
-  "countries__ISO2": "KN",
-  "countries__ISO3": "KNA",
-  "countries__short": "SAINT KITTS AND NEVIS",
-  "countries__full": "SAINT KITTS AND NEVIS"
-},{
-  "countries__ISO2": "LC",
-  "countries__ISO3": "LCA",
-  "countries__short": "SAINT LUCIA",
-  "countries__full": "SAINT LUCIA"
-},{
-  "countries__ISO2": "VC",
-  "countries__ISO3": "VCT",
-  "countries__short": "SAINT VINCENT AND THE GRENADINES",
-  "countries__full": "SAINT VINCENT AND THE GRENADINES"
-},{
-  "countries__ISO2": "WS",
-  "countries__ISO3": "WSM",
-  "countries__short": "SAMOA",
-  "countries__full": "INDEPENDENT STATE OF SAMOA"
-},{
-  "countries__ISO2": "SM",
-  "countries__ISO3": "SMR",
-  "countries__short": "SAN MARINO",
-  "countries__full": "REPUBLIC OF SAN MARINO"
-},{
-  "countries__ISO2": "ST",
-  "countries__ISO3": "STP",
-  "countries__short": "SAO TOME AND PRINCIPE",
-  "countries__full": "DEMOCRATIC REPUBLIC OF SAO TOME AND PRINCIPE"
-},{
-  "countries__ISO2": "SA",
-  "countries__ISO3": "SAU",
-  "countries__short": "SAUDI ARABIA",
-  "countries__full": "KINGDOM OF SAUDI ARABIA"
-},{
-  "countries__ISO2": "SN",
-  "countries__ISO3": "SEN",
-  "countries__short": "SENEGAL",
-  "countries__full": "REPUBLIC OF SENEGAL"
-},{
-  "countries__ISO2": "RS",
-  "countries__ISO3": "SRB",
-  "countries__short": "SERBIA",
-  "countries__full": "REPUBLIC OF SERBIA"
-},{
-  "countries__ISO2": "SC",
-  "countries__ISO3": "SYC",
-  "countries__short": "SEYCHELLES",
-  "countries__full": "REPUBLIC OF SEYCHELLES"
-},{
-  "countries__ISO2": "SL",
-  "countries__ISO3": "SLE",
-  "countries__short": "SIERRA LEONE",
-  "countries__full": "REPUBLIC OF SIERRA LEONE"
-},{
-  "countries__ISO2": "SG",
-  "countries__ISO3": "SGP",
-  "countries__short": "SINGAPORE",
-  "countries__full": "REPUBLIC OF SINGAPORE"
-},{
-  "countries__ISO2": "SK",
-  "countries__ISO3": "SVK",
-  "countries__short": "SLOVAKIA",
-  "countries__full": "SLOVAK REPUBLIC"
-},{
-  "countries__ISO2": "SI",
-  "countries__ISO3": "SVN",
-  "countries__short": "SLOVENIA",
-  "countries__full": "REPUBLIC OF SLOVENIA"
-},{
-  "countries__ISO2": "SB",
-  "countries__ISO3": "SLB",
-  "countries__short": "SOLOMON ISLANDS",
-  "countries__full": "SOLOMON ISLANDS"
-},{
-  "countries__ISO2": "SO",
-  "countries__ISO3": "SOM",
-  "countries__short": "SOMALIA",
-  "countries__full": "SOMALI DEMOCRATIC REPUBLIC"
-},{
-  "countries__ISO2": "ZA",
-  "countries__ISO3": "ZAF",
-  "countries__short": "SOUTH AFRICA",
-  "countries__full": "REPUBLIC OF SOUTH AFRICA"
-},{
-  "countries__ISO2": "ES",
-  "countries__ISO3": "ESP",
-  "countries__short": "SPAIN",
-  "countries__full": "KINGDOM OF SPAIN"
-},{
-  "countries__ISO2": "LK",
-  "countries__ISO3": "LKA",
-  "countries__short": "SRI LANKA",
-  "countries__full": "DEMOCRATIC SOCIALIST REPUBLIC OF SRI LANKA"
-},{
-  "countries__ISO2": "SD",
-  "countries__ISO3": "SDN",
-  "countries__short": "SUDAN",
-  "countries__full": "REPUBLIC OF THE SUDAN"
-},{
-  "countries__ISO2": "SS",
-  "countries__ISO3": "SSD",
-  "countries__short": "SOUTH SUDAN",
-  "countries__full": "REPUBLIC OF SOUTH SUDAN"
-},{
-  "countries__ISO2": "SR",
-  "countries__ISO3": "SUR",
-  "countries__short": "SURINAME",
-  "countries__full": "REPUBLIC OF SURINAME"
-},{
-  "countries__ISO2": "SZ",
-  "countries__ISO3": "SWZ",
-  "countries__short": "SWAZILAND",
-  "countries__full": "KINGDOM OF SWAZILAND"
-},{
-  "countries__ISO2": "SE",
-  "countries__ISO3": "SWE",
-  "countries__short": "SWEDEN",
-  "countries__full": "KINGDOM OF SWEDEN"
-},{
-  "countries__ISO2": "CH",
-  "countries__ISO3": "CHE",
-  "countries__short": "SWITZERLAND",
-  "countries__full": "SWISS CONFEDERATION"
-},{
-  "countries__ISO2": "SY",
-  "countries__ISO3": "SYR",
-  "countries__short": "SYRIAN ARAB REPUBLIC (THE)",
-  "countries__full": "SYRIAN ARAB REPUBLIC"
-},{
-  "countries__ISO2": "TJ",
-  "countries__ISO3": "TJK",
-  "countries__short": "TAJIKISTAN",
-  "countries__full": "REPUBLIC OF TAJIKISTAN"
-},{
-  "countries__ISO2": "TH",
-  "countries__ISO3": "THA",
-  "countries__short": "THAILAND",
-  "countries__full": "KINGDOM OF THAILAND"
-},{
-  "countries__ISO2": "TL",
-  "countries__ISO3": "TLS",
-  "countries__short": "TIMOR-LESTE",
-  "countries__full": "DEMOCRATIC REPUBLIC OF TIMOR-LESTE"
-},{
-  "countries__ISO2": "TG",
-  "countries__ISO3": "TGO",
-  "countries__short": "TOGO",
-  "countries__full": "TOGOLESE REPUBLIC"
-},{
-  "countries__ISO2": "TO",
-  "countries__ISO3": "TON",
-  "countries__short": "TONGA",
-  "countries__full": "KINGDOM OF TONGA"
-},{
-  "countries__ISO2": "TT",
-  "countries__ISO3": "TTO",
-  "countries__short": "TRINIDAD AND TOBAGO",
-  "countries__full": "REPUBLIC OF TRINIDAD AND TOBAGO"
-},{
-  "countries__ISO2": "TN",
-  "countries__ISO3": "TUN",
-  "countries__short": "TUNISIA",
-  "countries__full": "REPUBLIC OF TUNISIA"
-},{
-  "countries__ISO2": "TR",
-  "countries__ISO3": "TUR",
-  "countries__short": "TURKEY",
-  "countries__full": "REPUBLIC OF TURKEY"
-},{
-  "countries__ISO2": "TM",
-  "countries__ISO3": "TKM",
-  "countries__short": "TURKMENISTAN",
-  "countries__full": "TURKMENISTAN"
-},{
-  "countries__ISO2": "TV",
-  "countries__ISO3": "TUV",
-  "countries__short": "TUVALU",
-  "countries__full": "TUVALU"
-},{
-  "countries__ISO2": "UG",
-  "countries__ISO3": "UGA",
-  "countries__short": "UGANDA",
-  "countries__full": "REPUBLIC OF UGANDA"
-},{
-  "countries__ISO2": "UA",
-  "countries__ISO3": "UKR",
-  "countries__short": "UKRAINE",
-  "countries__full": "UKRAINE"
-},{
-  "countries__ISO2": "AE",
-  "countries__ISO3": "ARE",
-  "countries__short": "UNITED ARAB EMIRATES (THE)",
-  "countries__full": "UNITED ARAB EMIRATES"
-},{
-  "countries__ISO2": "GB",
-  "countries__ISO3": "GBR",
-  "countries__short": "UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND (THE)",
-  "countries__full": "UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND"
-},{
-  "countries__ISO2": "TZ",
-  "countries__ISO3": "TZA",
-  "countries__short": "UNITED REPUBLIC OF TANZANIA (THE)",
-  "countries__full": "UNITED REPUBLIC OF TANZANIA"
-},{
-  "countries__ISO2": "MP",
-  "countries__ISO3": "MNP",
-  "countries__short": "UNITED STATES - NORTHERN MARIANA ISLANDS",
-  "countries__full": "COMMONWEALTH OF THE NORTHERN MARIANA ISLANDS"
-},{
-  "countries__ISO2": "US",
-  "countries__ISO3": "USA",
-  "countries__short": "UNITED STATES OF AMERICA (THE)",
-  "countries__full": "UNITED STATES OF AMERICA"
-},{
-  "countries__ISO2": "UY",
-  "countries__ISO3": "URY",
-  "countries__short": "URUGUAY",
-  "countries__full": "EASTERN REPUBLIC OF URUGUAY"
-},{
-  "countries__ISO2": "UZ",
-  "countries__ISO3": "UZB",
-  "countries__short": "UZBEKISTAN",
-  "countries__full": "REPUBLIC OF UZBEKISTAN"
-},{
-  "countries__ISO2": "VU",
-  "countries__ISO3": "VUT",
-  "countries__short": "VANUATU",
-  "countries__full": "REPUBLIC OF VANUATU"
-},{
-  "countries__ISO2": "VE",
-  "countries__ISO3": "VEN",
-  "countries__short": "VENEZUELA",
-  "countries__full": "BOLIVARIAN REPUBLIC OF VENEZUELA"
-},{
-  "countries__ISO2": "VN",
-  "countries__ISO3": "VNM",
-  "countries__short": "VIET NAM",
-  "countries__full": "SOCIALIST REPUBLIC OF VIET NAM"
-},{
-  "countries__ISO2": "EH",
-  "countries__ISO3": "ESH",
-  "countries__short": "WESTERN SAHARA",
-  "countries__full": "WESTERN SAHARA"
-},{
-  "countries__ISO2": "YE",
-  "countries__ISO3": "YEM",
-  "countries__short": "YEMEN",
-  "countries__full": "REPUBLIC OF YEMEN"
-},{
-  "countries__ISO2": "ZM",
-  "countries__ISO3": "ZMB",
-  "countries__short": "ZAMBIA",
-  "countries__full": "REPUBLIC OF ZAMBIA"
-},{
-  "countries__ISO2": "ZW",
-  "countries__ISO3": "ZWE",
-  "countries__short": "ZIMBABWE",
-  "countries__full": "REPUBLIC OF ZIMBABWE"
+  "ISO2": "AF",
+  "ISO3": "AFG",
+  "short": "AFGHANISTAN",
+  "full": "ISLAMIC REPUBLIC OF AFGHANISTAN"
+},{
+  "ISO2": "AL",
+  "ISO3": "ALB",
+  "short": "ALBANIA",
+  "full": "REPUBLIC OF ALBANIA"
+},{
+  "ISO2": "DZ",
+  "ISO3": "DZA",
+  "short": "ALGERIA",
+  "full": "PEOPLE'S DEMOCRATIC REPUBLIC OF ALGERIA"
+},{
+  "ISO2": "AD",
+  "ISO3": "AND",
+  "short": "ANDORRA",
+  "full": "PRINCIPALITY OF ANDORRA"
+},{
+  "ISO2": "AO",
+  "ISO3": "AGO",
+  "short": "ANGOLA",
+  "full": "REPUBLIC OF ANGOLA"
+},{
+  "ISO2": "AG",
+  "ISO3": "ATG",
+  "short": "ANTIGUA AND BARBUDA",
+  "full": "ANTIGUA AND BARBUDA"
+},{
+  "ISO2": "PS",
+  "ISO3": "PSE",
+  "short": "AREA UNDER PALESTINIAN AUTHORITY",
+  "full": "AREA UNDER PALESTINIAN AUTHORITY"
+},{
+  "ISO2": "AR",
+  "ISO3": "ARG",
+  "short": "ARGENTINA",
+  "full": "ARGENTINE REPUBLIC"
+},{
+  "ISO2": "AM",
+  "ISO3": "ARM",
+  "short": "ARMENIA",
+  "full": "REPUBLIC OF ARMENIA"
+},{
+  "ISO2": "AU",
+  "ISO3": "AUS",
+  "short": "AUSTRALIA",
+  "full": "AUSTRALIA"
+},{
+  "ISO2": "AT",
+  "ISO3": "AUT",
+  "short": "AUSTRIA",
+  "full": "REPUBLIC OF AUSTRIA"
+},{
+  "ISO2": "AZ",
+  "ISO3": "AZE",
+  "short": "AZERBAIJAN",
+  "full": "REPUBLIC OF AZERBAIJAN"
+},{
+  "ISO2": "BS",
+  "ISO3": "BHS",
+  "short": "BAHAMAS (THE)",
+  "full": "COMMONWEALTH OF THE BAHAMAS"
+},{
+  "ISO2": "BH",
+  "ISO3": "BHR",
+  "short": "BAHRAIN",
+  "full": "KINGDOM OF BAHRAIN"
+},{
+  "ISO2": "BD",
+  "ISO3": "BGD",
+  "short": "BANGLADESH",
+  "full": "PEOPLE'S REPUBLIC OF BANGLADESH"
+},{
+  "ISO2": "BB",
+  "ISO3": "BRB",
+  "short": "BARBADOS",
+  "full": "BARBADOS"
+},{
+  "ISO2": "BY",
+  "ISO3": "BLR",
+  "short": "BELARUS",
+  "full": "REPUBLIC OF BELARUS"
+},{
+  "ISO2": "BE",
+  "ISO3": "BEL",
+  "short": "BELGIUM",
+  "full": "KINGDOM OF BELGIUM"
+},{
+  "ISO2": "BZ",
+  "ISO3": "BLZ",
+  "short": "BELIZE",
+  "full": "BELIZE"
+},{
+  "ISO2": "BJ",
+  "ISO3": "BEN",
+  "short": "BENIN",
+  "full": "REPUBLIC OF BENIN"
+},{
+  "ISO2": "BT",
+  "ISO3": "BTN",
+  "short": "BHUTAN",
+  "full": "KINGDOM OF BHUTAN"
+},{
+  "ISO2": "BO",
+  "ISO3": "BOL",
+  "short": "BOLIVIA",
+  "full": "REPUBLIC OF BOLIVIA"
+},{
+  "ISO2": "BA",
+  "ISO3": "BIH",
+  "short": "BOSNIA AND HERZEGOVINA",
+  "full": "REPUBLIC OF BOSNIA AND HERZEGOVINA (1)"
+},{
+  "ISO2": "BW",
+  "ISO3": "BWA",
+  "short": "BOTSWANA",
+  "full": "REPUBLIC OF BOTSWANA"
+},{
+  "ISO2": "BR",
+  "ISO3": "BRA",
+  "short": "BRAZIL",
+  "full": "FEDERATIVE REPUBLIC OF BRAZIL"
+},{
+  "ISO2": "BN",
+  "ISO3": "BRN",
+  "short": "BRUNEI DARUSSALAM",
+  "full": "BRUNEI DARUSSALAM"
+},{
+  "ISO2": "BG",
+  "ISO3": "BGR",
+  "short": "BULGARIA",
+  "full": "REPUBLIC OF BULGARIA"
+},{
+  "ISO2": "BF",
+  "ISO3": "BFA",
+  "short": "BURKINA FASO",
+  "full": "BURKINA FASO"
+},{
+  "ISO2": "BI",
+  "ISO3": "BDI",
+  "short": "BURUNDI",
+  "full": "REPUBLIC OF BURUNDI"
+},{
+  "ISO2": "KH",
+  "ISO3": "KHM",
+  "short": "CAMBODIA",
+  "full": "KINGDOM OF CAMBODIA"
+},{
+  "ISO2": "CM",
+  "ISO3": "CMR",
+  "short": "CAMEROON",
+  "full": "REPUBLIC OF CAMEROON"
+},{
+  "ISO2": "CA",
+  "ISO3": "CAN",
+  "short": "CANADA",
+  "full": "CANADA"
+},{
+  "ISO2": "CV",
+  "ISO3": "CPV",
+  "short": "CAPE VERDE",
+  "full": "REPUBLIC OF CAPE VERDE"
+},{
+  "ISO2": "CF",
+  "ISO3": "CAF",
+  "short": "CENTRAL AFRICAN REPUBLIC (THE)",
+  "full": "CENTRAL AFRICAN REPUBLIC"
+},{
+  "ISO2": "TD",
+  "ISO3": "TCD",
+  "short": "CHAD",
+  "full": "REPUBLIC OF CHAD"
+},{
+  "ISO2": "CL",
+  "ISO3": "CHL",
+  "short": "CHILE",
+  "full": "REPUBLIC OF CHILE"
+},{
+  "ISO2": "CN",
+  "ISO3": "CHN",
+  "short": "CHINA",
+  "full": "PEOPLE'S REPUBLIC OF CHINA"
+},{
+  "ISO2": "CO",
+  "ISO3": "COL",
+  "short": "COLOMBIA",
+  "full": "REPUBLIC OF COLOMBIA"
+},{
+  "ISO2": "KM",
+  "ISO3": "COM",
+  "short": "COMOROS (THE)",
+  "full": "ISLAMIC FEDERAL REPUBLIC OF THE COMOROS"
+},{
+  "ISO2": "CG",
+  "ISO3": "COG",
+  "short": "CONGO (THE)",
+  "full": "REPUBLIC OF THE CONGO"
+},{
+  "ISO2": "CK",
+  "ISO3": "COK",
+  "short": "COOK ISLANDS",
+  "full": "COOK ISLANDS"
+},{
+  "ISO2": "CR",
+  "ISO3": "CRI",
+  "short": "COSTA RICA",
+  "full": "REPUBLIC OF COSTA RICA"
+},{
+  "ISO2": "CI",
+  "ISO3": "CIV",
+  "short": "CÔTE D'IVOIRE",
+  "full": "REPUBLIC OF CÔTE D'IVOIRE"
+},{
+  "ISO2": "HR",
+  "ISO3": "HRV",
+  "short": "CROATIA",
+  "full": "REPUBLIC OF CROATIA"
+},{
+  "ISO2": "CU",
+  "ISO3": "CUB",
+  "short": "CUBA",
+  "full": "REPUBLIC OF CUBA"
+},{
+  "ISO2": "CY",
+  "ISO3": "CYP",
+  "short": "CYPRUS",
+  "full": "REPUBLIC OF CYPRUS"
+},{
+  "ISO2": "CZ",
+  "ISO3": "CZE",
+  "short": "CZECH REPUBLIC (THE)",
+  "full": "CZECH REPUBLIC"
+},{
+  "ISO2": "KP",
+  "ISO3": "PRK",
+  "short": "DEMOCRATIC PEOPLE'S REPUBLIC OF KOREA (THE)",
+  "full": "DEMOCRATIC PEOPLE'S REPUBLIC OF KOREA"
+},{
+  "ISO2": "CD",
+  "ISO3": "COD",
+  "short": "DEMOCRATIC REPUBLIC OF THE CONGO",
+  "full": "DEMOCRATIC REPUBLIC OF THE CONGO"
+},{
+  "ISO2": "DK",
+  "ISO3": "DNK",
+  "short": "DENMARK",
+  "full": "KINGDOM OF DENMARK"
+},{
+  "ISO2": "DJ",
+  "ISO3": "DJI",
+  "short": "DJIBOUTI",
+  "full": "REPUBLIC OF DJIBOUTI"
+},{
+  "ISO2": "DM",
+  "ISO3": "DMA",
+  "short": "DOMINICA",
+  "full": "COMMONWEALTH OF DOMINICA"
+},{
+  "ISO2": "DO",
+  "ISO3": "DOM",
+  "short": "DOMINICAN REPUBLIC (THE)",
+  "full": "DOMINICAN REPUBLIC"
+},{
+  "ISO2": "EC",
+  "ISO3": "ECU",
+  "short": "ECUADOR",
+  "full": "REPUBLIC OF ECUADOR"
+},{
+  "ISO2": "EG",
+  "ISO3": "EGY",
+  "short": "EGYPT",
+  "full": "ARAB REPUBLIC OF EGYPT"
+},{
+  "ISO2": "SV",
+  "ISO3": "SLV",
+  "short": "EL SALVADOR",
+  "full": "REPUBLIC OF EL SALVADOR"
+},{
+  "ISO2": "GQ",
+  "ISO3": "GNQ",
+  "short": "EQUATORIAL GUINEA",
+  "full": "REPUBLIC OF EQUATORIAL GUINEA"
+},{
+  "ISO2": "ER",
+  "ISO3": "ERI",
+  "short": "ERITREA",
+  "full": "ERITREA"
+},{
+  "ISO2": "EE",
+  "ISO3": "EST",
+  "short": "ESTONIA",
+  "full": "REPUBLIC OF ESTONIA"
+},{
+  "ISO2": "ET",
+  "ISO3": "ETH",
+  "short": "ETHIOPIA",
+  "full": "FEDERAL DEMOCRATIC REPUBLIC OF ETHIOPIA"
+},{
+  "ISO2": "EU",
+  "ISO3": "CEC",
+  "short": "EUROPEAN UNION",
+  "full": "EUROPEAN UNION"
+},{
+  "ISO2": "FK",
+  "ISO3": "FLK",
+  "short": "FALKLAND ISLANDS (MALVINAS)",
+  "full": "FALKLAND ISLANDS (MALVINAS)"
+},{
+  "ISO2": "FJ",
+  "ISO3": "FJI",
+  "short": "FIJI",
+  "full": "REPUBLIC OF THE FIJI ISLANDS"
+},{
+  "ISO2": "FI",
+  "ISO3": "FIN",
+  "short": "FINLAND",
+  "full": "REPUBLIC OF FINLAND"
+},{
+  "ISO2": "FR",
+  "ISO3": "FRA",
+  "short": "FRANCE",
+  "full": "FRENCH REPUBLIC"
+},{
+  "ISO2": "NC",
+  "ISO3": "NCL",
+  "short": "FRANCE - NEW CALEDONIA",
+  "full": "NEW CALEDONIA"
+},{
+  "ISO2": "PF",
+  "ISO3": "PYF",
+  "short": "FRANCE - TAHITI",
+  "full": "TAHITI"
+},{
+  "ISO2": "GA",
+  "ISO3": "GAB",
+  "short": "GABON",
+  "full": "GABONESE REPUBLIC"
+},{
+  "ISO2": "GM",
+  "ISO3": "GMB",
+  "short": "GAMBIA",
+  "full": "REPUBLIC OF THE GAMBIA"
+},{
+  "ISO2": "GE",
+  "ISO3": "GEO",
+  "short": "GEORGIA",
+  "full": "GEORGIA"
+},{
+  "ISO2": "DE",
+  "ISO3": "DEU",
+  "short": "GERMANY",
+  "full": "FEDERAL REPUBLIC OF GERMANY"
+},{
+  "ISO2": "GH",
+  "ISO3": "GHA",
+  "short": "GHANA",
+  "full": "REPUBLIC OF GHANA"
+},{
+  "ISO2": "GR",
+  "ISO3": "GRC",
+  "short": "GREECE",
+  "full": "HELLENIC REPUBLIC"
+},{
+  "ISO2": "GD",
+  "ISO3": "GRD",
+  "short": "GRENADA",
+  "full": "GRENADA"
+},{
+  "ISO2": "GT",
+  "ISO3": "GTM",
+  "short": "GUATEMALA",
+  "full": "REPUBLIC OF GUATEMALA"
+},{
+  "ISO2": "GN",
+  "ISO3": "GIN",
+  "short": "GUINEA",
+  "full": "REPUBLIC OF GUINEA"
+},{
+  "ISO2": "GW",
+  "ISO3": "GNB",
+  "short": "GUINEA-BISSAU",
+  "full": "REPUBLIC OF GUINEA-BISSAU"
+},{
+  "ISO2": "GY",
+  "ISO3": "GUY",
+  "short": "GUYANA",
+  "full": "REPUBLIC OF GUYANA"
+},{
+  "ISO2": "HT",
+  "ISO3": "HTI",
+  "short": "HAITI",
+  "full": "REPUBLIC OF HAITI"
+},{
+  "ISO2": "VA",
+  "ISO3": "VAT",
+  "short": "HOLY SEE (THE)",
+  "full": "HOLY SEE"
+},{
+  "ISO2": "HN",
+  "ISO3": "HND",
+  "short": "HONDURAS",
+  "full": "REPUBLIC OF HONDURAS"
+},{
+  "ISO2": "HU",
+  "ISO3": "HUN",
+  "short": "HUNGARY",
+  "full": "REPUBLIC OF HUNGARY"
+},{
+  "ISO2": "IS",
+  "ISO3": "ISL",
+  "short": "ICELAND",
+  "full": "REPUBLIC OF ICELAND"
+},{
+  "ISO2": "IN",
+  "ISO3": "IND",
+  "short": "INDIA",
+  "full": "REPUBLIC OF INDIA"
+},{
+  "ISO2": "ID",
+  "ISO3": "IDN",
+  "short": "INDONESIA",
+  "full": "REPUBLIC OF INDONESIA"
+},{
+  "ISO2": "IR",
+  "ISO3": "IRN",
+  "short": "IRAN (ISLAMIC REPUBLIC OF)",
+  "full": "ISLAMIC REPUBLIC OF IRAN"
+},{
+  "ISO2": "IQ",
+  "ISO3": "IRQ",
+  "short": "IRAQ",
+  "full": "REPUBLIC OF IRAQ"
+},{
+  "ISO2": "IE",
+  "ISO3": "IRL",
+  "short": "IRELAND",
+  "full": "IRELAND"
+},{
+  "ISO2": "IL",
+  "ISO3": "ISR",
+  "short": "ISRAEL",
+  "full": "STATE OF ISRAEL"
+},{
+  "ISO2": "IT",
+  "ISO3": "ITA",
+  "short": "ITALY",
+  "full": "ITALIAN REPUBLIC"
+},{
+  "ISO2": "JM",
+  "ISO3": "JAM",
+  "short": "JAMAICA",
+  "full": "JAMAICA"
+},{
+  "ISO2": "JP",
+  "ISO3": "JPN",
+  "short": "JAPAN",
+  "full": "JAPAN"
+},{
+  "ISO2": "JO",
+  "ISO3": "JOR",
+  "short": "JORDAN",
+  "full": "HASHEMITE KINGDOM OF JORDAN"
+},{
+  "ISO2": "KZ",
+  "ISO3": "KAZ",
+  "short": "KAZAKHSTAN",
+  "full": "REPUBLIC OF KAZAKHSTAN"
+},{
+  "ISO2": "KE",
+  "ISO3": "KEN",
+  "short": "KENYA",
+  "full": "REPUBLIC OF KENYA"
+},{
+  "ISO2": "KI",
+  "ISO3": "KIR",
+  "short": "KIRIBATI",
+  "full": "REPUBLIC OF KIRIBATI"
+},{
+  "ISO2": "XK",
+  "ISO3": "XXK",
+  "short": "KOSOVO",
+  "full": "REPUBLIC OF KOSOVO*"
+},{
+  "ISO2": "KW",
+  "ISO3": "KWT",
+  "short": "KUWAIT",
+  "full": "STATE OF KUWAIT"
+},{
+  "ISO2": "KG",
+  "ISO3": "KGZ",
+  "short": "KYRGYZSTAN",
+  "full": "KYRGYZ REPUBLIC"
+},{
+  "ISO2": "LA",
+  "ISO3": "LAO",
+  "short": "LAO PEOPLE'S DEMOCRATIC REPUBLIC (THE)",
+  "full": "LAO PEOPLE'S DEMOCRATIC REPUBLIC"
+},{
+  "ISO2": "LV",
+  "ISO3": "LVA",
+  "short": "LATVIA",
+  "full": "REPUBLIC OF LATVIA"
+},{
+  "ISO2": "LB",
+  "ISO3": "LBN",
+  "short": "LEBANON",
+  "full": "LEBANESE REPUBLIC"
+},{
+  "ISO2": "LS",
+  "ISO3": "LSO",
+  "short": "LESOTHO",
+  "full": "KINGDOM OF LESOTHO"
+},{
+  "ISO2": "LR",
+  "ISO3": "LBR",
+  "short": "LIBERIA",
+  "full": "REPUBLIC OF LIBERIA"
+},{
+  "ISO2": "LY",
+  "ISO3": "LBY",
+  "short": "LIBYAN ARAB JAMAHIRIYA (THE)",
+  "full": "SOCIALIST PEOPLE'S LIBYAN ARAB JAMAHIRIYA"
+},{
+  "ISO2": "LI",
+  "ISO3": "LIE",
+  "short": "LIECHTENSTEIN",
+  "full": "PRINCIPALITY OF LIECHTENSTEIN"
+},{
+  "ISO2": "LT",
+  "ISO3": "LTU",
+  "short": "LITHUANIA",
+  "full": "REPUBLIC OF LITHUANIA"
+},{
+  "ISO2": "LU",
+  "ISO3": "LUX",
+  "short": "LUXEMBOURG",
+  "full": "GRAND DUCHY OF LUXEMBOURG"
+},{
+  "ISO2": "MK",
+  "ISO3": "MKD",
+  "short": "MACEDONIA (THE FORMER YUGOSLAV REPUBLIC OF)",
+  "full": "THE FORMER YUGOSLAV REPUBLIC OF MACEDONIA"
+},{
+  "ISO2": "MG",
+  "ISO3": "MDG",
+  "short": "MADAGASCAR",
+  "full": "REPUBLIC OF MADAGASCAR"
+},{
+  "ISO2": "MW",
+  "ISO3": "MWI",
+  "short": "MALAWI",
+  "full": "REPUBLIC OF MALAWI"
+},{
+  "ISO2": "MY",
+  "ISO3": "MYS",
+  "short": "MALAYSIA",
+  "full": "MALAYSIA"
+},{
+  "ISO2": "MV",
+  "ISO3": "MDV",
+  "short": "MALDIVES",
+  "full": "REPUBLIC OF MALDIVES"
+},{
+  "ISO2": "ML",
+  "ISO3": "MLI",
+  "short": "MALI",
+  "full": "REPUBLIC OF MALI"
+},{
+  "ISO2": "MT",
+  "ISO3": "MLT",
+  "short": "MALTA",
+  "full": "REPUBLIC OF MALTA"
+},{
+  "ISO2": "MH",
+  "ISO3": "MHL",
+  "short": "MARSHALL ISLANDS (THE)",
+  "full": "REPUBLIC OF THE MARSHALL ISLANDS"
+},{
+  "ISO2": "MR",
+  "ISO3": "MRT",
+  "short": "MAURITANIA",
+  "full": "ISLAMIC REPUBLIC OF MAURITANIA"
+},{
+  "ISO2": "MU",
+  "ISO3": "MUS",
+  "short": "MAURITIUS",
+  "full": "REPUBLIC OF MAURITIUS"
+},{
+  "ISO2": "MX",
+  "ISO3": "MEX",
+  "short": "MEXICO",
+  "full": "UNITED MEXICAN STATES"
+},{
+  "ISO2": "FM",
+  "ISO3": "FSM",
+  "short": "MICRONESIA (FEDERATED STATES OF)",
+  "full": "FEDERATED STATES OF MICRONESIA"
+},{
+  "ISO2": "MC",
+  "ISO3": "MCO",
+  "short": "MONACO",
+  "full": "PRINCIPALITY OF MONACO"
+},{
+  "ISO2": "MN",
+  "ISO3": "MNG",
+  "short": "MONGOLIA",
+  "full": "MONGOLIA"
+},{
+  "ISO2": "ME",
+  "ISO3": "MNE",
+  "short": "MONTENEGRO",
+  "full": "MONTENEGRO"
+},{
+  "ISO2": "MA",
+  "ISO3": "MAR",
+  "short": "MOROCCO",
+  "full": "KINGDOM OF MOROCCO"
+},{
+  "ISO2": "MZ",
+  "ISO3": "MOZ",
+  "short": "MOZAMBIQUE",
+  "full": "REPUBLIC OF MOZAMBIQUE"
+},{
+  "ISO2": "MM",
+  "ISO3": "MMR",
+  "short": "MYANMAR",
+  "full": "UNION OF MYANMAR"
+},{
+  "ISO2": "NA",
+  "ISO3": "NAM",
+  "short": "NAMIBIA",
+  "full": "REPUBLIC OF NAMIBIA"
+},{
+  "ISO2": "NR",
+  "ISO3": "NRU",
+  "short": "NAURU",
+  "full": "REPUBLIC OF NAURU"
+},{
+  "ISO2": "NP",
+  "ISO3": "NPL",
+  "short": "NEPAL",
+  "full": "FEDERAL DEMOCRATIC REPUBLIC OF NEPAL"
+},{
+  "ISO2": "NL",
+  "ISO3": "NLD",
+  "short": "NETHERLANDS (THE)",
+  "full": "KINGDOM OF THE NETHERLANDS"
+},{
+  "ISO2": "NZ",
+  "ISO3": "NZL",
+  "short": "NEW ZEALAND",
+  "full": "NEW ZEALAND"
+},{
+  "ISO2": "NI",
+  "ISO3": "NIC",
+  "short": "NICARAGUA",
+  "full": "REPUBLIC OF NICARAGUA"
+},{
+  "ISO2": "NE",
+  "ISO3": "NER",
+  "short": "NIGER",
+  "full": "REPUBLIC OF THE NIGER"
+},{
+  "ISO2": "NG",
+  "ISO3": "NGA",
+  "short": "NIGERIA",
+  "full": "FEDERAL REPUBLIC OF NIGERIA"
+},{
+  "ISO2": "NU",
+  "ISO3": "NIU",
+  "short": "NIUE",
+  "full": "REPUBLIC OF NIUE"
+},{
+  "ISO2": "NO",
+  "ISO3": "NOR",
+  "short": "NORWAY",
+  "full": "KINGDOM OF NORWAY"
+},{
+  "ISO2": "OM",
+  "ISO3": "OMN",
+  "short": "OMAN",
+  "full": "SULTANATE OF OMAN"
+},{
+  "ISO2": "PK",
+  "ISO3": "PAK",
+  "short": "PAKISTAN",
+  "full": "ISLAMIC REPUBLIC OF PAKISTAN"
+},{
+  "ISO2": "PW",
+  "ISO3": "PLW",
+  "short": "PALAU",
+  "full": "REPUBLIC OF PALAU"
+},{
+  "ISO2": "PA",
+  "ISO3": "PAN",
+  "short": "PANAMA",
+  "full": "REPUBLIC OF PANAMA"
+},{
+  "ISO2": "PG",
+  "ISO3": "PNG",
+  "short": "PAPUA NEW GUINEA",
+  "full": "PAPUA NEW GUINEA"
+},{
+  "ISO2": "PY",
+  "ISO3": "PRY",
+  "short": "PARAGUAY",
+  "full": "REPUBLIC OF PARAGUAY"
+},{
+  "ISO2": "PE",
+  "ISO3": "PER",
+  "short": "PERU",
+  "full": "REPUBLIC OF PERU"
+},{
+  "ISO2": "PH",
+  "ISO3": "PHL",
+  "short": "PHILIPPINES (THE)",
+  "full": "REPUBLIC OF THE PHILIPPINES"
+},{
+  "ISO2": "PL",
+  "ISO3": "POL",
+  "short": "POLAND",
+  "full": "REPUBLIC OF POLAND"
+},{
+  "ISO2": "PT",
+  "ISO3": "PRT",
+  "short": "PORTUGAL",
+  "full": "PORTUGUESE REPUBLIC"
+},{
+  "ISO2": "QA",
+  "ISO3": "QAT",
+  "short": "QATAR",
+  "full": "STATE OF QATAR"
+},{
+  "ISO2": "TW",
+  "ISO3": "TWN",
+  "short": "REPUBLIC OF CHINA",
+  "full": "REPUBLIC OF CHINA"
+},{
+  "ISO2": "KR",
+  "ISO3": "KOR",
+  "short": "REPUBLIC OF KOREA (THE)",
+  "full": "REPUBLIC OF KOREA"
+},{
+  "ISO2": "MD",
+  "ISO3": "MDA",
+  "short": "REPUBLIC OF MOLDOVA (THE)",
+  "full": "REPUBLIC OF MOLDOVA"
+},{
+  "ISO2": "RO",
+  "ISO3": "ROM",
+  "short": "ROMANIA",
+  "full": "ROMANIA"
+},{
+  "ISO2": "RU",
+  "ISO3": "RUS",
+  "short": "RUSSIAN FEDERATION (THE)",
+  "full": "RUSSIAN FEDERATION"
+},{
+  "ISO2": "RW",
+  "ISO3": "RWA",
+  "short": "RWANDA",
+  "full": "REPUBLIC OF RWANDA"
+},{
+  "ISO2": "KN",
+  "ISO3": "KNA",
+  "short": "SAINT KITTS AND NEVIS",
+  "full": "SAINT KITTS AND NEVIS"
+},{
+  "ISO2": "LC",
+  "ISO3": "LCA",
+  "short": "SAINT LUCIA",
+  "full": "SAINT LUCIA"
+},{
+  "ISO2": "VC",
+  "ISO3": "VCT",
+  "short": "SAINT VINCENT AND THE GRENADINES",
+  "full": "SAINT VINCENT AND THE GRENADINES"
+},{
+  "ISO2": "WS",
+  "ISO3": "WSM",
+  "short": "SAMOA",
+  "full": "INDEPENDENT STATE OF SAMOA"
+},{
+  "ISO2": "SM",
+  "ISO3": "SMR",
+  "short": "SAN MARINO",
+  "full": "REPUBLIC OF SAN MARINO"
+},{
+  "ISO2": "ST",
+  "ISO3": "STP",
+  "short": "SAO TOME AND PRINCIPE",
+  "full": "DEMOCRATIC REPUBLIC OF SAO TOME AND PRINCIPE"
+},{
+  "ISO2": "SA",
+  "ISO3": "SAU",
+  "short": "SAUDI ARABIA",
+  "full": "KINGDOM OF SAUDI ARABIA"
+},{
+  "ISO2": "SN",
+  "ISO3": "SEN",
+  "short": "SENEGAL",
+  "full": "REPUBLIC OF SENEGAL"
+},{
+  "ISO2": "RS",
+  "ISO3": "SRB",
+  "short": "SERBIA",
+  "full": "REPUBLIC OF SERBIA"
+},{
+  "ISO2": "SC",
+  "ISO3": "SYC",
+  "short": "SEYCHELLES",
+  "full": "REPUBLIC OF SEYCHELLES"
+},{
+  "ISO2": "SL",
+  "ISO3": "SLE",
+  "short": "SIERRA LEONE",
+  "full": "REPUBLIC OF SIERRA LEONE"
+},{
+  "ISO2": "SG",
+  "ISO3": "SGP",
+  "short": "SINGAPORE",
+  "full": "REPUBLIC OF SINGAPORE"
+},{
+  "ISO2": "SK",
+  "ISO3": "SVK",
+  "short": "SLOVAKIA",
+  "full": "SLOVAK REPUBLIC"
+},{
+  "ISO2": "SI",
+  "ISO3": "SVN",
+  "short": "SLOVENIA",
+  "full": "REPUBLIC OF SLOVENIA"
+},{
+  "ISO2": "SB",
+  "ISO3": "SLB",
+  "short": "SOLOMON ISLANDS",
+  "full": "SOLOMON ISLANDS"
+},{
+  "ISO2": "SO",
+  "ISO3": "SOM",
+  "short": "SOMALIA",
+  "full": "SOMALI DEMOCRATIC REPUBLIC"
+},{
+  "ISO2": "ZA",
+  "ISO3": "ZAF",
+  "short": "SOUTH AFRICA",
+  "full": "REPUBLIC OF SOUTH AFRICA"
+},{
+  "ISO2": "ES",
+  "ISO3": "ESP",
+  "short": "SPAIN",
+  "full": "KINGDOM OF SPAIN"
+},{
+  "ISO2": "LK",
+  "ISO3": "LKA",
+  "short": "SRI LANKA",
+  "full": "DEMOCRATIC SOCIALIST REPUBLIC OF SRI LANKA"
+},{
+  "ISO2": "SD",
+  "ISO3": "SDN",
+  "short": "SUDAN",
+  "full": "REPUBLIC OF THE SUDAN"
+},{
+  "ISO2": "SS",
+  "ISO3": "SSD",
+  "short": "SOUTH SUDAN",
+  "full": "REPUBLIC OF SOUTH SUDAN"
+},{
+  "ISO2": "SR",
+  "ISO3": "SUR",
+  "short": "SURINAME",
+  "full": "REPUBLIC OF SURINAME"
+},{
+  "ISO2": "SZ",
+  "ISO3": "SWZ",
+  "short": "SWAZILAND",
+  "full": "KINGDOM OF SWAZILAND"
+},{
+  "ISO2": "SE",
+  "ISO3": "SWE",
+  "short": "SWEDEN",
+  "full": "KINGDOM OF SWEDEN"
+},{
+  "ISO2": "CH",
+  "ISO3": "CHE",
+  "short": "SWITZERLAND",
+  "full": "SWISS CONFEDERATION"
+},{
+  "ISO2": "SY",
+  "ISO3": "SYR",
+  "short": "SYRIAN ARAB REPUBLIC (THE)",
+  "full": "SYRIAN ARAB REPUBLIC"
+},{
+  "ISO2": "TJ",
+  "ISO3": "TJK",
+  "short": "TAJIKISTAN",
+  "full": "REPUBLIC OF TAJIKISTAN"
+},{
+  "ISO2": "TH",
+  "ISO3": "THA",
+  "short": "THAILAND",
+  "full": "KINGDOM OF THAILAND"
+},{
+  "ISO2": "TL",
+  "ISO3": "TLS",
+  "short": "TIMOR-LESTE",
+  "full": "DEMOCRATIC REPUBLIC OF TIMOR-LESTE"
+},{
+  "ISO2": "TG",
+  "ISO3": "TGO",
+  "short": "TOGO",
+  "full": "TOGOLESE REPUBLIC"
+},{
+  "ISO2": "TO",
+  "ISO3": "TON",
+  "short": "TONGA",
+  "full": "KINGDOM OF TONGA"
+},{
+  "ISO2": "TT",
+  "ISO3": "TTO",
+  "short": "TRINIDAD AND TOBAGO",
+  "full": "REPUBLIC OF TRINIDAD AND TOBAGO"
+},{
+  "ISO2": "TN",
+  "ISO3": "TUN",
+  "short": "TUNISIA",
+  "full": "REPUBLIC OF TUNISIA"
+},{
+  "ISO2": "TR",
+  "ISO3": "TUR",
+  "short": "TURKEY",
+  "full": "REPUBLIC OF TURKEY"
+},{
+  "ISO2": "TM",
+  "ISO3": "TKM",
+  "short": "TURKMENISTAN",
+  "full": "TURKMENISTAN"
+},{
+  "ISO2": "TV",
+  "ISO3": "TUV",
+  "short": "TUVALU",
+  "full": "TUVALU"
+},{
+  "ISO2": "UG",
+  "ISO3": "UGA",
+  "short": "UGANDA",
+  "full": "REPUBLIC OF UGANDA"
+},{
+  "ISO2": "UA",
+  "ISO3": "UKR",
+  "short": "UKRAINE",
+  "full": "UKRAINE"
+},{
+  "ISO2": "AE",
+  "ISO3": "ARE",
+  "short": "UNITED ARAB EMIRATES (THE)",
+  "full": "UNITED ARAB EMIRATES"
+},{
+  "ISO2": "GB",
+  "ISO3": "GBR",
+  "short": "UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND (THE)",
+  "full": "UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND"
+},{
+  "ISO2": "TZ",
+  "ISO3": "TZA",
+  "short": "UNITED REPUBLIC OF TANZANIA (THE)",
+  "full": "UNITED REPUBLIC OF TANZANIA"
+},{
+  "ISO2": "MP",
+  "ISO3": "MNP",
+  "short": "UNITED STATES - NORTHERN MARIANA ISLANDS",
+  "full": "COMMONWEALTH OF THE NORTHERN MARIANA ISLANDS"
+},{
+  "ISO2": "US",
+  "ISO3": "USA",
+  "short": "UNITED STATES OF AMERICA (THE)",
+  "full": "UNITED STATES OF AMERICA"
+},{
+  "ISO2": "UY",
+  "ISO3": "URY",
+  "short": "URUGUAY",
+  "full": "EASTERN REPUBLIC OF URUGUAY"
+},{
+  "ISO2": "UZ",
+  "ISO3": "UZB",
+  "short": "UZBEKISTAN",
+  "full": "REPUBLIC OF UZBEKISTAN"
+},{
+  "ISO2": "VU",
+  "ISO3": "VUT",
+  "short": "VANUATU",
+  "full": "REPUBLIC OF VANUATU"
+},{
+  "ISO2": "VE",
+  "ISO3": "VEN",
+  "short": "VENEZUELA",
+  "full": "BOLIVARIAN REPUBLIC OF VENEZUELA"
+},{
+  "ISO2": "VN",
+  "ISO3": "VNM",
+  "short": "VIET NAM",
+  "full": "SOCIALIST REPUBLIC OF VIET NAM"
+},{
+  "ISO2": "EH",
+  "ISO3": "ESH",
+  "short": "WESTERN SAHARA",
+  "full": "WESTERN SAHARA"
+},{
+  "ISO2": "YE",
+  "ISO3": "YEM",
+  "short": "YEMEN",
+  "full": "REPUBLIC OF YEMEN"
+},{
+  "ISO2": "ZM",
+  "ISO3": "ZMB",
+  "short": "ZAMBIA",
+  "full": "REPUBLIC OF ZAMBIA"
+},{
+  "ISO2": "ZW",
+  "ISO3": "ZWE",
+  "short": "ZIMBABWE",
+  "full": "REPUBLIC OF ZIMBABWE"
 }]
