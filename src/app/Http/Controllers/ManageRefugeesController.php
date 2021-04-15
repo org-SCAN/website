@@ -71,23 +71,27 @@ class ManageRefugeesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Uuid  $id
+     * @param  String  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Uuids $id)
+    public function show(String $id)
     {
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $refugee = Refugee::where("id", $id);
-        return view("manage_refugees.show", compact("refugee"));
+        $fields = Field::where("status", ">", 0)
+            ->orderBy("required")
+            ->orderBy("order")
+            ->get();
+        $refugee = Refugee::find($id);
+        return view("manage_refugees.show", compact("refugee", "fields"));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Uuid  $id
+     * @param  String  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Uuid  $id)
+    public function edit(String  $id)
     {
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $refugee = Refugee::where("id", $id);

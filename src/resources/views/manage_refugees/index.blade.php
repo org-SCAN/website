@@ -38,7 +38,7 @@
                                 @foreach($refugees as $refugee)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            {{$refugee->full_name}}
+                                            <a href="{{route("manage_refugees.show", $refugee->id)}}" class="text-indigo-600 hover:text-blue-900">{{$refugee->full_name}}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             {{$refugee->date}}
@@ -50,7 +50,6 @@
                                             {{$refugee->role}}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <a href="{{route("manage_refugees.show", $refugee->id)}}" class="text-indigo-600 hover:text-blue-900">View</a>
                                             <a href="{{route("manage_refugees.edit", $refugee->id)}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                         </td>
                                     </tr>
