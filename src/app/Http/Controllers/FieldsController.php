@@ -43,10 +43,12 @@ class FieldsController extends Controller
     public function store(StoreFieldRequest $request)
     {
         $field = $request->validated();
+        if(empty($field["order"])){
+            $field["order"]=100;
+        }
         $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field["database_type"]);
         $field["UI_type"] = Field::getUITypeFromForm($field["database_type"]);
         $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
-
         $field = Field::create($field);
         if($field->exists){
             //TODO : generate a new migration for refugee table
@@ -73,7 +75,7 @@ class FieldsController extends Controller
             "placeholder"=>"Placeholder",
             "html_data_type"=>"Html type",
             "UI_type"=>"Java type",
-            "linked_list"=>"Associate list",
+            // "linked_list"=>"Associate list", is removed because it needs a particular display
             "required"=>"Requirement state",
             "status"=>"Status",
             "attribute"=>"Attribute",
@@ -92,7 +94,24 @@ class FieldsController extends Controller
     public function edit($id)
     {
         $field = Field::find($id);
-        return view("fields.edit", compact('field'));
+        $linked_list_id = $field->getLinkedListId();
+        $lists["database_type"]= array("string" => "Small text","int" => "Number","date" => "Date","boolean" => "Yes / No ");
+        $lists["database_type"]= [$field->database_type => $lists["database_type"][$field->database_type]]+$lists["database_type"]; //TODO : gérer la conversion vers une valeur de tableau connue
+
+        $lists["required"]=  array(1 => "Required",2 => "Strongly advised",3 => "Advised",4 => "If possible",100 => "Undefined");
+        $lists["required"]= [$field->required => $lists["required"][$field->required]]+$lists["required"]; //TODO : gérer la conversion vers une valeur de tableau connue
+
+        $lists["status"]=   array(0 => "Disabled",1 => "Website",2 => "Website & App");
+        $lists["status"]= [$field->status => $lists["status"][$field->status]]+$lists["status"]; //TODO : gérer la conversion vers une valeur de tableau connue
+
+        if(empty($linked_list_id)){
+            $lists["linked_list"] = [" " => "Choose an associate list"];
+        }
+        else{
+            $lists["linked_list"] =  array_column(\App\Models\ListControl::where('id', $linked_list_id)->get()->toArray(), "title", "id");
+        }
+        $lists["linked_list"] +=  array_column(\App\Models\ListControl::where("deleted",0)->where("id","!=",$linked_list_id)->get()->toArray(), "title", "id");
+        return view("fields.edit", compact('field', "lists"));
     }
 
     /**
@@ -105,7 +124,11 @@ class FieldsController extends Controller
     public function update(UpdateFieldRequest $request, $id)
     {
         $field = Field::find($id);
-        $field->update($request->validate());
+        $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field["database_type"]);
+        $field["UI_type"] = Field::getUITypeFromForm($field["database_type"]);
+        $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
+
+        $field->update($request->validated());
 
         return redirect()->route("fields.index");
     }

@@ -28,11 +28,12 @@ class StoreFieldRequest extends FormRequest
         $rules = [
             "title" => "required|string",
             "label" => "required|string|unique:fields,label,0,deleted",
-            "placeholder" => "string|max:80",
+            "placeholder" => "string|max:80|nullable",
             "database_type" => "string|required",
             "required" => "integer|required",
             "status" => "integer|required",
-            "order" => "integer"
+            "linked_list" => "string|nullable",
+            "order" => "integer|nullable"
 
         ];
         return $rules;

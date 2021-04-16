@@ -116,15 +116,15 @@
 
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 @php($form_elem = "linked_list")
-                                <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's associated list </label>
+                                <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's associated list ~
+                                    <a href="{{route("lists_control.create")}}" class="inline-flex items-center">
+                                        Create a new list
+                                    </a>
+                                </label>
 
-                                @php( $list = ["" => "Choose an associate list"]+array_column(\App\Models\ListControl::where("deleted",0)->get()->toArray(), "title", "id"))
+                                @php( $list = [" " => "Choose an associate list"]+array_column(\App\Models\ListControl::where("deleted",0)->get()->toArray(), "title", "id"))
                                 <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                                 <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define a list which is associated with this field.</small>
-
-                                <a href="{{route("lists_control.create")}}" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:shadow-outline-blue disabled:opacity-25 transition ease-in-out duration-150">
-                                    Create a new list
-                                </a>
 
                                 @error($form_elem)
                                 <p class="text-sm text-red-600">{{ $message }}</p>

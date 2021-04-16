@@ -143,4 +143,26 @@ class Field extends Model
 
         return $laravel_validator;
     }
+
+    /**
+     *
+     * Getter to return correctly the linkedlist name
+     * @param $value
+     * @return string
+     */
+    public function getLinkedListAttribute($value){
+        $linked_list = ListControl::find($value);
+        return (empty($linked_list) ? "" : $linked_list->title);
+    }
+
+
+
+    /**
+     * Indicate the the UUID stored in DB
+     *
+     * @return String
+     */
+    public function getLinkedListId(){
+        return $this->attributes['linked_list'];
+    }
 }
