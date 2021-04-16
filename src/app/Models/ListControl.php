@@ -23,4 +23,11 @@ class ListControl extends Model
      */
 
     public $incrementing = false;
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
 }

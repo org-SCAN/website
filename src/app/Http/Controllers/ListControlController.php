@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ListControl;
-use App\Http\Request\StoreListControlRequestRequest;
+use App\Http\Requests\StoreListControlRequest;
 use App\Traits\Uuids;
 
 class ListControlController extends Controller
@@ -15,8 +15,9 @@ class ListControlController extends Controller
      */
     public function index()
     {
-        $lists = ListControl::where("deleted", 0);
-        return view("lists_control.index", compact("lits"));
+        $lists = ListControl::where("deleted", 0)
+            ->get();
+        return view("lists_control.index", compact("lists"));
     }
 
     /**
@@ -32,27 +33,27 @@ class ListControlController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\StoreListControlRequestRequest  $request
+     * @param  \App\Http\Requests\StoreListControlRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreListControlRequestRequest $request)
+    public function store(StoreListControlRequest $request)
     {
         // TODO : créer la migration
         // TODO : créer le modèle
         ListControl::create($request->validated());
-        return redirect()->route("list_control.index");
+        return redirect()->route("lists_control.index");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ListControl  $listControl
+     * @param  String  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(ListControl $listControl)
+    public function show(String $id)
     {
-
-        return view("lists_control.show", compact("listsControl"));
+        $list=ListControl::find($id);
+        return view("lists_control.show", compact("list"));
     }
 
     /**

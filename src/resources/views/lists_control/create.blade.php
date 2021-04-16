@@ -24,7 +24,7 @@
 
                             <!--  LABEL SECTION  -->
                             <div class="px-4 py-5 bg-white sm:p-6">
-                                @php($form_elem = "label")
+                                @php($form_elem = "name")
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">List's label</label>
                                 <input type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="country" />
                                 <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used as list identifier.</small>

@@ -25,6 +25,14 @@ class Field extends Model
     public $incrementing = false;
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
+
+    /**
      * Get all of the owning linked_list models.
      */
     public function get_linked_list()

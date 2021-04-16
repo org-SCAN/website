@@ -19,7 +19,8 @@ class CreateListControlsTable extends Migration
                 ->primary();
             $table->timestamps();
             $table->string("title");
-            $table->string("name");
+            $table->string("name")
+                ->unique();
             $table->boolean("deleted")
                 ->default(0);
         });
