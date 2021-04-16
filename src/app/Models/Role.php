@@ -30,7 +30,9 @@ class Role extends Model
     }
     public static function getLinkedList()
     {
-        $elem = self::all()->toArray();
+        $elem = self::orderBy("short")
+            ->get()
+            ->toArray();
         return array_column($elem, "short", "id");
     }
 }
