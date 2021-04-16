@@ -124,7 +124,7 @@
         "attribute":"",
         "database_type":"date",
         "order" : 8,
-        "validation_laravel" : "date_format:m/d/Y|nullable"
+        "validation_laravel" : "date|nullable"
     },
     {
         "title":"Age when last seen well",
@@ -213,7 +213,7 @@
     {
         "title":"Boarding date",
         "label":"boarding_date",
-        "placeholder":"DD/MM/YYYY",
+        "placeholder":"YYYY-mm-dd",
         "html_data_type":"date",
         "UI_type":"EditText",
         "linked_list":"",
@@ -222,7 +222,7 @@
         "attribute":"",
         "database_type":"date",
         "order" : 100,
-        "validation_laravel" : "date_format:m/d/Y|nullable"
+        "validation_laravel" : "date|nullable"
     },
     {
         "title":"Travel to",
@@ -241,7 +241,7 @@
     {
         "title":"Travel date (start)",
         "label":"travel_start",
-        "placeholder":"DD/MM/YYYY",
+        "placeholder":"YYYY-mm-dd",
         "html_data_type":"date",
         "UI_type":"EditText",
         "linked_list":"",
@@ -250,12 +250,12 @@
         "attribute":"",
         "database_type":"date",
         "order" : 12,
-        "validation_laravel" : "date_format:m/d/Y|nullable"
+        "validation_laravel" : "date|nullable"
     },
     {
         "title":"Travel date (arrival)",
         "label":"travel_end",
-        "placeholder":"DD/MM/YYYY",
+        "placeholder":"YYYY-mm-dd",
         "html_data_type":"date",
         "UI_type":"EditText",
         "linked_list":"",
@@ -264,7 +264,7 @@
         "attribute":"",
         "database_type":"date",
         "order" : 13,
-        "validation_laravel" : "date_format:m/d/Y|nullable|after_or_equal:start_date"
+        "validation_laravel" : "date|nullable|after_or_equal:travel_start"
     },
     {
         "title":"Place of last health control",
@@ -283,7 +283,7 @@
     {
         "title":"Last health control date",
         "label":"health_control_date",
-        "placeholder":"DD/MM/YYYY",
+        "placeholder":"YYYY-mm-dd",
         "html_data_type":"date",
         "UI_type":"EditText",
         "linked_list":"",
@@ -292,7 +292,7 @@
         "attribute":"",
         "database_type":"date",
         "order" : 100,
-        "validation_laravel" : "date_format:m/d/Y|nullable"
+        "validation_laravel" : "date|nullable"
     },
     {
         "title":"Route",

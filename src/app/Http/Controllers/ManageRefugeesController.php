@@ -37,7 +37,9 @@ class ManageRefugeesController extends Controller
     {
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $refugees = Refugee::all();
+        $refugees = Refugee::where("deleted", 0)
+            ->orderBy("date", "desc")
+            ->get();
 
         return view("manage_refugees.index", compact("refugees"));
     }
@@ -95,33 +97,40 @@ class ManageRefugeesController extends Controller
     public function edit(String  $id)
     {
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $refugee = Refugee::where("id", $id);
-        return view("manage_refugees.edit", compact("refugee"));
+        $refugee = Refugee::find($id);
+        $fields = Field::where("status", ">", 0)
+            ->orderBy("required")
+            ->orderBy("order")
+            ->get();
+        return view("manage_refugees.edit", compact("refugee", "fields"));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\RequestRefugeeRequest $request
-     * @param  Refugee $refugee
+     * @param  String $refugee_id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRefugeeRequest $request, Refugee $refugee)
+    public function update(UpdateRefugeeRequest $request, $refugee_id)
     {
-        $refugee->update($request->validated());
+        Refugee::where("id",$refugee_id)
+            ->update($request->validated());
         return redirect()->route("manage_refugees.index");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $refugee_id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Refugee $refugee)
+    public function destroy($refugee_id)
     {
+
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $refugee->delete();
+        Refugee::where("id",$refugee_id)
+            ->update(["deleted"=>1]);
         return redirect()->route("manage_refugees.index");
     }
 

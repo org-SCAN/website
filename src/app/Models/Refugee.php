@@ -30,6 +30,10 @@ class Refugee extends Model
      * @var array
      */
     protected $guarded = [];
+    /**
+     * @var mixed
+     */
+    private $residence;
 
     /**
      * Indicate the nationality according the UUID stored in DB
@@ -41,6 +45,14 @@ class Refugee extends Model
         return empty($country) ? "" : $country->short;
     }
     /**
+     * Indicate the the UUID stored in DB
+     * @param $value Is the id of the element
+     * @return String
+     */
+    public function getNationalityId(){
+        return $this->attributes['nationality'];
+    }
+    /**
      * Indicate the role according the UUID stored in DB
      * @param $value Is the id of the element
      * @return String
@@ -48,6 +60,14 @@ class Refugee extends Model
     public function getRoleAttribute($value){
         $role = Role::find($value);
         return empty($role) ? "" : $role->short;
+    }
+    /**
+     * Indicate the the UUID stored in DB
+     * @param $value Is the id of the element
+     * @return String
+     */
+    public function getRoleId(){
+        return $this->attributes['role'];
     }
     /**
      * Indicate the gender according the UUID stored in DB
@@ -58,6 +78,15 @@ class Refugee extends Model
         $gender = Gender::find($value);
         return empty($gender) ? "" : $gender->full;
     }
+
+    /**
+     * Indicate the the UUID stored in DB
+     * @param $value Is the id of the element
+     * @return String
+     */
+    public function getGenderId(){
+        return $this->attributes['gender'];
+    }
     /**
      * Indicate the route according the UUID stored in DB
      * @param $value Is the id of the element
@@ -67,6 +96,15 @@ class Refugee extends Model
         $route = Route::find($value);
         return empty($route) ? "" : $route->short;
     }
+
+    /**
+     * Indicate the the UUID stored in DB
+     * @param $value Is the id of the element
+     * @return String
+     */
+    public function getRouteId(){
+        return $this->attributes['route'];
+    }
     /**
      * Indicate the residence according the UUID stored in DB
      * @param $value Is the id of the element
@@ -75,5 +113,14 @@ class Refugee extends Model
     public function getResidenceAttribute($value){
         $country = Country::find($value);
         return empty($country) ? "" : $country->short;
+    }
+
+    /**
+     * Indicate the the UUID stored in DB
+     * @param $value Is the id of the element
+     * @return String
+     */
+    public function getResidenceId(){
+        return $this->attributes['residence'];
     }
 }

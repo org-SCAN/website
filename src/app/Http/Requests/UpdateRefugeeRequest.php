@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Field;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRefugeeRequest extends FormRequest
@@ -13,7 +14,7 @@ class UpdateRefugeeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,8 @@ class UpdateRefugeeRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        $fields = Field::where("status", ">", 0)->get()->toArray();
+        $rules = array_column($fields, 'validation_laravel', "label");
+        return $rules;
     }
 }

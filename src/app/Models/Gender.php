@@ -30,7 +30,9 @@ class Gender extends Model
     }
     public static function getLinkedList()
     {
-        $elem = self::all()->toArray();
+        $elem = self::orderBy("full")
+            ->get()
+            ->toArray();
         return array_column($elem, "full", "id");
     }
 }
