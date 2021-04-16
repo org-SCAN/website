@@ -7,6 +7,7 @@ use App\Models\Field;
 use Illuminate\Support\Facades\Gate;
 class StoreFieldRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,7 +27,7 @@ class StoreFieldRequest extends FormRequest
     {
         $rules = [
             "title" => "required|string",
-            "label" => "required|string",
+            "label" => "required|string|unique:fields,label,0,deleted",
             "placeholder" => "string|max:80",
             "database_type" => "string|required",
             "required" => "integer|required",

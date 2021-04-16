@@ -6,6 +6,9 @@
     </x-slot>
     <div>
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
+            <div class="block mb-8">
+                <a href="{{URL::previous() }}" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
+            </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <form method="post" action="{{ route('fields.store') }}">
                     @csrf
@@ -15,7 +18,7 @@
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 @php($form_elem = "title")
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's title</label>
-                                <input type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="Full Name" />
+                                <input value="{{ old($form_elem)}}" type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="Full Name" />
                                 <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500">It'll be shown as title when the field is used.</small>
                                 @error($form_elem)
                                 <p class="text-sm text-red-600">{{ $message }}</p>
@@ -26,7 +29,7 @@
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 @php($form_elem = "label")
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's label</label>
-                                <input type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="full_name" />
+                                <input value="{{ old($form_elem) }}" type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="full_name" />
                                 <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used as field identifier in database.</small>
                                 @error($form_elem)
                                 <p class="text-sm text-red-600">{{ $message }}</p>
@@ -40,7 +43,7 @@
                                 @php($form_elem = "placeholder")
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's placeholder</label>
 
-                                <input type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="John Doe" />
+                                <input value="{{ old($form_elem)}}" type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="John Doe" />
                                 <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be shown as an example when the field is asked.</small>
 
                                 @error($form_elem)
@@ -55,41 +58,13 @@
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's Data type</label>
 
                                 @php( $list = array("string" => "Small text","int" => "Number","date" => "Date","boolean" => "Yes / No "))
-                                <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
+                                <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" />
                                 <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used to store the datas.</small>
 
                                 @error($form_elem)
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <!--
-                             HTML_DATA_TYPE SECTION
-                            <div class="px-4 py-5 bg-white sm:p-6">
-
-                                @php($form_elem = "html_data_type")
-                                <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's Html Data type</label>
-
-                                @php( $list = array("" => "Select the HTML data type","text" => "text","number" => "number","date" => "date","radio" => "radio button","checkbox" => "checkbox"," " => "other"))
-                                <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
-                                <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used to display the form on the website.</small>
-
-                                @error($form_elem)
-                                <p class="text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                             UI TYPE SECTION
-                            <div class="px-4 py-5 bg-white sm:p-6">
-                                @php($form_elem = "UI_type")
-                                <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's UI type</label>
-                                @php( $list = array("" => "Select the UI data type","text" => "text","number" => "number","date" => "date","radio" => "radio button","checkbox" => "checkbox"," " => "other"))
-                                <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
-                                <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used to display the field on the android app.</small>
-                                @error($form_elem)
-                                <p class="text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            -->
 
                             <!--  REQUIRED SECTION  -->
 
@@ -128,7 +103,7 @@
                                 @php($form_elem = "order")
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's order</label>
 
-                                <input type="number" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="3" />
+                                <input value="{{ old($form_elem) }}" type="number" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="3" />
                                 <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used to order the field. Fields are first order by requirement state, then by order</small>
 
                                 @error($form_elem)
@@ -136,7 +111,27 @@
                                 @enderror
                             </div>
 
-                            <!-- validation_laravel SECTION -->
+
+                            <!--  Linked List SECTION  -->
+
+                            <div class="px-4 py-5 bg-white sm:p-6">
+                                @php($form_elem = "linked_list")
+                                <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's associated list </label>
+
+                                @php( $list = ["" => "Choose an associate list"]+array_column(\App\Models\ListControl::where("deleted",0)->get()->toArray(), "title", "id"))
+                                <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
+                                <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define a list which is associated with this field.</small>
+
+                                <a href="{{route("lists_control.create")}}" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:shadow-outline-blue disabled:opacity-25 transition ease-in-out duration-150">
+                                    Create a new list
+                                </a>
+
+                                @error($form_elem)
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- TODO validation_laravel SECTION
 
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <span class="text-gray-700">Choose the fields validator options</span>
@@ -155,7 +150,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            -->
                             <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                                 <button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
                                     Add

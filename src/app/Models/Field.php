@@ -131,11 +131,11 @@ class Field extends Model
             "boolean" => "Boolean"
         ];
 
-        if($field->required == 1){
+        if($field["required"] == 1){
             array_push($validador, "required");
         }
 
-        array_push($validador, $type_convert[$field->database_type]);
+        array_push($validador, $type_convert[$field["database_type"]]);
 
         //TODO : ajouter la gestion des champs spécifiques à la validation laravel
 

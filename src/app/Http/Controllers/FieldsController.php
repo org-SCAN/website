@@ -16,7 +16,8 @@ class FieldsController extends Controller
      */
     public function index()
     {
-        $fields = Field::orderBy("order")
+        $fields = Field::where("deleted", 0)
+            ->orderBy("order")
             ->orderBy("required")
             ->get();
         return view("fields.index", compact('fields'));
@@ -42,8 +43,8 @@ class FieldsController extends Controller
     public function store(StoreFieldRequest $request)
     {
         $field = $request->validated();
-        $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field->database_type);
-        $field["UI_type"] = Field::getUITypeFromForm($field->database_type);
+        $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field["database_type"]);
+        $field["UI_type"] = Field::getUITypeFromForm($field["database_type"]);
         $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
 
         $field = Field::create($field);
@@ -112,11 +113,13 @@ class FieldsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  String  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(String $id)
     {
-        //
+        Field::find($id)
+        ->update(["deleted"=>1]);
+        return redirect()->route("fields.index");
     }
 }

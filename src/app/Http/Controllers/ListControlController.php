@@ -6,6 +6,7 @@ use App\Models\ListControl;
 use App\Http\Requests\StoreListControlRequest;
 use App\Http\Requests\UpdateListControlRequest;
 use App\Traits\Uuids;
+use Illuminate\Support\Facades\URL;
 
 class ListControlController extends Controller
 {
@@ -85,11 +86,13 @@ class ListControlController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ListControl  $listControl
+     * @param  String  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ListControl $listControl)
+    public function destroy(String $id)
     {
-        //
+        ListControl::find($id)
+        ->update(["deleted"=>1]);
+        return redirect()->route("lists_control.index");
     }
 }

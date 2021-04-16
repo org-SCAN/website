@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Field;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRefugeeRequest extends FormRequest
+class UpdateFieldRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,16 @@ class UpdateRefugeeRequest extends FormRequest
      */
     public function rules()
     {
-        $fields = Field::where("status", ">", 0)->get()->toArray();
-        $rules = array_column($fields, 'validation_laravel', "label");
+        $rules = [
+            "title" => "required|string",
+            "label" => "required|string",
+            "placeholder" => "string|max:80",
+            "database_type" => "string|required",
+            "required" => "integer|required",
+            "status" => "integer|required",
+            "order" => "integer"
+
+        ];
         return $rules;
     }
 }

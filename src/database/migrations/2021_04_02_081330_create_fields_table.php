@@ -30,17 +30,24 @@ class CreateFieldsTable extends Migration
                 ->unique()
                 ->primary();
             $table->string( "title");
-            $table->string( "label");
-            $table->string( "placeholder");
+            $table->string( "label")
+                ->unique();
+            $table->string( "placeholder")
+                ->nullable();
             $table->string( "html_data_type");
             $table->string( "database_type");
             $table->string( "UI_type");
-            $table->string( "linked_list");
+            $table->foreignUuid( "linked_list")
+                ->nullable();
             $table->integer( "status");
             $table->integer( "required");
-            $table->string( "attribute");
+            $table->string( "attribute")
+                ->nullable();
             $table->integer("order");
-            $table->string("validation_laravel");
+            $table->string("validation_laravel")
+                ->nullable();
+            $table->boolean("deleted")
+                ->default(0);
             $table->timestamps();
         });
 
