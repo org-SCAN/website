@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ListControl;
 use App\Http\Requests\StoreListControlRequest;
+use App\Http\Requests\UpdateListControlRequest;
 use App\Traits\Uuids;
 
 class ListControlController extends Controller
@@ -59,24 +60,26 @@ class ListControlController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ListControl  $listControl
+     * @param  String  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ListControl $listControl)
+    public function edit(String $id)
     {
-        //
+        $list=ListControl::find($id);
+        return view("lists_control.edit", compact("list"));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  UpdateListControlRequest  $request
      * @param  \App\Models\ListControl  $listControl
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ListControl $listControl)
+    public function update(UpdateListControlRequest $request, ListControl $listControl)
     {
-        //
+        $listControl->update($request->validated());
+        return redirect()->route("lists_control.index");
     }
 
     /**

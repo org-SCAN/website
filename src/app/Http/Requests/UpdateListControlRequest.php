@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Field;
 use Illuminate\Support\Facades\Gate;
 
-class StoreListControlRequest extends FormRequest
+class UpdateListControlRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,7 +29,7 @@ class StoreListControlRequest extends FormRequest
         $rules =[
             "title" => "string|required",
             "displayed_value" => "string|required",
-            "name" => "string|required|unique:list_controls,name"
+            "name" => "string|required"
         ];
         return $rules;
     }
