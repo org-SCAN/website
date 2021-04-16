@@ -53,19 +53,33 @@ class FieldsController extends Controller
         }else{
             //DROP error ?
         }
-        return redirect(route("fields.index"));
+        return redirect()->route("fields.index");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  string  $id
+     * @param  String  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(String $id)
     {
         $field = Field::find($id);
-        return route("fields.show", compact('field'));
+        //die(var_dump($field));
+        $display_elements = [
+            "title"=>"Title",
+            "label"=>"Label",
+            "placeholder"=>"Placeholder",
+            "html_data_type"=>"Html type",
+            "UI_type"=>"Java type",
+            "linked_list"=>"Associate list",
+            "required"=>"Requirement state",
+            "status"=>"Status",
+            "attribute"=>"Attribute",
+            "database_type"=>"Database type",
+            "order" => "Order",
+            "validation_laravel" => "Validations attributes"];
+        return view("fields.show",compact('field', 'display_elements'));
     }
 
     /**
@@ -77,7 +91,7 @@ class FieldsController extends Controller
     public function edit($id)
     {
         $field = Field::find($id);
-        return route("fields.edit", compact('field'));
+        return view("fields.edit", compact('field'));
     }
 
     /**
@@ -92,7 +106,7 @@ class FieldsController extends Controller
         $field = Field::find($id);
         $field->update($request->validate());
 
-        return redirect(route("fields.index"));
+        return redirect()->route("fields.index");
     }
 
     /**
