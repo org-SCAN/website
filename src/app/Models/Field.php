@@ -71,4 +71,68 @@ class Field extends Model
         }
         return $text_required;
     }
+
+    /**
+     * It returns the html_data_type according the selected database type value
+     *
+     * @param String$database_type
+     * @return string
+     */
+
+    public static function getHtmlDataTypeFromForm(String $database_type){
+        $type_convert = [
+            "string" => "text",
+            "int" => "number",
+            "date" => "date",
+            "boolean" => "checkbox"
+        ];
+        return $type_convert[$database_type];
+    }
+
+    /**
+     * It returns the UI type value according the selected database type value
+     *
+     * @param String $database_type
+     * @return string
+     */
+
+    public static function getUITypeFromForm(String $database_type){
+        $type_convert = [
+            "string" => "EditText",
+            "int" => "number",
+            "date" => "date",
+            "boolean" => "Radio Button"
+        ];
+        return $type_convert[$database_type];
+    }
+
+    /**
+     * Generates the laravel validator according the field datas
+     *
+     * @param $field
+     * @return string
+     */
+
+    public static function getValidationLaravelFromForm($field){
+
+        $validador = array();
+        $type_convert = [
+            "string" => "String",
+            "int" => "Integer",
+            "date" => "Date",
+            "boolean" => "Boolean"
+        ];
+
+        if($field->required == 1){
+            array_push($validador, "required");
+        }
+
+        array_push($validador, $type_convert[$field->database_type]);
+
+        //TODO : ajouter la gestion des champs spécifiques à la validation laravel
+
+        $laravel_validator = implode("|", $validador);
+
+        return $laravel_validator;
+    }
 }

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Field;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreFildsRequest;
-use App\Http\Requests\UpdateFildsRequest;
+use App\Http\Requests\StoreFieldRequest;
+use App\Http\Requests\UpdateFieldRequest;
 
 class FieldsController extends Controller
 {
@@ -36,12 +36,23 @@ class FieldsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\StoreFieldRequest  $request
+     * @param  App\Http\Requests\StoreFieldRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreFieldRequest $request)
     {
-        Field::create($request->validated());
+        $field = $request->validated();
+        $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field->database_type);
+        $field["UI_type"] = Field::getUITypeFromForm($field->database_type);
+        $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
+
+        $field = Field::create($field);
+        if($field->exists){
+            //TODO : generate a new migration for refugee table
+            //TODO : generate a new json file
+        }else{
+            //DROP error ?
+        }
         return redirect(route("fields.index"));
     }
 
@@ -76,7 +87,7 @@ class FieldsController extends Controller
      * @param  string  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateFieldsRequest $request, $id)
+    public function update(UpdateFieldRequest $request, $id)
     {
         $field = Field::find($id);
         $field->update($request->validate());
