@@ -17,7 +17,7 @@
                                     @if($field->linked_list != "")
                                         @php
 
-                                        $list=ManageRefugees::getLinkedList($field->linked_list);
+                                        $list=$field->getLinkedListContent();
                                         array_unshift($list, "Select your ".$field->title) ;
                                         @endphp
                                         <x-form-select name="{{$field->label}}" :options="$list" label="" class="form-input rounded-md shadow-sm mt-1 block w-full"/>

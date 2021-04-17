@@ -174,6 +174,25 @@ class Field extends Model
         return (empty($linked_list) ? "" : $linked_list->title);
     }
 
+    /**
+     * Get all the element from the linkedlist
+     *
+     * @param  string  $id
+     * @return array
+     */
+    public function getLinkedListContent()
+    {
+        //
+        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $model = ListControl::find($this->getLinkedListId());
+        $model = 'App\Models\\'.$model->name;
+        $displayed_value = ListControl::find($this->getLinkedListId())->displayed_value;
+        $list = $model::orderBy($displayed_value)
+            ->get()
+            ->toArray();
+
+        return array_column($list, $displayed_value, "id");
+    }
 
 
     /**

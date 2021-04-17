@@ -22,14 +22,14 @@
                                 @if($field->linked_list != "")
                                     @php
 
-                                        $list=ManageRefugees::getLinkedList($field->linked_list);
-                                        if(empty($refugee->{$field->label})){
-                                            array_unshift($list, "Select your ".$field->title);
-                                        }
-                                        else{
-                                            $function_name = "get".ucfirst($field->label)."Id";
-                                            $list= array($refugee->$function_name() => $refugee->{$field->label})+$list;
-                                        }
+                                        $list=$field->getLinkedListContent();
+                                         if(empty($refugee->{$field->label})){
+                                             array_unshift($list, "Select your ".$field->title);
+                                         }
+                                         else{
+                                             $function_name = "get".ucfirst($field->label)."Id";
+                                             $list= array($refugee->$function_name() => $refugee->{$field->label})+$list;
+                                         }
                                     @endphp
                                     <x-form-select name="{{$field->label}}" :options="$list" label="" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                                 @else
