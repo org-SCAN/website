@@ -56,6 +56,14 @@ class Field extends Model
         }
         return $text_status;
     }
+    /**
+     * Indicate the the status id stored in DB
+     *
+     * @return String
+     */
+    public function getStatusId(){
+        return $this->attributes['status'];
+    }
 
     public function getRequiredAttribute($value){
         switch ($value) {
@@ -78,6 +86,15 @@ class Field extends Model
                 $text_required = "Undefined";
         }
         return $text_required;
+    }
+
+    /**
+     * Indicate the the required id stored in DB
+     *
+     * @return String
+     */
+    public function getRequiredId(){
+        return $this->attributes['required'];
     }
 
     /**
