@@ -30,7 +30,7 @@
                                 @php($form_elem = "label")
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's label</label>
                                 <input value="{{ old($form_elem) }}" type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="full_name" />
-                                <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used as field identifier in database.</small>
+                                <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used as field identifier in database. <i class="text-sm text-red-600"> Be careful : you couldn't change this value later</i></small>
                                 @error($form_elem)
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -59,7 +59,7 @@
 
                                 @php( $list = array("string" => "Small text","int" => "Number","date" => "Date","boolean" => "Yes / No "))
                                 <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" />
-                                <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used to store the datas.</small>
+                                <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used to store the datas. <i class="text-sm text-red-600"> Be careful : you couldn't change this value later</i></small>
 
                                 @error($form_elem)
                                 <p class="text-sm text-red-600">{{ $message }}</p>
@@ -117,7 +117,7 @@
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 @php($form_elem = "linked_list")
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's associated list ~
-                                    <a href="{{route("lists_control.create")}}" class="inline-flex items-center">
+                                    <a href="{{route("lists_control.create")}}" class="inline-flex items-center text-blue-800">
                                         Create a new list
                                     </a>
                                 </label>

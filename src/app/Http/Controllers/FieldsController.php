@@ -98,11 +98,11 @@ class FieldsController extends Controller
         $lists["database_type"]= array("string" => "Small text","integer" => "Number","date" => "Date","boolean" => "Yes / No ");
         $lists["database_type"]= [$field->database_type => $lists["database_type"][$field->database_type]]+$lists["database_type"]; //TODO : gérer la conversion vers une valeur de tableau connue
 
-        $lists["required"]=  array(1 => "Required",2 => "Strongly advised",3 => "Advised",4 => "If possible",100 => "Undefined");
-        $lists["required"]= [$field->required => $lists["required"][$field->getRequiredId()]]+$lists["required"]; //TODO : gérer la conversion vers une valeur de tableau connue
+        $lists["required"]=  array(0 => "Auto generated", 1 => "Required",2 => "Strongly advised",3 => "Advised",4 => "If possible",100 => "Undefined");
+        $lists["required"]= [$field->getRequiredId() => $lists["required"][$field->getRequiredId()]]+$lists["required"]; //TODO : gérer la conversion vers une valeur de tableau connue
 
         $lists["status"]=   array(0 => "Disabled",1 => "Website",2 => "Website & App");
-        $lists["status"]= [$field->status => $lists["status"][$field->getStatusId()]]+$lists["status"]; //TODO : gérer la conversion vers une valeur de tableau connue
+        $lists["status"]= [$field->getStatusId() => $lists["status"][$field->getStatusId()]]+$lists["status"]; //TODO : gérer la conversion vers une valeur de tableau connue
 
         if(empty($linked_list_id)){
             $lists["linked_list"] = [" " => "Choose an associate list"];
