@@ -36,7 +36,11 @@
                                             Associate list
                                         </th>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-900 bg-white divide-y divide-gray-200">
-                                            <a href="{{route("lists_control.show", $field->getLinkedListId())}}">{{ $field->linked_list }}</a>
+                                            @if(!empty($field->linked_list))
+                                                <a href="{{route("lists_control.show", $field->getLinkedListId())}}">{{ $field->linked_list }}</a>
+                                            @else
+                                                {{ $field->linked_list }}
+                                            @endif
                                         </td>
                                     </tr>
                             </table>

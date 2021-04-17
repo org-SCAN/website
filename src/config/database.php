@@ -16,6 +16,7 @@ return [
     */
 
     'default' => env('DB_CONNECTION', 'mysql'),
+    "migration_path" => realpath(base_path("database/migrations/")),
 
     /*
     |--------------------------------------------------------------------------

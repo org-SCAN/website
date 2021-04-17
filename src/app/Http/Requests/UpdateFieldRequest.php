@@ -26,9 +26,7 @@ class UpdateFieldRequest extends FormRequest
     {
         $rules = [
             "title" => "required|string",
-            "label" => "required|string",
             "placeholder" => "string|max:80",
-            "database_type" => "string|required",
             "required" => "integer|required",
             "status" => "integer|required",
             "order" => "integer"

@@ -51,8 +51,7 @@ class FieldsController extends Controller
         $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
         $field = Field::create($field);
         if($field->exists){
-            //TODO : generate a new migration for refugee table
-            //TODO : generate a new json file
+            $field->addFieldtoRefugees();
         }else{
             //DROP error ?
         }
@@ -123,12 +122,11 @@ class FieldsController extends Controller
      */
     public function update(UpdateFieldRequest $request, $id)
     {
-        $field = Field::find($id);
-        $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field["database_type"]);
-        $field["UI_type"] = Field::getUITypeFromForm($field["database_type"]);
-        $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
 
-        $field->update($request->validated());
+        $field = Field::find($id);
+        $to_update = $request->validated();
+        $to_update["database_type"] = $field->database_type; $to_update["validation_laravel"] = Field::getValidationLaravelFromForm($to_update);
+        $field->update($to_update);
 
         return redirect()->route("fields.index");
     }

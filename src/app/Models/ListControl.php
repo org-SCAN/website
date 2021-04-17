@@ -30,4 +30,10 @@ class ListControl extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public function addNewList(){
+        // 1. Create a new table -> for the list
+
+        // 2. Create a new table -> for the list column name
+    }
 }

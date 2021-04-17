@@ -57,7 +57,7 @@
                                 @php($form_elem = "database_type")
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's Data type</label>
 
-                                @php( $list = array("string" => "Small text","int" => "Number","date" => "Date","boolean" => "Yes / No "))
+                                @php( $list = array("string" => "Small text","integer" => "Number","date" => "Date","boolean" => "Yes / No "))
                                 <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" />
                                 <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used to store the datas. <i class="text-sm text-red-600"> Be careful : you couldn't change this value later</i></small>
 
