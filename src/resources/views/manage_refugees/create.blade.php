@@ -16,7 +16,6 @@
                                     <label for="{{$field->label}}" class="block font-medium text-sm text-gray-700">{{$field->title}}</label>
                                     @if($field->linked_list != "")
                                         @php
-
                                         $list=$field->getLinkedListContent();
                                         array_unshift($list, "Select your ".$field->title) ;
                                         @endphp
