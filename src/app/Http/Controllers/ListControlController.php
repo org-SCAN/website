@@ -55,6 +55,7 @@ class ListControlController extends Controller
     public function show(String $id)
     {
         $list=ListControl::find($id);
+        $list_content = ListControl::all();
         return view("lists_control.show", compact("list"));
     }
 

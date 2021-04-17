@@ -36,4 +36,16 @@ class ListControl extends Model
 
         // 2. Create a new table -> for the list column name
     }
+
+    public static function getListContent($id){
+
+        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $list_control = self::find($id);
+        $model = 'App\Models\\'.$list_control->name;
+        $list = $model::orderBy($list_control->displayed_value)
+            ->get()
+            ->toArray();
+
+        return $list;
+    }
 }
