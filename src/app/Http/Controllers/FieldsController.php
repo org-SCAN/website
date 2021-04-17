@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Field;
+use App\Models\ListControl;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreFieldRequest;
 use App\Http\Requests\UpdateFieldRequest;
@@ -153,7 +154,11 @@ class FieldsController extends Controller
     {
         if($request->user()->tokenCan("read")){
             $fields = Field::where("deleted",0)->where("status",2)->get()->toArray();
-            return response(json_encode($fields), 200);
+            $datas["fields"] = $fields;
+            foreach (ListControl::where("deleted",0)->get()->toArray() as $list){
+                $datas[$list["title"]] = ListControl::find($list["id"])->getListContent();
+            }
+            return response(json_encode($datas), 200);
         }
         return response("Your token can't be use to read datas", 403);
 

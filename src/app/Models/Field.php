@@ -33,6 +33,13 @@ class Field extends Model
      */
     protected $guarded = [];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['deleted','id',"created_at","updated_at"]; //TODO : SI on a des bugs à cause des fields c'est ici
+
 
     /**
      * Get all of the owning linked_list models.
