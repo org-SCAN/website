@@ -152,8 +152,8 @@ class FieldsController extends Controller
     public function handleApiRequest(Request $request)
     {
         if($request->user()->tokenCan("read")){
-        $fields = Field::where("deleted",0)->where("status",2)->get()->toArray();
-        return response(json_encode($fields), 200);
+            $fields = Field::where("deleted",0)->where("status",2)->get()->toArray();
+            return response(json_encode($fields), 200);
         }
         return response("Your token can't be use to read datas", 403);
 

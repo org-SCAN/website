@@ -12,19 +12,15 @@ class CreateCountriesTable extends Migration
      * @return void
      */
     protected $table_name;
-    protected $path_role_json;
 
     public function __construct()
     {
 
-        // read the json file to get the values
         $this->table_name = "countries";
-        $this->path_role_json =config('jsonDataset.path')."/".$this->table_name.".json";
     }
 
     public function up()
     {
-        Schema::dropIfExists($this->table_name);
         Schema::create($this->table_name, function (Blueprint $table) {
             $table->uuid("id")
                 ->unique()
@@ -35,23 +31,6 @@ class CreateCountriesTable extends Migration
             $table->string("full");
             $table->timestamps();
         });
-
-
-
-        $obj_json = file_get_contents($this->path_role_json);
-        // interpret the json format as an array
-        $array_json = json_decode($obj_json, true);
-
-        // make the inserts
-        foreach($array_json as $country)
-        {
-            $to_store = array();
-            $to_store["id"] = (string)Str::uuid();
-            foreach ($country as $countryKey => $countryValue) {
-                $to_store[$countryKey] = $countryValue;
-            }
-          DB::table($this->table_name)->insert($to_store);
-        }
     }
 
     /**
