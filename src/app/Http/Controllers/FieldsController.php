@@ -17,11 +17,8 @@ class FieldsController extends Controller
      */
     public function index()
     {
-        $fields = Field::where("deleted", 0)
-            ->orderBy("order")
-            ->orderBy("required")
-            ->get();
-        return view("fields.index", compact('fields'));
+
+        return view("fields.index");
     }
 
     /**
