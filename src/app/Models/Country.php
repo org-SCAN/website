@@ -24,15 +24,11 @@ class Country extends Model
 
     public $incrementing = false;
 
-    public function fields()
-    {
-        return $this->morphMany('App\Models\Field', 'get_linked_list');
-    }
-    public static function getLinkedList()
-    {
-        $elem = self::orderBy("short")
-            ->get()
-            ->toArray();
-        return array_column($elem, "short", "id");
-    }
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['deleted',"created_at","updated_at"]; //TODO : SI on a des bugs à cause des countries c'est ici
+
 }

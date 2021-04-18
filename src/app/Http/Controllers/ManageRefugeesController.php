@@ -6,6 +6,7 @@ use App\Models\Field;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
 use App\Http\Requests\StoreRefugeeApiRequest;
+use App\Models\ListControl;
 use App\Traits\Uuids;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -134,20 +135,6 @@ class ManageRefugeesController extends Controller
         return redirect()->route("manage_refugees.index");
     }
 
-    /**
-     * Get all the element from the model name.
-     *
-     * @param  Model  $model
-     * @return array
-     */
-    public static function getLinkedList($model)
-    {
-        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $model = ucfirst($model);
-        $model = 'App\Models\\'.$model;
-        $list = $model::getLinkedList();//all()->toArray();
-        return $list;
-    }
     /**
      * Handle the API request
      *
