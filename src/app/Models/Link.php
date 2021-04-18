@@ -27,7 +27,7 @@ class Link extends Model
     /**
      *
      * Get relation name
-     * 
+     *
      * @param $relation
      * @return mixed
      */

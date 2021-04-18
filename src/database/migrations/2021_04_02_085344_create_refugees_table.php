@@ -25,7 +25,6 @@ class CreateRefugeesTable extends Migration
     public function up()
     {
 
-        Schema::dropIfExists($this->table_name);
         Schema::create($this->table_name, function (Blueprint $table) {
             $obj_json = file_get_contents($this->path_role_json);
             // interpret the json format as an array

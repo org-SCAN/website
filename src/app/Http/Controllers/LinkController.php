@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreLinkRequest;
 use App\Models\Link;
+use App\Models\Refugee;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class LinkController extends Controller
@@ -25,7 +28,9 @@ class LinkController extends Controller
      */
     public function create()
     {
-        //
+        $lists["refugees"] = array_column(Refugee::where("deleted",0)->get()->toArray(), "full_name", "id");
+        $lists["relations"] = array_column(Role::where("deleted",0)->get()->toArray(), "short", "id");
+        return view("links.create", compact("lists"));
     }
 
     /**
@@ -34,9 +39,10 @@ class LinkController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreLinkRequest $request)
     {
-        //
+        Link::create($request->validated());
+        return redirect()->route("links.index");
     }
 
     /**

@@ -23,7 +23,6 @@ class CreateLinksTable extends Migration
     public function up()
     {
 
-        Schema::dropIfExists($this->table_name);
         Schema::create($this->table_name, function (Blueprint $table) {
             $table->uuid( "id")
                 ->primary()

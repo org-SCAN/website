@@ -13,7 +13,7 @@ class StoreLinkRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class StoreLinkRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "refugee1" => "Required|uuid|exists:refugees,id",
+            "refugee2" => "Required|uuid|exists:refugees,id|different:refugee1",
+            "relation" => "Required|uuid|exists:roles,id",
         ];
     }
 }
