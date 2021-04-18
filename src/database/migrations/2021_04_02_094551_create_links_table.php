@@ -29,7 +29,8 @@ class CreateLinksTable extends Migration
                 ->primary()
                 ->unique();
             $table->datetime( "date");
-            $table->boolean( "deleted");
+            $table->boolean( "deleted")
+            ->default(0);
             $table->foreignUuid( "relation");
             $table->foreignUuid( "refugee1_id");
             $table->foreignUuid( "refugee2_id");

@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RouteSeeder::class);
         $this->call(GenderSeeder::class);
         $this->call(RefugeeSeeder::class);
+        $this->call(LinkSeeder::class);
     }
 }
