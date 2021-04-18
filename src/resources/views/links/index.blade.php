@@ -35,10 +35,10 @@
                                 @foreach($links as $link)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("manage_refugees.show", $link->refugee1)}}" class="text-indigo-600 hover:text-blue-900">{{$link->refugee1}}</a>
+                                            <a href="{{route("manage_refugees.show", $link->getRefugee1Id())}}" class="text-indigo-600 hover:text-blue-900">{{$link->refugee1}}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <a href="{{route("manage_refugees.show", $link->refugee2)}}" class="text-indigo-600 hover:text-blue-900">{{$link->refugee2}}</a>
+                                            <a href="{{route("manage_refugees.show", $link->getRefugee2Id())}}" class="text-indigo-600 hover:text-blue-900">{{$link->refugee2}}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {{$link->relation}}

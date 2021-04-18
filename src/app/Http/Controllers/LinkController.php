@@ -81,7 +81,7 @@ class LinkController extends Controller
     public function update(UpdateLinkRequest $request, $id)
     {
         $link = Link::find($id);
-        $link::update($request->validated());
+        $link->update($request->validated());
 
         return redirect()->route("links.index");
     }

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Gate;
 use PhpParser\Node\Expr\Array_;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Refugee;
+use App\Models\Link;
 use Illuminate\Support\Facades\View;
 
 
@@ -86,7 +87,9 @@ class ManageRefugeesController extends Controller
             ->orderBy("order")
             ->get();
         $refugee = Refugee::find($id);
-        return view("manage_refugees.show", compact("refugee", "fields"));
+        $links = Link::where("deleted",0)->where("refugee1", $id)->orWhere("refugee2", $id)->get();
+
+        return view("manage_refugees.show", compact("refugee", "fields", "links"));
     }
 
     /**
