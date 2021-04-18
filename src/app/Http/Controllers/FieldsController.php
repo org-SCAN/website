@@ -153,12 +153,12 @@ class FieldsController extends Controller
     public function handleApiRequest(Request $request)
     {
         if($request->user()->tokenCan("read")){
-            $fields = Field::where("deleted",0)->where("status",2)->get()->toArray();
+            $fields = Field::where("deleted",0)->where("status",2)->orderBy("order")->orderBy("required")->get()->toArray();
             $datas["fields"] = $fields;
-            foreach (ListControl::where("deleted",0)->get()->toArray() as $list){
+            foreach (ListControl::where("deleted",0)->whereIn("title",array_column($fields, "linked_list"))->get()->toArray() as $list){
                 $datas[$list["title"]] = ListControl::find($list["id"])->getListContent();
             }
-            return response(json_encode($datas), 200);
+            return response(json_encode($datas), 200)->header('Content-Type', 'application/json');;
         }
         return response("Your token can't be use to read datas", 403);
 

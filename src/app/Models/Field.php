@@ -38,7 +38,7 @@ class Field extends Model
      *
      * @var array
      */
-    protected $hidden = ['deleted','id',"created_at","updated_at"]; //TODO : SI on a des bugs à cause des fields c'est ici
+    protected $hidden = ['deleted','id',"created_at","updated_at","status", "database_type", "html_data_type", "validation_laravel", "attribute"]; //TODO : SI on a des bugs à cause des fields c'est ici
 
 
     /**
