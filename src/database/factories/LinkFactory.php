@@ -26,8 +26,8 @@ class LinkFactory extends Factory
         return [
             'date' => $this->faker->date("Y-m-d", $max = 'now', $min='- 2 months'),
             'relation' => Role::inRandomOrder()->first()->id,
-            'refugee1_id'=> Refugee::inRandomOrder()->first()->id,
-            'refugee2_id'=> Refugee::inRandomOrder()->first()->id
+            'refugee1'=> Refugee::inRandomOrder()->first()->id,
+            'refugee2'=> Refugee::inRandomOrder()->first()->id
         ];
     }
 }

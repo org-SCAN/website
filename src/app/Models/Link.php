@@ -23,4 +23,36 @@ class Link extends Model
      */
 
     public $incrementing = false;
+
+    /**
+     *
+     * Get relation name
+     * 
+     * @param $relation
+     * @return mixed
+     */
+    public function getRelationAttribute($relation)
+    {
+        return Role::find($relation)->short; //TODO : ne pas passer par role mais trouver un moyen de le contourner en passant par control_list (maybe en storant la clé de la liste dans les config ?)
+    }
+
+    /**
+     * Get refugee1 fullname
+     * @param $refugee1
+     * @return mixed
+     */
+    public function getRefugee1Attribute($refugee1)
+    {
+        return Refugee::find($refugee1)->full_name;
+    }
+
+    /**
+     * Get refugee2 fullname
+     * @param $refugee1
+     * @return mixed
+     */
+    public function getRefugee2Attribute($refugee2)
+    {
+        return Refugee::find($refugee2)->full_name;
+    }
 }

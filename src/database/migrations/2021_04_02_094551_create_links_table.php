@@ -32,8 +32,8 @@ class CreateLinksTable extends Migration
             $table->boolean( "deleted")
             ->default(0);
             $table->foreignUuid( "relation");
-            $table->foreignUuid( "refugee1_id");
-            $table->foreignUuid( "refugee2_id");
+            $table->foreignUuid( "refugee1");
+            $table->foreignUuid( "refugee2");
             $table->timestamps();
         });
     }
