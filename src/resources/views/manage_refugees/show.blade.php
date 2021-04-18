@@ -61,11 +61,13 @@
                                 @endforeach
                             </table>
                         </div>
+
+
                     </div>
                 </div>
             </div>
             <div class="block mt-8">
-                <a href="{{ route('manage_refugees.index') }}" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to list</a>
+                <a href="{{ route('links.create') }}" class="bg-green-200 hover:bg-green-300 text-black font-bold py-2 px-4 rounded">Add a relation</a>
             </div>
         </div>
     </div>
