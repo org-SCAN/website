@@ -37,6 +37,18 @@ class Link extends Model
     }
 
     /**
+     *
+     * Get relation name
+     *
+     * @param $relation
+     * @return mixed
+     */
+    public function getRelationId()
+    {
+        return $this->attributes["relation"]; //TODO : ne pas passer par role mais trouver un moyen de le contourner en passant par control_list (maybe en storant la clé de la liste dans les config ?)
+    }
+
+    /**
      * Get refugee1 fullname
      * @param $refugee1
      * @return mixed

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLinkRequest;
+use App\Http\Requests\UpdateLinkRequest;
 use App\Models\Link;
 use App\Models\Refugee;
 use App\Models\Role;
@@ -48,12 +49,13 @@ class LinkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $link = Link::find($id);
+        return view("links.show", compact("links"));
     }
 
     /**
@@ -64,7 +66,9 @@ class LinkController extends Controller
      */
     public function edit($id)
     {
-        //
+        $link = Link::find($id);
+        $lists["relations"] = [$link->getRelationId() => $link->relation]+array_column(Role::where("deleted",0)->get()->toArray(), "short", "id");
+        return view("links.edit", compact("link","lists"));
     }
 
     /**
@@ -74,9 +78,12 @@ class LinkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateLinkRequest $request, $id)
     {
-        //
+        $link = Link::find($id);
+        $link::update($request->validated());
+
+        return redirect()->route("links.index");
     }
 
     /**
