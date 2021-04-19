@@ -25,17 +25,23 @@ class CreateRefugeesTable extends Migration
     public function up()
     {
 
-        Schema::dropIfExists($this->table_name);
         Schema::create($this->table_name, function (Blueprint $table) {
             $obj_json = file_get_contents($this->path_role_json);
             // interpret the json format as an array
             $array_json = json_decode($obj_json, true);
-            $table->string($this->table_name . "__" . "id", 36)->unique();
-            $table->date($this->table_name . "__" . "date");
-            $table->boolean($this->table_name . "__" . "deleted");
+            $table->uuid("id")
+                ->unique()
+                ->primary();
+            $table->date("date")->useCurrent();
+            $table->boolean("deleted")->default(0);
             $table->timestamps();
             foreach ($array_json as $field) {
-                $table->{$field["fields__database_type"]}($this->table_name . "__" .$field["fields__label"]);
+                if($field["required"] != 1){
+                    $table->{$field["database_type"]}($field["label"])->nullable();
+                }
+                else{
+                    $table->{$field["database_type"]}($field["label"]);
+                }
             }
         });
     }

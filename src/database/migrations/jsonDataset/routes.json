@@ -1,10 +1,10 @@
 [{
-  "routes__short": "WM",
-  "routes__full": "Western Mediterranean"
+  "short": "WM",
+  "full": "Western Mediterranean"
 },{
-  "routes__short": "CM",
-  "routes__full": "Central Mediterranean"
+  "short": "CM",
+  "full": "Central Mediterranean"
 },{
-  "routes__short": "EM",
-  "routes__full": "Eastern Mediterranean"
+  "short": "EM",
+  "full": "Eastern Mediterranean"
 }]

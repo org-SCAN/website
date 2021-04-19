@@ -1,0 +1,22 @@
+[
+    {
+        "title" : "Country",
+        "name" : "Country",
+        "displayed_value" : "short"
+    },
+    {
+        "title" : "Gender",
+        "name" : "Gender",
+        "displayed_value" : "full"
+    },
+    {
+        "title" : "Route",
+        "name" : "Route",
+        "displayed_value" : "full"
+    },
+    {
+        "title" : "Role",
+        "name" : "Role",
+        "displayed_value" : "short"
+    }
+]
