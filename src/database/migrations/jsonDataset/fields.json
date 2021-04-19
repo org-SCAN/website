@@ -257,15 +257,15 @@
         "title":"Place of embarkation",
         "label":"embarkation_place",
         "placeholder":"Roubaix",
-        "html_data_type":"date",
+        "html_data_type":"text",
         "android_type":"EditText",
         "linked_list":"",
         "required":3,
         "status":2,
         "attribute":"",
-        "database_type":"date",
+        "database_type":"string",
         "order" : 12,
-        "validation_laravel" : "date|nullable"
+        "validation_laravel" : "string|nullable"
     },
     {
         "title":"Travel to",
