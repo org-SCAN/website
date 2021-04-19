@@ -21,17 +21,11 @@
                                 <label for="{{$field->label}}" class="block font-medium text-sm text-gray-700">{{$field->title}}</label>
                                 @if($field->linked_list != "")
                                     @php
-
                                         $list=$field->getLinkedListContent();
-                                         if(empty($refugee->{$field->label})){
-                                             array_unshift($list, "Select your ".$field->title);
-                                         }
-                                         else{
-                                             $function_name = "get".ucfirst($field->label)."Id";
-                                             $list= array($refugee->$function_name() => $refugee->{$field->label})+$list;
-                                         }
+                                        $get_id = "get".ucfirst($field->label)."Id";
                                     @endphp
-                                    <x-form-select name="{{$field->label}}" :options="$list" label="" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
+                                    @livewire("select-dropdown", ['label' => $field->label, 'placeholder' => "-- Select your ".$field->title." --", 'datas' => $list, "selected_value" => $refugee->$get_id()])
+                                    @stack('scripts')
                                 @else
                                     <input type="{{$field->html_data_type}}" name="{{$field->label}}" id="{{$field->label}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ old($field->label, $refugee->{$field->label}) }}"/>

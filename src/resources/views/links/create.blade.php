@@ -21,7 +21,8 @@
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Refugee 1</label>
 
                                 @php( $list = $lists["refugees"])
-                                <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" />
+                                @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the first refugee --', 'datas' => $list])
+                                @stack('scripts')
 
                                 @error($form_elem)
                                 <p class="text-sm text-red-600">{{ $message }}</p>
@@ -35,7 +36,8 @@
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Refugee 2</label>
 
                                 @php( $list = $lists["refugees"])
-                                <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" />
+                                @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the second refugee --', 'datas' => $list])
+                                @stack('scripts')
 
                                 @error($form_elem)
                                 <p class="text-sm text-red-600">{{ $message }}</p>
@@ -49,7 +51,8 @@
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Relation</label>
 
                                 @php( $list = $lists["relations"])
-                                <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" />
+                                @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the relation --', 'datas' => $list])
+                                @stack('scripts')
 
                                 @error($form_elem)
                                 <p class="text-sm text-red-600">{{ $message }}</p>

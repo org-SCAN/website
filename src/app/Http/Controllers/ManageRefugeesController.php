@@ -20,16 +20,7 @@ use Illuminate\Support\Facades\View;
 
 class ManageRefugeesController extends Controller
 {
-    public function __construct()
-    {
-        /*
-        $fields = Field::where("status", ">", 0)->get();
-        $fields = DB::table('fields')
-            ->orderBy('order')
-            ->get();
 
-        View::share('fields', $fields);*/
-    }
     /**
      * Display a listing of the resource.
      *
@@ -69,7 +60,9 @@ class ManageRefugeesController extends Controller
      */
     public function store(StoreRefugeeRequest $request)
     {
+       var_dump($request->validated());
         $new_ref = Refugee::create($request->validated());
+
         return redirect()->route("manage_refugees.index");
     }
 

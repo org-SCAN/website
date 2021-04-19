@@ -27,7 +27,8 @@ class CreateLinksTable extends Migration
             $table->uuid( "id")
                 ->primary()
                 ->unique();
-            $table->datetime( "date");
+            $table->datetime( "date")
+                ->useCurrent();
             $table->boolean( "deleted")
             ->default(0);
             $table->foreignUuid( "relation");
