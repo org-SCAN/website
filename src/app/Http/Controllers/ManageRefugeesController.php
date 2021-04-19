@@ -60,8 +60,12 @@ class ManageRefugeesController extends Controller
      */
     public function store(StoreRefugeeRequest $request)
     {
-       var_dump($request->validated());
-        $new_ref = Refugee::create($request->validated());
+
+       $refugee = $request->validated();
+        $refugee["flight_disease"] = ((isset($refugee["flight_disease"]) && $refugee["flight_disease"] == "on") ? 1 : 0);
+        $refugee["flight_boarded"] = ((isset($refugee["flight_boarded"]) && $refugee["flight_boarded"] == "on") ? 1 : 0);
+
+        $new_ref = Refugee::create($refugee);
 
         return redirect()->route("manage_refugees.index");
     }
@@ -111,8 +115,12 @@ class ManageRefugeesController extends Controller
      */
     public function update(UpdateRefugeeRequest $request, $refugee_id)
     {
+        $refugee = $request->validated();
+        $refugee["flight_disease"] = ((isset($refugee["flight_disease"]) && $refugee["flight_disease"] == "on") ? 1 : 0);
+        $refugee["flight_boarded"] = ((isset($refugee["flight_boarded"]) && $refugee["flight_boarded"] == "on") ? 1 : 0);
+
         Refugee::where("id",$refugee_id)
-            ->update($request->validated());
+            ->update($refugee);
         return redirect()->route("manage_refugees.index");
     }
 
