@@ -24,7 +24,11 @@ class StoreRefugeeRequest extends FormRequest
      */
     public function rules()
     {
-        $fields = Field::where("status", ">", 0)->get()->toArray();
+        $hiddens = new Field();
+        $hiddens = $hiddens->getHidden();
+        $fields = Field::where("status", ">", 0)->get();
+        $fields = $fields->makeVisible($hiddens)->toArray();
+
         $rules = array_column($fields, 'validation_laravel', "label");
         return $rules;
     }

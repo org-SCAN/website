@@ -14,21 +14,13 @@ use Illuminate\Support\Facades\Gate;
 use PhpParser\Node\Expr\Array_;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Refugee;
+use App\Models\Link;
 use Illuminate\Support\Facades\View;
 
 
 class ManageRefugeesController extends Controller
 {
-    public function __construct()
-    {
-        /*
-        $fields = Field::where("status", ">", 0)->get();
-        $fields = DB::table('fields')
-            ->orderBy('order')
-            ->get();
 
-        View::share('fields', $fields);*/
-    }
     /**
      * Display a listing of the resource.
      *
@@ -68,7 +60,13 @@ class ManageRefugeesController extends Controller
      */
     public function store(StoreRefugeeRequest $request)
     {
-        $new_ref = Refugee::create($request->validated());
+
+       $refugee = $request->validated();
+        $refugee["flight_disease"] = ((isset($refugee["flight_disease"]) && $refugee["flight_disease"] == "on") ? 1 : 0);
+        $refugee["flight_boarded"] = ((isset($refugee["flight_boarded"]) && $refugee["flight_boarded"] == "on") ? 1 : 0);
+
+        $new_ref = Refugee::create($refugee);
+
         return redirect()->route("manage_refugees.index");
     }
 
@@ -86,7 +84,9 @@ class ManageRefugeesController extends Controller
             ->orderBy("order")
             ->get();
         $refugee = Refugee::find($id);
-        return view("manage_refugees.show", compact("refugee", "fields"));
+        $links = Link::where("deleted",0)->where("refugee1", $id)->orWhere("refugee2", $id)->get();
+
+        return view("manage_refugees.show", compact("refugee", "fields", "links"));
     }
 
     /**
@@ -115,8 +115,12 @@ class ManageRefugeesController extends Controller
      */
     public function update(UpdateRefugeeRequest $request, $refugee_id)
     {
+        $refugee = $request->validated();
+        $refugee["flight_disease"] = ((isset($refugee["flight_disease"]) && $refugee["flight_disease"] == "on") ? 1 : 0);
+        $refugee["flight_boarded"] = ((isset($refugee["flight_boarded"]) && $refugee["flight_boarded"] == "on") ? 1 : 0);
+
         Refugee::where("id",$refugee_id)
-            ->update($request->validated());
+            ->update($refugee);
         return redirect()->route("manage_refugees.index");
     }
 

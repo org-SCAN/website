@@ -29,6 +29,8 @@ class CreateGendersTable extends Migration
             $table->string("short");
             $table->string("full");
             $table->timestamps();
+            $table->boolean("deleted")
+                ->default(0);
         });
     }
 

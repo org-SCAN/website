@@ -42,12 +42,13 @@ class Field extends Model
 
 
     /**
-     * Get all of the owning linked_list models.
-     */
-    public function get_linked_list()
-    {
-        return $this->morphTo();
-    }
+     * Return all hidden fields
+     *
+     * @return array|string[]
+
+    public  function getHiddenValue(){
+        return $this->hidden;
+    } */
 
     public function getStatusAttribute($value){
         switch ($value) {

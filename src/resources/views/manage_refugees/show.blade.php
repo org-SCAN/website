@@ -39,8 +39,30 @@
                     </div>
                 </div>
             </div>
-            <div class="block mt-8">
-                <a href="{{ route('manage_refugees.index') }}" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to list</a>
+            <div class="block mt-8 flex flex-col">
+                <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                        <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-8">
+                            <b>{{ $refugee->full_name }}</b> relations
+                        </h2>
+                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-200 w-full">
+                                @foreach($links as $link)
+                                    <tr class="border-b">
+                                        <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-blue-800 uppercase tracking-wider">
+                                        @php($refugee_num = ($link->getRefugee1Id() == $refugee->id ? "2" : "1"))
+                                        @php($relation_name = "refugee".$refugee_num)
+                                        @php($relation_id = "getRefugee".$refugee_num."Id")
+                                            <a href="{{route("manage_refugees.show", $link->$relation_id())}}">{{$link->$relation_name }}</a>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                            {{ $link->relation }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
