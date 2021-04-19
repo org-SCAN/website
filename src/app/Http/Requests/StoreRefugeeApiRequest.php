@@ -17,6 +17,7 @@ class StoreRefugeeApiRequest extends StoreRefugeeRequest
     public function rules()
     {
         $rules = parent::rules();
+        $rules["date"] = "date";
         $rules = array_combine(
             array_map(function($key){ return '*.'.$key; }, array_keys($rules)),
             $rules
