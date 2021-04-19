@@ -16,25 +16,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/analyse_data', function () {
-    return view('analyse_data');
-});
-Route::get('/change_fields', function () {
-    return view('change_fields');
-});
-Route::get('/change_password', function () {
-    return view('change_password');
-});
-Route::get('/edit_users', function () {
-    return view('edit_users');
-});
-Route::get('/home', function () {
-    return view('home');
-});
 
-Route::get('/modify_data', function () {
-    return view('modify_data');
-});
-Route::get('/new_user', function () {
-    return view('new_user');
-});
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+/*
+Route::get('manage_refugees/create/{fields}', [
+    'as' => 'manage_refugees.create',
+    'uses' => 'ManageRefugeesController@create'
+]);*/
+Route::resource("manage_refugees", \App\Http\Controllers\ManageRefugeesController::class);
+Route::resource("fields", \App\Http\Controllers\FieldsController::class);
+Route::resource("lists_control", \App\Http\Controllers\ListControlController::class);
+Route::resource("links", \App\Http\Controllers\LinkController::class);
