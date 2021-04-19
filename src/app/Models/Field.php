@@ -44,7 +44,7 @@ class Field extends Model
     /**
      * Return all hidden fields
      *
-     * @return array|string[]
+     * @return string
 
     public  function getHiddenValue(){
         return $this->hidden;
@@ -105,6 +105,35 @@ class Field extends Model
      */
     public function getRequiredId(){
         return $this->attributes['required'];
+    }
+
+    /**
+     * Convert a given requirement description into the associate int
+     *
+     * @param $value
+     * @return int
+     */
+    public static function convertRequiredAttribute($value){
+        switch ($value) {
+            case "Auto generated":
+                $int_required = 0;
+                break;
+            case "Required":
+                $int_required = 1;
+                break;
+            case "Strongly advised":
+                $int_required = 2;
+                break;
+            case "Advised":
+                $int_required = 3;
+                break;
+            case "If possible":
+                $int_required = 4;
+                break;
+            default:
+                $int_required = 100;
+        }
+        return $int_required;
     }
 
     /**
