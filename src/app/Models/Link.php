@@ -39,7 +39,7 @@ class Link extends Model
      */
     public function getRelationAttribute($relation)
     {
-        return Role::find($relation)->short; //TODO : ne pas passer par role mais trouver un moyen de le contourner en passant par control_list (maybe en storant la clé de la liste dans les config ?)
+        return Relation::find($relation)->name; //TODO : ne pas passer par role mais trouver un moyen de le contourner en passant par control_list (maybe en storant la clé de la liste dans les config ?)
     }
 
     /**
