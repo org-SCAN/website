@@ -144,16 +144,16 @@
     {
         "title":"Date when last seen well",
         "label":"date_last_seen",
-        "placeholder":"MM-YYYY",
-        "html_data_type":"number",
-        "android_type":"EditText",
+        "placeholder":"YYYY-mm-dd",
+        "html_data_type":"date",
+        "android_type":"CalendarView",
         "linked_list":"",
         "required":3,
         "status":2,
-        "attribute":"min=1 max=120",
-        "database_type":"integer",
+        "attribute":"",
+        "database_type":"date",
         "order" : 100,
-        "validation_laravel" : "integer|min:1|max:120|nullable"
+        "validation_laravel" : "date|nullable"
     },
     {
         "title":"Place of birth",

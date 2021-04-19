@@ -39,22 +39,18 @@ class RefugeeFactory extends Factory
             'fathers_names' => $this->faker->name,
             'fathers_names' => $this->faker->name,
             'role' => Role::inRandomOrder()->first()->id,
+            'age' => $this->faker->numberBetween(1,120),
             'birth_date' => $this->faker->date("Y-m-d", $max = 'now'),
-            'age_last_seen' => $this->faker->numberBetween(1,120),
+            'date_last_seen' => $this->faker->date("Y-m-d", $min = '-2 years', $max="now"),
             'birth_place' => $this->faker->city,
             'gender' => Gender::inRandomOrder()->first()->id,
             'passport_number' => $this->faker->regexify('[A-Z]{3}-[0-9]{6}-[A-Z]{8}'),
-            'flight_boarded' => $this->faker->randomElement([0,1]),
-            'flight_disease' => $this->faker->randomElement([0,1]),
-            'boarding_date' => $this->faker->date("Y-m-d", $max = 'now'),
+            'embarkation_date' => $this->faker->date("Y-m-d", $max = 'now'),
+            'detention_place' => $this->faker->randomElement(['Libya', '', 'Aleppo', 'Sahara']),
+            'embarkation_place' => $this->faker->randomElement(['Libya', 'Roubaix', 'Tunisia', 'Algeria']),
             'destination' => $this->faker->randomElement(['France', 'Spain', 'Italy', 'Greece']),
-            'travel_start' => $this->faker->date("Y-m-d", $max = '-2 years'),
-            'travel_end' => $this->faker->date("Y-m-d", $min = '-2 years', $max='now'),
-            'health_control_place' => $this->faker->city,
-            'health_control_date' => $this->faker->date("Y-m-d", $max = 'now'),
             'route' => Route::inRandomOrder()->first()->id,
             'residence' => Country::inRandomOrder()->first()->id,
-
 
         ];
     }
