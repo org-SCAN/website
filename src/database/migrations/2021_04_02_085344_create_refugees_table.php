@@ -32,7 +32,8 @@ class CreateRefugeesTable extends Migration
             $table->uuid("id")
                 ->unique()
                 ->primary();
-            $table->date("date");
+            $table->date("date")
+                ->default()->useCurrent();
             $table->boolean("deleted")->default(0);
             $table->timestamps();
             foreach ($array_json as $field) {
