@@ -26,8 +26,11 @@ class ManageRefugeesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(StoreRefugeeRequest $request)
     {
+        if (!$request->user()->hasTeamPermission($request->user()->currentTeam, 'read')) {
+            abort(401,"You cannot read!");
+        }
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $refugees = Refugee::where("deleted", 0)
