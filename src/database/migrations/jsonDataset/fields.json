@@ -243,15 +243,15 @@
         "title":"Place of Detention",
         "label":"detention_place",
         "placeholder":"Aleppo",
-        "html_data_type":"date",
+        "html_data_type":"text",
         "android_type":"EditText",
         "linked_list":"",
         "required":3,
         "status":2,
         "attribute":"",
-        "database_type":"date",
+        "database_type":"string",
         "order" : 12,
-        "validation_laravel" : "date|nullable"
+        "validation_laravel" : "string|nullable"
     },
     {
         "title":"Place of embarkation",
