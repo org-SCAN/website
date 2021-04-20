@@ -17,6 +17,7 @@ class CreateUserRolesTable extends Migration
             $table->uuid("id");
             $table->string("role");
             $table->boolean("deleted")->default(0);
+            $table->integer("importance");
             $table->timestamps();
         });
     }

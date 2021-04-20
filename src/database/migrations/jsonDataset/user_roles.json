@@ -1,7 +1,10 @@
 [{
-    "role": "admin"
+    "role": "admin",
+    "importance": 3
 },{
-    "role": "editor"
+    "role": "editor",
+    "importance": 2
 },{
-    "role": "viewer"
+    "role": "viewer",
+    "importance": 1
 }]

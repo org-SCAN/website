@@ -72,6 +72,23 @@ class User extends Authenticatable
         $this->token = Crypt::encryptString(md5($this->id).$token);
         $this->save();
     }
+
+    public function genRole()
+    {
+        $users = User::all();
+        $userAdmin = User::where("role",UserRole::orderBy("importance","desc")->first()->id)->get();
+        if($users->isEmpty() || $userAdmin->isEmpty() ){
+            $this->role=UserRole::orderBy("importance","desc")->first()->id;
+        }
+        else {
+
+            $this->role=UserRole::orderBy("importance")->first()->id;
+
+        }
+
+        $this->save();
+    }
+
     public function getToken()
     {
         $encrypted_token = $this->token;

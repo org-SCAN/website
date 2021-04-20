@@ -6,8 +6,7 @@ use App\Http\Requests\StoreUser;
 use App\Http\Requests\UpdateUsers;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Support\Facades\Gate;
-use Symfony\Component\HttpFoundation\Response;
+
 
 class ManageUsers extends Controller
 {

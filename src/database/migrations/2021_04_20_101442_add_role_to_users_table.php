@@ -14,7 +14,7 @@ class AddRoleToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignUuid("role");
+            $table->foreignUuid("role")->nullable();
         });
     }
 
