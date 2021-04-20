@@ -26,7 +26,7 @@ class StoreLinkRequest extends FormRequest
         return [
             "refugee1" => "Required|uuid|exists:refugees,id",
             "refugee2" => "Required|uuid|exists:refugees,id|different:refugee1",
-            "relation" => "Required|uuid|exists:roles,id",
+            "relation" => "Required|uuid|exists:relations,id",
         ];
     }
 }

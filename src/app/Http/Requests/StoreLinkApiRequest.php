@@ -4,16 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreLinkApiRequest extends FormRequest
+class StoreLinkApiRequest extends StoreLinkRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+
+    public function validationData()
     {
-        return false;
+        return $this->json()->all();
     }
 
     /**
@@ -24,7 +20,11 @@ class StoreLinkApiRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "*.refugee1_full_name" => "Required|string|exists:refugees,full_name",
+            "*.refugee1_unique_id" => "Required|string|exists:refugees,unique_id",
+            "*.refugee2_full_name" => "Required|string|exists:refugees,full_name",
+            "*.refugee2_unique_id" => "Required|string|exists:refugees,unique_id",
+            "*.relation" => "Required|uuid|exists:relations,id",
         ];
     }
 }
