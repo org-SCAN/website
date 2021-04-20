@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreLinkRequest;
 use App\Http\Requests\UpdateLinkRequest;
 use App\Models\Link;
+use App\Models\ListControl;
 use App\Models\Refugee;
-use App\Models\Role;
+use App\Models\Relation;
 use Illuminate\Http\Request;
 
 class LinkController extends Controller
@@ -30,7 +31,7 @@ class LinkController extends Controller
     public function create()
     {
         $lists["refugees"] = array_column(Refugee::where("deleted",0)->get()->toArray(), "full_name", "id");
-        $lists["relations"] = array_column(Role::where("deleted",0)->get()->toArray(), "short", "id");
+        $lists["relations"] = array_column(Relation::where("deleted",0)->get()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
         return view("links.create", compact("lists"));
     }
 
@@ -67,7 +68,7 @@ class LinkController extends Controller
     public function edit($id)
     {
         $link = Link::find($id);
-        $lists["relations"] = [$link->getRelationId() => $link->relation]+array_column(Role::where("deleted",0)->get()->toArray(), "short", "id");
+        $lists["relations"] = [$link->getRelationId() => $link->relation]+array_column(Relation::where("deleted",0)->get()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
         return view("links.edit", compact("link","lists"));
     }
 

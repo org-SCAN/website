@@ -18,5 +18,10 @@
         "title" : "Role",
         "name" : "Role",
         "displayed_value" : "short"
+    },
+    {
+        "title" : "Relation",
+        "name" : "Relation",
+        "displayed_value" : "name"
     }
 ]

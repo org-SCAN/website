@@ -33,7 +33,7 @@ class CreateFieldsTable extends Migration
                 ->nullable();
             $table->string( "html_data_type");
             $table->string( "database_type");
-            $table->string( "UI_type");
+            $table->string( "android_type");
             $table->string( "linked_list")
                 ->nullable();
             $table->integer( "status");
