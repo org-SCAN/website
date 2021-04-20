@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Refugee extends Model
 {
@@ -52,6 +53,23 @@ class Refugee extends Model
     public function getNationalityId(){
         return $this->attributes['nationality'];
     }
+
+    /**
+     * Store the country id accorting its key or its ISO3 contry code
+     * @param $value
+     */
+
+    public function setNationalityAttribute($value){
+        if(Str::isUuid($value)){
+            $this->attributes["nationality"] = $value;
+        }
+        else{
+            if(preg_match('/[A-Z]{3}/', $value)){
+                $this->attributes["nationality"] = Country::where("ISO3",$value)->first()->id;
+            }
+        }
+    }
+
     /**
      * Indicate the role according the UUID stored in DB
      * @param $value Is the id of the element
