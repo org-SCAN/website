@@ -108,9 +108,11 @@ class LinkController extends Controller
     {
         if($request->user()->tokenCan("update")){
             foreach ($request->validated() as $link){
-                $link->refugee1 = Refugee::where("full_name", $link->refugee1_full_name)->where("unique_id", $link->refugee1_unique_id)->first()->id;
-                $link->refugee2 = Refugee::where("full_name", $link->refugee2_full_name)->where("unique_id", $link->refugee2_unique_id)->first()->id;
-                $stored_link = Link::create($link);
+                $relation["refugee1"] = Refugee::where("full_name", $link["refugee1_full_name"])->where("unique_id", $link["refugee1_unique_id"])->first()->id;
+                $relation["refugee2"] = Refugee::where("full_name", $link["refugee2_full_name"])->where("unique_id", $link["refugee2_unique_id"])->first()->id;
+                $relation["relation"] = $link["relation"];
+
+                $stored_link = Link::create($relation);
                 if(!$stored_link->exists){
                     return response("Error while creating this refugee :".json_encode($link), 500);
                 }

@@ -76,6 +76,141 @@ Réponse du serveur :
     ]
 }
 ```
+## Add refugees :
+
+Il faut maintenant envoyer une requête post avec le json à l'intérieur :
+
+Exemple :
+
+```
+POST /api/manage_refugees HTTP/1.1
+Host: 15.236.237.200:80
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer YOUR_API_TOKEN
+Content-Length: 256
+
+[
+    {
+    "unique_id" : "ABC-000001",
+    "full_name" : "full name",
+    "country" : "NIGER",
+    "date" : "2021-04-12"
+    },
+    {
+    "unique_id" : "ABC-000002",
+    "full_name" : "full name",
+    "country" : "NIGER",
+    "date" : "2021-04-12"
+    }
+]
+```
+
+Le serveur répondra une erreur si la donnée envoyée n'est pas valide, je détaillerai plus tard comment et ce que vous pouvez en faire, sinon un message de succès est envoyé.
+
+## API post Link
+
+L'API post permet aussi d'envoyer la liste des relations. Pour l'utiliser il faut :
+
+- Que les deux refugees (personnes) soient déjà présente dans la database. Autrement dit, il faut d'abord effectuer une requete POST add refugee
+- Préciser le `full_name` et le `unique_id de chaque personne
+- Préciser une relation appartenant à la liste des relations prédéfinies.
+
+```
+POST /api/links HTTP/1.1
+Host: 15.236.237.200:80
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer YOUR_API_TOKEN
+Content-Length: 249
+
+[
+    {
+    "refugee1_unique_id" : "ABC-000008",
+    "refugee1_full_name" : "INSERT FROM API 1",
+    "refugee2_unique_id" : "ABC-000009",
+    "refugee2_full_name" : "INSERT FROM API 2",
+    "relation" : "3ebf36e0-82b1-423b-98b5-ee5ec52223b5"
+    }
+]
+```
+
+### Erreurs possibles : 
+
+Si les données fournies ne sont pas bonnes, le serveur renvoie une erreur de type `422` :
+
+```
+{
+    "message": "The given data was invalid.",
+    "errors": {
+        "0.refugee1_full_name": [
+            "The 0.refugee1_full_name field is required."
+        ],
+        "1.refugee1_full_name": [
+            "The 1.refugee1_full_name field is required."
+        ],
+        "2.refugee1_full_name": [
+            "The 2.refugee1_full_name field is required."
+        ],
+        "3.refugee1_full_name": [
+            "The 3.refugee1_full_name field is required."
+        ],
+        "0.refugee1_unique_id": [
+            "The 0.refugee1_unique_id field is required."
+        ],
+        "1.refugee1_unique_id": [
+            "The 1.refugee1_unique_id field is required."
+        ],
+        "2.refugee1_unique_id": [
+            "The 2.refugee1_unique_id field is required."
+        ],
+        "3.refugee1_unique_id": [
+            "The 3.refugee1_unique_id field is required."
+        ],
+        "0.refugee2_full_name": [
+            "The 0.refugee2_full_name field is required."
+        ],
+        "1.refugee2_full_name": [
+            "The 1.refugee2_full_name field is required."
+        ],
+        "2.refugee2_full_name": [
+            "The 2.refugee2_full_name field is required."
+        ],
+        "3.refugee2_full_name": [
+            "The 3.refugee2_full_name field is required."
+        ],
+        "0.refugee2_unique_id": [
+            "The 0.refugee2_unique_id field is required."
+        ],
+        "1.refugee2_unique_id": [
+            "The 1.refugee2_unique_id field is required."
+        ],
+        "2.refugee2_unique_id": [
+            "The 2.refugee2_unique_id field is required."
+        ],
+        "3.refugee2_unique_id": [
+            "The 3.refugee2_unique_id field is required."
+        ],
+        "0.relation": [
+            "The 0.relation field is required."
+        ],
+        "1.relation": [
+            "The 1.relation field is required."
+        ],
+        "2.relation": [
+            "The 2.relation field is required."
+        ],
+        "3.relation": [
+            "The 3.relation field is required."
+        ]
+    }
+}
+```
+On retrouve le détail de tous les champs mal renseignés
+
+## Obtenir son API Token :
+
+Il faut se créer un compte sur le site puis se rendre dans profil. Ici il y a une section permettant de consulter son api token.
 
 ## Docker ou comment bosser de chez moi :
 
@@ -113,41 +248,7 @@ DB_USERNAME=user_example
 DB_PASSWORD=my_passwd
 ```
 
-## Add refugees :
 
-Il faut maintenant envoyer une requête post avec le json à l'intérieur :
-
-Exemple :
-
-```
-POST /api/manage_refugees HTTP/1.1
-Host: 15.236.237.200:80
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer YOUR_API_TOKEN
-Content-Length: 256
-
-[
-    {
-    "unique_id" : "ABC-000001",
-    "full_name" : "full name",
-    "country" : "NIGER",
-    "date" : "2021-04-12"
-    },
-    {
-    "unique_id" : "ABC-000002",
-    "full_name" : "full name",
-    "country" : "NIGER",
-    "date" : "2021-04-12"
-    }
-]
-```
-
-Le serveur répondra une erreur si la donnée envoyée n'est pas valide, je détaillerai plus tard comment et ce que vous pouvez en faire, sinon un message de succès est envoyé.
-
-## Obtenir son API Token :
-
-Il faut se créer un compte sur le site puis se rendre dans profil. Ici il y a une section permettant de consulter son api token.
 # Lancement de Laravel
 
 Après avoir exécuté `./start_laravel`, il faut se connecter à ce conteneur et exécuter les commandes suivantes :
