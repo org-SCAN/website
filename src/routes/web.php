@@ -29,3 +29,4 @@ Route::resource("manage_refugees", \App\Http\Controllers\ManageRefugeesControlle
 Route::resource("fields", \App\Http\Controllers\FieldsController::class);
 Route::resource("lists_control", \App\Http\Controllers\ListControlController::class);
 Route::resource("links", \App\Http\Controllers\LinkController::class);
+Route::resource("user", \App\Http\Controllers\ManageUsers::class);
