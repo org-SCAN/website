@@ -19,4 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->post('/manage_refugees', "\App\Http\Controllers\ManageRefugeesController@handleApiRequest");
+Route::middleware('auth:sanctum')->post('/links', "\App\Http\Controllers\LinksController@handleApiRequest");
 Route::middleware('auth:sanctum')->get('/fields', "\App\Http\Controllers\FieldsController@handleApiRequest");
