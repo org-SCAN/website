@@ -25,9 +25,13 @@ Route::get('manage_refugees/create/{fields}', [
     'as' => 'manage_refugees.create',
     'uses' => 'ManageRefugeesController@create'
 ]);*/
-Route::get('manage_refugees/create_from_json', [
-    'as' => 'manage_refugees.create_from_json',
+Route::get('manage_refugees/json/create', [
+    'as' => 'manage_refugees.json.create',
     'uses' => '\App\Http\Controllers\ManageRefugeesController@createFromJson'
+]);
+Route::get('manage_refugees/json/store', [
+    'as' => 'manage_refugees.json.store',
+    'uses' => '\App\Http\Controllers\ManageRefugeesController@storesFromJson'
 ]);
 
 Route::resource("manage_refugees", \App\Http\Controllers\ManageRefugeesController::class);
