@@ -20,11 +20,12 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
-/*
-Route::get('manage_refugees/create/{fields}', [
-    'as' => 'manage_refugees.create',
-    'uses' => 'ManageRefugeesController@create'
-]);*/
+
+Route::get('cytoscape', [
+    'as' => 'cytoscape.index',
+    'uses' => '\App\Http\Controllers\CytoscapeController@index'
+]);
+
 Route::get('manage_refugees/json/create', [
     'as' => 'manage_refugees.json.create',
     'uses' => '\App\Http\Controllers\ManageRefugeesController@createFromJson'
