@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FileRefugeeRequest;
 use App\Http\Requests\StoreRefugeeApiRequest;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
@@ -65,12 +66,12 @@ class ManageRefugeesController extends Controller
     {
 
         $refugee = $request->validated();
-        /*
+
         $refugee["flight_disease"] = ((isset($refugee["flight_disease"]) && $refugee["flight_disease"] == "on") ? 1 : 0);
         $refugee["flight_boarded"] = ((isset($refugee["flight_boarded"]) && $refugee["flight_boarded"] == "on") ? 1 : 0);
 
         $new_ref = Refugee::create($refugee);
-           */
+
         return redirect()->route("manage_refugees.index");
     }
 
@@ -80,10 +81,11 @@ class ManageRefugeesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeFromJson(StoreRefugeeRequest $request)
+    public function storeFromJson(FileRefugeeRequest $request)
     {
 
-       $refugee = $request->validated();
+        $file = $request->validated();
+        die(var_dump($file));
         $refugee["flight_disease"] = ((isset($refugee["flight_disease"]) && $refugee["flight_disease"] == "on") ? 1 : 0);
         $refugee["flight_boarded"] = ((isset($refugee["flight_boarded"]) && $refugee["flight_boarded"] == "on") ? 1 : 0);
 
