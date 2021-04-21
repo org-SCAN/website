@@ -2,29 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class FileRefugeeRequest extends FormRequest
+class FileRefugeeRequest extends StoreRefugeeApiRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+    public function validationData()
     {
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-        return [
-            "refugee_json" => "required|file|mimes:json"
-        ];
+        return json_decode($this->refugee_json->getContent(), true);
     }
 }

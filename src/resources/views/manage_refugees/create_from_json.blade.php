@@ -47,7 +47,7 @@
                             </div>
 
 
-                            @error("refugee_json")
+                            @error("*")
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
