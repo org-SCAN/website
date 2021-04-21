@@ -38,6 +38,7 @@ class CreateNewUser implements CreatesNewUsers
             ]), function (User $user) {
                 $this->createTeam($user);
                 $user->genToken();
+                $user->genRole();
             });
         });
     }

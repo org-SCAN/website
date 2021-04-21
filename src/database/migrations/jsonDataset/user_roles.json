@@ -1,0 +1,10 @@
+[{
+    "role": "admin",
+    "importance": 3
+},{
+    "role": "editor",
+    "importance": 2
+},{
+    "role": "viewer",
+    "importance": 1
+}]
