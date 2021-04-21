@@ -25,6 +25,11 @@ Route::get('manage_refugees/create/{fields}', [
     'as' => 'manage_refugees.create',
     'uses' => 'ManageRefugeesController@create'
 ]);*/
+Route::get('manage_refugees/create_from_json', [
+    'as' => 'manage_refugees.create_from_json',
+    'uses' => '\App\Http\Controllers\ManageRefugeesController@createFromJson'
+]);
+
 Route::resource("manage_refugees", \App\Http\Controllers\ManageRefugeesController::class);
 Route::resource("fields", \App\Http\Controllers\FieldsController::class);
 Route::resource("lists_control", \App\Http\Controllers\ListControlController::class);

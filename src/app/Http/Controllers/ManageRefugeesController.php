@@ -2,20 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Field;
+use App\Http\Requests\StoreRefugeeApiRequest;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
-use App\Http\Requests\StoreRefugeeApiRequest;
-use App\Models\ListControl;
-use App\Traits\Uuids;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
-use PhpParser\Node\Expr\Array_;
-use Symfony\Component\HttpFoundation\Response;
-use App\Models\Refugee;
+use App\Models\Field;
 use App\Models\Link;
-use Illuminate\Support\Facades\View;
+use App\Models\Refugee;
 
 
 class ManageRefugeesController extends Controller
@@ -50,6 +42,17 @@ class ManageRefugeesController extends Controller
             ->orderBy("order")
             ->get();
         return view("manage_refugees.create", compact("fields"));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createFromJson()
+    {
+        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return view("manage_refugees.create_from_json");
     }
 
     /**
