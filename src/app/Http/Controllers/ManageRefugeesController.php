@@ -85,7 +85,27 @@ class ManageRefugeesController extends Controller
     {
 
         $file = $request->validated();
-        die(var_dump($file));
+        $this->storeJsonContent($request);
+        //die(var_dump($request->refugee_json->getContent()));
+        $refugee["flight_disease"] = ((isset($refugee["flight_disease"]) && $refugee["flight_disease"] == "on") ? 1 : 0);
+        $refugee["flight_boarded"] = ((isset($refugee["flight_boarded"]) && $refugee["flight_boarded"] == "on") ? 1 : 0);
+
+        $new_ref = Refugee::create($refugee);
+
+        return redirect()->route("manage_refugees.index");
+    }
+    /**
+     * Store a newly created resource from json file in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeJsonContent(StoreRefugeeApiRequest $request)
+    {
+
+        $file = $request->validated();
+
+        die(var_dump($request->refugee_json->getContent()));
         $refugee["flight_disease"] = ((isset($refugee["flight_disease"]) && $refugee["flight_disease"] == "on") ? 1 : 0);
         $refugee["flight_boarded"] = ((isset($refugee["flight_boarded"]) && $refugee["flight_boarded"] == "on") ? 1 : 0);
 

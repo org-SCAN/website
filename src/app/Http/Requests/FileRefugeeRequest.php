@@ -24,7 +24,7 @@ class FileRefugeeRequest extends FormRequest
     public function rules()
     {
         return [
-            "refugee-json" => "required|file|mimes:json"
+            "refugee_json" => "required|file|mimes:json"
         ];
     }
 }
