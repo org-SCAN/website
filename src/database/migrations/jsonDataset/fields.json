@@ -273,7 +273,7 @@
         "placeholder":"",
         "html_data_type":"text",
         "android_type":"AutoCompleteTextView",
-        "linked_list":"Country",
+        "linked_list":"",
         "required":2,
         "status":2,
         "attribute":"",
