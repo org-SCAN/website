@@ -14,23 +14,35 @@
                             <label for="refugee-json" class="block font-medium text-sm text-gray-700">
                                 Update a json file
                             </label>
-                            <div class="m-3 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                                <div class="space-y-1 text-center">
-                                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                    <div class="flex text-sm text-gray-600">
-                                        <label for="refugee-json" class="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                                            <span>Upload a file</span>
-                                            <input id="refugee-json" name="refugee-json" type="file" class="sr-only">
-                                        </label>
-                                        <p class="pl-1">or drag and drop</p>
-                                    </div>
-                                    <p class="text-xs text-gray-500">
-                                        Accepted format : JSON
-                                    </p>
+                            <div class="flex flex-col flex-grow mb-3">
+                                <div x-data="{ files: null }" id="FileUpload" class="block w-full py-2 px-3 relative bg-white appearance-none border-2 border-gray-300 border-solid rounded-md hover:shadow-outline-gray">
+                                    <input type="file" multiple
+                                           class="absolute inset-0 z-50 m-0 p-0 w-full h-full outline-none opacity-0"
+                                           x-on:change="files = $event.target.files; console.log($event.target.files);"
+                                           x-on:dragover="$el.classList.add('active')" x-on:dragleave="$el.classList.remove('active')" x-on:drop="$el.classList.remove('active')"
+                                    >
+                                    <template x-if="files !== null">
+                                        <div class="flex flex-col space-y-1">
+                                            <template x-for="(_,index) in Array.from({ length: files.length })">
+                                                <div class="flex flex-row items-center space-x-2">
+                                                    <template x-if="files[index].type.includes('application/')"><i class="far fa-file-alt fa-fw"></i></template>
+                                                    <span class="font-medium text-gray-900" x-text="files[index].name">Uploading</span>
+                                                    <span class="text-xs self-end text-gray-500" x-text="filesize(files[index].size)">...</span>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </template>
+                                    <template x-if="files === null">
+                                        <div class="flex flex-col space-y-2 items-center justify-center">
+                                            <i class="fas fa-cloud-upload-alt fa-3x text-currentColor"></i>
+                                            <p class="text-gray-700">Drag your files here or click in this area.</p>
+                                            <a href="javascript:void(0)" class="flex items-center mx-auto py-2 px-4 text-white text-center font-medium border border-transparent rounded-md outline-none bg-red-700">Select a file</a>
+                                        </div>
+                                    </template>
                                 </div>
                             </div>
+
+
                             @error("refugee-json")
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
