@@ -21,6 +21,7 @@
         "tailwindcss": "^2.0.1"
     },
     "dependencies": {
-        "cytoscape-edgehandles": "^3.6.0"
+        "cytoscape-edgehandles": "^3.6.0",
+        "cytoscape-klay": "^3.1.4"
     }
 }
