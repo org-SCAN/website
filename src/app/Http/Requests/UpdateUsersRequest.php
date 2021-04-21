@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUser extends FormRequest
+class UpdateUsersRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class StoreUser extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('user_access');
+        return true;
     }
 
     /**
@@ -24,21 +24,18 @@ class StoreUser extends FormRequest
     public function rules()
     {
         return [
-            'name'     => [
+            'name'    => [
                 'string',
                 'required',
             ],
-            'email'    => [
+            'email'   => [
                 'required',
-                'unique:users',
+                'unique:users,email,' . request()->route('user')->id,
             ],
-            'password' => [
-                'required',
-            ],
-            'roles.*'  => [
+            'roles.*' => [
                 'integer',
             ],
-            'roles'    => [
+            'roles'   => [
                 'required',
                 'array',
             ],

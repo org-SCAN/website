@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUser;
-use App\Http\Requests\UpdateUsers;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUsersRequest;
 use App\Models\Field;
 use App\Models\Refugee;
 use App\Models\User;
@@ -45,7 +45,7 @@ class ManageUsers extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUser $request)
+    public function store(StoreUserRequest $request)
     {
         //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         User::create($request->validated());
@@ -94,7 +94,7 @@ class ManageUsers extends Controller
      * @param $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUsers $request, $id)
+    public function update(UpdateUsersRequest $request, $id)
     {
         $id->update($request->validated());
         //$user->roles()->sync($request->input('roles', []));
