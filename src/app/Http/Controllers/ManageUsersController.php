@@ -9,7 +9,7 @@ use App\Models\Refugee;
 use App\Models\User;
 
 
-class ManageUsers extends Controller
+class ManageUsersController extends Controller
 {
     /**
      * Display a listing of the resource.
