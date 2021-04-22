@@ -6,16 +6,7 @@ use App\Models\Field;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
 use App\Http\Requests\StoreRefugeeApiRequest;
-use App\Models\ListControl;
-use App\Traits\Uuids;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
-use PhpParser\Node\Expr\Array_;
-use Symfony\Component\HttpFoundation\Response;
 use App\Models\Refugee;
-use App\Models\Link;
-use Illuminate\Support\Facades\View;
 
 
 class ManageRefugeesController extends Controller
@@ -76,17 +67,18 @@ class ManageRefugeesController extends Controller
      * @param  String  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(String $id)
+    public function show($user)
     {
+        return view('users.show', compact('user'));
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $fields = Field::where("status", ">", 0)
+       /** $fields = Field::where("status", ">", 0)
             ->orderBy("required")
             ->orderBy("order")
             ->get();
         $refugee = Refugee::find($id);
         $links = Link::where("deleted",0)->where("refugee1", $id)->orWhere("refugee2", $id)->get();
 
-        return view("manage_refugees.show", compact("refugee", "fields", "links"));
+        return view("manage_refugees.show", compact("refugee", "fields", "links"));*/
     }
 
     /**

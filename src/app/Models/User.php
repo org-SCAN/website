@@ -27,7 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', "token"
+        'name', 'email', 'password', "token", "role"
     ];
 
     /**
@@ -52,14 +52,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'profile_photo_url',
-    ];
+
 
     /**
      * Create a personal Token API.
@@ -97,4 +90,5 @@ class User extends Authenticatable
         $unsalt = preg_replace('/'.md5($id).'/', '', $decypted, 1);
         return preg_replace('/[0-9]+\|/', '', $unsalt, 1);
     }
+
 }
