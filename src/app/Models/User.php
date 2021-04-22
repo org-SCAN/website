@@ -52,7 +52,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Indicate the role of the user according the UUID stored in DB
+     * @param $value Is the id of the element
+     * @return String
+     */
+    public function getRoleAttribute($value){
+        $user_role = UserRole::find($value);
+        return empty($user_role) ? "" : $user_role->role;
+    }
 
+    /**
+     * Indicate the the UUID stored in DB
+     * @param $value Is the id of the element
+     * @return String
+     */
+    public function getRoleId(){
+        return $this->attributes['role'];
+    }
 
     /**
      * Create a personal Token API.
@@ -90,5 +107,6 @@ class User extends Authenticatable
         $unsalt = preg_replace('/'.md5($id).'/', '', $decypted, 1);
         return preg_replace('/[0-9]+\|/', '', $unsalt, 1);
     }
+
 
 }
