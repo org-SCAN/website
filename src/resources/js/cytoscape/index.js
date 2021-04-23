@@ -30,17 +30,43 @@ function drawGraph(){
                         'width': 3,
                         'line-color': '#ccc',
                         'target-arrow-color': '#ccc',
-                        'label': 'data(label)',
                         'target-arrow-shape': 'triangle',
                         'curve-style': 'bezier'
                     }
                 },
-
                 {
                     selector: 'edge[label = "Saw"]',
                     style: {
                         'line-color': '#ff0000',
                         'target-arrow-color': '#ff0000'
+                    }
+                },
+                {
+                    selector: 'edge[label = "Biological relationship"]',
+                    style: {
+                        'line-color': '#0099ff',
+                        'target-arrow-color': '#0099ff'
+                    }
+                },
+                {
+                    selector: 'edge[label = "Travelled with"]',
+                    style: {
+                        'line-color': '#00ff2a',
+                        'target-arrow-color': '#00ff2a'
+                    }
+                },
+                {
+                    selector: 'edge[label = "Service"]',
+                    style: {
+                        'line-color': '#7e00ff',
+                        'target-arrow-color': '#7e00ff'
+                    }
+                },
+                {
+                    selector: 'edge[label = "Non-biological relationship"]',
+                    style: {
+                        'line-color': '#cbaf1d',
+                        'target-arrow-color': '#cbaf1d'
                     }
                 }
             ],
