@@ -34,11 +34,19 @@
                         </div>
 
                         <div class="px-4 py-5 bg-white sm:p-6">
-                            <label for="password" class="block font-medium text-sm text-gray-700">Password</label>
-                            <input type="password" name="password" id="password" class="form-input rounded-md shadow-sm mt-1 block w-full" />
-                            @error('password')
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            <label for="role" class="block font-medium text-sm text-gray-700">Role</label>
+
+
+                            <div class="list-group">
+                                     @foreach($user = \App\Models\UserRole::get() as $rols)
+                                        @if(($rols->id) == ($user_found->role))
+                                            <a href="#" class="list-group-item list-group-item-action active">{{$rols->role}}</a>
+                                     @else
+                                        <a href="#" class="list-group-item list-group-item-action ">{{$rols->role}} </a>
+                                        @endif
+                                    @endforeach
+                            </div>
+
                         </div>
 
 
