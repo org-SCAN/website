@@ -1,89 +1,83 @@
-let cytoscape = require('cytoscape');
-let edgehandles = require('cytoscape-edgehandles');
+import cytoscape from 'cytoscape';
+import dagre from 'cytoscape-dagre';
+import $ from "jquery";
 
-cytoscape.use( edgehandles ); // register extension
+cytoscape.use( dagre );
 
-let cy = cytoscape({
-    container: document.getElementById('#cy'),
-    /* ... */
-});
+function testJson(){
+    $.getJSON('/content.json', function(data){
+        console.log(data)
+    });
+}
+function drawGraph(){
+    $.getJSON('/content.json', function(data){
+        var cy = cytoscape({
 
-// the default values of each option are outlined below:
-let defaults = {
-    preview: true, // whether to show added edges preview before releasing selection
-    hoverDelay: 150, // time spent hovering over a target node before it is considered selected
-    handleNodes: 'node', // selector/filter function for whether edges can be made from a given node
-    snap: false, // when enabled, the edge can be drawn by just moving close to a target node
-    snapThreshold: 50, // the target node must be less than or equal to this many pixels away from the cursor/finger
-    snapFrequency: 15, // the number of times per second (Hz) that snap checks done (lower is less expensive)
-    noEdgeEventsInDraw: false, // set events:no to edges during draws, prevents mouseouts on compounds
-    disableBrowserGestures: true, // during an edge drawing gesture, disable browser gestures such as two-finger trackpad swipe and pinch-to-zoom
-    handlePosition: function( node ){
-        return 'middle top'; // sets the position of the handle in the format of "X-AXIS Y-AXIS" such as "left top", "middle top"
-    },
-    handleInDrawMode: false, // whether to show the handle in draw mode
-    edgeType: function( sourceNode, targetNode ){
-        // can return 'flat' for flat edges between nodes or 'node' for intermediate node between them
-        // returning null/undefined means an edge can't be added between the two nodes
-        return 'flat';
-    },
-    loopAllowed: function( node ){
-        // for the specified node, return whether edges from itself to itself are allowed
-        return false;
-    },
-    nodeLoopOffset: -50, // offset for edgeType: 'node' loops
-    nodeParams: function( sourceNode, targetNode ){
-        // for edges between the specified source and target
-        // return element object to be passed to cy.add() for intermediary node
-        return {};
-    },
-    edgeParams: function( sourceNode, targetNode, i ){
-        // for edges between the specified source and target
-        // return element object to be passed to cy.add() for edge
-        // NB: i indicates edge index in case of edgeType: 'node'
-        return {};
-    },
-    ghostEdgeParams: function(){
-        // return element object to be passed to cy.add() for the ghost edge
-        // (default classes are always added for you)
-        return {};
-    },
-    show: function( sourceNode ){
-        // fired when handle is shown
-    },
-    hide: function( sourceNode ){
-        // fired when the handle is hidden
-    },
-    start: function( sourceNode ){
-        // fired when edgehandles interaction starts (drag on handle)
-    },
-    complete: function( sourceNode, targetNode, addedEles ){
-        // fired when edgehandles is done and elements are added
-    },
-    stop: function( sourceNode ){
-        // fired when edgehandles interaction is stopped (either complete with added edges or incomplete)
-    },
-    cancel: function( sourceNode, cancelledTargets ){
-        // fired when edgehandles are cancelled (incomplete gesture)
-    },
-    hoverover: function( sourceNode, targetNode ){
-        // fired when a target is hovered
-    },
-    hoverout: function( sourceNode, targetNode ){
-        // fired when a target isn't hovered anymore
-    },
-    previewon: function( sourceNode, targetNode, previewEles ){
-        // fired when preview is shown
-    },
-    previewoff: function( sourceNode, targetNode, previewEles ){
-        // fired when preview is hidden
-    },
-    drawon: function(){
-        // fired when draw mode enabled
-    },
-    drawoff: function(){
-        // fired when draw mode disabled
-    }
-};
+            container: document.getElementById('cy'), // container to render in
+            elements: data,
+            style: [ // the stylesheet for the graph
+                {
+                    selector: 'node',
+                    style: {
+                        'background-color': '#666',
+                        'label': 'data(name)'
+                    }
+                },
 
-let eh = cy.edgehandles( defaults );
+                {
+                    selector: 'edge',
+                    style: {
+                        'width': 3,
+                        'line-color': '#ccc',
+                        'target-arrow-color': '#ccc',
+                        'target-arrow-shape': 'triangle',
+                        'curve-style': 'bezier'
+                    }
+                }
+            ],
+        })
+        var defaults = {
+            // dagre algo options, uses default value on undefined
+            nodeSep: undefined, // the separation between adjacent nodes in the same rank
+            edgeSep: undefined, // the separation between adjacent edges in the same rank
+            rankSep: undefined, // the separation between each rank in the layout
+            rankDir: undefined, // 'TB' for top to bottom flow, 'LR' for left to right,
+            ranker: undefined, // Type of algorithm to assign a rank to each node in the input graph. Possible values: 'network-simplex', 'tight-tree' or 'longest-path'
+            minLen: function (edge) {
+                return 1;
+            }, // number of ranks to keep between the source and target of the edge
+            edgeWeight: function (edge) {
+                return 1;
+            }, // higher weight edges are generally made shorter and straighter than lower weight edges
+
+            // general layout options
+            fit: true, // whether to fit to viewport
+            padding: 30, // fit padding
+            spacingFactor: undefined, // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
+            nodeDimensionsIncludeLabels: false, // whether labels should be included in determining the space used by a node
+            animate: false, // whether to transition the node positions
+            animateFilter: function (node, i) {
+                return true;
+            }, // whether to animate specific nodes when animation is on; non-animated nodes immediately go to their final positions
+            animationDuration: 500, // duration of animation in ms if enabled
+            animationEasing: undefined, // easing of animation if enabled
+            boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+            transform: function (node, pos) {
+                return pos;
+            }, // a function that applies a transform to the final node position
+            ready: function () {
+            }, // on layoutready
+            stop: function () {
+            } // on layoutstop
+        };
+
+        cy.layout({
+            name: "dagre",
+            defaults
+        }).run();
+
+    });
+}
+
+drawGraph();
+

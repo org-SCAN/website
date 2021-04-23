@@ -5,13 +5,9 @@
         </h2>
     </x-slot><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
 
-    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
 
-    <!-- for testing with local version of cytoscape.js -->
-    <!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
-    <script src="cytoscape-edgehandles.js"></script>
 
     <style>
         body {
@@ -41,92 +37,51 @@
             z-index: 99999;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2.3.2/cytoscape-dagre.min.js"></script>
-    <script>
-        cytoscape.use(cytoscapeDagre);
+    <?php
+    $refugees = \App\Models\Refugee::where('deleted',0)->get();
+    $relations = \App\Models\Link::where('deleted',0)->get();
+/*
+    $nodes = array();
+    foreach ($refugees as $refugee){
+        $node["data"] = array();
+        $node["data"]["id"] = $refugee->id;
+        $node["data"]["name"] = $refugee->full_name;
+        array_push($nodes, $node);
+    }*/
 
-        document.addEventListener('DOMContentLoaded', function(){
+    $links = array();
+    $nodes = array();
+    foreach ($relations as $relation){
 
-            var cy = cytoscape({
+        $node["data"] = array();
+        $node["data"]["id"] = $relation->getRefugee1Id();
+        $node["data"]["name"] = $relation->refugee1;
+        array_push($nodes, $node);
 
-                container: document.getElementById('cy'), // container to render in
+        $node["data"] = array();
+        $node["data"]["id"] = $relation->getRefugee2Id();
+        $node["data"]["name"] = $relation->refugee2;
+        array_push($nodes, $node);
 
-                elements: [ // list of graph elements to start with
-                    @foreach(\App\Models\Link::where("deleted", 0)->get() as $relation)
-                        { // node a
-                            data: { id: '{{$relation->getRefugee1Id()}}', name: '{{$relation->refugee1}}' }
-                        },
-                    @endforeach
-                    @foreach(\App\Models\Link::where("deleted", 0)->get() as $relation)
-                        { // node a
-                            data: { id: '{{$relation->getRefugee2Id()}}', name: '{{$relation->refugee2}}' }
-                        },
-                    @endforeach
-                    @foreach(\App\Models\Link::where("deleted", 0)->get() as $relation)
-                    { // edge ab
-                        data: { id: '{{$relation->id}}', source: '{{$relation->getRefugee1Id()}}', target: '{{$relation->getRefugee2Id()}}' }
-                    },
-                    @endforeach
-                ],
+        $link["data"] = array();
+        $link["data"]["id"] = $relation->id;
+        $link["data"]["source"] = $relation->getRefugee1Id();
+        $link["data"]["target"] = $relation->getRefugee2Id();
+        array_push($links, $link);
+    }
 
-                style: [ // the stylesheet for the graph
-                    {
-                        selector: 'node',
-                        style: {
-                            'background-color': '#666',
-                            'label': 'data(name)'
-                        }
-                    },
-
-                    {
-                        selector: 'edge',
-                        style: {
-                            'width': 3,
-                            'line-color': '#ccc',
-                            'target-arrow-color': '#ccc',
-                            'target-arrow-shape': 'triangle',
-                            'curve-style': 'bezier'
-                        }
-                    }
-                ],
-
-
-            });
-            cy.layout({
-                name: 'breadthfirst'
-            }).run();
-
-            var eh = cy.edgehandles();
-
-            document.querySelector('#draw-on').addEventListener('click', function() {
-                eh.enableDrawMode();
-            });
-
-            document.querySelector('#draw-off').addEventListener('click', function() {
-                eh.disableDrawMode();
-            });
-
-            document.querySelector('#start').addEventListener('click', function() {
-                eh.start( cy.$('node:selected') );
-            });
-
-        });
-    </script>
+   // file_put_contents("js/cytoscape/content.json",json_encode(array_merge($nodes, $links)));
+    Storage::disk('public')->put('content.json', json_encode(array_merge($nodes, $links)));
+    ?>
+    <script src="js/cytoscape/index.js"></script>
     </head>
 
     <body>
-    <h1>cytoscape-edgehandles demo</h1>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col">
                 <div id="cy"></div>
             </div>
         </div>
-    </div>
-
-    <div id="buttons">
-        <button id="start">Start on selected</button>
-        <button id="draw-on">Draw mode on</button>
-        <button id="draw-off">Draw mode off</button>
     </div>
 </x-app-layout>
