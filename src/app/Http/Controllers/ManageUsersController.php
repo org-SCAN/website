@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Models\Field;
+use App\Models\Link;
 use App\Models\Refugee;
 use App\Models\User;
 
@@ -59,12 +60,13 @@ class ManageUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(String $id)
     {
         //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $user_found = User::find($id);
 
-        return view('users.show', compact('id'));
+        $user = User::find($id);
+
+        return view("users.show", compact("user"));
 
     }
 
