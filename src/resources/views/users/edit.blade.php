@@ -3,12 +3,21 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Edit : <b>{{$user_found->name}}</b>
         </h2>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     </x-slot>
 
     <div>
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <a href="{{URL::previous() }}" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
+                <a href="{{ route('user.index') }}"
+                   class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded">Back to list</a>
+                <a href="{{URL::previous() }}"
+                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
+                <a type="submit"
+                        class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
+                    Delete
+                </a>
+
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <form method="post" action="{{ route('user.update', $user_found->id) }}">
@@ -17,8 +26,9 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="name" class="block font-medium text-sm text-gray-700">Name</label>
-                            <input type="text" name="name" id="name" class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                   value="{{ old('name', $user_found->name) }}" />
+                            <input type="text" name="name" id="name"
+                                   class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   value="{{ old('name', $user_found->name) }}"/>
                             @error('name')
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -26,8 +36,9 @@
 
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="email" class="block font-medium text-sm text-gray-700">Email</label>
-                            <input type="email" name="email" id="email" class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                   value="{{ old('email', $user_found->email) }}" />
+                            <input type="email" name="email" id="email"
+                                   class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   value="{{ old('email', $user_found->email) }}"/>
                             @error('email')
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -36,23 +47,40 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="role" class="block font-medium text-sm text-gray-700">Role</label>
 
+                            <div class="switch-toggle switch-3 switch-candy">
+                                @foreach($user = \App\Models\UserRole::get() as $rols)
+                                    @if(($rols->role) == ($user_found->role))
+                                        <input id="na" name="state-d" type="radio" checked="checked"/>
+                                        <button for="na" onclick="">{{$rols->role}}</button>
+                                    @else
+                                        <input id="on" name="state-d" type="radio" checked=""/>
+                                        <button for="on" onclick="">{{$rols->role}}</button>
+                                    @endif
+                                @endforeach
 
-                            <div class="list-group">
-                                     @foreach($user = \App\Models\UserRole::get() as $rols)
-                                        @if(($rols->id) == ($user_found->role))
-                                            <a href="#" class="list-group-item list-group-item-action active">{{$rols->role}}</a>
-                                     @else
-                                        <a href="#" class="list-group-item list-group-item-action ">{{$rols->role}} </a>
-                                        @endif
-                                    @endforeach
                             </div>
+                        </div>
+
+
+                        <div class="px-4 py-5 bg-white sm:p-6">
+
+                            <label for="role" class="block font-medium text-sm text-gray-700">Team</label>
+
+                            @foreach($user = \App\Models\Team::get() as $teams)
+                                    @if(($teams->id) == ($user_found->current_team_id))
+                                        <a class="dropdown-item active" href="#">{{$teams->name}}</a>
+                                    @else
+                                        <a class="dropdown-item" href="#">{{$teams->name}}</a>
+                                    @endif
+                                @endforeach
+
 
                         </div>
 
 
-
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
-                            <button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
+                            <button
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
                                 Edit
                             </button>
                         </div>
