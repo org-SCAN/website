@@ -30,8 +30,17 @@ function drawGraph(){
                         'width': 3,
                         'line-color': '#ccc',
                         'target-arrow-color': '#ccc',
+                        'label': 'data(label)',
                         'target-arrow-shape': 'triangle',
                         'curve-style': 'bezier'
+                    }
+                },
+
+                {
+                    selector: 'edge[label = "Saw"]',
+                    style: {
+                        'line-color': '#ff0000',
+                        'target-arrow-color': '#ff0000'
                     }
                 }
             ],
@@ -52,8 +61,8 @@ function drawGraph(){
 
             // general layout options
             fit: true, // whether to fit to viewport
-            padding: 30, // fit padding
-            spacingFactor: undefined, // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
+            padding: 100, // fit padding
+            spacingFactor: 100, // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
             nodeDimensionsIncludeLabels: false, // whether labels should be included in determining the space used by a node
             animate: false, // whether to transition the node positions
             animateFilter: function (node, i) {

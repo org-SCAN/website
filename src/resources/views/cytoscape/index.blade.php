@@ -65,6 +65,7 @@
 
         $link["data"] = array();
         $link["data"]["id"] = $relation->id;
+        $link["data"]["label"] = $relation->relation;
         $link["data"]["source"] = $relation->getRefugee1Id();
         $link["data"]["target"] = $relation->getRefugee2Id();
         array_push($links, $link);
