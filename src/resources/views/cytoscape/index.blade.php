@@ -41,8 +41,10 @@
             z-index: 99999;
         }
     </style>
-
+    <script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2.3.2/cytoscape-dagre.min.js"></script>
     <script>
+        cytoscape.use(cytoscapeDagre);
+
         document.addEventListener('DOMContentLoaded', function(){
 
             var cy = cytoscape({
@@ -50,9 +52,14 @@
                 container: document.getElementById('cy'), // container to render in
 
                 elements: [ // list of graph elements to start with
-                    @foreach(\App\Models\Refugee::where("deleted", 0)->get() as $refugee)
+                    @foreach(\App\Models\Link::where("deleted", 0)->get() as $relation)
                         { // node a
-                            data: { id: '{{$refugee->id}}' }
+                            data: { id: '{{$relation->getRefugee1Id()}}', name: '{{$relation->refugee1}}' }
+                        },
+                    @endforeach
+                    @foreach(\App\Models\Link::where("deleted", 0)->get() as $relation)
+                        { // node a
+                            data: { id: '{{$relation->getRefugee2Id()}}', name: '{{$relation->refugee2}}' }
                         },
                     @endforeach
                     @foreach(\App\Models\Link::where("deleted", 0)->get() as $relation)
@@ -67,7 +74,7 @@
                         selector: 'node',
                         style: {
                             'background-color': '#666',
-                            'label': 'data(id)'
+                            'label': 'data(name)'
                         }
                     },
 
@@ -83,12 +90,11 @@
                     }
                 ],
 
-                layout: {
-                    name: 'grid',
-                    rows: 1
-                }
 
             });
+            cy.layout({
+                name: 'breadthfirst'
+            }).run();
 
             var eh = cy.edgehandles();
 

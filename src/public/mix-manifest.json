@@ -1,4 +1,5 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/js/app.js": "/js/app.js?id=8bcd56598e21f46fdf8e",
+    "/js/cytoscape/index.js": "/js/cytoscape/index.js?id=005a7ece61c57ed7e476",
+    "/css/app.css": "/css/app.css?id=150f9fa1e06264daeea7"
 }
