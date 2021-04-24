@@ -20,61 +20,96 @@ Accept: application/json
 Content-Type: application/json
 ```
 
-Réponse du serveur :
+Exemple de réponse du serveur :
 ```
 {
-    "fields": [
-        {
-            "title": "Unique ID",
-            "label": "unique_id",
-            "placeholder": "AAA-000001",
-            "UI_type": "EditText",
-            "linked_list": "",
-            "required": "Auto generated",
-            "order": 0
-        },
-        {
-            "title": "Full Name",
-            "label": "full_name",
-            "placeholder": "Manuel",
-            "UI_type": "EditText",
-            "linked_list": "",
-            "required": "Required",
-            "order": 1
-        },
-        {
-            "title": "Gender",
-            "label": "gender",
-            "placeholder": "F",
-            "UI_type": "Spinner",
-            "linked_list": "Gender",
-            "required": "Strongly advised",
-            "order": 2
-        }
-    ],
-    "Gender": [
-        {
-            "id": "f53f1664-aea4-4844-8e48-9a3c1539de83",
-            "short": "F",
-            "full": "Female"
-        },
-        {
-            "id": "5a0a8892-11de-4249-b26b-9edf950dd6f0",
-            "short": "M",
-            "full": "Male"
-        },
-        {
-            "id": "b007c422-aa97-4ce5-8941-d472357e24b9",
-            "short": "NB",
-            "full": "Non-Binary"
-        },
-        {
-            "id": "6e511f4f-29ee-4770-94a3-f4d42e786388",
-            "short": "O",
-            "full": "Other"
-        }
-    ]
-}
+    "fields": {
+            "unique_id": {
+                "placeholder": "AAA-000001",
+                "database_type": "string",
+                "android_type": "EditText",
+                "linked_list": "",
+                "required": 0,
+                "displayed_value": {
+                    "eng": "Unique ID",
+                    "fra": "ID Unique",
+                    "esp": "Unico ID"
+                }
+            },
+            "gender": {
+                "placeholder": "F",
+                "database_type": "string",
+                "android_type": "Spinner",
+                "linked_list": "Gender",
+                "required": 1,
+                "displayed_value": {
+                    "eng": "Sex",
+                    "fra": "Sexe",
+                    "esp": "Sexo"
+                }
+            },
+            "full_name": {
+                "placeholder": "John Doe",
+                "database_type": "string",
+                "android_type": "EditText",
+                "linked_list": "",
+                "required": 1,
+                "displayed_value": {
+                    "eng": "Full Name",
+                    "fra": "Nom complet",
+                    "esp": "Full Name"
+                }
+            },
+            ...
+    },
+    relations": {
+            "BR": {
+                "color": "000000",
+                "importance": 1,
+                "displayed_value": {
+                    "eng": "Biological relationship",
+                    "fra": "Relation biologique",
+                    "esp": "Biological relationship"
+                }
+            },
+            "NBR": {
+                "color": "000000",
+                "importance": 1,
+                "displayed_value": {
+                    "eng": "Non-biological relationship",
+                    "fra": "Relation non biologique",
+                    "esp": "Non-biological relationship"
+                }
+            },
+            "TW": {
+                "color": "000000",
+                "importance": 1,
+                "displayed_value": {
+                    "eng": "Travelled with",
+                    "fra": "A voyagé avec",
+                    "esp": "Travelled with"
+                }
+            },
+            "SA": {
+                "color": "000000",
+                "importance": 1,
+                "displayed_value": {
+                    "eng": "Saw",
+                    "fra": "A vu",
+                    "esp": "Saw"
+                }
+            },
+            "SE": {
+                "color": "000000",
+                "importance": 1,
+                "displayed_value": {
+                    "eng": "Service",
+                    "fra": "Service",
+                    "esp": "Service"
+                }
+            }
+    }
+ }
 ```
 ## Add refugees :
 
