@@ -2,26 +2,31 @@
     {
         "title" : "Country",
         "name" : "Country",
-        "displayed_value" : "short"
+        "displayed_value" : "short",
+        "key_value" : "ISO3"
     },
     {
         "title" : "Gender",
         "name" : "Gender",
-        "displayed_value" : "full"
+        "displayed_value" : "full",
+        "key_value" : "short"
     },
     {
         "title" : "Route",
         "name" : "Route",
-        "displayed_value" : "full"
+        "displayed_value" : "full",
+        "key_value" : "short"
     },
     {
         "title" : "Role",
         "name" : "Role",
         "displayed_value" : "short"
+        "key_value" : "short"
     },
     {
         "title" : "Relation",
         "name" : "Relation",
-        "displayed_value" : "name"
+        "displayed_value" : "name",
+        "key_value" : "name"
     }
 ]

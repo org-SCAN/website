@@ -1,14 +1,14 @@
 [
     {
-        "language" : "en",
+        "language" : "eng",
         "language_name" : "English"
     },
     {
-        "language" : "fr",
+        "language" : "fra",
         "language_name" : "Français"
     },
     {
-        "language" : "es",
+        "language" : "esp",
         "language_name" : "Español"
     }
 ]
