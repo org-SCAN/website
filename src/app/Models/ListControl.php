@@ -59,8 +59,8 @@ class ListControl extends Model
      * @return array
      *
      */
-    public function getAPIContent(){
-        $class_name = class_name($this);
+    public static function getAPIContent(){
+        $class_name = class_name(self);
         $database_content = $class_name::where('deleted', 0)->get()->toArray();
         $list_info = ListControl::where('name', $class_name)->first();
 

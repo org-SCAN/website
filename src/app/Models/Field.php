@@ -12,7 +12,7 @@ class Field extends ListControl
      *
      * @var array
      */
-    protected $hidden = ['deleted','id',"created_at","updated_at","status", "database_type", "html_data_type", "validation_laravel", "attribute"]; //TODO : SI on a des bugs à cause des fields c'est ici
+    protected $hidden = ['deleted','id',"created_at","updated_at","status", "html_data_type", "validation_laravel", "attribute"]; //TODO : SI on a des bugs à cause des fields c'est ici
 
 
     /**
@@ -231,5 +231,36 @@ class Field extends ListControl
         ".$new_file_content;
         file_put_contents($migration_dir."/".$file_name, $new_file_content);
         Artisan::call("migrate");
+    }
+
+    public static function getUsedLinkedList(){
+        return array_column(self::whereNotEmpty("linked_list")->get()->toArray(), "linked_list");
+    }
+
+    /**
+     * It returns the list control dataset for API calls
+     *
+     * @return array
+     *
+     */
+    public static function getAPIContent(){
+
+        $class_name = class_name(self);
+        $database_content = $class_name::where('deleted', 0)->where("status",2)->orderBy("required")->orderBy("order")->get();
+        $list_info = ListControl::where('name', $class_name)->first();
+
+        $keys = array_column($database_content, $list_info->key); // all keys name
+        $api_res = array();
+        foreach ($keys as $key_index => $key_value){
+            $res = array();
+            $res[$key_value]["displayed_value"] = array_column(Translation::where('deleted',0)->where('list', $list_info->id)->where('field_key', $key_value)->get()->toArray(), "translation", "language");
+            $res[$key_value] = $database_content[$key_index];
+            unset($res[$key_value][$list_info->key]);
+            unset($res[$key_value][$list_info->displayed_value]);
+            $res[$key_value]["required"] = Field::convertRequiredAttribute( $database_content[$key_index]["required"]);
+            array_push($api_res, $res);
+        }
+        return $api_res;
+
     }
 }

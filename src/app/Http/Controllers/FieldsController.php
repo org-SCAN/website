@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Field;
-use App\Models\ListControl;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreFieldRequest;
 use App\Http\Requests\UpdateFieldRequest;
+use App\Models\Field;
+use Illuminate\Http\Request;
 
 class FieldsController extends Controller
 {
@@ -150,14 +149,10 @@ class FieldsController extends Controller
     public function handleApiRequest(Request $request)
     {
         if($request->user()->tokenCan("read")){
-            $fields = Field::where("deleted",0)->where("status",2)->orderBy("order")->orderBy("required")->get()->toArray();
-            foreach ($fields as $key => $field){
-                $field["required"] = Field::convertRequiredAttribute($field["required"]);
-                $fields[$key] = $field;
-            }
-            $datas["fields"] = $fields;
-            foreach (ListControl::where("deleted",0)->whereIn("title",array_column($fields, "linked_list"))->get()->toArray() as $list){
-                $datas[$list["title"]] = ListControl::find($list["id"])->getListContent();
+            $datas = array();
+            $datas["fields"] = Field::getAPIContent();
+            foreach (Field::getUsedLinkedList() as $list){
+                $datas[$list] = $list::getAPIContent();
             }
             return response(json_encode($datas), 200)->header('Content-Type', 'application/json');
         }
