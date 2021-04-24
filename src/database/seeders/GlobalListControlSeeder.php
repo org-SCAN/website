@@ -1,15 +1,17 @@
 <?php
 
 namespace Database\Seeders;
-namespace App\Models;
 
+use App\Models\Language;
+use App\Models\ListControl;
+use App\Models\Translation;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
 class GlobalListControlSeeder extends Seeder
 {
     protected $list_name;
-    protected $class_name;
+    protected $class_name; //class_name must be define in the child class.
     protected $array_json;
     protected $displayed_value;
     protected $list_id;
@@ -23,8 +25,9 @@ class GlobalListControlSeeder extends Seeder
     public function __construct($list_name)
     {
         $this->list_name = $list_name;
+        $this->class_name = Str::ucfirst(Str::singular($list_name));
         $this->languages = array_column(Language::all()->toArray(), "id", "language");
-        $this->default_language = Language::where("default", 1)->language;
+        $this->default_language = Language::where("default", 1)->first()->language;
         $this->getJsonDatas();
         $this->getListInfo();
     }
@@ -41,7 +44,7 @@ class GlobalListControlSeeder extends Seeder
     }
 
     protected function getListInfo(){
-        $list = ListControl::where('name', $this->list_name)->get();
+        $list = ListControl::where('name', $this->list_name)->first();
         $this->displayed_value = $list->displayed_value;
         $this->list_id = $list->id;
     }
@@ -52,28 +55,31 @@ class GlobalListControlSeeder extends Seeder
      */
     public function run()
     {
-        $to_store = array();
-        // get all the content from the json and store it in the correct DB
-        foreach ($this->array_json as $key => $value) {
-            //If the key is the displayed value, we have to store it in translation
-            if($key == $this->displayed_value){
-                $displayed_value = $value;
-                foreach ($displayed_value as $language => $value){
-                    //check that the language exists in the language DB
-                    if(key_exists($language, $this->languages)){
-                        $translation = array();
-                        $translation["language"] = $this->languages[$language];
-                        $translation["list"] = $this->list_id;
-                        $translation["translation"] = $value;
-                        //add the translation in the table
-                        Translation::create($translation);
+        foreach ($this->array_json as $json_elem) {
+            $to_store = array();
+            // get all the content from the json and store it in the correct DB
+            foreach ($json_elem as $key => $value) {
+                //If the key is the displayed value, we have to store it in translation
+                if ($key == $this->displayed_value) {
+                    $displayed_value = $value;
+                    foreach ($displayed_value as $language => $value) {
+                        //check that the language exists in the language DB
+                        if (key_exists($language, $this->languages)) {
+                            $translation = array();
+                            $translation["language"] = $this->languages[$language];
+                            $translation["list"] = $this->list_id;
+                            $translation["translation"] = $value;
+                            //add the translation in the table
+                            Translation::create($translation);
+                        }
                     }
+                    //set the value as the one for the default language
+                    $value = $displayed_value[$this->default_language];
                 }
-                //set the value as the one for the default language
-                $value = $displayed_value[$this->default_language];
+                $to_store[$key] = $value;
             }
-            $to_store[$key] = $value;
+            $model = 'App\Models\\' . $this->class_name;
+            $model::create($to_store);
         }
-        $this->class_name::create($to_store);
     }
 }
