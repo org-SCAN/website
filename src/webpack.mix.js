@@ -16,6 +16,7 @@ mix.js('resources/js/app.js', 'public/js')
         require('postcss-import'),
         require('tailwindcss'),
     ]);
+mix.js('resources/js/cytoscape/*', 'public/js/cytoscape');
 
 if (mix.inProduction()) {
     mix.version();
