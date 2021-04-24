@@ -30,6 +30,12 @@ class ListControl extends Model
      */
     protected $guarded = [];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['deleted',"created_at","updated_at"];
 
     public function addNewList(){
         // 1. Create a new table -> for the list
