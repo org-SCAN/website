@@ -20,7 +20,7 @@
     {
         "title" : "Role",
         "name" : "Role",
-        "displayed_value" : "short"
+        "displayed_value" : "short",
         "key_value" : "short"
     },
     {
