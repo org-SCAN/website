@@ -1,10 +1,26 @@
-[{
-  "short": "WM",
-  "full": "Western Mediterranean"
-},{
-  "short": "CM",
-  "full": "Central Mediterranean"
-},{
-  "short": "EM",
-  "full": "Eastern Mediterranean"
-}]
+[
+    {
+        "short": "WM",
+        "full": {
+            "eng": "Western Mediterranean",
+            "fra": "Méditerranée occidentale",
+            "esp": "Western Mediterranean"
+        }
+    },
+    {
+        "short": "CM",
+        "full": {
+            "eng": "Central Mediterranean",
+            "fra": "Méditerranée centrale",
+            "esp": "Central Mediterranean"
+        }
+    },
+    {
+        "short": "EM",
+        "full": {
+            "eng": "Eastern Mediterranean",
+            "fra": "Méditerranée orientale",
+            "esp": "Eastern Mediterranean"
+        }
+    }
+]

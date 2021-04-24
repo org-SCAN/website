@@ -27,6 +27,6 @@
         "title" : "Relation",
         "name" : "Relation",
         "displayed_value" : "name",
-        "key_value" : "name"
+        "key_value" : "short"
     }
 ]

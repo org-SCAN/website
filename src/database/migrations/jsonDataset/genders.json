@@ -1,10 +1,22 @@
 [{
   "short": "F",
-  "full": "Female"
+  "full": {
+      "eng" : "Female",
+      "fra" : "Femme",
+      "esp" : "Señora"
+  }
 },{
   "short": "M",
-  "full": "Male"
+    "full": {
+        "eng" : "Male",
+        "fra" : "Homme",
+        "esp" : "Señor"
+    }
 },{
   "short": "O",
-  "full": "Other"
+    "full": {
+        "eng" : "Other",
+        "fra" : "Autre",
+        "esp" : "Otro"
+    }
 }]

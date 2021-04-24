@@ -1,18 +1,43 @@
 [
     {
-        "name" : "Biological relationship"
+        "name": {
+            "eng": "Biological relationship",
+            "fra": "Relation biologique",
+            "esp": "Biological relationship"
+        },
+        "short": "BR"
     },
     {
-        "name" : "Non-biological relationship"
+        "name": {
+            "eng": "Non-biological relationship",
+            "fra": "Relation non biologique",
+            "esp": "Non-biological relationship"
+        },
+        "short": "NBR"
     },
     {
-        "name" : "Travelled with"
+        "name": {
+            "eng": "Travelled with",
+            "fra": "A voyagé avec",
+            "esp": "Travelled with"
+        },
+        "short": "TW"
     },
     {
-        "name" : "Saw"
+        "name": {
+            "eng": "Saw",
+            "fra": "A vu",
+            "esp": "Saw"
+        },
+        "short": "SA"
     },
     {
-        "name" : "Service"
+        "name": {
+            "eng": "Service",
+            "fra": "Service",
+            "esp": "Service"
+        },
+        "short": "SE"
     }
 ]
 
