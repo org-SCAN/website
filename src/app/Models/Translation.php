@@ -31,4 +31,13 @@ class Translation extends Model
      * @var array
      */
     protected $hidden = ['deleted',"created_at","updated_at"]; //TODO : SI on a des bugs à cause des roles c'est ici
+
+    /**
+     * Return ISO3 language name
+     * @param $value
+     * @return mixed
+     */
+    public function getLanguageAttribute($value){
+        return Language::find($value)->language;
+    }
 }
