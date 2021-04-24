@@ -2,10 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Country;
-use App\Models\ListControl;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,7 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(UserRoleSeeder::class);
         $this->call(ListControlSeeder::class);
+        $this->call(LanguageSeeder::class);
         $this->call(FieldSeeder::class);
         $this->call(CountrySeeder::class);
         $this->call(RoleSeeder::class);

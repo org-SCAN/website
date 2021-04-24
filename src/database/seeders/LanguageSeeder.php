@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Gender;
+use App\Models\Language;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class LanguageSeeder extends Seeder
 {
@@ -23,11 +22,10 @@ class LanguageSeeder extends Seeder
         foreach($array_json as $language)
         {
             $to_store = array();
-            $to_store["id"] = (string)Str::uuid();
             foreach ($language as $languageKey => $languageValue) {
                 $to_store[$languageKey] = $languageValue;
             }
-            Gender::create($to_store);
+            Language::create($to_store);
         }
     }
 }
