@@ -48,6 +48,22 @@ class GlobalListControlSeeder extends Seeder
         $this->displayed_value = $list->displayed_value;
         $this->list_id = $list->id;
     }
+    protected function storeTranslation($displayed_value){
+        foreach ($displayed_value as $language => $value) {
+            //check that the language exists in the language DB
+            if (key_exists($language, $this->languages)) {
+                $translation = array();
+                $translation["language"] = $this->languages[$language];
+                $translation["list"] = $this->list_id;
+                $translation["translation"] = $value;
+                //add the translation in the table
+                Translation::create($translation);
+            }
+        }
+        //set the value as the one for the default language
+        return $displayed_value[$this->default_language];
+    }
+
     /**
      * Run the database seeds.
      *
@@ -61,20 +77,7 @@ class GlobalListControlSeeder extends Seeder
             foreach ($json_elem as $key => $value) {
                 //If the key is the displayed value, we have to store it in translation
                 if ($key == $this->displayed_value) {
-                    $displayed_value = $value;
-                    foreach ($displayed_value as $language => $value) {
-                        //check that the language exists in the language DB
-                        if (key_exists($language, $this->languages)) {
-                            $translation = array();
-                            $translation["language"] = $this->languages[$language];
-                            $translation["list"] = $this->list_id;
-                            $translation["translation"] = $value;
-                            //add the translation in the table
-                            Translation::create($translation);
-                        }
-                    }
-                    //set the value as the one for the default language
-                    $value = $displayed_value[$this->default_language];
+                    $value = $this->storeTranslation($value);
                 }
                 $to_store[$key] = $value;
             }
