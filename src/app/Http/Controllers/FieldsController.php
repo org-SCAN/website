@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreFieldRequest;
 use App\Http\Requests\UpdateFieldRequest;
 use App\Models\Field;
+use App\Models\Relation;
 use Illuminate\Http\Request;
 
 class FieldsController extends Controller
@@ -151,7 +152,7 @@ class FieldsController extends Controller
         if($request->user()->tokenCan("read")){
             $datas = array();
             $datas["fields"] = Field::getAPIContent();
-            //return response(json_encode(Field::getUsedLinkedList()), 200)->header('Content-Type', 'application/json');
+            $datas["relations"] = Relation::getAPIContent();
             foreach (Field::getUsedLinkedList() as $list){
                 $call_class = '\App\Models\\'.$list;
                 $datas[$list] = $call_class::getAPIContent();
