@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class Field extends ListControl
@@ -12,7 +13,7 @@ class Field extends ListControl
      *
      * @var array
      */
-    protected $hidden = ['deleted','id',"created_at","updated_at","status", "html_data_type", "validation_laravel", "attribute"]; //TODO : SI on a des bugs à cause des fields c'est ici
+    protected $hidden = ['deleted','id',"created_at","updated_at","status", "html_data_type", "validation_laravel", "attribute", "order"]; //TODO : SI on a des bugs à cause des fields c'est ici
 
 
     /**
@@ -181,7 +182,7 @@ class Field extends ListControl
      * @return string
      */
     public function getLinkedListAttribute($value){
-        $linked_list = ListControl::find($value);
+        $linked_list =  DB::table("list_controls")->find($value);
         return (empty($linked_list) ? "" : $linked_list->title);
     }
 
@@ -193,7 +194,7 @@ class Field extends ListControl
      */
     public function getLinkedListContent()
     {
-        $list_control = ListControl::find($this->getLinkedListId());
+        $list_control = DB::table("list_controls")->find($this->getLinkedListId());
         $list = $list_control->getListContent();
         $displayed_value = $list_control->displayed_value;
 
@@ -234,7 +235,8 @@ class Field extends ListControl
     }
 
     public static function getUsedLinkedList(){
-        return array_column(self::whereNotEmpty("linked_list")->get()->toArray(), "linked_list");
+        $used_linked_list = self::where("linked_list", "!=", "")->get()->toArray();
+        return array_column($used_linked_list, "linked_list");
     }
 
     /**
@@ -245,20 +247,22 @@ class Field extends ListControl
      */
     public static function getAPIContent(){
 
-        $class_name = class_name(self);
-        $database_content = $class_name::where('deleted', 0)->where("status",2)->orderBy("required")->orderBy("order")->get();
+        $call_class_name = get_called_class();
+        $class_name = substr(strrchr($call_class_name, "\\"), 1);
+        $database_content = $call_class_name::where('deleted', 0)->where("status",2)->orderBy("required")->orderBy("order")->get()->toArray();
         $list_info = ListControl::where('name', $class_name)->first();
-
-        $keys = array_column($database_content, $list_info->key); // all keys name
+        $keys = array_column($database_content, $list_info->key_value); // all keys name
         $api_res = array();
         foreach ($keys as $key_index => $key_value){
-            $res = array();
-            $res[$key_value]["displayed_value"] = array_column(Translation::where('deleted',0)->where('list', $list_info->id)->where('field_key', $key_value)->get()->toArray(), "translation", "language");
-            $res[$key_value] = $database_content[$key_index];
-            unset($res[$key_value][$list_info->key]);
-            unset($res[$key_value][$list_info->displayed_value]);
-            $res[$key_value]["required"] = Field::convertRequiredAttribute( $database_content[$key_index]["required"]);
-            array_push($api_res, $res);
+            $api_res[$key_value] = $database_content[$key_index];
+
+            $translations = array_column(Translation::where('deleted',0)->where('list', $list_info->id)->where('field_key', $key_value)->get()->toArray(), "translation", "language");
+            foreach($translations as $language => $translation){
+                $api_res[$key_value]["displayed_value"][$language] = $translation;
+            }
+            unset($api_res[$key_value][$list_info->key_value]);
+            unset($api_res[$key_value][$list_info->displayed_value]);
+            $api_res[$key_value]["required"] = Field::convertRequiredAttribute( $database_content[$key_index]["required"]);
         }
         return $api_res;
 

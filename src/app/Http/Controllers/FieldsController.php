@@ -151,8 +151,10 @@ class FieldsController extends Controller
         if($request->user()->tokenCan("read")){
             $datas = array();
             $datas["fields"] = Field::getAPIContent();
+            //return response(json_encode(Field::getUsedLinkedList()), 200)->header('Content-Type', 'application/json');
             foreach (Field::getUsedLinkedList() as $list){
-                $datas[$list] = $list::getAPIContent();
+                $call_class = '\App\Models\\'.$list;
+                $datas[$list] = $call_class::getAPIContent();
             }
             return response(json_encode($datas), 200)->header('Content-Type', 'application/json');
         }
