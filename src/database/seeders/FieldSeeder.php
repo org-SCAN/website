@@ -25,7 +25,7 @@ class FieldSeeder extends GlobalListControlSeeder
             foreach ($fields as $keyField => $fieldValue) {
                 //If the key is the displayed value, we have to store it in translation
                 if ($keyField == $this->displayed_value) {
-                    $fieldValue = $this->storeTranslation($fieldValue);
+                    $fieldValue = $this->storeTranslation($fieldValue, $fields[$this->list_field_key]);
                 }
 
                 // There is a special condition for linked_list

@@ -5,7 +5,8 @@
             "fra": "recherché",
             "esp": "sought"
         },
-        "descr": "the police is looking for this person"
+        "descr": "the police is looking for this person",
+        "key" : "sought"
     },
     {
         "short": {
@@ -13,7 +14,8 @@
             "fra": "possiblement recherché",
             "esp": "possibly sought"
         },
-        "descr": "the police might be looking for this person"
+        "descr": "the police might be looking for this person",
+        "key" : "possibly_sought"
     },
     {
         "short": {
@@ -21,7 +23,8 @@
             "fra": "témoin",
             "esp": "witness"
         },
-        "descr": ""
+        "descr": "",
+        "key" : "witness"
     },
     {
         "short": {
@@ -29,7 +32,8 @@
             "fra": "survivant",
             "esp": "survivor"
         },
-        "descr": ""
+        "descr": "",
+        "key" : "survivor"
     },
     {
         "short": {
@@ -37,7 +41,8 @@
             "fra": "informateur",
             "esp": "informant"
         },
-        "descr": ""
+        "descr": "",
+        "key" : "informant"
     },
     {
         "short": {
@@ -45,6 +50,7 @@
             "fra": "proche",
             "esp": "relative"
         },
-        "descr": ""
+        "descr": "",
+        "key" : "relative"
     }
 ]

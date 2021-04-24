@@ -18,6 +18,7 @@ class CreateTranslationsTable extends Migration
             $table->timestamps();
             $table->foreignUuid("language");
             $table->foreignUuid("list");
+            $table->String("field_key");
             $table->String("translation");
             $table->boolean("deleted")->default(0);
         });

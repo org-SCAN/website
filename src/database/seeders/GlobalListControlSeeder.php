@@ -17,6 +17,7 @@ class GlobalListControlSeeder extends Seeder
     protected $list_id;
     protected $languages;
     protected $default_language;
+    protected $list_field_key;
 
     /**
      * GlobalListControlSeeder constructor.
@@ -46,15 +47,17 @@ class GlobalListControlSeeder extends Seeder
     protected function getListInfo(){
         $list = ListControl::where('name', $this->list_name)->first();
         $this->displayed_value = $list->displayed_value;
+        $this->list_field_key = $list->key_value;
         $this->list_id = $list->id;
     }
-    protected function storeTranslation($displayed_value){
+    protected function storeTranslation($displayed_value, $field_key){
         foreach ($displayed_value as $language => $value) {
             //check that the language exists in the language DB
             if (key_exists($language, $this->languages)) {
                 $translation = array();
                 $translation["language"] = $this->languages[$language];
                 $translation["list"] = $this->list_id;
+                $translation["field_key"] = $field_key;
                 $translation["translation"] = $value;
                 //add the translation in the table
                 Translation::create($translation);
@@ -77,7 +80,7 @@ class GlobalListControlSeeder extends Seeder
             foreach ($json_elem as $key => $value) {
                 //If the key is the displayed value, we have to store it in translation
                 if ($key == $this->displayed_value) {
-                    $value = $this->storeTranslation($value);
+                    $value = $this->storeTranslation($value, $json_elem[$this->list_field_key]);
                 }
                 $to_store[$key] = $value;
             }
