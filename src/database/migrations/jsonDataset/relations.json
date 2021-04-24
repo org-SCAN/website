@@ -5,7 +5,9 @@
             "fra": "Relation biologique",
             "esp": "Biological relationship"
         },
-        "short": "BR"
+        "short": "BR",
+        "color" : "000000",
+        "importance" : 1
     },
     {
         "name": {
@@ -13,7 +15,9 @@
             "fra": "Relation non biologique",
             "esp": "Non-biological relationship"
         },
-        "short": "NBR"
+        "short": "NBR",
+        "color" : "000000",
+        "importance" : 1
     },
     {
         "name": {
@@ -21,7 +25,9 @@
             "fra": "A voyagé avec",
             "esp": "Travelled with"
         },
-        "short": "TW"
+        "short": "TW",
+        "color" : "000000",
+        "importance" : 1
     },
     {
         "name": {
@@ -29,7 +35,9 @@
             "fra": "A vu",
             "esp": "Saw"
         },
-        "short": "SA"
+        "short": "SA",
+        "color" : "000000",
+        "importance" : 1
     },
     {
         "name": {
@@ -37,7 +45,9 @@
             "fra": "Service",
             "esp": "Service"
         },
-        "short": "SE"
+        "short": "SE",
+        "color" : "000000",
+        "importance" : 1
     }
 ]
 
