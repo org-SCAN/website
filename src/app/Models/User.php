@@ -27,7 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', "token"
+        'name', 'email', 'password', "token", "role"
     ];
 
     /**
@@ -53,13 +53,23 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
+     * Indicate the role of the user according the UUID stored in DB
+     * @param $value Is the id of the element
+     * @return String
      */
-    protected $appends = [
-        'profile_photo_url',
-    ];
+    public function getRoleAttribute($value){
+        $user_role = UserRole::find($value);
+        return empty($user_role) ? "" : $user_role->role;
+    }
+
+    /**
+     * Indicate the the UUID stored in DB
+     * @param $value Is the id of the element
+     * @return String
+     */
+    public function getRoleId(){
+        return $this->attributes['role'];
+    }
 
     /**
      * Create a personal Token API.
@@ -72,6 +82,23 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->token = Crypt::encryptString(md5($this->id).$token);
         $this->save();
     }
+
+    public function genRole()
+    {
+        $users = User::all();
+        $userAdmin = User::where("role",UserRole::orderBy("importance","desc")->first()->id)->get();
+        if($users->isEmpty() || $userAdmin->isEmpty() ){
+            $this->role=UserRole::orderBy("importance","desc")->first()->id;
+        }
+        else {
+
+            $this->role=UserRole::orderBy("importance")->first()->id;
+
+        }
+
+        $this->save();
+    }
+
     public function getToken()
     {
         $encrypted_token = $this->token;
@@ -80,4 +107,6 @@ class User extends Authenticatable implements MustVerifyEmail
         $unsalt = preg_replace('/'.md5($id).'/', '', $decypted, 1);
         return preg_replace('/[0-9]+\|/', '', $unsalt, 1);
     }
+
+
 }
