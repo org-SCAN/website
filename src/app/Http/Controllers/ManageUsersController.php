@@ -8,6 +8,9 @@ use App\Models\Field;
 use App\Models\Link;
 use App\Models\Refugee;
 use App\Models\User;
+use App\Models\Team;
+use DB;
+use Laravel\Jetstream\Jetstream;
 
 
 class ManageUsersController extends Controller
@@ -22,6 +25,7 @@ class ManageUsersController extends Controller
         //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '405 Forbidden');
 
         $users = User::all();
+        $teams = Team::all();
         return view("users.index", compact("users"));
 
     }
@@ -65,8 +69,22 @@ class ManageUsersController extends Controller
         //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $user = User::find($id);
-
-        return view("users.show", compact("user"));
+        $team_user = DB::table('team_user')->where('team_id', $user->current_team_id)->Where('user_id',$id)->first();
+        if ($team_user==null){
+            $team = Team::find($user->current_team_id);
+            if ($team->user_id==$id){
+                $role = "Owner";
+            }
+            else{
+                $role = "Not in the current team";
+            }
+        }
+        else{
+            $role = $team_user->role;
+            $role = Jetstream::findRole($role)->name;
+        }
+        $roles = Jetstream::$roles;
+        return view("users.show", compact("user","role","roles"));
 
     }
 
@@ -104,6 +122,7 @@ class ManageUsersController extends Controller
         return redirect()->route('users.index');
 
     }
+
 
     /**
      * Remove the specified resource from storage.

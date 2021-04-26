@@ -42,4 +42,7 @@ Route::resource("manage_refugees", \App\Http\Controllers\ManageRefugeesControlle
 Route::resource("fields", \App\Http\Controllers\FieldsController::class);
 Route::resource("lists_control", \App\Http\Controllers\ListControlController::class);
 Route::resource("links", \App\Http\Controllers\LinkController::class);
+Route::get('request', [\App\Http\Controllers\RequestRole::class,'getrequest']);
+Route::post('request', [\App\Http\Controllers\RequestRole::class,'request']);
+Route::post('request/grant', [\App\Http\Controllers\RequestRole::class,'grant']);
 Route::resource("user", \App\Http\Controllers\ManageUsersController::class);

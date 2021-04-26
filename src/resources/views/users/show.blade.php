@@ -74,7 +74,86 @@
                                         Roles
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                       {{ $user->role }}
+                                        @if ($role=="Administrator" || $role=="Owner")
+                                            <div class="ml-2 text-sm text-gray-400">
+                                                {{ $role }}
+                                            </div>
+                                        @else
+                                        @php
+                                            $usser = Auth::user();
+                                            $team_id = $usser->ownedTeams;
+                                        @endphp
+                                        @if ($team_id[0]->id==$user->current_team_id)
+                                        @php
+                                        $roless=array()
+                                        @endphp
+                                        @foreach (array_values($roles) as $rol)
+                                            @php
+                                            array_push($roless,$rol->name)
+                                            @endphp
+                                        @endforeach
+                                        {{ Form::open(array('url' => 'request/grant')) }}
+                                        {{ Form::hidden('user_id', $user->id) }}
+                                        {{ Form::hidden('user_current_team_id', $user->current_team_id) }}
+                                            <div class="ml-2 text-sm text-gray-400 underline">
+                                                {{ Form::select('role', $roless,array_search($role,$roless)) }}
+                                                @php
+                                                $requested_role = App\Models\RoleRequest::where('user_id',$user->id)->where('team_id',$user->current_team_id)->get();
+                                                $requested_role = $requested_role->last();
+                                                @endphp
+                                                @if (!is_null($requested_role))
+                                                @if ($requested_role->granted)
+                                                    {{ __('Granted:') }}
+                                                    {{ $requested_role->role }}
+                                                @elseif (!$requested_role->granted)
+                                                    {{ __('Requested:') }}
+                                                    {{ $requested_role->role }}
+                                                @endif
+                                                @endif
+                                                <button class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none">
+                                                {{ __('Grant') }}
+                                                </button>
+                                            </div>
+                                        {{ Form::close() }}
+                                        @elseif ($team_id[0]->id!=$user->current_team_id && $user->id==$usser->id)
+                                        @php
+                                        $roless=array()
+                                        @endphp
+                                        @foreach (array_values($roles) as $rol)
+                                            @php
+                                            array_push($roless,$rol->name)
+                                            @endphp
+                                        @endforeach
+                                        {{ Form::open(array('url' => 'request')) }}
+                                        {{ Form::hidden('user_id', $user->id) }}
+                                        {{ Form::hidden('user_current_team_id', $user->current_team_id) }}
+                                            <div class="ml-2 text-sm text-gray-400 underline">
+                                                {{ Form::select('role', $roless,array_search($role,$roless)) }}
+                                                @php
+                                                $requested_role = App\Models\RoleRequest::where('user_id',$user->id)->where('team_id',$user->current_team_id)->get();
+                                                $requested_role = $requested_role->last();
+                                                @endphp
+                                                @if (!is_null($requested_role))
+                                                @if ($requested_role->granted)
+                                                    {{ __('Granted:') }}
+                                                    {{ $requested_role->role }}
+                                                @elseif (!$requested_role->granted)
+                                                    {{ __('Requested:') }}
+                                                    {{ $requested_role->role }}
+                                                @endif
+                                                @endif
+                                                <button class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none">
+                                                {{ __('Request') }}
+                                                </button>
+                                            </div>
+                                        {{ Form::close() }}
+                                        @else
+                                            <div class="ml-2 text-sm text-gray-400 underline">
+                                                {{ $role }}
+                                            </div>
+                                        @endif
+                                        @endif
+                                        
                                     </td>
                                 </tr>
                                 </tr>
