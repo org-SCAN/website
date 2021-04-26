@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class Field extends ListControl
+class Field extends Model
 {
     /**
      * The attributes that should be hidden for arrays.
@@ -182,7 +182,7 @@ class Field extends ListControl
      * @return string
      */
     public function getLinkedListAttribute($value){
-        $linked_list =  DB::table("list_controls")->find($value);
+        $linked_list =  ListControl::find($value);
         return (empty($linked_list) ? "" : $linked_list->title);
     }
 
@@ -194,10 +194,9 @@ class Field extends ListControl
      */
     public function getLinkedListContent()
     {
-        $list_control = DB::table("list_controls")->find($this->getLinkedListId());
+        $list_control = ListControl::find($this->getLinkedListId());
         $list = $list_control->getListContent();
         $displayed_value = $list_control->displayed_value;
-
         return array_column($list, $displayed_value, "id");
     }
 

@@ -48,6 +48,7 @@ class ListControl extends Model
         $model = 'App\Models\\'.$this->name;
         $list = $model::orderBy($this->displayed_value)
             ->get()
+            ->makeVisible("id")
             ->toArray();
 
         return $list;
