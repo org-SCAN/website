@@ -35,7 +35,7 @@ class ListControl extends Model
      *
      * @var array
      */
-    protected $hidden = ['deleted',"created_at","updated_at", "id"];
+    protected $hidden = ['deleted',"created_at","updated_at"];
 
     public function addNewList(){
         // 1. Create a new table -> for the list
@@ -63,7 +63,7 @@ class ListControl extends Model
     public static function getAPIContent(){
         $call_class_name = get_called_class();
         $class_name = substr(strrchr($call_class_name, "\\"), 1);
-        $database_content = $call_class_name::where('deleted', 0)->get()->toArray();
+        $database_content = $call_class_name::where('deleted', 0)->get()->makeHidden("id")->toArray();
         $list_info = ListControl::where('name', $class_name)->first();
         $keys = array_column($database_content, $list_info->key_value); // all keys name
         $api_res = array();
