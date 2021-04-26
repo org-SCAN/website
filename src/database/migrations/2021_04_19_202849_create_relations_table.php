@@ -17,6 +17,9 @@ class CreateRelationsTable extends Migration
             $table->uuid("id");
             $table->timestamps();
             $table->string("name");
+            $table->string("color")->default('000000');
+            $table->integer("importance")->default(1);
+            $table->string("short");
             $table->boolean("deleted")
                 ->default(0);
         });
