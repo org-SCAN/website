@@ -2,18 +2,42 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
 class Field extends Model
 {
+    use Uuids;
+    /**
+     * The data type of the auto-incrementing ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
+     * Indicates if the model's ID is auto-incrementing.
+     *
+     * @var bool
+     */
+
+    public $incrementing = false;
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = ['deleted','id',"created_at","updated_at","status", "html_data_type", "validation_laravel", "attribute", "order"]; //TODO : SI on a des bugs à cause des fields c'est ici
+    protected $hidden = ['deleted',"created_at","updated_at","status", "html_data_type", "validation_laravel", "attribute", "order"]; //TODO : SI on a des bugs à cause des fields c'est ici
 
 
     /**
@@ -165,6 +189,9 @@ class Field extends Model
         if($field["required"] == 1){
             array_push($validador, "required");
         }
+        else{
+            array_push($validador, "nullable");
+        }
 
         array_push($validador, $type_convert[$field["database_type"]]);
 
@@ -248,7 +275,7 @@ class Field extends Model
 
         $call_class_name = get_called_class();
         $class_name = substr(strrchr($call_class_name, "\\"), 1);
-        $database_content = $call_class_name::where('deleted', 0)->where("status",2)->orderBy("required")->orderBy("order")->get()->toArray();
+        $database_content = $call_class_name::where('deleted', 0)->where("status",2)->orderBy("required")->orderBy("order")->get()->makeHidden("id")->toArray();
         $list_info = ListControl::where('name', $class_name)->first();
         $keys = array_column($database_content, $list_info->key_value); // all keys name
         $api_res = array();
