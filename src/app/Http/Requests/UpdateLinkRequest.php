@@ -24,7 +24,7 @@ class UpdateLinkRequest extends FormRequest
     public function rules()
     {
         return [
-            "relation" => "Required|uuid|exists:roles,id",
+            "relation" => "Required|uuid|exists:relations,id",
         ];
     }
 }
