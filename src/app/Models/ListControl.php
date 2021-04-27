@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class ListControl extends Model
 {
@@ -54,6 +55,39 @@ class ListControl extends Model
     }
 
     /**
+     *
+     * It returns the content of the displayed value of the control list
+     * @param $id
+     * @return string
+     */
+
+    public static function getDisplayedValueContent($id){
+        $call_class_name = get_called_class();
+        $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg Country / Gender / …
+
+        $displayed_value = ListControl::where('name', $class_name)->first()->displayed_value;
+        $displayed_value_content = $call_class_name::find($id)->$displayed_value; //the content of the displayed value
+        return empty($displayed_value_content) ? "" : $displayed_value_content;
+    }
+
+    public static function getIdFromValue($value){
+        $call_class_name = get_called_class();
+        $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg Country / Gender / …
+
+        if(Str::isUuid($value) && $call_class_name::find($value)->exists()){
+            return $value;
+        }
+        else{
+            $key_value = ListControl::where("name", $class_name)->first()->key_value;
+            $val = $call_class_name::where($key_value ,$value)->first();
+            if($val->exists()){
+                return $val->id;
+            }
+        }
+    }
+
+
+    /**
      * It returns the list control dataset for API calls
      *
      * @return array
@@ -61,7 +95,8 @@ class ListControl extends Model
      */
     public static function getAPIContent(){
         $call_class_name = get_called_class();
-        $class_name = substr(strrchr($call_class_name, "\\"), 1);
+        $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg Country / Gender / …
+
         $database_content = $call_class_name::where('deleted', 0)->get()->makeHidden("id")->toArray();
         $list_info = ListControl::where('name', $class_name)->first();
         $keys = array_column($database_content, $list_info->key_value); // all keys name
