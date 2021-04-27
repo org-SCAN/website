@@ -22,7 +22,6 @@ class RoleRequest extends Model
      */
     protected $fillable = [
         'user_id',
-        'team_id',
         'role',
         'granted'
     ];

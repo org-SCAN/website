@@ -17,8 +17,6 @@ class CreateRoleRequestsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('team_id');
-            $table->foreign('team_id')->references('id')->on('teams');
             $table->string('role');
             $table->boolean('granted')->default(false);
             $table->timestamps();
