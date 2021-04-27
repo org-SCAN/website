@@ -159,7 +159,7 @@
         "attribute": "",
         "database_type": "integer",
         "order": 8,
-        "validation_laravel": "integer"
+        "validation_laravel": "required|integer"
     },
     {
         "title": {
@@ -231,7 +231,7 @@
         "attribute": "",
         "database_type": "string",
         "order": 1,
-        "validation_laravel": "string|nullable"
+        "validation_laravel": "string|required"
     },
     {
         "title": {

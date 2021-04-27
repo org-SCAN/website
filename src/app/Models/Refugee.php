@@ -90,6 +90,15 @@ class Refugee extends Model
     }
 
     /**
+     * Store the residence id accorting its key or its code
+     * @param $value
+     */
+
+    public function setResidenceAttribute($value){
+        $this->attributes["residence"] = Country::getIdFromValue($value);
+    }
+
+    /**
      * Indicate the role according the UUID stored in DB
      * @param $value Is the id of the element
      * @return String

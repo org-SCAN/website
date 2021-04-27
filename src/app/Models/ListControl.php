@@ -66,21 +66,24 @@ class ListControl extends Model
         $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg Country / Gender / …
 
         $displayed_value = ListControl::where('name', $class_name)->first()->displayed_value;
-        $displayed_value_content = $call_class_name::find($id)->$displayed_value; //the content of the displayed value
-        return empty($displayed_value_content) ? "" : $displayed_value_content;
+        $displayed_value_content = $call_class_name::find($id);
+
+        return empty($displayed_value_content) ? "" : $displayed_value_content->$displayed_value; //the content of the displayed value
     }
 
     public static function getIdFromValue($value){
         $call_class_name = get_called_class();
         $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg Country / Gender / …
-
-        if(Str::isUuid($value) && $call_class_name::find($value)->exists()){
-            return $value;
+        if(Str::isUuid($value)){
+            $val = $call_class_name::find($value);
+            if(!empty($val)){
+                return $value;
+            }
         }
         else{
             $key_value = ListControl::where("name", $class_name)->first()->key_value;
             $val = $call_class_name::where($key_value ,$value)->first();
-            if($val->exists()){
+            if(!empty($val)){
                 return $val->id;
             }
         }
