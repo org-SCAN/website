@@ -36,6 +36,25 @@ class Refugee extends Model
      */
     private $residence;
 
+
+    /**
+     * Get the good element ID according it's key
+     * @param $model
+     * @param $attribute
+     * @param $value
+     */
+    protected function setLinkedListElement($model, $attribute, $value){
+        if(Str::isUuid($value) && $model::find($value)->exists()){
+            $this->attributes[$attribute] = $value;
+        }
+        else{
+            $val = $model::where(ListControl::where("name", $model)->first()->key_value,$value)->first();
+            if(preg_match('/[A-Z]{3}/', $value) &&  $val->exists()){
+                $this->attributes[$attribute] = $val->id;
+            }
+        }
+    }
+
     /**
      * Indicate the nationality according the UUID stored in DB
      * @param $value Is the id of the element
@@ -60,14 +79,34 @@ class Refugee extends Model
      */
 
     public function setNationalityAttribute($value){
-        if(Str::isUuid($value)){
-            $this->attributes["nationality"] = $value;
-        }
-        else{
-            if(preg_match('/[A-Z]{3}/', $value)){
-                $this->attributes["nationality"] = Country::where("ISO3",$value)->first()->id;
-            }
-        }
+        $this->setLinkedListElement("Country", "nationality", $value);
+    }
+
+    /**
+     * Store the sex id accorting its key or its code
+     * @param $value
+     */
+
+    public function setGenderAttribute($value){
+        $this->setLinkedListElement("Gender", "gender", $value);
+    }
+
+    /**
+     * Store the role id accorting its key or its code
+     * @param $value
+     */
+
+    public function setRoleAttribute($value){
+        $this->setLinkedListElement("Role", "role", $value);
+    }
+
+    /**
+     * Store the route id accorting its key or its code
+     * @param $value
+     */
+
+    public function setRouteAttribute($value){
+        $this->setLinkedListElement("Route", "route", $value);
     }
 
     /**
