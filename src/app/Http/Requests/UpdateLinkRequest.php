@@ -25,6 +25,7 @@ class UpdateLinkRequest extends FormRequest
     {
         return [
             "relation" => "Required|uuid|exists:relations,id",
+            "detail" => "String|nullable",
         ];
     }
 }

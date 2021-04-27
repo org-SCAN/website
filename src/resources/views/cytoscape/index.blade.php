@@ -54,20 +54,20 @@
     foreach ($relations as $relation){
 
         $node["data"] = array();
-        $node["data"]["id"] = $relation->getRefugee1Id();
-        $node["data"]["name"] = $relation->refugee1;
+        $node["data"]["id"] = $relation->getFromId();
+        $node["data"]["name"] = $relation->from;
         array_push($nodes, $node);
 
         $node["data"] = array();
-        $node["data"]["id"] = $relation->getRefugee2Id();
-        $node["data"]["name"] = $relation->refugee2;
+        $node["data"]["id"] = $relation->getToId();
+        $node["data"]["name"] = $relation->to;
         array_push($nodes, $node);
 
         $link["data"] = array();
         $link["data"]["id"] = $relation->id;
         $link["data"]["label"] = $relation->relation;
-        $link["data"]["source"] = $relation->getRefugee1Id();
-        $link["data"]["target"] = $relation->getRefugee2Id();
+        $link["data"]["source"] = $relation->getFromId();
+        $link["data"]["target"] = $relation->getToId();
         array_push($links, $link);
     }
 

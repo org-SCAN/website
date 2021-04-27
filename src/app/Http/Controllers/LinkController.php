@@ -90,12 +90,14 @@ class LinkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        Link::where("id",$id)
+            ->update(["deleted"=>1]);
+        return redirect()->route("links.index");
     }
 
     /**
@@ -108,9 +110,10 @@ class LinkController extends Controller
     {
         if($request->user()->tokenCan("update")){
             foreach ($request->validated() as $link){
-                $relation["refugee1"] = Refugee::where("full_name", $link["refugee1_full_name"])->where("unique_id", $link["refugee1_unique_id"])->first()->id;
-                $relation["refugee2"] = Refugee::where("full_name", $link["refugee2_full_name"])->where("unique_id", $link["refugee2_unique_id"])->first()->id;
+                $relation["from"] = Refugee::where("full_name", $link["from_full_name"])->where("unique_id", $link["from_unique_id"])->first()->id;
+                $relation["to"] = Refugee::where("full_name", $link["to_full_name"])->where("unique_id", $link["to_unique_id"])->first()->id;
                 $relation["relation"] = $link["relation"];
+                $relation["detail"] = $link["detail"];
 
                 $stored_link = Link::create($relation);
                 if(!$stored_link->exists){

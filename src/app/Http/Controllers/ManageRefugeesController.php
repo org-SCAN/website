@@ -103,7 +103,7 @@ class ManageRefugeesController extends Controller
             ->orderBy("order")
             ->get();
         $refugee = Refugee::find($id);
-        $links = Link::where("deleted",0)->where("refugee1", $id)->orWhere("refugee2", $id)->get();
+        $links = Link::where("deleted",0)->where("from", $id)->orWhere("to", $id)->get();
 
         return view("manage_refugees.show", compact("refugee", "fields", "links"));
     }

@@ -14,7 +14,7 @@ Voici un exemple de requête et la réponse associée :
 
 ```
 GET /api/fields HTTP/1.1
-Host: 15.200.236.237:80
+Host: 15.236.237.200:80
 Authorization: Bearer YOUR_API_TOKEN
 Accept: application/json
 Content-Type: application/json
@@ -161,11 +161,12 @@ Content-Length: 249
 
 [
     {
-    "refugee1_unique_id" : "ABC-000008",
-    "refugee1_full_name" : "INSERT FROM API 1",
-    "refugee2_unique_id" : "ABC-000009",
-    "refugee2_full_name" : "INSERT FROM API 2",
-    "relation" : "3ebf36e0-82b1-423b-98b5-ee5ec52223b5"
+    "from_unique_id" : "ABC-000008",
+    "from_full_name" : "INSERT FROM API 1",
+    "to_unique_id" : "ABC-000009",
+    "to_full_name" : "INSERT FROM API 2",
+    "relation" : "3ebf36e0-82b1-423b-98b5-ee5ec52223b5",
+    "detail" : "at the port"
     }
 ]
 ```
