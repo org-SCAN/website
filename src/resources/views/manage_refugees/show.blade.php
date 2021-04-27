@@ -47,15 +47,36 @@
                         </h2>
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200 w-full">
+                                <thead>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">From</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">Relation</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">To</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-800 uppercase tracking-wider"></th>
+                                </thead>
                                 @foreach($links as $link)
                                     <tr class="border-b">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                            <a href="{{route("manage_refugees.show", $link->getFromId())}}">{{$link->from }}</a>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                            {{ $link->relation }}
+                                            <small>{{$link->detail}}</small>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                            <a href="{{route("manage_refugees.show", $link->getToId())}}">{{$link->to }}</a>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                            <a href="{{route("links.edit", $link->id)}}">Edit</a>
+                                        </td>
+
+                                        <!--
                                         <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-blue-800 uppercase tracking-wider">
                                         @php($relation_name = ($link->getFromId() == $refugee->id ? "to" : "from"))
                                         @php($relation_id = "get".ucfirst($relation_name)."Id")
                                             <a href="{{route("manage_refugees.show", $link->$relation_id())}}">{{$link->$relation_name }}</a>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
                                             {{ $link->relation }}
-                                        </td>
+                                        </td> --!>
                                     </tr>
                                 @endforeach
                             </table>
