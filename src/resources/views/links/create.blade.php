@@ -32,6 +32,21 @@
                             <!--  Relation SECTION  -->
                             <div class="px-4 py-5 bg-white sm:p-6">
 
+                                @php($form_elem = "relation")
+                                <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Relation</label>
+
+                                @php( $list = $lists["relations"])
+                                @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the relation --', 'datas' => $list])
+                                @stack('scripts')
+
+                                @error($form_elem)
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!--  Relation SECTION  -->
+                            <div class="px-4 py-5 bg-white sm:p-6">
+
                                 @php($form_elem = "refugee2")
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Refugee 2</label>
 
@@ -47,13 +62,10 @@
                             <!--  Relation SECTION  -->
                             <div class="px-4 py-5 bg-white sm:p-6">
 
-                                @php($form_elem = "relation")
-                                <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Relation</label>
+                                @php($form_elem = "detail")
+                                <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Detail</label>
 
-                                @php( $list = $lists["relations"])
-                                @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the relation --', 'datas' => $list])
-                                @stack('scripts')
-
+                                <input value="{{ old($form_elem)}}" type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="Father" />
                                 @error($form_elem)
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                                 @enderror

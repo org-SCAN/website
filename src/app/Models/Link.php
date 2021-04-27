@@ -39,7 +39,8 @@ class Link extends Model
      */
     public function getRelationAttribute($relation)
     {
-        return Relation::find($relation)->name; //TODO : ne pas passer par role mais trouver un moyen de le contourner en passant par control_list (maybe en storant la clé de la liste dans les config ?)
+        $displayed_value = ListControll::where("name", Relation)->get()->displayed_value;
+        return Relation::find($relation)->$displayed_value;
     }
 
     /**
@@ -59,39 +60,37 @@ class Link extends Model
      * @param $refugee1
      * @return mixed
      */
-    public function getRefugee1Attribute($refugee1)
+    public function getFromAttribute($from)
     {
-        return Refugee::find($refugee1)->full_name;
+        return Refugee::find($from)->full_name;
     }
 
 
     /**
-     * Get refugee1 Id
-     * @param $refugee1
+     * Get from Id
      * @return mixed
      */
-    public function getRefugee1Id()
+    public function getFromId()
     {
-        return $this->attributes["refugee1"];
+        return $this->attributes["from"];
     }
 
     /**
-     * Get refugee2 fullname
-     * @param $refugee1
+     * Get to fullname
+     * @param $to
      * @return mixed
      */
-    public function getRefugee2Attribute($refugee2)
+    public function getToAttribute($to)
     {
-        return Refugee::find($refugee2)->full_name;
+        return Refugee::find($to)->full_name;
     }
 
     /**
-     * Get refugee2 Id
-     * @param $refugee1
+     * Get to Id
      * @return mixed
      */
-    public function getRefugee2Id()
+    public function getToId()
     {
-        return $this->attributes["refugee2"];
+        return $this->attributes["to"];
     }
 }
