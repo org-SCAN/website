@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout >
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Edit : <b>{{$user_found->name}}</b>
@@ -17,7 +17,6 @@
                         class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
                     Delete
                 </a>
-
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <form method="post" action="{{ route('user.update', $user_found->id) }}">
@@ -59,22 +58,6 @@
                                 @endforeach
 
                             </div>
-                        </div>
-
-
-                        <div class="px-4 py-5 bg-white sm:p-6">
-
-                            <label for="role" class="block font-medium text-sm text-gray-700">Team</label>
-
-                            @foreach($user = \App\Models\Team::get() as $teams)
-                                    @if(($teams->id) == ($user_found->current_team_id))
-                                        <a class="dropdown-item active" href="#">{{$teams->name}}</a>
-                                    @else
-                                        <a class="dropdown-item" href="#">{{$teams->name}}</a>
-                                    @endif
-                                @endforeach
-
-
                         </div>
 
 
