@@ -10,8 +10,8 @@ class ShowFields extends Component
     public function render()
     {
         $fields = Field::where("deleted", 0)
-            ->orderBy("order")
             ->orderBy("required")
+            ->orderBy("order")
             ->get();
         return view('livewire.show-fields', compact('fields'));
     }

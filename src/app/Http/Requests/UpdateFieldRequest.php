@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Field;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateFieldRequest extends FormRequest
@@ -29,7 +28,8 @@ class UpdateFieldRequest extends FormRequest
             "placeholder" => "string|max:80",
             "required" => "integer|required",
             "status" => "integer|required",
-            "order" => "integer"
+            "order" => "integer",
+            "linked_list" => "uuid|exists:list_controls,id|nullable"
 
         ];
         return $rules;

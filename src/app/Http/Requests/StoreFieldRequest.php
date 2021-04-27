@@ -3,8 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Field;
-use Illuminate\Support\Facades\Gate;
+
 class StoreFieldRequest extends FormRequest
 {
 
@@ -32,7 +31,7 @@ class StoreFieldRequest extends FormRequest
             "database_type" => "string|required",
             "required" => "integer|required",
             "status" => "integer|required",
-            "linked_list" => "string|nullable",
+            "linked_list" => "nullable|uuid|exists:list_controls,id",
             "order" => "integer|nullable"
 
         ];

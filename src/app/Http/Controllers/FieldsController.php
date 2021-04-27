@@ -45,7 +45,7 @@ class FieldsController extends Controller
             $field["order"]=100;
         }
         $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field["database_type"]);
-        $field["UI_type"] = Field::getUITypeFromForm($field["database_type"]);
+        $field["android_type"] = Field::getUITypeFromForm($field["database_type"]);
         $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
         $field = Field::create($field);
         if($field->exists){

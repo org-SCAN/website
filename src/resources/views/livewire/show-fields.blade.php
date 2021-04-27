@@ -1,4 +1,5 @@
 <tbody class="bg-white divide-y divide-gray-200"  wire:sortable="updateOrder">
+
 @foreach($fields as $field)
     <tr wire:sortable.item="{{ $field->id }}" wire:key="field-{{ $field->id }}">
         <td class="px-6 py-4 whitespace-nowrap">
