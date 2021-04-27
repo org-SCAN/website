@@ -50,9 +50,8 @@
                                 @foreach($links as $link)
                                     <tr class="border-b">
                                         <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-blue-800 uppercase tracking-wider">
-                                        @php($refugee_num = ($link->getRefugee1Id() == $refugee->id ? "2" : "1"))
-                                        @php($relation_name = "refugee".$refugee_num)
-                                        @php($relation_id = "getRefugee".$refugee_num."Id")
+                                        @php($relation_name = ($link->getFromId() == $refugee->id ? "to" : "from"))
+                                        @php($relation_id = "get".ucfirst($relation_name)."Id")
                                             <a href="{{route("manage_refugees.show", $link->$relation_id())}}">{{$link->$relation_name }}</a>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
                                             {{ $link->relation }}

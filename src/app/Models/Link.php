@@ -39,7 +39,7 @@ class Link extends Model
      */
     public function getRelationAttribute($relation)
     {
-        $displayed_value = ListControll::where("name", Relation)->get()->displayed_value;
+        $displayed_value = ListControl::where("name", "Relation")->first()->displayed_value;
         return Relation::find($relation)->$displayed_value;
     }
 

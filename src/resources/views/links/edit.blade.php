@@ -33,9 +33,9 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "detail")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Relation</label>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Detail</label>
 
-                            <input value="{{ old($form_elem)}}" type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="Father" />
+                            <input value="{{ old($form_elem, $link->$form_elem)}}" type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="Father" />
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
