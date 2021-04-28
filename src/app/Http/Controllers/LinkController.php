@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreLinkApiRequest;
 use App\Http\Requests\StoreLinkRequest;
 use App\Http\Requests\UpdateLinkRequest;
+use App\Models\ApiLog;
 use App\Models\Link;
 use App\Models\ListControl;
 use App\Models\Refugee;
@@ -108,21 +109,25 @@ class LinkController extends Controller
      */
     public static function handleApiRequest(StoreLinkApiRequest $request)
     {
+        $log = ApiLog::createFromRequest($request, "Link");
         if($request->user()->tokenCan("update")){
             foreach ($request->validated() as $link){
                 $relation["from"] = Refugee::where("full_name", $link["from_full_name"])->where("unique_id", $link["from_unique_id"])->first()->id;
                 $relation["to"] = Refugee::where("full_name", $link["to_full_name"])->where("unique_id", $link["to_unique_id"])->first()->id;
                 $relation["relation"] = $link["relation"];
                 $relation["detail"] = $link["detail"];
-
+                $relation["api_log"] = $log->id;
+                $relation["application_id"] = $log->application_id;
                 $stored_link = Link::create($relation);
+
                 if(!$stored_link->exists){
+                    $log->update(["response"=>"Error while creating a relation"]);
                     return response("Error while creating this refugee :".json_encode($link), 500);
                 }
             }
             return response("Success !", 201);
         }
-
+        $log->update(["response"=>"Bad token access"]);
         return response("Your token can't be use to send datas", 403);
     }
 }
