@@ -31,6 +31,15 @@ class Link extends Model
     protected $guarded = [];
 
     /**
+     * It returns a representative value, witch could be shown to discribe the element
+     *
+     * @return mixed
+     */
+    public function getRepresentativeValue(){
+        return $this->from." <-> ".$this->to;
+    }
+
+    /**
      *
      * Get relation name
      *
