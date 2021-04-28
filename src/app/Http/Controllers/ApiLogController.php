@@ -14,7 +14,7 @@ class ApiLogController extends Controller
      */
     public function index()
     {
-        $logs = ApiLog::all();
+        $logs = ApiLog::orderBy("created_at", "desc")->get();
         return view("api_logs.index", compact("logs"));
     }
 
@@ -45,7 +45,7 @@ class ApiLogController extends Controller
      * @param  String  $apiLogId
      * @return \Illuminate\Http\Response
      */
-    public function show(ApiLog $apiLogId)
+    public function show($apiLogId)
     {
         $log = ApiLog::find($apiLogId);
         return view("api_logs.show", compact("log"));

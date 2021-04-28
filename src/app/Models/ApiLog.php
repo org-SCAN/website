@@ -49,10 +49,10 @@ class ApiLog extends Model
         return $this->attributes['user'];
     }
 
-    public static function createFromRequest(Request $request){
+    public static function createFromRequest($request){
         $log = array();
         $log["user"] = $request->user()->id;
-        $log["application_id"] = $request->json()->application_id; //Pas sur du tout
+        $log["application_id"] = $request->header("Application-id"); //Pas sur du tout
         $log["api_type"] =  $request->path();
         $log["ip"] = $request->ip();
 

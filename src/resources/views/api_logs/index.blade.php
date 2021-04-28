@@ -35,17 +35,17 @@
                                 @foreach($logs as $log)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            @if($log->response == "Success")
-                                                <i class="fas fa-check-circle" color="green"></i>
+                                            @if($log->response == "success")
+                                                <i class="fas fa-check-circle  text-green-500"></i>
                                             @else
-                                                <i class="fas fa-times-circle" color="red"></i>
+                                                <i class="fas fa-times-circle text-red-500"></i>
                                             @endif
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            {{$log->creation_date}}
+                                            {{$log->created_at}}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("users.show", $log->getUserId())}}" class="text-indigo-600 hover:text-blue-900">{{$log->user}}</a>
+                                            <a href="{{route("user.show", $log->getUserId())}}" class="text-indigo-600 hover:text-blue-900">{{$log->user}}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             {{$log->api_type}}

@@ -170,14 +170,17 @@ class ManageRefugeesController extends Controller
         $log = ApiLog::createFromRequest($request);
         if($request->user()->tokenCan("update")){
             foreach ($request->validated() as $refugee){
+                $refugee["api_log"] = $log->id;
+                $refugee["application_id"] = $log->application_id;
                 $stored_ref = Refugee::create($refugee);
                 if(!$stored_ref->exists){
                     return response("Error while creating this refugee :".json_encode($refugee), 500);
+                    $log->update(["response"=>"Error while creating a refugee"]);
                 }
             }
            return response("Success !", 201);
         }
-
+        $log->update(["response"=>"Bad token"]);
         return response("Your token can't be use to send datas", 403);
     }
 }
