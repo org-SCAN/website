@@ -14,7 +14,8 @@ class ApiLogController extends Controller
      */
     public function index()
     {
-        //
+        $logs = ApiLog::all();
+        return view("api_log.index", compact("logs"));
     }
 
     /**
@@ -41,12 +42,13 @@ class ApiLogController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ApiLog  $apiLog
+     * @param  String  $apiLogId
      * @return \Illuminate\Http\Response
      */
-    public function show(ApiLog $apiLog)
+    public function show(ApiLog $apiLogId)
     {
-        //
+        $log = ApiLog::find($apiLogId);
+        return view("api_log.show", compact("log"));
     }
 
     /**
