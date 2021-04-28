@@ -141,7 +141,7 @@
         "attribute": "",
         "database_type": "string",
         "order": 7,
-        "validation_laravel": ""
+        "validation_laravel": "string|nullable"
     },
     {
         "title": {
@@ -157,9 +157,9 @@
         "required": 1,
         "status": 2,
         "attribute": "",
-        "database_type": "string",
+        "database_type": "integer",
         "order": 8,
-        "validation_laravel": ""
+        "validation_laravel": "required|integer"
     },
     {
         "title": {
@@ -231,7 +231,7 @@
         "attribute": "",
         "database_type": "string",
         "order": 1,
-        "validation_laravel": ""
+        "validation_laravel": "string|required"
     },
     {
         "title": {
@@ -447,7 +447,7 @@
         "attribute": "",
         "database_type": "string",
         "order": 14,
-        "validation_laravel": "string|nullable|max:250"
+        "validation_laravel": "string|nullable"
     },
     {
         "title": {
