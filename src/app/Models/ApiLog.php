@@ -29,4 +29,23 @@ class ApiLog extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * Get the user email
+     *
+     * @param $value
+     * @return string (user's email)
+     */
+    public function getUserAttribute($value){
+        return User::find($value)->email;
+    }
+
+    /**
+     * Return the guid of the user
+     *
+     * @return guid
+     */
+    public function getUserId(){
+        return $this->attributes['user'];
+    }
 }

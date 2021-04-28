@@ -32,7 +32,7 @@
                                         User
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                        <a href="{{route("users.show", $log->id)}}" class="text-indigo-600 hover:text-blue-900">{{$log->user}}</a>
+                                        <a href="{{route("users.show", $log->getUserId())}}" class="text-indigo-600 hover:text-blue-900">{{$log->user}}</a>
                                     </td>
                                 </tr>
 

@@ -35,7 +35,7 @@
                                             {{$log->creation_date}}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("users.show", $log->id)}}" class="text-indigo-600 hover:text-blue-900">{{$log->user}}</a>
+                                            <a href="{{route("users.show", $log->getUserId())}}" class="text-indigo-600 hover:text-blue-900">{{$log->user}}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             {{$log->api_type}}
