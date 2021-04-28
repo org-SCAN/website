@@ -14,7 +14,7 @@ class AddApiLogToRefugeesTable extends Migration
     public function up()
     {
         Schema::table('refugees', function (Blueprint $table) {
-            $table->foreignUuid("api_log");
+            $table->foreignUuid("api_log")->default("seeder"); //TODO : retirer ça quand on aura plus les seeders !
         });
     }
 

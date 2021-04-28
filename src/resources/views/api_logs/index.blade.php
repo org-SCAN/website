@@ -15,6 +15,9 @@
                                 <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Status
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Date
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -31,6 +34,13 @@
                                 <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach($logs as $log)
                                     <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            @if($log->response == "Success")
+                                                <i class="fas fa-check-circle" color="green"></i>
+                                            @else
+                                                <i class="fas fa-times-circle" color="red"></i>
+                                            @endif
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             {{$log->creation_date}}
                                         </td>
