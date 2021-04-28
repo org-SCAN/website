@@ -167,7 +167,7 @@ class ManageRefugeesController extends Controller
      */
     public static function handleApiRequest(StoreRefugeeApiRequest $request)
     {
-        $log = ApiLog::createFromRequest($request);
+        $log = ApiLog::createFromRequest($request, "Refugee");
         if($request->user()->tokenCan("update")){
             foreach ($request->validated() as $refugee){
                 $refugee["api_log"] = $log->id;

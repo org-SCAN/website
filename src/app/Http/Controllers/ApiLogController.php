@@ -48,6 +48,12 @@ class ApiLogController extends Controller
     public function show($apiLogId)
     {
         $log = ApiLog::find($apiLogId);
+        if($log->http_method == "POST"){
+            $pushed_datas = $log->getPushedDatas();
+            //die(var_dump($pushed_datas));
+            return view("api_logs.show", compact("log", "pushed_datas"));
+        }
+
         return view("api_logs.show", compact("log"));
     }
 

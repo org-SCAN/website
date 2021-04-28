@@ -49,13 +49,27 @@ class ApiLog extends Model
         return $this->attributes['user'];
     }
 
-    public static function createFromRequest($request){
+    public static function createFromRequest($request, $model = null){
         $log = array();
         $log["user"] = $request->user()->id;
         $log["application_id"] = $request->header("Application-id"); //Pas sur du tout
         $log["api_type"] =  $request->path();
+        $log["http_method"] =  $request->method();
+        $log["model"] =  $model;
         $log["ip"] = $request->ip();
 
         return self::create($log);
+    }
+
+    public function getPushedDatas(){
+        $base_name = "\App\Models\\";
+
+        $pushed_datas = ($base_name.$this->model)::where("api_log", $this->id)->get();
+
+        foreach ($pushed_datas as $pushed_data){
+            $res[$pushed_data->id] = $pushed_data->getRepresentativeValue();
+        }
+
+        return $res;
     }
 }

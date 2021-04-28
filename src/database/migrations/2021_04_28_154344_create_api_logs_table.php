@@ -21,6 +21,8 @@ class CreateApiLogsTable extends Migration
             $table->string("api_type");
             $table->ipAddress("ip")->nullable();
             $table->string("response")->default("success");
+            $table->string("model")->nullable();
+            $table->string("http_method");
         });
     }
 
