@@ -15,7 +15,7 @@ class ApiLogController extends Controller
     public function index()
     {
         $logs = ApiLog::all();
-        return view("api_log.index", compact("logs"));
+        return view("api_logs.index", compact("logs"));
     }
 
     /**
@@ -48,7 +48,7 @@ class ApiLogController extends Controller
     public function show(ApiLog $apiLogId)
     {
         $log = ApiLog::find($apiLogId);
-        return view("api_log.show", compact("log"));
+        return view("api_logs.show", compact("log"));
     }
 
     /**
