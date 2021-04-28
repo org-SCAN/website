@@ -6,6 +6,7 @@ use App\Http\Requests\FileRefugeeRequest;
 use App\Http\Requests\StoreRefugeeApiRequest;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
+use App\Models\ApiLog;
 use App\Models\Field;
 use App\Models\Link;
 use App\Models\Refugee;
@@ -166,6 +167,7 @@ class ManageRefugeesController extends Controller
      */
     public static function handleApiRequest(StoreRefugeeApiRequest $request)
     {
+        $log = ApiLog::createFromRequest($request);
         if($request->user()->tokenCan("update")){
             foreach ($request->validated() as $refugee){
                 $stored_ref = Refugee::create($refugee);

@@ -19,6 +19,7 @@ class CreateApiLogsTable extends Migration
             $table->foreignUuid("user");
             $table->string("application_id");
             $table->string("api_type");
+            $table->ipAddress("ip")->nullable();
             $table->string("response")->default("success");
         });
     }
