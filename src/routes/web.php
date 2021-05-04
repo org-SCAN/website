@@ -43,3 +43,4 @@ Route::resource("fields", \App\Http\Controllers\FieldsController::class);
 Route::resource("lists_control", \App\Http\Controllers\ListControlController::class);
 Route::resource("links", \App\Http\Controllers\LinkController::class);
 Route::resource("user", \App\Http\Controllers\ManageUsersController::class);
+Route::resource("api_logs", \App\Http\Controllers\ApiLogController::class);

@@ -35,6 +35,14 @@ class Refugee extends Model
      */
     private $residence;
 
+    /**
+     * It returns a representative value, witch could be shown to discribe the element
+     *
+     * @return mixed
+     */
+    public function getRepresentativeValue(){
+        return $this->full_name;
+    }
 
     /**
      * Indicate the nationality according the UUID stored in DB

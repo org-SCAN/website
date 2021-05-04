@@ -6,6 +6,7 @@ use App\Http\Requests\FileRefugeeRequest;
 use App\Http\Requests\StoreRefugeeApiRequest;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
+use App\Models\ApiLog;
 use App\Models\Field;
 use App\Models\Link;
 use App\Models\Refugee;
@@ -166,16 +167,20 @@ class ManageRefugeesController extends Controller
      */
     public static function handleApiRequest(StoreRefugeeApiRequest $request)
     {
+        $log = ApiLog::createFromRequest($request, "Refugee");
         if($request->user()->tokenCan("update")){
             foreach ($request->validated() as $refugee){
+                $refugee["api_log"] = $log->id;
+                $refugee["application_id"] = $log->application_id;
                 $stored_ref = Refugee::create($refugee);
                 if(!$stored_ref->exists){
+                    $log->update(["response"=>"Error while creating a refugee"]);
                     return response("Error while creating this refugee :".json_encode($refugee), 500);
                 }
             }
            return response("Success !", 201);
         }
-
+        $log->update(["response"=>"Bad token access"]);
         return response("Your token can't be use to send datas", 403);
     }
 }

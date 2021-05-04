@@ -36,10 +36,14 @@
                         {{ __('Manage links') }}
                     </x-jet-nav-link>
                 </div>
-
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.index')">
                         {{ __('Users') }}
+                    </x-jet-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('api_logs.index') }}" :active="request()->routeIs('api_logs.index')">
+                        {{ __('Api logs') }}
                     </x-jet-nav-link>
                 </div>
                 <!--

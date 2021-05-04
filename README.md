@@ -7,6 +7,7 @@ Adresse IP du serveur : 15.236.237.200
 # Connection à l'API
 
 Il est maintenant possible de se connecter à l'API pour envoyer des nouveaux refugees ou pour obtenir la dernière version des fields (et des listes).
+Il est OBLIGATOIRE de transmettre un Application-Id dans les headers sinon la requête sera refusée
 
 ## Get fields :
 
@@ -18,6 +19,7 @@ Host: 15.236.237.200:80
 Authorization: Bearer YOUR_API_TOKEN
 Accept: application/json
 Content-Type: application/json
+Application-id: YOUR_APPLICATION_ID
 ```
 
 Exemple de réponse du serveur :
@@ -123,6 +125,7 @@ Host: 15.236.237.200:80
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer YOUR_API_TOKEN
+Application-id: YOUR_APPLICATION_ID
 Content-Length: 256
 
 [
@@ -157,6 +160,7 @@ Host: 15.236.237.200:80
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer YOUR_API_TOKEN
+Application-id: YOUR_APPLICATION_ID
 Content-Length: 249
 
 [

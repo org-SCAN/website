@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFieldRequest;
 use App\Http\Requests\UpdateFieldRequest;
+use App\Models\ApiLog;
 use App\Models\Field;
 use App\Models\Relation;
 use Illuminate\Http\Request;
@@ -149,6 +150,7 @@ class FieldsController extends Controller
      */
     public function handleApiRequest(Request $request)
     {
+        $log = ApiLog::createFromRequest($request, "Refugee");
         if($request->user()->tokenCan("read")){
             $datas = array();
             $datas["fields"] = Field::getAPIContent();
@@ -159,6 +161,7 @@ class FieldsController extends Controller
             }
             return response(json_encode($datas), 200)->header('Content-Type', 'application/json');
         }
+        $log->update(["response"=>"Bad token access"]);
         return response("Your token can't be use to read datas", 403);
 
     }
