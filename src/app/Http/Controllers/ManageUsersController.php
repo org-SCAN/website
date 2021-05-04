@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUsersRequest;
-use App\Models\Field;
-use App\Models\Link;
-use App\Models\Refugee;
 use App\Models\User;
 
 
@@ -19,7 +16,6 @@ class ManageUsersController extends Controller
      */
     public function index()
     {
-        //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '405 Forbidden');
 
         $users = User::all();
         return view("users.index", compact("users"));
@@ -33,9 +29,6 @@ class ManageUsersController extends Controller
      */
     public function create()
     {
-       // abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-       // $roles = User::pluck('title', 'id');
 
         return view('users.create');
     }
@@ -50,6 +43,7 @@ class ManageUsersController extends Controller
     {
         //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         User::create($request->validated());
+
         return redirect()->route('users.index');
 
     }
@@ -62,7 +56,7 @@ class ManageUsersController extends Controller
      */
     public function show(String $id)
     {
-        //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
 
         $user = User::find($id);
 
@@ -80,8 +74,6 @@ class ManageUsersController extends Controller
      */
     public function edit( $user)
     {
-        //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $user_found = User::find($user);
 
         return view("users.edit", compact("user_found"));
@@ -114,10 +106,10 @@ class ManageUsersController extends Controller
      */
     public function destroy($id)
     {
-        //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $id->delete();
-
-       return redirect()->route('users.index');
+        $user = User :: where("id",$id);
+        $user ->delete();
+        $users = User::all();
+        return view("users.index", compact("users"));
     }
 }

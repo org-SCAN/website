@@ -13,10 +13,15 @@
                    class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded">Back to list</a>
                 <a href="{{URL::previous() }}"
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
-                <a type="submit"
-                        class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
-                    Delete
-                </a>
+
+
+                    <form class="inline-block" action="{{ route('user.destroy', $user_found->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
+                    </form>
+
+
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <form method="post" action="{{ route('user.update', $user_found->id) }}">
