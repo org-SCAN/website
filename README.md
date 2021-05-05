@@ -132,7 +132,7 @@ Content-Length: 256
     {
     "unique_id" : "ABC-000001",
     "full_name" : "full name",
-    "country" : "FRA",
+    "nationality" : "FRA",
     "date" : "2021-04-12",
     "age" : 68,
     "gender" : "F"
@@ -140,7 +140,7 @@ Content-Length: 256
     {
     "unique_id" : "ABC-000002",
     "full_name" : "full name",
-    "country" : "USA",
+    "nationality" : "USA",
     "date" : "2021-04-12",
     "age" : 92,
     "gender" : "F"
