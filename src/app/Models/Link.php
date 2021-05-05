@@ -102,4 +102,10 @@ class Link extends Model
     {
         return $this->attributes["to"];
     }
+
+
+    public function getRelationWeight()
+    {
+        return Relation::find($this->getRelationId())->importance;
+    }
 }
