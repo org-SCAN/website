@@ -132,14 +132,18 @@ Content-Length: 256
     {
     "unique_id" : "ABC-000001",
     "full_name" : "full name",
-    "country" : "NIGER",
-    "date" : "2021-04-12"
+    "country" : "FRA",
+    "date" : "2021-04-12",
+    "age" : 68,
+    "gender" : "F"
     },
     {
     "unique_id" : "ABC-000002",
     "full_name" : "full name",
-    "country" : "NIGER",
-    "date" : "2021-04-12"
+    "country" : "USA",
+    "date" : "2021-04-12",
+    "age" : 92,
+    "gender" : "F"
     }
 ]
 ```
@@ -169,7 +173,7 @@ Content-Length: 249
     "from_full_name" : "INSERT FROM API 1",
     "to_unique_id" : "ABC-000009",
     "to_full_name" : "INSERT FROM API 2",
-    "relation" : "3ebf36e0-82b1-423b-98b5-ee5ec52223b5",
+    "relation" : "TW",
     "detail" : "at the port"
     }
 ]
