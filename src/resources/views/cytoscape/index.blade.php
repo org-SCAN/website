@@ -82,6 +82,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col">
                 <h1>Graph</h1>
+                @foreach(\App\Models\Relation::all() as $relation)
+                    <i class="fas fa-circle" style="color: #{{$relation->color}}"> {{$relation->name}}</i>
+                @endforeach
+                <a href="?layout=cise">Cise</a>
+                <a href="?layout=dagre">Dagre</a>
+                <a href="?layout=fcose">Fcose</a>
                 <hr>
                 <div id="cy"></div>
             </div>
