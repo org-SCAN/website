@@ -40,8 +40,8 @@
                             @enderror
 
                             <label for="password" class="block font-medium text-sm text-gray-700">Confirm password</label>
-                            <input type="password" name="password" id="password" class="form-input rounded-md shadow-sm mt-1 block w-full" />
-                            @error('password')
+                            <input type="password" name="confirm_password" id="confirm_password" class="form-input rounded-md shadow-sm mt-1 block w-full" />
+                            @error('password_confirmation')
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
@@ -49,10 +49,10 @@
                         <!--    -->
 
                         <div class="px-4 py-5 bg-white sm:p-6">
-                            @php($form_elem = "required")
+                            @php($form_elem = "role")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Role</label>
 
-                            @php( $list = array(1 => "admin",2 => "editor",3 => "viewer"))
+                            @php( $list = array_column(\App\Models\UserRole::all()->toArray(), 'role', 'id'))
                             <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">The role can be changed later on by an admin</small>
 
@@ -60,8 +60,6 @@
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-
-
 
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">

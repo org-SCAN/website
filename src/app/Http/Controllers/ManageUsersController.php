@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 
 class ManageUsersController extends Controller
@@ -16,10 +18,8 @@ class ManageUsersController extends Controller
      */
     public function index()
     {
-
         $users = User::all();
-        return view("users.index", compact("users"));
-
+        return view("user.index", compact("users"));
     }
 
     /**
@@ -29,23 +29,33 @@ class ManageUsersController extends Controller
      */
     public function create()
     {
-
-        return view('users.create');
+        return view('user.create');
     }
 
+
     /**
-     * Store a newly created resource in storage.
+     * Create a newly registered user.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  array  $input
+     * @return \App\Models\User
      */
     public function store(StoreUserRequest $request)
     {
-        //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        User::create($request->validated());
+        $user = $request->validated();
+        DB::transaction(function () use ($user) {
+            return tap(User::create([
+                'name' => $user['name'],
+                'email' => $user['email'],
+                'password' => Hash::make($user['password']),
+                'role' => $user['role'],
+            ]), function (User $created_user) {
+                $this->createTeam($created_user);
+                $created_user->genToken();
+                $created_user->genRole();
+            });
+        });
 
-        return redirect()->route('users.index');
-
+        return redirect()->route('user.index');
     }
 
     /**
@@ -56,11 +66,8 @@ class ManageUsersController extends Controller
      */
     public function show(String $id)
     {
-
-
         $user = User::find($id);
-
-        return view("users.show", compact("user"));
+        return view("user.show", compact("user"));
 
     }
 
@@ -72,11 +79,10 @@ class ManageUsersController extends Controller
      * @param $user
      * @return \Illuminate\Http\Response
      */
-    public function edit( $user)
+    public function edit( $id)
     {
-        $user_found = User::find($user);
-
-        return view("users.edit", compact("user_found"));
+        $user_found = User::find($id);
+        return view("user.edit", compact("user_found"));
 
     }
 
@@ -90,10 +96,15 @@ class ManageUsersController extends Controller
      */
     public function update(UpdateUsersRequest $request, $id)
     {
-        $id->update($request->validated());
+       // $id->update($request->validated());
         //$user->roles()->sync($request->input('roles', []));
 
-        return redirect()->route('users.index');
+        $user = $request->validated();
+
+        User::find($id)
+            ->update($user);
+
+        return redirect()->route('user.index');
 
     }
 
@@ -110,6 +121,6 @@ class ManageUsersController extends Controller
         $user = User :: where("id",$id);
         $user ->delete();
         $users = User::all();
-        return view("users.index", compact("users"));
+        return view("user.index", compact("users"));
     }
 }
