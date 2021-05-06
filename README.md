@@ -157,7 +157,7 @@ L'API post permet aussi d'envoyer la liste des relations. Pour l'utiliser il fau
 
 - Que les deux refugees (personnes) soient déjà présente dans la database. Autrement dit, il faut d'abord effectuer une
   requete POST add refugee
-- Préciser le `unique_id de chaque personne
+- Préciser le `unique_id de chaque personne et la date à laquelle le champ a été créé
 - Préciser une relation appartenant à la liste des relations prédéfinies.
 
 On peut aussi préciser un détail sur la relation
@@ -176,6 +176,7 @@ Content-Length: 249
     "from_unique_id" : "ABC-000008",
     "to_unique_id" : "ABC-000009",``
     "relation" : "TW",
+    "date" : "2021-05-14 8:51:53",
     "detail" : "at the port"
     }
 ]

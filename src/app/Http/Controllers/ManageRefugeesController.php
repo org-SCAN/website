@@ -176,12 +176,12 @@ class ManageRefugeesController extends Controller
                 $refugee["api_log"] = $log->id;
                 $refugee["application_id"] = $log->application_id;
 
-                $potential_refugee = Refugee::where("application_id", $refugee["application_id"])->where('unique_id', $refugee["unique_id"])->get();
-                if ($potential_refugee->exists) {
+                $potential_refugee = Refugee::where("application_id", $refugee["application_id"])->where('unique_id', $refugee["unique_id"])->first();
+                if ($potential_refugee != null) {
                     $potential_refugee->update($refugee);
                 } else {
                     $stored_ref = Refugee::create($refugee);
-                    if (!$stored_ref->exists) {
+                    if ($stored_ref == null) {
                         $log->update(["response" => "Error while creating a refugee"]);
                         return response("Error while creating this refugee :" . json_encode($refugee), 500);
                     }

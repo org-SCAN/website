@@ -126,18 +126,21 @@ class LinkController extends Controller
                     ->first()
                     ->id;
                 $relation["relation"] = $link["relation"];
-                $relation["detail"] = $link["detail"];
+                if (isset($link["detail"])) {
+                    $relation["detail"] = link["detail"];
+                }
 
                 $potential_link = Link::where("application_id", $relation["application_id"])
                     ->where("from", $link["from_unique_id"])
                     ->where("to", $link["to_unique_id"])
-                    ->get();
-                if ($potential_link->exists) {
+                    ->first();
+
+                if ($potential_link != null) {
                     $potential_link->update($relation);
                 } else {
                     $stored_link = Link::create($relation);
 
-                    if (!$stored_link->exists) {
+                    if ($stored_link == null) {
                         $log->update(["response" => "Error while creating a relation"]);
                         return response("Error while creating this refugee :" . json_encode($link), 500);
                     }

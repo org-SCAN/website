@@ -20,8 +20,9 @@ class StoreLinkApiRequest extends StoreLinkRequest
         return [
             "*.from_unique_id" => "Required|string|exists:refugees,unique_id",
             "*.to_unique_id" => "Required|string|exists:refugees,unique_id",
-            "*.relation" => "Required|uuid|exists:relations,id",
+            "*.relation" => "Required|exists:relations,short",
             "*.detail" => "String|nullable",
+            "*.date" => "Required|date",
         ];
     }
 }
