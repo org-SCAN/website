@@ -10,13 +10,24 @@ cytoscape.use( cise );
 cytoscape.use( fcose );
 cytoscape.use( cxtmenu );
 
-function testJson(){
-    $.getJSON('/content.json', function(data){
-        console.log(data)
-    });
+function perc2color(perc) {
+    var r, g, b = 0;
+    if(perc > 50) {
+        r = 255;
+        g = Math.round(5.1 * (100-perc));
+    }
+    else {
+        g = 255;
+        r = Math.round(510 - 5.10 * (100-perc));
+    }
+    var h = r * 0x10000 + g * 0x100 + b * 0x1;
+    return '#' + ('000000' + h.toString(16)).slice(-6);
 }
+
 function drawGraph(){
     $.getJSON('/content.json', function(data){
+        const urlParams = new URLSearchParams(window.location.search);
+
         var cy = cytoscape({
 
             container: document.getElementById('cy'), // container to render in
@@ -87,9 +98,14 @@ function drawGraph(){
             ],
         })
 
-        const urlParams = new URLSearchParams(window.location.search);
+
         const layout_name = (urlParams.has("layout") ? urlParams.get("layout") : "dagre");
 
+        /*
+
+            ******** DEFINE LAYOUT ******
+
+         */
         if(layout_name == "dagre") {
             cy.layout({
                 name: layout_name,
@@ -286,49 +302,38 @@ function drawGraph(){
                 stop: () => {} // on layoutstop
             }).run();
         }
+        if(layout_name == "breadthfirst") {
+            cy.layout({
+                    name: 'breadthfirst',
+                    fit: true, // whether to fit the viewport to the graph
+                    directed: false, // whether the tree is directed downwards (or edges can point in any direction if false)
+                    padding: 30, // padding on fit
+                    circle: false, // put depths in concentric circles if true, put depths top down if false
+                    grid: false, // whether to create an even grid into which the DAG is placed (circle:false only)
+                    spacingFactor: 1, // positive spacing factor, larger => more space between nodes (N.B. n/a if causes overlap)
+                    boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+                    avoidOverlap: true, // prevents node overlap, may overflow boundingBox if not enough space
+                    nodeDimensionsIncludeLabels: true, // Excludes the label when calculating node bounding boxes for the layout algorithm
+                    roots: undefined, // the roots of the trees
+                    maximal: true, // whether to shift nodes down their natural BFS depths in order to avoid upwards edges (DAGS only)
+                    animate: false, // whether to transition the node positions
+                    animationDuration: 500, // duration of animation in ms if enabled
+                    animationEasing: undefined, // easing of animation if enabled,
+                    animateFilter: function ( node, i ){ return true; }, // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
+                    ready: undefined, // callback on layoutready
+                    stop: undefined, // callback on layoutstop
+                    transform: function (node, position ){ return position; } // transform a given node position. Useful for changing flow direction in discrete layouts
+            }).run();
+        }
 
 
+        /*
 
+            **** DEFINE MENU ******
 
-        console.log("Toto 2\n");
-
-/*
-        var dijkstra = cy.elements().dijkstra('#14a826b6-e0d5-393a-8093-2dc2ee6a7197',function(edge){
-            return edge.data('weight');
-        },false);
-        var bfs = dijkstra.pathTo( cy.$('#88fbc82c-1455-3171-abf4-ce2d40dd1e09'));
-
-        var x=0;
-        var highlightNextEle = function(){
-            var el=bfs[x];
-            el.addClass('highlighted');
-            if(x<bfs.length){
-                x++;
-                setTimeout(highlightNextEle);
-            }
-        };
-        highlightNextEle();
-        */
-
-            /*
-        cy.unbind('click')
-        cy.bind('click', 'node', function(event) {
-            // .union() takes two collections and adds both together without duplicates
-            var connected = event.target
-            console.log(connected);
-            connected = connected.union(event.target.component())
-
-            // in one line:
-            // event.target.union(event.target.predecessors().union(event.target.successors()))
-
-            // .not() filters out whatever is not specified in connected, e.g. every other node/edge not present in connected
-            var notConnected = cy.elements().not(connected)
-
-            // if you want, you can later add the saved elements again
-            var saved = cy.remove(notConnected)
-        });
-            */
+         */
         console.log("Param menu :")
+
         let defaults = {
             menuRadius: function(ele){ return 100; }, // the outer radius (node center to the end of the menu) in pixels. It is added to the rendered size of the node. Can either be a number or function as in the example.
             selector: 'node', // elements matching this Cytoscape.js selector will trigger cxtmenus
@@ -403,6 +408,12 @@ function drawGraph(){
                     }
                 },
                 {
+                    content: 'Breadthfirst layout',
+                    select: function(){
+                        window.location.replace("?layout=breadthfirst");
+                    }
+                },
+                {
                     content: 'Show relation details',
                     select: function(){
                         cy.style().selector("edge").style('label','data(detail)').update()
@@ -416,7 +427,6 @@ function drawGraph(){
                 }
             ]
         });
-
 
         cy.cxtmenu({
             selector: 'edge',
@@ -443,6 +453,43 @@ function drawGraph(){
                 }
             ]
         });
+
+        /*
+
+                **** DEFINE CALCULATION ****
+
+         */
+
+        const calcul = (urlParams.has("calcul") ? urlParams.get("calcul") : "");
+
+        if(calcul == "betweennessCentrality"){
+
+            let bcn = cy.elements().bc();
+
+            cy.nodes().forEach( n => {
+                n.data("bcn", bcn.betweennessNormalized( n ));
+                n.style("background-color",perc2color(100*n.data("bcn")))
+                console.log(n.data("name")+" : "+n.data("bcn"))
+            } );
+
+        }
+        /*
+                var dijkstra = cy.elements().dijkstra('#14a826b6-e0d5-393a-8093-2dc2ee6a7197',function(edge){
+                    return edge.data('weight');
+                },false);
+                var bfs = dijkstra.pathTo( cy.$('#88fbc82c-1455-3171-abf4-ce2d40dd1e09'));
+
+                var x=0;
+                var highlightNextEle = function(){
+                    var el=bfs[x];
+                    el.addClass('highlighted');
+                    if(x<bfs.length){
+                        x++;
+                        setTimeout(highlightNextEle);
+                    }
+                };
+                highlightNextEle();
+                */
 
     });
 

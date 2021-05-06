@@ -86,9 +86,13 @@
                 @foreach(\App\Models\Relation::all() as $relation)
                     <i class="fas fa-circle" style="color: #{{$relation->color}}"> {{$relation->name}}</i>
                 @endforeach
+                <!--
                 <a href="?layout=cise">Cise</a>
                 <a href="?layout=dagre">Dagre</a>
                 <a href="?layout=fcose">Fcose</a>
+                -->
+
+                <a href="?calcul=betweennessCentrality"><button>Calculate betweenness Centrality</button></a>
                 <hr>
                 <div id="cy"></div>
             </div>
