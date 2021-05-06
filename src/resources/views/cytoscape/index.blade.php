@@ -70,6 +70,7 @@
         $link["data"]["weight"] = $relation->getRelationWeight();
         $link["data"]["source"] = $relation->getFromId();
         $link["data"]["target"] = $relation->getToId();
+        $link["data"]["detail"] = $relation->detail;
         array_push($links, $link);
     }
 

@@ -2,11 +2,13 @@ import cytoscape from 'cytoscape';
 import dagre from 'cytoscape-dagre';
 import cise from 'cytoscape-cise';
 import fcose from 'cytoscape-fcose';
+import cxtmenu from 'cytoscape-cxtmenu';
 import $ from "jquery";
 
 cytoscape.use( dagre );
 cytoscape.use( cise );
 cytoscape.use( fcose );
+cytoscape.use( cxtmenu );
 
 function testJson(){
     $.getJSON('/content.json', function(data){
@@ -289,16 +291,8 @@ function drawGraph(){
 
 
         console.log("Toto 2\n");
-        /*
-        var dfs = cy.elements().aStar({
-            root: '#114e00d8-f14b-379a-b720-08fb9d87b47f',
-            goal: '#dbfd8e31-a7ac-3737-9ab8-593a9fa227c0',
-            directed: false
-        })
-        dfs.path.select();
-    */
 
-
+/*
         var dijkstra = cy.elements().dijkstra('#14a826b6-e0d5-393a-8093-2dc2ee6a7197',function(edge){
             return edge.data('weight');
         },false);
@@ -314,7 +308,9 @@ function drawGraph(){
             }
         };
         highlightNextEle();
+        */
 
+            /*
         cy.unbind('click')
         cy.bind('click', 'node', function(event) {
             // .union() takes two collections and adds both together without duplicates
@@ -331,8 +327,127 @@ function drawGraph(){
             // if you want, you can later add the saved elements again
             var saved = cy.remove(notConnected)
         });
+            */
+        console.log("Param menu :")
+        let defaults = {
+            menuRadius: function(ele){ return 100; }, // the outer radius (node center to the end of the menu) in pixels. It is added to the rendered size of the node. Can either be a number or function as in the example.
+            selector: 'node', // elements matching this Cytoscape.js selector will trigger cxtmenus
+            commands: [ // an array of commands to list in the menu or a function that returns the array
+
+                {
+                    content: 'View information',
+                    select: function(ele){
+                        window.location.replace("/manage_refugees/"+ele.id());
+                    }
+                },
+
+                {
+                    content: 'View related persons',
+                    select: function(ele){
+                        var connected = ele
+                        console.log(connected);
+                        connected = connected.union(ele.component())
+                        var notConnected = cy.elements().not(connected)
+                        var saved = cy.remove(notConnected)
+                    }
+                },
+
+                {
+                    content: 'Save position',
+                    select: function(ele){
+                        console.log( ele.position() );
+                    },
+                    enabled : false
+                }
+            ], // function( ele ){ return [ /*...*/ ] }, // a function that returns commands or a promise of commands
+            fillColor: 'rgba(0, 0, 0, 0.75)', // the background colour of the menu
+            activeFillColor: 'rgba(1, 105, 217, 0.75)', // the colour used to indicate the selected command
+            activePadding: 20, // additional size in pixels for the active command
+            indicatorSize: 24, // the size in pixels of the pointer to the active command, will default to the node size if the node size is smaller than the indicator size,
+            separatorWidth: 3, // the empty spacing in pixels between successive commands
+            spotlightPadding: 4, // extra spacing in pixels between the element and the spotlight
+            adaptativeNodeSpotlightRadius: false, // specify whether the spotlight radius should adapt to the node size
+            minSpotlightRadius: 24, // the minimum radius in pixels of the spotlight (ignored for the node if adaptativeNodeSpotlightRadius is enabled but still used for the edge & background)
+            maxSpotlightRadius: 38, // the maximum radius in pixels of the spotlight (ignored for the node if adaptativeNodeSpotlightRadius is enabled but still used for the edge & background)
+            openMenuEvents: 'cxttapstart taphold', // space-separated cytoscape events that will open the menu; only `cxttapstart` and/or `taphold` work here
+            itemColor: 'white', // the colour of text in the command's content
+            itemTextShadowColor: 'transparent', // the text shadow colour of the command's content
+            zIndex: 9999, // the z-index of the ui div
+            atMouse: false, // draw menu at mouse position
+            outsideMenuCancel: false // if set to a number, this will cancel the command if the pointer is released outside of the spotlight, padded by the number given
+        };
+
+        cy.cxtmenu( defaults );
+
+        cy.cxtmenu({
+            selector: 'core',
+
+            commands: [
+                {
+                    content: 'Dagre layout',
+                    select: function(){
+                        window.location.replace("?layout=dagre");
+                    }
+                },
+
+                {
+                    content: 'Cise layout',
+                    select: function(){
+                        window.location.replace("?layout=cise");
+                    }
+                },
+                {
+                    content: 'Fcose layout',
+                    select: function(){
+                        window.location.replace("?layout=fcose");
+                    }
+                },
+                {
+                    content: 'Show relation details',
+                    select: function(){
+                        cy.style().selector("edge").style('label','data(detail)').update()
+                    }
+                },
+                {
+                    content: 'Hide relation details',
+                    select: function(){
+                        cy.style().selector("edge").style('label','').update()
+                    }
+                }
+            ]
+        });
+
+
+        cy.cxtmenu({
+            selector: 'edge',
+
+            commands: [
+                {
+                    content: 'Show detail',
+                    select: function(ele){
+                        ele.style("label", ele.data("detail"))
+                    }
+                },
+                {
+                    content: 'Hide detail',
+                    select: function(ele){
+                        ele.removeStyle( "label" )
+                    }
+                },
+
+                {
+                    content: 'Edit relation',
+                    select: function(ele){
+                        window.location.replace("/links/"+ele.id()+"/edit");
+                    }
+                }
+            ]
+        });
 
     });
+
+    // the default values of each option are outlined below:
+
 }
 
 drawGraph();
