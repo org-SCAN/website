@@ -6,7 +6,7 @@
             "esp": "Biological relationship"
         },
         "short": "BR",
-        "color" : "000000",
+        "color" : "0099ff",
         "importance" : 1
     },
     {
@@ -16,7 +16,7 @@
             "esp": "Non-biological relationship"
         },
         "short": "NBR",
-        "color" : "000000",
+        "color" : "cbaf1d",
         "importance" : 1
     },
     {
@@ -26,7 +26,7 @@
             "esp": "Travelled with"
         },
         "short": "TW",
-        "color" : "000000",
+        "color" : "00ff2a",
         "importance" : 1
     },
     {
@@ -36,7 +36,7 @@
             "esp": "Saw"
         },
         "short": "SA",
-        "color" : "000000",
+        "color" : "734d39",
         "importance" : 1
     },
     {
@@ -46,7 +46,7 @@
             "esp": "Service"
         },
         "short": "SE",
-        "color" : "000000",
+        "color" : "7e00ff",
         "importance" : 1
     }
 ]
