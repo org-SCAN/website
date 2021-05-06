@@ -10,13 +10,15 @@ use App\Models\Link;
 use App\Models\ListControl;
 use App\Models\Refugee;
 use App\Models\Relation;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class LinkController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -27,7 +29,7 @@ class LinkController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -39,8 +41,8 @@ class LinkController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(StoreLinkRequest $request)
     {
@@ -51,20 +53,21 @@ class LinkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  string  $id
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return Response
      */
     public function show($id)
     {
         $link = Link::find($id);
-        return view("links.show", compact("links"));
+        //return view("links.show", compact("links"));
+        return redirect()->route("links.edit", compact("link"));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function edit($id)
     {
@@ -76,9 +79,9 @@ class LinkController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return Response
      */
     public function update(UpdateLinkRequest $request, $id)
     {
@@ -91,8 +94,8 @@ class LinkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string  $id
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return Response
      */
     public function destroy($id)
     {
@@ -111,18 +114,38 @@ class LinkController extends Controller
     {
         $log = ApiLog::createFromRequest($request, "Link");
         if($request->user()->tokenCan("update")){
-            foreach ($request->validated() as $link){
-                $relation["from"] = Refugee::where("full_name", $link["from_full_name"])->where("unique_id", $link["from_unique_id"])->first()->id;
-                $relation["to"] = Refugee::where("full_name", $link["to_full_name"])->where("unique_id", $link["to_unique_id"])->first()->id;
-                $relation["relation"] = $link["relation"];
-                $relation["detail"] = $link["detail"];
+            foreach ($request->validated() as $link) {
+
                 $relation["api_log"] = $log->id;
                 $relation["application_id"] = $log->application_id;
-                $stored_link = Link::create($relation);
+                $relation["from"] = Refugee::where("application_id", $relation["application_id"])
+                    ->where("unique_id", $link["from_unique_id"])
+                    ->first()
+                    ->id;
+                $relation["to"] = Refugee::where("application_id", $relation["application_id"])
+                    ->where("unique_id", $link["to_unique_id"])
+                    ->first()
+                    ->id;
+                $relation["relation"] = $link["relation"];
+                if (isset($link["detail"])) {
+                    $relation["detail"] = link["detail"];
+                }
 
-                if(!$stored_link->exists){
-                    $log->update(["response"=>"Error while creating a relation"]);
-                    return response("Error while creating this refugee :".json_encode($link), 500);
+                $potential_link = Link::where("application_id", $relation["application_id"])
+                    ->where("from", $link["from_unique_id"])
+                    ->where("to", $link["to_unique_id"])
+                    ->first();
+
+                if ($potential_link != null) {
+                    $potential_link->update($relation);
+                } else {
+                    $stored_link = Link::create($relation);
+
+                    if ($stored_link == null) {
+                        $log->update(["response" => "Error while creating a relation"]);
+                        return response("Error while creating this refugee :" . json_encode($link), 500);
+                    }
+
                 }
             }
             return response("Success !", 201);

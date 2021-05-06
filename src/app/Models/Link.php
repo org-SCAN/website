@@ -108,4 +108,15 @@ class Link extends Model
     {
         return Relation::find($this->getRelationId())->importance;
     }
+
+
+    /**
+     * Store the relation id accorting its key or its code
+     * @param $value
+     */
+
+    public function setRelationAttribute($value)
+    {
+        $this->attributes["relation"] = Relation::getIdFromValue($value);
+    }
 }

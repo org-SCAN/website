@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            @if(isset($pushed_datas))
+            @if(isset($pushed_datas) && !empty($pushed_datas))
                 <div class="block mt-8 flex flex-col">
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">

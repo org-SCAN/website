@@ -18,12 +18,11 @@ class StoreLinkApiRequest extends StoreLinkRequest
     public function rules()
     {
         return [
-            "*.from_full_name" => "Required|string|exists:refugees,full_name",
             "*.from_unique_id" => "Required|string|exists:refugees,unique_id",
-            "*.to_full_name" => "Required|string|exists:refugees,full_name",
             "*.to_unique_id" => "Required|string|exists:refugees,unique_id",
-            "*.relation" => "Required|uuid|exists:relations,id",
+            "*.relation" => "Required|exists:relations,short",
             "*.detail" => "String|nullable",
+            "*.date" => "Required|date",
         ];
     }
 }
