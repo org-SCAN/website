@@ -59,7 +59,8 @@ class LinkController extends Controller
     public function show($id)
     {
         $link = Link::find($id);
-        return view("links.show", compact("links"));
+        //return view("links.show", compact("links"));
+        return redirect()->route("links.edit", compact("link"));
     }
 
     /**

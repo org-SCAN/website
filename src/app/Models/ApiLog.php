@@ -64,9 +64,9 @@ class ApiLog extends Model
     public function getPushedDatas(){
         $base_name = "\App\Models\\";
 
-        $pushed_datas = ($base_name.$this->model)::where("api_log", $this->id)->get();
-
-        foreach ($pushed_datas as $pushed_data){
+        $pushed_datas = ($base_name . $this->model)::where("api_log", $this->id)->get();
+        $res = array();
+        foreach ($pushed_datas as $pushed_data) {
             $res[$pushed_data->id] = $pushed_data->getRepresentativeValue();
         }
 
