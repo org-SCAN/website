@@ -24,6 +24,40 @@ function perc2color(perc) {
     return '#' + ('000000' + h.toString(16)).slice(-6);
 }
 
+function view_relative(cy, ele){
+    var connected = ele
+
+    connected = connected.union(ele.component())
+    var notConnected = cy.elements().not(connected)
+    var saved = cy.remove(notConnected)
+}
+function insertParam(key, value) {
+    key = encodeURIComponent(key);
+    value = encodeURIComponent(value);
+
+    // kvp looks like ['key1=value1', 'key2=value2', ...]
+    var kvp = document.location.search.substr(1).split('&');
+    let i=0;
+
+    for(; i<kvp.length; i++){
+        if (kvp[i].startsWith(key + '=')) {
+            let pair = kvp[i].split('=');
+            pair[1] = value;
+            kvp[i] = pair.join('=');
+            break;
+        }
+    }
+
+    if(i >= kvp.length){
+        kvp[kvp.length] = [key,value].join('=');
+    }
+
+    // can return this or...
+    let params = kvp.join('&');
+
+    // reload page with new params
+    document.location.search = params;
+}
 function drawGraph(){
     $.getJSON('/content.json', function(data){
         const urlParams = new URLSearchParams(window.location.search);
@@ -340,6 +374,18 @@ function drawGraph(){
             commands: [ // an array of commands to list in the menu or a function that returns the array
 
                 {
+                    content: 'Set as FROM',
+                    select: function(ele){
+                        insertParam("from", ele.id())
+                    }
+                },
+                {
+                    content: 'set as TO',
+                    select: function(ele){
+                        insertParam("to", ele.id())
+                    }
+                },
+                {
                     content: 'View information',
                     select: function(ele){
                         window.location.replace("/manage_refugees/"+ele.id());
@@ -349,11 +395,7 @@ function drawGraph(){
                 {
                     content: 'View related persons',
                     select: function(ele){
-                        var connected = ele
-                        console.log(connected);
-                        connected = connected.union(ele.component())
-                        var notConnected = cy.elements().not(connected)
-                        var saved = cy.remove(notConnected)
+                        view_relative(cy, ele)
                     }
                 },
 
@@ -391,26 +433,26 @@ function drawGraph(){
                 {
                     content: 'Dagre layout',
                     select: function(){
-                        window.location.replace("?layout=dagre");
+                        insertParam("layout", "dagre")
                     }
                 },
 
                 {
                     content: 'Cise layout',
                     select: function(){
-                        window.location.replace("?layout=cise");
+                        insertParam("layout", "cise")
                     }
                 },
                 {
                     content: 'Fcose layout',
                     select: function(){
-                        window.location.replace("?layout=fcose");
+                        insertParam("layout", "fcose")
                     }
                 },
                 {
                     content: 'Breadthfirst layout',
                     select: function(){
-                        window.location.replace("?layout=breadthfirst");
+                        insertParam("layout", "breadthfirst")
                     }
                 },
                 {
@@ -456,9 +498,19 @@ function drawGraph(){
 
         /*
 
+                **** DEFINE persons details ****
+
+         */
+        const from = (urlParams.has("from") ? urlParams.get("from") : "");
+        if(from != ""){
+            view_relative(cy, cy.$id(from))
+        }
+        /*
+
                 **** DEFINE CALCULATION ****
 
          */
+
 
         const calcul = (urlParams.has("calcul") ? urlParams.get("calcul") : "");
 
@@ -469,27 +521,28 @@ function drawGraph(){
             cy.nodes().forEach( n => {
                 n.data("bcn", bcn.betweennessNormalized( n ));
                 n.style("background-color",perc2color(100*n.data("bcn")))
-                console.log(n.data("name")+" : "+n.data("bcn"))
             } );
 
         }
-        /*
-                var dijkstra = cy.elements().dijkstra('#14a826b6-e0d5-393a-8093-2dc2ee6a7197',function(edge){
-                    return edge.data('weight');
-                },false);
-                var bfs = dijkstra.pathTo( cy.$('#88fbc82c-1455-3171-abf4-ce2d40dd1e09'));
+        const to = (urlParams.has("to") ? urlParams.get("to") : "");
 
-                var x=0;
-                var highlightNextEle = function(){
-                    var el=bfs[x];
-                    el.addClass('highlighted');
-                    if(x<bfs.length){
-                        x++;
-                        setTimeout(highlightNextEle);
-                    }
-                };
-                highlightNextEle();
-                */
+        if(from != "" && to != "") {
+            var dijkstra = cy.elements().dijkstra('#'+from, function (edge) {
+                return edge.data('weight');
+            }, false);
+            var bfs = dijkstra.pathTo(cy.$('#'+to));
+
+            var x = 0;
+            var highlightNextEle = function () {
+                var el = bfs[x];
+                el.addClass('highlighted');
+                if (x < bfs.length) {
+                    x++;
+                    setTimeout(highlightNextEle);
+                }
+            };
+            highlightNextEle();
+        }
 
     });
 

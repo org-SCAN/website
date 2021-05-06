@@ -78701,6 +78701,39 @@ function perc2color(perc) {
   return '#' + ('000000' + h.toString(16)).slice(-6);
 }
 
+function view_relative(cy, ele) {
+  var connected = ele;
+  connected = connected.union(ele.component());
+  var notConnected = cy.elements().not(connected);
+  var saved = cy.remove(notConnected);
+}
+
+function insertParam(key, value) {
+  key = encodeURIComponent(key);
+  value = encodeURIComponent(value); // kvp looks like ['key1=value1', 'key2=value2', ...]
+
+  var kvp = document.location.search.substr(1).split('&');
+  var i = 0;
+
+  for (; i < kvp.length; i++) {
+    if (kvp[i].startsWith(key + '=')) {
+      var pair = kvp[i].split('=');
+      pair[1] = value;
+      kvp[i] = pair.join('=');
+      break;
+    }
+  }
+
+  if (i >= kvp.length) {
+    kvp[kvp.length] = [key, value].join('=');
+  } // can return this or...
+
+
+  var params = kvp.join('&'); // reload page with new params
+
+  document.location.search = params;
+}
+
 function drawGraph() {
   jquery__WEBPACK_IMPORTED_MODULE_5___default().getJSON('/content.json', function (data) {
     var urlParams = new URLSearchParams(window.location.search);
@@ -79036,6 +79069,16 @@ function drawGraph() {
       // elements matching this Cytoscape.js selector will trigger cxtmenus
       commands: [// an array of commands to list in the menu or a function that returns the array
       {
+        content: 'Set as FROM',
+        select: function select(ele) {
+          insertParam("from", ele.id());
+        }
+      }, {
+        content: 'set as TO',
+        select: function select(ele) {
+          insertParam("to", ele.id());
+        }
+      }, {
         content: 'View information',
         select: function select(ele) {
           window.location.replace("/manage_refugees/" + ele.id());
@@ -79043,11 +79086,7 @@ function drawGraph() {
       }, {
         content: 'View related persons',
         select: function select(ele) {
-          var connected = ele;
-          console.log(connected);
-          connected = connected.union(ele.component());
-          var notConnected = cy.elements().not(connected);
-          var saved = cy.remove(notConnected);
+          view_relative(cy, ele);
         }
       }, {
         content: 'Save position',
@@ -79094,22 +79133,22 @@ function drawGraph() {
       commands: [{
         content: 'Dagre layout',
         select: function select() {
-          window.location.replace("?layout=dagre");
+          insertParam("layout", "dagre");
         }
       }, {
         content: 'Cise layout',
         select: function select() {
-          window.location.replace("?layout=cise");
+          insertParam("layout", "cise");
         }
       }, {
         content: 'Fcose layout',
         select: function select() {
-          window.location.replace("?layout=fcose");
+          insertParam("layout", "fcose");
         }
       }, {
         content: 'Breadthfirst layout',
         select: function select() {
-          window.location.replace("?layout=breadthfirst");
+          insertParam("layout", "breadthfirst");
         }
       }, {
         content: 'Show relation details',
@@ -79143,8 +79182,18 @@ function drawGraph() {
       }]
     });
     /*
+             **** DEFINE persons details ****
+      */
+
+    var from = urlParams.has("from") ? urlParams.get("from") : "";
+
+    if (from != "") {
+      view_relative(cy, cy.$id(from));
+    }
+    /*
              **** DEFINE CALCULATION ****
       */
+
 
     var calcul = urlParams.has("calcul") ? urlParams.get("calcul") : "";
 
@@ -79153,26 +79202,30 @@ function drawGraph() {
       cy.nodes().forEach(function (n) {
         n.data("bcn", bcn.betweennessNormalized(n));
         n.style("background-color", perc2color(100 * n.data("bcn")));
-        console.log(n.data("name") + " : " + n.data("bcn"));
       });
     }
-    /*
-            var dijkstra = cy.elements().dijkstra('#14a826b6-e0d5-393a-8093-2dc2ee6a7197',function(edge){
-                return edge.data('weight');
-            },false);
-            var bfs = dijkstra.pathTo( cy.$('#88fbc82c-1455-3171-abf4-ce2d40dd1e09'));
-             var x=0;
-            var highlightNextEle = function(){
-                var el=bfs[x];
-                el.addClass('highlighted');
-                if(x<bfs.length){
-                    x++;
-                    setTimeout(highlightNextEle);
-                }
-            };
-            highlightNextEle();
-            */
 
+    var to = urlParams.has("to") ? urlParams.get("to") : "";
+
+    if (from != "" && to != "") {
+      var dijkstra = cy.elements().dijkstra('#' + from, function (edge) {
+        return edge.data('weight');
+      }, false);
+      var bfs = dijkstra.pathTo(cy.$('#' + to));
+      var x = 0;
+
+      var highlightNextEle = function highlightNextEle() {
+        var el = bfs[x];
+        el.addClass('highlighted');
+
+        if (x < bfs.length) {
+          x++;
+          setTimeout(highlightNextEle);
+        }
+      };
+
+      highlightNextEle();
+    }
   }); // the default values of each option are outlined below:
 }
 
