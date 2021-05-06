@@ -148,15 +148,19 @@ Content-Length: 256
 ]
 ```
 
-Le serveur répondra une erreur si la donnée envoyée n'est pas valide, je détaillerai plus tard comment et ce que vous pouvez en faire, sinon un message de succès est envoyé.
+Le serveur répondra une erreur si la donnée envoyée n'est pas valide, je détaillerai plus tard comment et ce que vous
+pouvez en faire, sinon un message de succès est envoyé. En cas de succès on recoit un message de type 201
 
 ## API post Link
 
 L'API post permet aussi d'envoyer la liste des relations. Pour l'utiliser il faut :
 
-- Que les deux refugees (personnes) soient déjà présente dans la database. Autrement dit, il faut d'abord effectuer une requete POST add refugee
-- Préciser le `full_name` et le `unique_id de chaque personne
+- Que les deux refugees (personnes) soient déjà présente dans la database. Autrement dit, il faut d'abord effectuer une
+  requete POST add refugee
+- Préciser le `unique_id de chaque personne
 - Préciser une relation appartenant à la liste des relations prédéfinies.
+
+On peut aussi préciser un détail sur la relation
 
 ```
 POST /api/links HTTP/1.1
@@ -170,16 +174,16 @@ Content-Length: 249
 [
     {
     "from_unique_id" : "ABC-000008",
-    "from_full_name" : "INSERT FROM API 1",
-    "to_unique_id" : "ABC-000009",
-    "to_full_name" : "INSERT FROM API 2",
+    "to_unique_id" : "ABC-000009",``
     "relation" : "TW",
     "detail" : "at the port"
     }
 ]
 ```
 
-### Erreurs possibles : 
+En cas de succès on recoit un message de type `201`
+
+### Erreurs possibles :
 
 Si les données fournies ne sont pas bonnes, le serveur renvoie une erreur de type `422` :
 
