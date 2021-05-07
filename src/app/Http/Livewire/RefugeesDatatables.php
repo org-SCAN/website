@@ -2,7 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Country;
+use App\Models\Gender;
 use App\Models\Refugee;
+use App\Models\Role;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
@@ -28,6 +31,8 @@ class RefugeesDatatables extends LivewireDatatable
     public function columns()
     {
         return [
+            // Column::checkbox(),
+
             Column::name('unique_id')
                 ->label('Reference')
                 ->filterable()
@@ -36,27 +41,27 @@ class RefugeesDatatables extends LivewireDatatable
             Column::callback(["full_name", 'id'], function ($name, $id) {
                 return "<a href='" . route('manage_refugees.show', $id) . "'>$name</a>";
             })
-                ->defaultSort('asc')
                 ->searchable()
                 ->label('Name'),
 
-            Column::name('genders.full')
+            Column::name('genders.' . Gender::getDisplayedValue())
                 ->label("Sex")
                 ->filterable([
                     'Male',
                     'Female',
                     'Other']),
 
-            Column::name('countries.short')
+            Column::name('countries.' . Country::getDisplayedValue())
                 ->label("Nationality")
                 ->filterable(),
 
-            Column::name('roles.short')
+            Column::name('roles.' . Role::getDisplayedValue())
                 ->label("Role")
                 ->filterable(),
 
             DateColumn::name('date')
                 ->label('Date')
+                ->defaultSort('desc')
                 ->filterable()
         ];
     }
