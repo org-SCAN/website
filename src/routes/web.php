@@ -46,6 +46,13 @@ Route::post('manage_refugees/json/store', [
     'uses' => '\App\Http\Controllers\ManageRefugeesController@storeFromJson'
 ]);
 
+
+Route::put('manage_refugees/fix_duplicated_reference/{id} ', [
+    'as' => 'manage_refugees.fix_duplicated_reference',
+    'uses' => '\App\Http\Controllers\ManageRefugeesController@fixDuplicatedReference'
+]);
+
+
 Route::resource("manage_refugees", ManageRefugeesController::class);
 Route::resource("fields", FieldsController::class);
 Route::resource("lists_control", ListControlController::class);

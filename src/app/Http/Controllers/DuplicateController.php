@@ -16,7 +16,7 @@ class DuplicateController extends Controller
     public function index()
     {
         $duplicates = Duplicate::getDuplicates();
-        print_r($duplicates);
+        return view("duplicate.index", compact("duplicates"));
     }
 
     /**

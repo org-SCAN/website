@@ -45,17 +45,24 @@ class ApiLog extends Model
      *
      * @return guid
      */
-    public function getUserId(){
+    public function getUserId()
+    {
         return $this->attributes['user'];
     }
 
-    public static function createFromRequest($request, $model = null){
+    public static function getUser($push_id)
+    {
+        return self::find($push_id)->user;
+    }
+
+    public static function createFromRequest($request, $model = null)
+    {
         $log = array();
         $log["user"] = $request->user()->id;
         $log["application_id"] = $request->header("Application-id"); //Pas sur du tout
-        $log["api_type"] =  $request->path();
-        $log["http_method"] =  $request->method();
-        $log["model"] =  $model;
+        $log["api_type"] = $request->path();
+        $log["http_method"] = $request->method();
+        $log["model"] = $model;
         $log["ip"] = $request->ip();
 
         return self::create($log);
