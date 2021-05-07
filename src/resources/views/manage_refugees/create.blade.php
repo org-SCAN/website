@@ -13,26 +13,36 @@
                             @foreach($fields as $field)
 
                                 <div class="px-4 py-5 bg-white sm:p-6">
-                                    <label for="{{$field->label}}" class="block font-medium text-sm text-gray-700">{{$field->title}}</label>
-                                    @if($field->linked_list != "")
-                                        @php
+                                    <label for="{{$field->label}}"
+                                           class="block font-medium text-sm text-gray-700">{{$field->title}}</label>
+                                @if($field->linked_list != "")
+                                    @php
                                         $list=$field->getLinkedListContent();
                                         //array_unshift($list, "Select your ".$field->title) ;
-                                        @endphp
-                                        <!--<x-form-select name="{{$field->label}}" :options="$list" label="" class="form-input rounded-md shadow-sm mt-1 block w-full"/>-->
+                                    @endphp
+                                    <!--<x-form-select name="{{$field->label}}" :options="$list" label="" class="form-input rounded-md shadow-sm mt-1 block w-full"/>-->
 
-                                            @livewire("select-dropdown", ['label' => $field->label, 'placeholder' => "-- Select your ".$field->title." --", 'datas' => $list])
-                                            @stack('scripts')
+                                        @livewire("select-dropdown", ['label' => $field->label, 'placeholder' => "--
+                                        Select your ".$field->title." --", 'datas' => $list])
+                                        @stack('scripts')
+                                    @elseif($field->html_data_type == "textarea")
+                                        <textarea name="{{$field->label}}" id="{{$field->label}}"
+                                                  class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                                  placeholder="{{$field->placeholder ?? ''}}"></textarea>
                                     @else
-                                        <input type="{{$field->html_data_type}}" name="{{$field->label}}" id="{{$field->label}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="{{$field->placeholder ?? ''}}" />
+                                        <input type="{{$field->html_data_type}}" name="{{$field->label}}"
+                                               id="{{$field->label}}"
+                                               class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                               placeholder="{{$field->placeholder ?? ''}}"/>
                                     @endif
                                     @error($field->label)
-                                        <p class="text-sm text-red-600">{{ $message }}</p>
+                                    <p class="text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
                             @endforeach
                             <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                <button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
+                                <button
+                                    class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
                                     Add
                                 </button>
                             </div>
