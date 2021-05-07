@@ -14,6 +14,7 @@
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.0",
+        "mediconesystems/livewire-datatables": "dev-master",
         "protonemedia/laravel-form-components": "^2.5"
     },
     "require-dev": {

@@ -44,14 +44,23 @@ class ListControl extends Model
         // 2. Create a new table -> for the list column name
     }
 
-    public function getListContent(){
+    public function getListContent()
+    {
 
-        $model = 'App\Models\\'.$this->name;
+        $model = 'App\Models\\' . $this->name;
         $list = $model::orderBy($this->displayed_value)
             ->get()
             ->toArray();
 
         return $list;
+    }
+
+    public static function getDisplayedValue()
+    {
+        $call_class_name = get_called_class();
+        $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg Country / Gender / …
+
+        return ListControl::where('name', $class_name)->first()->displayed_value;
     }
 
     /**
@@ -61,7 +70,8 @@ class ListControl extends Model
      * @return string
      */
 
-    public static function getDisplayedValueContent($id){
+    public static function getDisplayedValueContent($id)
+    {
         $call_class_name = get_called_class();
         $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg Country / Gender / …
 
