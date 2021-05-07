@@ -18,17 +18,27 @@
                         @foreach($fields as $field)
 
                             <div class="px-4 py-5 bg-white sm:p-6">
-                                <label for="{{$field->label}}" class="block font-medium text-sm text-gray-700">{{$field->title}}</label>
+                                <label for="{{$field->label}}"
+                                       class="block font-medium text-sm text-gray-700">{{$field->title}}</label>
                                 @if($field->linked_list != "")
                                     @php
                                         $list=$field->getLinkedListContent();
                                         $get_id = "get".ucfirst($field->label)."Id";
                                     @endphp
-                                    @livewire("select-dropdown", ['label' => $field->label, 'placeholder' => "-- Select your ".$field->title." --", 'datas' => $list, "selected_value" => $refugee->$get_id()])
+                                    @livewire("select-dropdown", ['label' => $field->label, 'placeholder' => "-- Select
+                                    your ".$field->title." --", 'datas' => $list, "selected_value" =>
+                                    $refugee->$get_id()])
                                     @stack('scripts')
+
+                                @elseif($field->html_data_type == "textarea")
+                                    <textarea name="{{$field->label}}" id="{{$field->label}}"
+                                              class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                              placeholder="{{$field->placeholder ?? ''}}">{{ old($field->label, $refugee->{$field->label}) }}</textarea>
                                 @else
-                                    <input type="{{$field->html_data_type}}" name="{{$field->label}}" id="{{$field->label}}"
-                                           class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ old($field->label, $refugee->{$field->label}) }}"/>
+                                    <input type="{{$field->html_data_type}}" name="{{$field->label}}"
+                                           id="{{$field->label}}"
+                                           class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                           value="{{ old($field->label, $refugee->{$field->label}) }}"/>
                                 @endif
                                 @error($field->label)
                                 <p class="text-sm text-red-600">{{ $message }}</p>

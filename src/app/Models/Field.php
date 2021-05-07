@@ -145,6 +145,7 @@ class Field extends Model
     public static function getHtmlDataTypeFromForm(String $database_type){
         $type_convert = [
             "string" => "text",
+            "text" => "textarea",
             "integer" => "number",
             "date" => "date",
             "boolean" => "checkbox"
@@ -162,6 +163,7 @@ class Field extends Model
     public static function getUITypeFromForm(String $database_type){
         $type_convert = [
             "string" => "EditText",
+            "text" => "EditText",
             "integer" => "number",
             "date" => "date",
             "boolean" => "Radio Button"
@@ -181,6 +183,7 @@ class Field extends Model
         $validador = array();
         $type_convert = [
             "string" => "String",
+            "text" => "String",
             "integer" => "Integer",
             "date" => "Date",
             "boolean" => "Boolean"
