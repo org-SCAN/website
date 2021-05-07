@@ -1,6 +1,14 @@
 <?php
 
+use App\Http\Controllers\ApiLogController;
+use App\Http\Controllers\DuplicateController;
+use App\Http\Controllers\FieldsController;
+use App\Http\Controllers\LinkController;
+use App\Http\Controllers\ListControlController;
+use App\Http\Controllers\ManageRefugeesController;
+use App\Http\Controllers\ManageUsersController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +25,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/content.json', function () {
-    return \Illuminate\Support\Facades\Storage::disk('public')->get('content.json');
+    return Storage::disk('public')->get('content.json');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -38,9 +46,17 @@ Route::post('manage_refugees/json/store', [
     'uses' => '\App\Http\Controllers\ManageRefugeesController@storeFromJson'
 ]);
 
-Route::resource("manage_refugees", \App\Http\Controllers\ManageRefugeesController::class);
-Route::resource("fields", \App\Http\Controllers\FieldsController::class);
-Route::resource("lists_control", \App\Http\Controllers\ListControlController::class);
-Route::resource("links", \App\Http\Controllers\LinkController::class);
-Route::resource("user", \App\Http\Controllers\ManageUsersController::class);
-Route::resource("api_logs", \App\Http\Controllers\ApiLogController::class);
+
+Route::put('manage_refugees/fix_duplicated_reference/{id} ', [
+    'as' => 'manage_refugees.fix_duplicated_reference',
+    'uses' => '\App\Http\Controllers\ManageRefugeesController@fixDuplicatedReference'
+]);
+
+
+Route::resource("manage_refugees", ManageRefugeesController::class);
+Route::resource("fields", FieldsController::class);
+Route::resource("lists_control", ListControlController::class);
+Route::resource("links", LinkController::class);
+Route::resource("user", ManageUsersController::class);
+Route::resource("duplicate", DuplicateController::class);
+Route::resource("api_logs", ApiLogController::class);

@@ -13,6 +13,7 @@ use App\Models\Refugee;
 use Illuminate\Http\Request;
 use Illuminate\Http\RequestRefugeeRequest;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\URL;
 
 
 class ManageRefugeesController extends Controller
@@ -145,6 +146,24 @@ class ManageRefugeesController extends Controller
         Refugee::find($refugee_id)
             ->update($refugee);
         return redirect()->route("manage_refugees.index");
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param String $refugee_id
+     * @return Response
+     */
+    public function fixDuplicatedReference(Request $request, $refugee_id)
+    {
+
+        $refugee["unique_id"] = $request->input('unique_id');
+
+        Refugee::find($refugee_id)
+            ->update($refugee);
+
+        return redirect(URL::previous());
     }
 
     /**
