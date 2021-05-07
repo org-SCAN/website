@@ -126,6 +126,15 @@
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/psr/event-dispatcher" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/protonemedia/laravel-form-components" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/ezyang/htmlpurifier" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/maennchen/zipstream-php" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/maatwebsite/excel" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/psr/http-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/mediconesystems/livewire-datatables" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/phpoffice/phpspreadsheet" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/markbaker/complex" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/markbaker/matrix" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/myclabs/php-enum" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
