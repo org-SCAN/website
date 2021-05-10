@@ -6,15 +6,17 @@ use App\Http\Requests\StoreFieldRequest;
 use App\Http\Requests\UpdateFieldRequest;
 use App\Models\ApiLog;
 use App\Models\Field;
+use App\Models\ListControl;
 use App\Models\Relation;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class FieldsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -25,7 +27,7 @@ class FieldsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -36,8 +38,8 @@ class FieldsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\StoreFieldRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param App\Http\Requests\StoreFieldRequest $request
+     * @return Response
      */
     public function store(StoreFieldRequest $request)
     {
@@ -60,8 +62,8 @@ class FieldsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  String  $id
-     * @return \Illuminate\Http\Response
+     * @param String $id
+     * @return Response
      */
     public function show(String $id)
     {
@@ -86,38 +88,39 @@ class FieldsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function edit($id)
     {
         $field = Field::find($id);
         $linked_list_id = $field->getLinkedListId();
-        $lists["database_type"]= array("string" => "Small text","integer" => "Number","date" => "Date","boolean" => "Yes / No ");
-        $lists["database_type"]= [$field->database_type => $lists["database_type"][$field->database_type]]+$lists["database_type"]; //TODO : gérer la conversion vers une valeur de tableau connue
+        $lists["database_type"] = array("string" => "Small text", "integer" => "Number", "date" => "Date", "boolean" => "Yes / No ");
+        $lists["database_type"] = [$field->database_type => $lists["database_type"][$field->database_type]] + $lists["database_type"];
 
-        $lists["required"]=  array(0 => "Auto generated", 1 => "Required",2 => "Strongly advised",3 => "Advised",4 => "If possible",100 => "Undefined");
-        $lists["required"]= [$field->getRequiredId() => $lists["required"][$field->getRequiredId()]]+$lists["required"]; //TODO : gérer la conversion vers une valeur de tableau connue
+        $lists["required"] = array(0 => "Auto generated", 2 => "Strongly advised", 3 => "Advised", 4 => "If possible", 100 => "Undefined");
+        if ($field->getRequiredId() != 1) { // 1 is for required
+            $lists["required"] = [$field->getRequiredId() => $lists["required"][$field->getRequiredId()]] + $lists["required"];
+        }
 
-        $lists["status"]=   array(0 => "Disabled",1 => "Website",2 => "Website & App");
-        $lists["status"]= [$field->getStatusId() => $lists["status"][$field->getStatusId()]]+$lists["status"]; //TODO : gérer la conversion vers une valeur de tableau connue
+        $lists["status"] = array(0 => "Disabled", 1 => "Website", 2 => "Website & App");
+        $lists["status"] = [$field->getStatusId() => $lists["status"][$field->getStatusId()]] + $lists["status"];
 
-        if(empty($linked_list_id)){
+        if (empty($linked_list_id)) {
             $lists["linked_list"] = [" " => "Choose an associate list"];
+        } else {
+            $lists["linked_list"] = array_column(ListControl::where('id', $linked_list_id)->get()->toArray(), "title", "id");
         }
-        else{
-            $lists["linked_list"] =  array_column(\App\Models\ListControl::where('id', $linked_list_id)->get()->toArray(), "title", "id");
-        }
-        $lists["linked_list"] +=  array_column(\App\Models\ListControl::where("deleted",0)->where("id","!=",$linked_list_id)->get()->toArray(), "title", "id");
+        $lists["linked_list"] += array_column(ListControl::where("deleted", 0)->where("id", "!=", $linked_list_id)->get()->toArray(), "title", "id");
         return view("fields.edit", compact('field', "lists"));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param string $id
+     * @return Response
      */
     public function update(UpdateFieldRequest $request, $id)
     {
@@ -133,8 +136,8 @@ class FieldsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  String  $id
-     * @return \Illuminate\Http\Response
+     * @param String $id
+     * @return Response
      */
     public function destroy(String $id)
     {
