@@ -3,13 +3,12 @@
 namespace Database\Factories;
 
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use App\Models\Refugee;
-use App\Models\Route;
 use App\Models\Country;
-use App\Models\Role;
 use App\Models\Gender;
+use App\Models\Refugee;
+use App\Models\Role;
+use App\Models\Route;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RefugeeFactory extends Factory
 {
@@ -41,7 +40,7 @@ class RefugeeFactory extends Factory
             'role' => Role::inRandomOrder()->first()->id,
             'age' => $this->faker->numberBetween(1,120),
             'birth_date' => $this->faker->date("Y-m-d", $max = 'now'),
-            'date_last_seen' => $this->faker->date("Y-m-d", $min = '-2 years', $max="now"),
+            'date_last_seen' => $this->faker->date("Y-m-d", $min = '-2 years', $max = "now"),
             'birth_place' => $this->faker->city,
             'gender' => Gender::inRandomOrder()->first()->id,
             'passport_number' => $this->faker->regexify('[A-Z]{3}-[0-9]{6}-[A-Z]{8}'),
@@ -51,6 +50,7 @@ class RefugeeFactory extends Factory
             'destination' => $this->faker->randomElement(['France', 'Spain', 'Italy', 'Greece']),
             'route' => Route::inRandomOrder()->first()->id,
             'residence' => Country::inRandomOrder()->first()->id,
+            'api_log' => "seeder",
 
         ];
     }

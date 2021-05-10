@@ -91,6 +91,24 @@
     },
     {
         "title": {
+            "eng": "Disaster",
+            "fra": "Sinistre",
+            "esp": "Disaster"
+        },
+        "label": "disaster",
+        "placeholder": "Sfax",
+        "html_data_type": "text",
+        "android_type": "EditText",
+        "linked_list": "",
+        "required": 2,
+        "status": 2,
+        "attribute": "",
+        "database_type": "string",
+        "order": 5,
+        "validation_laravel": "string|nullable|max:250"
+    },
+    {
+        "title": {
             "eng": "Mother's full names",
             "fra": "Nom de la mère",
             "esp": "Mother's full names"
@@ -340,6 +358,24 @@
         "database_type": "string",
         "order": 12,
         "validation_laravel": "string|nullable"
+    },
+    {
+        "title": {
+            "eng": "Details",
+            "fra": "Informations supplémentaires",
+            "esp": "Details"
+        },
+        "label": "detail",
+        "placeholder": "Shoes found",
+        "html_data_type": "textarea",
+        "android_type": "EditText",
+        "linked_list": "",
+        "required": 4,
+        "status": 1,
+        "attribute": "",
+        "database_type": "text",
+        "order": 22,
+        "validation_laravel": "nullable|String"
     },
     {
         "title": {

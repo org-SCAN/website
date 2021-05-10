@@ -46,10 +46,7 @@ class RefugeesDatatables extends LivewireDatatable
 
             Column::name('genders.' . Gender::getDisplayedValue())
                 ->label("Sex")
-                ->filterable([
-                    'Male',
-                    'Female',
-                    'Other']),
+                ->filterable(Gender::pluck(Gender::getDisplayedValue())),
 
             Column::name('countries.' . Country::getDisplayedValue())
                 ->label("Nationality")
@@ -57,10 +54,10 @@ class RefugeesDatatables extends LivewireDatatable
 
             Column::name('roles.' . Role::getDisplayedValue())
                 ->label("Role")
-                ->filterable(),
+                ->filterable(Role::pluck(Role::getDisplayedValue())),
 
             DateColumn::name('date')
-                ->label('Date')
+                ->label('Date (from / to)')
                 ->defaultSort('desc')
                 ->filterable()
         ];
