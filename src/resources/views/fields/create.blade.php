@@ -70,11 +70,15 @@
 
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 @php($form_elem = "required")
-                                <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's requirement state</label>
+                                <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
+                                    requirement state</label>
 
-                                @php( $list = array(1 => "Required",2 => "Strongly advised",3 => "Advised",4 => "If possible",100 => "Undefined"))
-                                <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
-                                <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define the field's requirement state.</small>
+                                @php( $list = array(2 => "Strongly advised",3 => "Advised",4 => "If possible",100 => "Undefined"))
+                                <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
+                                               class="form-input rounded-md shadow-sm mt-1 block w-full"/>
+                                <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define
+                                    the field's requirement state. <i class="text-sm text-red-600"> Due to deployment
+                                        conditions, you can't define the field as required</i></small>
 
                                 @error($form_elem)
                                 <p class="text-sm text-red-600">{{ $message }}</p>
@@ -116,15 +120,19 @@
 
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 @php($form_elem = "linked_list")
-                                <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's associated list ~
+                                <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
+                                    associated list
+                                <!--
                                     <a href="{{route("lists_control.create")}}" class="inline-flex items-center text-blue-800">
-                                        Create a new list
-                                    </a>
+                                       ~ Create a new list
+                                    </a>-->
                                 </label>
 
                                 @php( $list = [" " => "Choose an associate list"]+array_column(\App\Models\ListControl::where("deleted",0)->get()->toArray(), "title", "id"))
-                                <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
-                                <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define a list which is associated with this field.</small>
+                                <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
+                                               class="form-input rounded-md shadow-sm mt-1 block w-full"/>
+                                <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define a
+                                    list which is associated with this field.</small>
 
                                 @error($form_elem)
                                 <p class="text-sm text-red-600">{{ $message }}</p>

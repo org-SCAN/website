@@ -45,11 +45,16 @@
 
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "required")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's requirement state</label>
-
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
+                                requirement state</label>
+                            @if($field->required == "Required")
+                                <b>This field is currently required</b>
+                            @endif
                             @php( $list = $lists["required"])
-                            <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define the field's requirement state.</small>
+                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
+                                           class="form-input rounded-md shadow-sm mt-1 block w-full"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define the
+                                field's requirement state.</small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
