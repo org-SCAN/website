@@ -40,7 +40,9 @@
                             @enderror
 
                             <label for="password" class="block font-medium text-sm text-gray-700">Confirm password</label>
-                            <input type="password" name="confirm_password" id="confirm_password" class="form-input rounded-md shadow-sm mt-1 block w-full" />
+                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-input rounded-md shadow-sm mt-1 block w-full" />
+                            <small id="Help_password" class="block font-medium text-sm text-gray-500 ">
+                                The password must contain at least 8 characters in length, one lowercase letter, one uppercase letter, one digit  </small>
                             @error('password_confirmation')
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
