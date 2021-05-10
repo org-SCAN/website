@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUsersRequest;
-use App\Models\Field;
-use App\Models\Link;
-use App\Models\Refugee;
+use App\Models\Team;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 
 class ManageUsersController extends Controller
@@ -19,11 +19,8 @@ class ManageUsersController extends Controller
      */
     public function index()
     {
-        //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '405 Forbidden');
-
         $users = User::all();
-        return view("users.index", compact("users"));
-
+        return view("user.index", compact("users"));
     }
 
     /**
@@ -33,25 +30,48 @@ class ManageUsersController extends Controller
      */
     public function create()
     {
-       // abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return view('user.create');
+    }
 
-       // $roles = User::pluck('title', 'id');
 
-        return view('users.create');
+    /**
+     * Create a personal team for the user.
+     *
+     * @param  \App\Models\User  $user
+     * @return void
+     */
+    protected function createTeam(User $user)
+    {
+        $user->ownedTeams()->save(Team::forceCreate([
+            'user_id' => $user->id,
+            'name' => explode(' ', $user->name, 2)[0]."'s Team",
+            'personal_team' => true,
+        ]));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a newly registered user.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  array  $input
+     * @return \App\Models\User
      */
     public function store(StoreUserRequest $request)
     {
-        //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        User::create($request->validated());
-        return redirect()->route('users.index');
+        $user = $request->validated();
+        DB::transaction(function () use ($user) {
+            return tap(User::create([
+                'name' => $user['name'],
+                'email' => $user['email'],
+                'password' => Hash::make($user['password']),
+                'role' => $user['role'],
+            ]), function (User $created_user) {
+                $this->createTeam($created_user);
+                $created_user->genToken();
+                $created_user->genRole();
+            });
+        });
 
+        return redirect()->route('user.index');
     }
 
     /**
@@ -62,11 +82,8 @@ class ManageUsersController extends Controller
      */
     public function show(String $id)
     {
-        //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $user = User::find($id);
-
-        return view("users.show", compact("user"));
+        return view("user.show", compact("user"));
 
     }
 
@@ -78,13 +95,10 @@ class ManageUsersController extends Controller
      * @param $user
      * @return \Illuminate\Http\Response
      */
-    public function edit( $user)
+    public function edit( $id)
     {
-        //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $user_found = User::find($user);
-
-        return view("users.edit", compact("user_found"));
+        $user_found = User::find($id);
+        return view("user.edit", compact("user_found"));
 
     }
 
@@ -98,10 +112,15 @@ class ManageUsersController extends Controller
      */
     public function update(UpdateUsersRequest $request, $id)
     {
-        $id->update($request->validated());
+       // $id->update($request->validated());
         //$user->roles()->sync($request->input('roles', []));
 
-        return redirect()->route('users.index');
+        $user = $request->validated();
+
+        User::find($id)
+            ->update($user);
+
+        return redirect()->route('user.index');
 
     }
 
@@ -114,10 +133,10 @@ class ManageUsersController extends Controller
      */
     public function destroy($id)
     {
-        //abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $id->delete();
-
-       return redirect()->route('users.index');
+        $user = User :: where("id",$id);
+        $user ->delete();
+        $users = User::all();
+        return view("user.index", compact("users"));
     }
 }

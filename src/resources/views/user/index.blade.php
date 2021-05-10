@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('User') }}
+            {{ __('Users') }}
         </h2>
     </x-slot>
 
@@ -24,7 +24,7 @@
                                         Email
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Team
+                                        Role
                                     </th>
 
                                     <th scope="col" class="relative px-6 py-3">
@@ -42,7 +42,7 @@
                                             <a href="{{route("user.show", $user->id)}}" class="text-indigo-600 hover:text-blue-900">{{$user->email}}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("user.show", $user->id)}}" class="text-indigo-600 hover:text-blue-900">{{$user->current_team_id}}</a>
+                                            <a href="{{route("user.show", $user->id)}}" class="text-indigo-600 hover:text-blue-900">{{$user->role}}</a>
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
