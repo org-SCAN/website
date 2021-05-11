@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FileLinkRequest;
 use App\Http\Requests\StoreLinkApiRequest;
 use App\Http\Requests\StoreLinkRequest;
 use App\Http\Requests\UpdateLinkRequest;
@@ -33,9 +34,21 @@ class LinkController extends Controller
      */
     public function create()
     {
-        $lists["refugees"] = array_column(Refugee::where("deleted",0)->get()->toArray(), "full_name", "id");
-        $lists["relations"] = array_column(Relation::where("deleted",0)->get()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
+        $lists["refugees"] = array_column(Refugee::where("deleted", 0)->get()->toArray(), "full_name", "id");
+        $lists["relations"] = array_column(Relation::where("deleted", 0)->get()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
         return view("links.create", compact("lists"));
+    }
+
+
+    /**
+     * Show the form for creating a new resource from a json file.
+     *
+     * @return Response
+     */
+    public function createFromJson()
+    {
+        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return view("links.create_from_json");
     }
 
     /**
@@ -46,7 +59,54 @@ class LinkController extends Controller
      */
     public function store(StoreLinkRequest $request)
     {
-        Link::create($request->validated());
+        $link = $request->validated();
+        $link["date"] = ((isset($link["date"]) && !empty($link["date"])) ? $link["date"] : date('Y-m-d H:i', time()));
+        $log = ApiLog::createFromRequest($request, "Link");
+        $link["api_log"] = $log->id;
+        Link::create($link);
+        return redirect()->route("links.index");
+    }
+
+    /**
+     * Store a newly created resource from json file in storage.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function storeFromJson(FileLinkRequest $request)
+    {
+        $log = ApiLog::createFromRequest($request, "Link");
+        foreach ($request->validated() as $link) {
+            $relation["api_log"] = $log->id;
+            $relation["application_id"] = $log->application_id;
+            $from = Refugee::where("application_id", $link["application_id"])
+                ->where("unique_id", $link["from_unique_id"])
+                ->first();
+            if ($from != null) {
+                $relation["from"] = $from->id;
+            } else {
+                $log->update(["response" => "Error : " . $link["from_unique_id"] . " not found with application id : " . $link["application_id"]]);
+                break;
+            }
+
+            $to = Refugee::where("application_id", $link["application_id"])
+                ->where("unique_id", $link["to_unique_id"])
+                ->first();
+
+            if ($to != null) {
+                $relation["to"] = $to->id;
+            } else {
+                $log->update(["response" => "Error : " . $link["to_unique_id"] . " not found with application id : " . $link["application_id"]]);
+                break;
+            }
+
+            $relation["relation"] = $link["relation"];
+            if (isset($link["detail"]) && !empty($link["detail"])) {
+                $relation["detail"] = $link["detail"];
+            }
+
+            Link::create($relation);
+        }
         return redirect()->route("links.index");
     }
 
@@ -85,8 +145,11 @@ class LinkController extends Controller
      */
     public function update(UpdateLinkRequest $request, $id)
     {
-        $link = Link::find($id);
-        $link->update($request->validated());
+
+        $log = ApiLog::createFromRequest($request, "Link");
+        $link = $request->validated();
+        $link["api_log"] = $log->id;
+        $link = Link::find($id)->update($link);
 
         return redirect()->route("links.index");
     }
@@ -118,17 +181,30 @@ class LinkController extends Controller
 
                 $relation["api_log"] = $log->id;
                 $relation["application_id"] = $log->application_id;
-                $relation["from"] = Refugee::where("application_id", $relation["application_id"])
+                $from = Refugee::where("application_id", $relation["application_id"])
                     ->where("unique_id", $link["from_unique_id"])
-                    ->first()
-                    ->id;
-                $relation["to"] = Refugee::where("application_id", $relation["application_id"])
+                    ->first();
+                if ($from != null) {
+                    $relation["from"] = $from->id;
+                } else {
+                    $log->update(["response" => "Error : " . $link["from_unique_id"] . " not found with application id : " . $relation["application_id"]]);
+                    return response("Error : " . $link["to_unique_id"] . " not found with application id : " . $relation["application_id"], 500);
+                }
+
+                $to = Refugee::where("application_id", $relation["application_id"])
                     ->where("unique_id", $link["to_unique_id"])
-                    ->first()
-                    ->id;
+                    ->first();
+
+                if ($to != null) {
+                    $relation["to"] = $to->id;
+                } else {
+                    $log->update(["response" => "Error : " . $link["to_unique_id"] . " not found with application id : " . $relation["application_id"]]);
+                    return response("Error : " . $link["to_unique_id"] . " not found with application id : " . $relation["application_id"], 500);
+                }
+
                 $relation["relation"] = $link["relation"];
                 if (isset($link["detail"])) {
-                    $relation["detail"] = link["detail"];
+                    $relation["detail"] = $link["detail"];
                 }
 
                 $potential_link = Link::where("application_id", $relation["application_id"])

@@ -31,12 +31,19 @@ class Link extends Model
     protected $guarded = [];
 
     /**
+     * Give the route pattern, used in api log
+     * @var string
+     */
+    const route_base = "links";
+
+    /**
      * It returns a representative value, witch could be shown to discribe the element
      *
      * @return mixed
      */
-    public function getRepresentativeValue(){
-        return $this->from." <-> ".$this->to;
+    public function getRepresentativeValue()
+    {
+        return $this->from . " <-> " . $this->to;
     }
 
     /**

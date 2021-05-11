@@ -11,6 +11,9 @@
             <div class="block mb-8">
                 <a href="{{ route("links.create") }}"
                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add link</a>
+                <a href="{{ route("links.json.create") }}"
+                   class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add link from
+                    json</a>
             </div>
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

@@ -93,7 +93,10 @@ class ManageRefugeesController extends Controller
      */
     public function storeFromJson(FileRefugeeRequest $request)
     {
-        foreach ($request->validated() as $refugee){
+        $log = ApiLog::createFromRequest($request, "Refugee");
+        foreach ($request->validated() as $refugee) {
+            $refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i', time()));
+            $refugee["api_log"] = $log->id;
             Refugee::create($refugee);
         }
         return redirect()->route("manage_refugees.index");

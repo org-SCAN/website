@@ -33,14 +33,20 @@ class Refugee extends Model
     /**
      * @var mixed
      */
-    private $residence;
+
+    /**
+     * Give the route pattern, used in api log
+     * @var string
+     */
+    const route_base = "manage_refugees";
 
     /**
      * It returns a representative value, witch could be shown to discribe the element
      *
      * @return mixed
      */
-    public function getRepresentativeValue(){
+    public function getRepresentativeValue()
+    {
         return $this->full_name;
     }
 
