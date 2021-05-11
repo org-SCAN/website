@@ -33,7 +33,16 @@
             "esp": "survivor"
         },
         "descr": "",
-        "key" : "survivor"
+        "key": "survivor"
+    },
+    {
+        "short": {
+            "eng": "deceased",
+            "fra": "décédé",
+            "esp": "deceased"
+        },
+        "descr": "",
+        "key": "deceased"
     },
     {
         "short": {
@@ -42,7 +51,7 @@
             "esp": "informant"
         },
         "descr": "",
-        "key" : "informant"
+        "key": "informant"
     },
     {
         "short": {

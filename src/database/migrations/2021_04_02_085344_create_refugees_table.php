@@ -37,11 +37,12 @@ class CreateRefugeesTable extends Migration
                 ->nullable();
             $table->boolean("deleted")->default(0);
             $table->timestamps();
+            $table->foreignUuid("api_log");
+            $table->string("application_id")->default("website");
             foreach ($array_json as $field) {
-                if($field["required"] != 1){
+                if ($field["required"] != 1) {
                     $table->{$field["database_type"]}($field["label"])->nullable();
-                }
-                else{
+                } else {
                     $table->{$field["database_type"]}($field["label"]);
                 }
             }

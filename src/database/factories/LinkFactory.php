@@ -24,10 +24,11 @@ class LinkFactory extends Factory
     public function definition()
     {
         return [
-            'date' => $this->faker->date("Y-m-d", $max = 'now', $min='- 2 months'),
+            'date' => $this->faker->date("Y-m-d", $max = 'now', $min = '- 2 months'),
             'relation' => Relation::inRandomOrder()->first()->id,
-            'from'=> Refugee::inRandomOrder()->first()->id,
-            'to'=> Refugee::inRandomOrder()->first()->id
+            'from' => Refugee::inRandomOrder()->first()->id,
+            'to' => Refugee::inRandomOrder()->first()->id,
+            'api_log' => "seeder",
         ];
     }
 }

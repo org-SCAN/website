@@ -24,16 +24,19 @@ class CreateLinksTable extends Migration
     {
 
         Schema::create($this->table_name, function (Blueprint $table) {
-            $table->uuid( "id")
+            $table->uuid("id")
                 ->primary()
                 ->unique();
-            $table->datetime( "date")
+            $table->datetime("date")
                 ->useCurrent();
-            $table->boolean( "deleted")
-            ->default(0);
-            $table->foreignUuid( "relation");
-            $table->foreignUuid( "from");
-            $table->foreignUuid( "to");
+            $table->boolean("deleted")
+                ->default(0);
+            $table->foreignUuid("relation");
+            $table->foreignUuid("from");
+            $table->foreignUuid("to");
+            $table->String("detail")->nullable();
+            $table->foreignUuid("api_log");
+            $table->string("application_id")->default("website");
             $table->timestamps();
         });
     }
