@@ -115,6 +115,19 @@ Exemple de réponse du serveur :
 ```
 ## Add refugees :
 
+Pour la format du fichier csv pour l'ajout des refugees, elle doit être comme suit:
+
+Exemple:
+
+```
+'full_name','date','unique_id','nationality','alias','other_names','mothers_names','fathers_names','role','age','birth_date','date_last_seen','birth_place','gender','passport_number','embarkation_date','detention_place','embarkation_place','destination','route'
+```
+
+```
+Ellis McGlynn MD,1989-12-28,ZSR-737417,7f025c60-be0f-4837-9176-57e755595995,Dr. Lurline Schumm DDS,Dr. Travis Beier,Helen Jast PhD,Prof. Aaliyah Auer,1602a8a5-ce72-425e-b42f-2be7867523f2,89,2010-05-24,1979-08-19,Leviport,4a10ec3f-5eec-492f-847c-0feaceb26d63,WOC-521635-WMCHCXIF,1970-03-10,Roubaix,Italy,8a329237-f566-4c49-91a9-b58e0f98e112,d8c9335b-2baa-4f54-813d-f07494d4c304,
+```
+NB: pour le moment, il y a des paramètres qui sont du format UUID, on va essayer de les regler le plus tot possible, pour le moment ça reste un POC(Proof Of Concept) que tout marche bien en important d'un fichier csv
+
 Il faut maintenant envoyer une requête post avec le json à l'intérieur :
 
 Exemple :
