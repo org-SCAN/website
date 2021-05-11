@@ -24,16 +24,6 @@ class UserRole extends Model
 
     public $incrementing = false;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'role',
-        'importance'
-    ];
-
 
     /**
      * The attributes that should be hidden for arrays.

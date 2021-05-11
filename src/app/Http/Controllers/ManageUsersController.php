@@ -6,9 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Models\Team;
 use App\Models\User;
-use App\Models\UserRole;
-use DB;
-use Laravel\Jetstream\Jetstream;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -85,8 +83,7 @@ class ManageUsersController extends Controller
     public function show(String $id)
     {
         $user = User::find($id);
-        $roles = UserRole::all();
-        return view("user.show", compact("user","roles"));
+        return view("user.show", compact("user"));
 
     }
 
@@ -126,7 +123,6 @@ class ManageUsersController extends Controller
         return redirect()->route('user.index');
 
     }
-
 
     /**
      * Remove the specified resource from storage.
