@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Uuids;
 
-class UserRole extends Model
+class RoleRequest extends Model
 {
     use HasFactory, Uuids;
     /**
@@ -15,7 +15,7 @@ class UserRole extends Model
      * @var string
      */
     protected $keyType = 'string';
-
+    
     /**
      * Indicates if the model's ID is auto-incrementing.
      *
@@ -30,10 +30,10 @@ class UserRole extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'role',
-        'importance'
+        'granted'
     ];
-
 
     /**
      * The attributes that should be hidden for arrays.

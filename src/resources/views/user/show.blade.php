@@ -77,7 +77,78 @@
                                         Roles
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                       {{ $user->role }}
+                                        @php
+                                            $currentUser = Auth::user();
+                                            $importance  = App\Models\UserRole::select('importance')->where('role',$user->role)->get()->last()->importance;
+                                            $currentUser_importance = App\Models\UserRole::select('importance')->where('role',$currentUser->role)->get()->last()->importance;
+                                        @endphp
+                                        @if ($importance==0)
+                                            <div class="ml-2 text-sm text-gray-400">
+                                                {{ $user->role }}
+                                            </div>
+                                        @elseif($currentUser_importance==0 && $user->id!=$currentUser->id)
+                                            @php
+                                                $roless=array()
+                                            @endphp
+                                            @foreach ($roles as $rol)
+                                                @php
+                                                    $roless[$rol->id]=$rol->role
+                                                @endphp
+                                            @endforeach
+                                            {{ Form::open(array('url' => 'request/grant')) }}
+                                            {{ Form::hidden('user_id', $user->id) }}
+                                                <div class="ml-2 text-sm text-gray-400 underline">
+                                                    {{ Form::select('role', $roless,array_search($user->role,$roless)) }}
+                                                    @php
+                                                        $requested_role = App\Models\RoleRequest::where('user_id',$user->id)->get();
+                                                        $requested_role = $requested_role->last();
+                                                    @endphp
+                                                    @if (!is_null($requested_role))
+                                                    @if ($requested_role->granted)
+                                                        {{ __('Granted:') }}
+                                                        {{ $roless[$requested_role->role] }}
+                                                    @elseif (!$requested_role->granted)
+                                                        {{ __('Requested:') }}
+                                                        {{ $roless[$requested_role->role] }}
+                                                    @endif
+                                                    @endif
+                                                    <button class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none">
+                                                        {{ __('Grant') }}
+                                                    </button>
+                                                </div>
+                                            {{ Form::close() }}
+                                            @else
+                                            @php
+                                                $roless=array()
+                                            @endphp
+                                            @foreach ($roles as $rol)
+                                                @php
+                                                $roless[$rol->id]=$rol->role
+                                                @endphp
+                                            @endforeach
+                                            {{ Form::open(array('url' => 'request')) }}
+                                            {{ Form::hidden('user_id', $user->id) }}
+                                                <div class="ml-2 text-sm text-gray-400 underline">
+                                                    {{ Form::select('role', $roless,array_search($user->role,$roless)) }}
+                                                    @php
+                                                        $requested_role = App\Models\RoleRequest::where('user_id',$user->id)->get();
+                                                        $requested_role = $requested_role->last();
+                                                    @endphp
+                                                    @if (!is_null($requested_role))
+                                                    @if ($requested_role->granted)
+                                                        {{ __('Granted:') }}
+                                                        {{ $roless[$requested_role->role] }}
+                                                    @elseif (!$requested_role->granted)
+                                                        {{ __('Requested:') }}
+                                                        {{ $roless[$requested_role->role] }}
+                                                    @endif
+                                                    @endif
+                                                    <button class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none">
+                                                        {{ __('Request') }}
+                                                    </button>
+                                                </div>
+                                            {{ Form::close() }}
+                                        @endif
                                     </td>
                                 </tr>
                                 </tr>

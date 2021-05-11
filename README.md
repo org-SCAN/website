@@ -296,6 +296,21 @@ DB_DATABASE=DB_DATABASE_NAME
 DB_USERNAME=user_example
 DB_PASSWORD=my_passwd
 ```
+### Associer un serveur smtp
+
+Pour pouvoir bosser avec la verification(envoie en général) des emails, il est nécessaire de motifier le fichier `src/.env`.
+
+Voici un exemple de ce qu'il doit contenir, où les valeurs `MAIL_MAILER`, `MAIL_HOST`, `MAIL_USERNAME`, `MAIL_PASSWORD` doivent correspondre aux informations saisies dans le `.env` de racine (utilisé mailtrap.io pour créer un serveur smtp gratuit).
+
+```
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=SMTP_USERNAME
+MAIL_PASSWORD=SMTP_PASSWORD
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=address_email
+```
 
 
 # Lancement de Laravel
