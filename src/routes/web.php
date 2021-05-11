@@ -46,6 +46,15 @@ Route::post('manage_refugees/json/store', [
     'uses' => '\App\Http\Controllers\ManageRefugeesController@storeFromJson'
 ]);
 
+Route::get('manage_refugees/excel/create', [
+    'as' => 'manage_refugees.excel.create',
+    'uses' => '\App\Http\Controllers\ManageRefugeesController@createFromExcel'
+]);
+Route::post('manage_refugees/excel/store', [
+    'as' => 'manage_refugees.excel.store',
+    'uses' => '\App\Http\Controllers\ManageRefugeesController@storeFromExcel'
+]);
+
 
 Route::put('manage_refugees/fix_duplicated_reference/{id} ', [
     'as' => 'manage_refugees.fix_duplicated_reference',

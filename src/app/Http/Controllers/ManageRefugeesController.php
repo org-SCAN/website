@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RequestRefugeeRequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\URL;
+use Excel;
+use App\Imports\RefugeeImport;
 
 
 class ManageRefugeesController extends Controller
@@ -24,7 +26,7 @@ class ManageRefugeesController extends Controller
      *
      * @return Response
      */
-    public function index(StoreRefugeeRequest $request)
+    public function index()
     {
 
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -63,6 +65,17 @@ class ManageRefugeesController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource from a Excel file.
+     *
+     * @return Response
+     */
+    public function createFromExcel()
+    {
+        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return view("manage_refugees.create_from_excel");
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
@@ -92,6 +105,22 @@ class ManageRefugeesController extends Controller
         foreach ($request->validated() as $refugee){
             Refugee::create($refugee);
         }
+        return redirect()->route("manage_refugees.index");
+    }
+
+    /**
+     * Store a newly created resource from excel file in storage.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function storeFromExcel(Request $request)
+    {
+        /*
+        foreach ($request->validated() as $refugee){
+            Refugee::create($refugee);
+        }*/
+        Excel::import(new RefugeeImport, $request->file('refugee_excel')->store('temp'));
         return redirect()->route("manage_refugees.index");
     }
 

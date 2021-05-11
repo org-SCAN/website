@@ -12,6 +12,9 @@
                 <a href="{{ route("manage_refugees.json.create") }}"
                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add refugee from
                     json</a>
+                <a href="{{ route("manage_refugees.excel.create") }}"
+                   class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add refugee from
+                    excel</a>
             </div>
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.2",
         "livewire/livewire": "^2.0",
+        "maatwebsite/excel": "^3.1",
         "mediconesystems/livewire-datatables": "dev-master",
         "protonemedia/laravel-form-components": "^2.5"
     },
