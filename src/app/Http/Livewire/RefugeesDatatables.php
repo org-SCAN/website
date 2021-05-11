@@ -18,6 +18,7 @@ class RefugeesDatatables extends LivewireDatatable
     public function builder()
     {
         return Refugee::query()
+            ->where("refugees.deleted", 0)
             ->leftJoin('countries', 'countries.id', 'refugees.nationality')
             ->leftJoin('roles', 'roles.id', 'refugees.role')
             ->leftJoin('genders', 'genders.id', 'refugees.gender');
