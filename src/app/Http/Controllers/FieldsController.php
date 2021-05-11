@@ -157,7 +157,7 @@ class FieldsController extends Controller
         if($request->user()->tokenCan("read")){
             $datas = array();
             $datas["fields"] = Field::getAPIContent();
-            $datas["relations"] = Relation::getAPIContent();
+            $datas["Relations"] = Relation::getAPIContent();
             foreach (Field::getUsedLinkedList() as $list){
                 $call_class = '\App\Models\\'.$list;
                 $datas[$list] = $call_class::getAPIContent();
