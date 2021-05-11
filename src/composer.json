@@ -13,7 +13,6 @@
         "laravel/jetstream": "^2.3",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
-        "laravelcollective/html": "^6.2",
         "livewire/livewire": "^2.0",
         "mediconesystems/livewire-datatables": "dev-master",
         "protonemedia/laravel-form-components": "^2.5"

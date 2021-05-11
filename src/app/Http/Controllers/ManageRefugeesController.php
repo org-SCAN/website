@@ -26,7 +26,6 @@ class ManageRefugeesController extends Controller
      */
     public function index()
     {
-
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $refugees = Refugee::where("deleted", 0)
