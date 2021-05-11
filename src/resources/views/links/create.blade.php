@@ -17,11 +17,12 @@
                             <!--  Relation SECTION  -->
                             <div class="px-4 py-5 bg-white sm:p-6">
 
-                                @php($form_elem = "refugee1")
+                                @php($form_elem = "from")
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Refugee 1</label>
 
                                 @php( $list = $lists["refugees"])
-                                @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the first refugee --', 'datas' => $list])
+                                @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the
+                                first refugee --', 'datas' => $list, 'selected_value' => old($form_elem, $form_elem)])
                                 @stack('scripts')
 
                                 @error($form_elem)
@@ -36,7 +37,8 @@
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Relation</label>
 
                                 @php( $list = $lists["relations"])
-                                @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the relation --', 'datas' => $list])
+                                @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the
+                                relation --', 'datas' => $list, 'selected_value' => old($form_elem, $form_elem)])
                                 @stack('scripts')
 
                                 @error($form_elem)
@@ -47,11 +49,12 @@
                             <!--  Relation SECTION  -->
                             <div class="px-4 py-5 bg-white sm:p-6">
 
-                                @php($form_elem = "refugee2")
+                                @php($form_elem = "to")
                                 <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Refugee 2</label>
 
                                 @php( $list = $lists["refugees"])
-                                @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the second refugee --', 'datas' => $list])
+                                @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the
+                                second refugee --', 'datas' => $list, 'selected_value' => old($form_elem, $form_elem)])
                                 @stack('scripts')
 
                                 @error($form_elem)

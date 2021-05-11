@@ -46,7 +46,11 @@ class LinkController extends Controller
      */
     public function store(StoreLinkRequest $request)
     {
-        Link::create($request->validated());
+        $link = $request->validated();
+        $link["date"] = ((isset($link["date"]) && !empty($link["date"])) ? $link["date"] : date('Y-m-d H:i', time()));
+        $log = ApiLog::createFromRequest($request, "Link");
+        $link["api_log"] = $log->id;
+        Link::create($link);
         return redirect()->route("links.index");
     }
 
@@ -85,8 +89,11 @@ class LinkController extends Controller
      */
     public function update(UpdateLinkRequest $request, $id)
     {
-        $link = Link::find($id);
-        $link->update($request->validated());
+
+        $log = ApiLog::createFromRequest($request, "Link");
+        $link = $request->validated();
+        $link["api_log"] = $log->id;
+        $link = Link::find($id)->update($link);
 
         return redirect()->route("links.index");
     }
