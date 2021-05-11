@@ -24,7 +24,7 @@ class ManageRefugeesController extends Controller
      *
      * @return Response
      */
-    public function index(StoreRefugeeRequest $request)
+    public function index()
     {
 
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
