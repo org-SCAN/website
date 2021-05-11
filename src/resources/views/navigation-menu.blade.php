@@ -36,19 +36,29 @@
                         {{ __('Manage links') }}
                     </x-jet-nav-link>
                 </div>
-
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.index')">
                         {{ __('Users') }}
                     </x-jet-nav-link>
                 </div>
-                <!--
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('duplicate.index') }}"
+                                    :active="request()->routeIs('duplicate.index')">
+                        {{ __('Duplicates') }}
+                    </x-jet-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('api_logs.index') }}" :active="request()->routeIs('api_logs.index')">
+                        {{ __('Api logs') }}
+                    </x-jet-nav-link>
+                </div>
+            <!--
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('lists_control.index') }}" :active="request()->routeIs('lists_control.index')">
                         {{ __('Manage lists') }}
-                    </x-jet-nav-link>
-                </div>
-                -->
+                </x-jet-nav-link>
+            </div>
+-->
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -75,7 +85,7 @@
                                         {{ __('Manage Team') }}
                                     </div>
 
-                                    <!-- Team Settings -->
+                                    /*<!-- Team Settings -->
                                     <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                                         {{ __('Team Settings') }}
                                     </x-jet-dropdown-link>

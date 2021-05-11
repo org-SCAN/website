@@ -1,14 +1,17 @@
 [
     {
-        "language" : "en",
-        "language_name" : "English"
+        "language" : "eng",
+        "language_name" : "English",
+        "default" : 1
     },
     {
-        "language" : "fr",
-        "language_name" : "Français"
+        "language" : "fra",
+        "language_name" : "Français",
+        "default" : 0
     },
     {
-        "language" : "es",
-        "language_name" : "Español"
+        "language" : "esp",
+        "language_name" : "Español",
+        "default" : 0
     }
 ]

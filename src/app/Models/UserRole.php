@@ -22,7 +22,7 @@ class UserRole extends Model
      * @var bool
      */
 
-    public $incrementing = true;
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.

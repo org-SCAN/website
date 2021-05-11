@@ -14,7 +14,7 @@ class CreateRoleRequestsTable extends Migration
     public function up()
     {
         Schema::create('role_requests', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('role');

@@ -7,6 +7,7 @@ Adresse IP du serveur : 15.236.237.200
 # Connection à l'API
 
 Il est maintenant possible de se connecter à l'API pour envoyer des nouveaux refugees ou pour obtenir la dernière version des fields (et des listes).
+Il est OBLIGATOIRE de transmettre un Application-Id dans les headers sinon la requête sera refusée
 
 ## Get fields :
 
@@ -14,67 +15,103 @@ Voici un exemple de requête et la réponse associée :
 
 ```
 GET /api/fields HTTP/1.1
-Host: 15.200.236.237:80
+Host: 15.236.237.200:80
 Authorization: Bearer YOUR_API_TOKEN
 Accept: application/json
 Content-Type: application/json
+Application-id: YOUR_APPLICATION_ID
 ```
 
-Réponse du serveur :
+Exemple de réponse du serveur :
 ```
 {
-    "fields": [
-        {
-            "title": "Unique ID",
-            "label": "unique_id",
-            "placeholder": "AAA-000001",
-            "UI_type": "EditText",
-            "linked_list": "",
-            "required": "Auto generated",
-            "order": 0
-        },
-        {
-            "title": "Full Name",
-            "label": "full_name",
-            "placeholder": "Manuel",
-            "UI_type": "EditText",
-            "linked_list": "",
-            "required": "Required",
-            "order": 1
-        },
-        {
-            "title": "Gender",
-            "label": "gender",
-            "placeholder": "F",
-            "UI_type": "Spinner",
-            "linked_list": "Gender",
-            "required": "Strongly advised",
-            "order": 2
-        }
-    ],
-    "Gender": [
-        {
-            "id": "f53f1664-aea4-4844-8e48-9a3c1539de83",
-            "short": "F",
-            "full": "Female"
-        },
-        {
-            "id": "5a0a8892-11de-4249-b26b-9edf950dd6f0",
-            "short": "M",
-            "full": "Male"
-        },
-        {
-            "id": "b007c422-aa97-4ce5-8941-d472357e24b9",
-            "short": "NB",
-            "full": "Non-Binary"
-        },
-        {
-            "id": "6e511f4f-29ee-4770-94a3-f4d42e786388",
-            "short": "O",
-            "full": "Other"
-        }
-    ]
-}
+    "fields": {
+            "unique_id": {
+                "placeholder": "AAA-000001",
+                "database_type": "string",
+                "android_type": "EditText",
+                "linked_list": "",
+                "required": 0,
+                "displayed_value": {
+                    "eng": "Unique ID",
+                    "fra": "ID Unique",
+                    "esp": "Unico ID"
+                }
+            },
+            "gender": {
+                "placeholder": "F",
+                "database_type": "string",
+                "android_type": "Spinner",
+                "linked_list": "Gender",
+                "required": 1,
+                "displayed_value": {
+                    "eng": "Sex",
+                    "fra": "Sexe",
+                    "esp": "Sexo"
+                }
+            },
+            "full_name": {
+                "placeholder": "John Doe",
+                "database_type": "string",
+                "android_type": "EditText",
+                "linked_list": "",
+                "required": 1,
+                "displayed_value": {
+                    "eng": "Full Name",
+                    "fra": "Nom complet",
+                    "esp": "Full Name"
+                }
+            },
+            ...
+    },
+    relations": {
+            "BR": {
+                "color": "000000",
+                "importance": 1,
+                "displayed_value": {
+                    "eng": "Biological relationship",
+                    "fra": "Relation biologique",
+                    "esp": "Biological relationship"
+                }
+            },
+            "NBR": {
+                "color": "000000",
+                "importance": 1,
+                "displayed_value": {
+                    "eng": "Non-biological relationship",
+                    "fra": "Relation non biologique",
+                    "esp": "Non-biological relationship"
+                }
+            },
+            "TW": {
+                "color": "000000",
+                "importance": 1,
+                "displayed_value": {
+                    "eng": "Travelled with",
+                    "fra": "A voyagé avec",
+                    "esp": "Travelled with"
+                }
+            },
+            "SA": {
+                "color": "000000",
+                "importance": 1,
+                "displayed_value": {
+                    "eng": "Saw",
+                    "fra": "A vu",
+                    "esp": "Saw"
+                }
+            },
+            "SE": {
+                "color": "000000",
+                "importance": 1,
+                "displayed_value": {
+                    "eng": "Service",
+                    "fra": "Service",
+                    "esp": "Service"
+                }
+            }
+    }
+ }
 ```
 ## Add refugees :
 
@@ -88,33 +125,42 @@ Host: 15.236.237.200:80
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer YOUR_API_TOKEN
+Application-id: YOUR_APPLICATION_ID
 Content-Length: 256
 
 [
     {
     "unique_id" : "ABC-000001",
     "full_name" : "full name",
-    "country" : "NIGER",
-    "date" : "2021-04-12"
+    "nationality" : "FRA",
+    "date" : "2021-04-12",
+    "age" : 68,
+    "gender" : "F"
     },
     {
     "unique_id" : "ABC-000002",
     "full_name" : "full name",
-    "country" : "NIGER",
-    "date" : "2021-04-12"
+    "nationality" : "USA",
+    "date" : "2021-04-12",
+    "age" : 92,
+    "gender" : "F"
     }
 ]
 ```
 
-Le serveur répondra une erreur si la donnée envoyée n'est pas valide, je détaillerai plus tard comment et ce que vous pouvez en faire, sinon un message de succès est envoyé.
+Le serveur répondra une erreur si la donnée envoyée n'est pas valide, je détaillerai plus tard comment et ce que vous
+pouvez en faire, sinon un message de succès est envoyé. En cas de succès on recoit un message de type 201
 
 ## API post Link
 
 L'API post permet aussi d'envoyer la liste des relations. Pour l'utiliser il faut :
 
-- Que les deux refugees (personnes) soient déjà présente dans la database. Autrement dit, il faut d'abord effectuer une requete POST add refugee
-- Préciser le `full_name` et le `unique_id de chaque personne
+- Que les deux refugees (personnes) soient déjà présente dans la database. Autrement dit, il faut d'abord effectuer une
+  requete POST add refugee
+- Préciser le `unique_id de chaque personne et la date à laquelle le champ a été créé
 - Préciser une relation appartenant à la liste des relations prédéfinies.
+
+On peut aussi préciser un détail sur la relation
 
 ```
 POST /api/links HTTP/1.1
@@ -122,20 +168,23 @@ Host: 15.236.237.200:80
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer YOUR_API_TOKEN
+Application-id: YOUR_APPLICATION_ID
 Content-Length: 249
 
 [
     {
-    "refugee1_unique_id" : "ABC-000008",
-    "refugee1_full_name" : "INSERT FROM API 1",
-    "refugee2_unique_id" : "ABC-000009",
-    "refugee2_full_name" : "INSERT FROM API 2",
-    "relation" : "3ebf36e0-82b1-423b-98b5-ee5ec52223b5"
+    "from_unique_id" : "ABC-000008",
+    "to_unique_id" : "ABC-000009",``
+    "relation" : "TW",
+    "date" : "2021-05-14 8:51:53",
+    "detail" : "at the port"
     }
 ]
 ```
 
-### Erreurs possibles : 
+En cas de succès on recoit un message de type `201`
+
+### Erreurs possibles :
 
 Si les données fournies ne sont pas bonnes, le serveur renvoie une erreur de type `422` :
 

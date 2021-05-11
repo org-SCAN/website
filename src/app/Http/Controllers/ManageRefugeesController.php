@@ -6,9 +6,14 @@ use App\Http\Requests\FileRefugeeRequest;
 use App\Http\Requests\StoreRefugeeApiRequest;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
+use App\Models\ApiLog;
 use App\Models\Field;
 use App\Models\Link;
 use App\Models\Refugee;
+use Illuminate\Http\Request;
+use Illuminate\Http\RequestRefugeeRequest;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\URL;
 
 
 class ManageRefugeesController extends Controller
@@ -17,13 +22,11 @@ class ManageRefugeesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index(StoreRefugeeRequest $request)
     {
-        if (!$request->user()->hasTeamPermission($request->user()->currentTeam, 'read')) {
-            abort(401,"You cannot read!");
-        }
+
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $refugees = Refugee::where("deleted", 0)
@@ -36,7 +39,7 @@ class ManageRefugeesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -51,7 +54,7 @@ class ManageRefugeesController extends Controller
     /**
      * Show the form for creating a new resource from a json file.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function createFromJson()
     {
@@ -62,8 +65,8 @@ class ManageRefugeesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(StoreRefugeeRequest $request)
     {
@@ -81,8 +84,8 @@ class ManageRefugeesController extends Controller
     /**
      * Store a newly created resource from json file in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function storeFromJson(FileRefugeeRequest $request)
     {
@@ -95,8 +98,8 @@ class ManageRefugeesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  String  $id
-     * @return \Illuminate\Http\Response
+     * @param String $id
+     * @return Response
      */
     public function show(String $id)
     {
@@ -106,7 +109,7 @@ class ManageRefugeesController extends Controller
             ->orderBy("order")
             ->get();
         $refugee = Refugee::find($id);
-        $links = Link::where("deleted",0)->where("refugee1", $id)->orWhere("refugee2", $id)->get();
+        $links = Link::where("deleted",0)->where("from", $id)->orWhere("to", $id)->get();
 
         return view("manage_refugees.show", compact("refugee", "fields", "links"));
     }
@@ -114,8 +117,8 @@ class ManageRefugeesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  String  $id
-     * @return \Illuminate\Http\Response
+     * @param String $id
+     * @return Response
      */
     public function edit(String  $id)
     {
@@ -131,9 +134,9 @@ class ManageRefugeesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\RequestRefugeeRequest $request
-     * @param  String $refugee_id
-     * @return \Illuminate\Http\Response
+     * @param RequestRefugeeRequest $request
+     * @param String $refugee_id
+     * @return Response
      */
     public function update(UpdateRefugeeRequest $request, $refugee_id)
     {
@@ -141,22 +144,40 @@ class ManageRefugeesController extends Controller
         $refugee["flight_disease"] = ((isset($refugee["flight_disease"]) && $refugee["flight_disease"] == "on") ? 1 : 0);
         $refugee["flight_boarded"] = ((isset($refugee["flight_boarded"]) && $refugee["flight_boarded"] == "on") ? 1 : 0);
 
-        Refugee::where("id",$refugee_id)
+        Refugee::find($refugee_id)
             ->update($refugee);
         return redirect()->route("manage_refugees.index");
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param String $refugee_id
+     * @return Response
+     */
+    public function fixDuplicatedReference(Request $request, $refugee_id)
+    {
+
+        $refugee["unique_id"] = $request->input('unique_id');
+
+        Refugee::find($refugee_id)
+            ->update($refugee);
+
+        return redirect(URL::previous());
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
-     * @param  string  $refugee_id
-     * @return \Illuminate\Http\Response
+     * @param string $refugee_id
+     * @return Response
      */
     public function destroy($refugee_id)
     {
 
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        Refugee::where("id",$refugee_id)
+        Refugee::find($refugee_id)
             ->update(["deleted"=>1]);
         return redirect()->route("manage_refugees.index");
     }
@@ -169,16 +190,26 @@ class ManageRefugeesController extends Controller
      */
     public static function handleApiRequest(StoreRefugeeApiRequest $request)
     {
+        $log = ApiLog::createFromRequest($request, "Refugee");
         if($request->user()->tokenCan("update")){
-            foreach ($request->validated() as $refugee){
-                $stored_ref = Refugee::create($refugee);
-                if(!$stored_ref->exists){
-                    return response("Error while creating this refugee :".json_encode($refugee), 500);
+            foreach ($request->validated() as $refugee) {
+                $refugee["api_log"] = $log->id;
+                $refugee["application_id"] = $log->application_id;
+
+                $potential_refugee = Refugee::where("application_id", $refugee["application_id"])->where('unique_id', $refugee["unique_id"])->first();
+                if ($potential_refugee != null) {
+                    $potential_refugee->update($refugee);
+                } else {
+                    $stored_ref = Refugee::create($refugee);
+                    if ($stored_ref == null) {
+                        $log->update(["response" => "Error while creating a refugee"]);
+                        return response("Error while creating this refugee :" . json_encode($refugee), 500);
+                    }
                 }
             }
            return response("Success !", 201);
         }
-
+        $log->update(["response"=>"Bad token access"]);
         return response("Your token can't be use to send datas", 403);
     }
 }

@@ -4,16 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Uuids;
 
 class RoleRequest extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuids;
     /**
-     * Indicates if the IDs are auto-incrementing.
+     * The data type of the auto-incrementing ID.
      *
-     * @var bool
+     * @var string
      */
-    public $incrementing = true;
+    protected $keyType = 'string';
 
     /**
      * The attributes that are mass assignable.

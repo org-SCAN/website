@@ -7,6 +7,8 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <!-- Favicons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
@@ -23,15 +25,20 @@
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
+        <style>
+            [x-cloak] {
+                display: none;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
-        <x-jet-banner />
+    <x-jet-banner/>
 
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+    <div class="min-h-screen bg-gray-100">
+        @livewire('navigation-menu')
 
-            <!-- Page Heading -->
-            @if (isset($header))
+        <!-- Page Heading -->
+        @if (isset($header))
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}

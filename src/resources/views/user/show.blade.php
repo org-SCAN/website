@@ -14,11 +14,14 @@
                        class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to list</a>
                     <a href="{{ route('user.edit', $user->id) }}"
                        class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">Edit</a>
-
-                    <button type="submit"
-                            class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
-                        Delete
-                    </button>
+                    <form class="inline-block" action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <button type="submit"
+                                class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
+                            Delete
+                        </button>
+                    </form>
                 </form>
             </div>
             <div class="flex flex-col">
@@ -76,12 +79,14 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
                                         @php
                                             $currentUser = Auth::user();
+                                            $importance  = App\Models\UserRole::select('importance')->where('role',$user->role)->get()->last()->importance;
+                                            $currentUser_importance = App\Models\UserRole::select('importance')->where('role',$currentUser->role)->get()->last()->importance;
                                         @endphp
-                                        @if ($role=="Administrator")
+                                        @if ($importance==0)
                                             <div class="ml-2 text-sm text-gray-400">
-                                                {{ $role }}
+                                                {{ $user->role }}
                                             </div>
-                                        @elseif($currentUser->role=="Administrator" && $user->id!=$currentUser->id)
+                                        @elseif($currentUser_importance==0 && $user->id!=$currentUser->id)
                                             @php
                                                 $roless=array()
                                             @endphp
@@ -93,7 +98,7 @@
                                             {{ Form::open(array('url' => 'request/grant')) }}
                                             {{ Form::hidden('user_id', $user->id) }}
                                                 <div class="ml-2 text-sm text-gray-400 underline">
-                                                    {{ Form::select('role', $roless,array_search($role,$roless)) }}
+                                                    {{ Form::select('role', $roless,array_search($user->role,$roless)) }}
                                                     @php
                                                         $requested_role = App\Models\RoleRequest::where('user_id',$user->id)->get();
                                                         $requested_role = $requested_role->last();
@@ -124,7 +129,7 @@
                                             {{ Form::open(array('url' => 'request')) }}
                                             {{ Form::hidden('user_id', $user->id) }}
                                                 <div class="ml-2 text-sm text-gray-400 underline">
-                                                    {{ Form::select('role', $roless,array_search($role,$roless)) }}
+                                                    {{ Form::select('role', $roless,array_search($user->role,$roless)) }}
                                                     @php
                                                         $requested_role = App\Models\RoleRequest::where('user_id',$user->id)->get();
                                                         $requested_role = $requested_role->last();

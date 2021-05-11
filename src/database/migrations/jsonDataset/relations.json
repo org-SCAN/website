@@ -1,18 +1,53 @@
 [
     {
-        "name" : "Biological relationship"
+        "name": {
+            "eng": "Biological relationship",
+            "fra": "Relation biologique",
+            "esp": "Biological relationship"
+        },
+        "short": "BR",
+        "color" : "0099ff",
+        "importance" : 1
     },
     {
-        "name" : "Non-biological relationship"
+        "name": {
+            "eng": "Non-biological relationship",
+            "fra": "Relation non biologique",
+            "esp": "Non-biological relationship"
+        },
+        "short": "NBR",
+        "color" : "cbaf1d",
+        "importance" : 1
     },
     {
-        "name" : "Travelled with"
+        "name": {
+            "eng": "Travelled with",
+            "fra": "A voyagé avec",
+            "esp": "Travelled with"
+        },
+        "short": "TW",
+        "color" : "00ff2a",
+        "importance" : 1
     },
     {
-        "name" : "Saw"
+        "name": {
+            "eng": "Saw",
+            "fra": "A vu",
+            "esp": "Saw"
+        },
+        "short": "SA",
+        "color" : "734d39",
+        "importance" : 1
     },
     {
-        "name" : "Service"
+        "name": {
+            "eng": "Service",
+            "fra": "Service",
+            "esp": "Service"
+        },
+        "short": "SE",
+        "color" : "7e00ff",
+        "importance" : 1
     }
 ]
 

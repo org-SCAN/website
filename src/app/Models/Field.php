@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuids;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
 class Field extends Model
 {
-    use HasFactory, Uuids;
+    use Uuids;
     /**
      * The data type of the auto-incrementing ID.
      *
@@ -38,7 +37,7 @@ class Field extends Model
      *
      * @var array
      */
-    protected $hidden = ['deleted','id',"created_at","updated_at","status", "database_type", "html_data_type", "validation_laravel", "attribute"]; //TODO : SI on a des bugs à cause des fields c'est ici
+    protected $hidden = ['deleted',"created_at","updated_at","status", "html_data_type", "validation_laravel", "attribute", "order"]; //TODO : SI on a des bugs à cause des fields c'est ici
 
 
     /**
@@ -146,6 +145,7 @@ class Field extends Model
     public static function getHtmlDataTypeFromForm(String $database_type){
         $type_convert = [
             "string" => "text",
+            "text" => "textarea",
             "integer" => "number",
             "date" => "date",
             "boolean" => "checkbox"
@@ -163,6 +163,7 @@ class Field extends Model
     public static function getUITypeFromForm(String $database_type){
         $type_convert = [
             "string" => "EditText",
+            "text" => "EditText",
             "integer" => "number",
             "date" => "date",
             "boolean" => "Radio Button"
@@ -182,6 +183,7 @@ class Field extends Model
         $validador = array();
         $type_convert = [
             "string" => "String",
+            "text" => "String",
             "integer" => "Integer",
             "date" => "Date",
             "boolean" => "Boolean"
@@ -189,6 +191,9 @@ class Field extends Model
 
         if($field["required"] == 1){
             array_push($validador, "required");
+        }
+        else{
+            array_push($validador, "nullable");
         }
 
         array_push($validador, $type_convert[$field["database_type"]]);
@@ -207,7 +212,7 @@ class Field extends Model
      * @return string
      */
     public function getLinkedListAttribute($value){
-        $linked_list = ListControl::find($value);
+        $linked_list =  ListControl::find($value);
         return (empty($linked_list) ? "" : $linked_list->title);
     }
 
@@ -222,7 +227,6 @@ class Field extends Model
         $list_control = ListControl::find($this->getLinkedListId());
         $list = $list_control->getListContent();
         $displayed_value = $list_control->displayed_value;
-
         return array_column($list, $displayed_value, "id");
     }
 
@@ -257,5 +261,39 @@ class Field extends Model
         ".$new_file_content;
         file_put_contents($migration_dir."/".$file_name, $new_file_content);
         Artisan::call("migrate");
+    }
+
+    public static function getUsedLinkedList(){
+        $used_linked_list = self::where("linked_list", "!=", "")->get()->toArray();
+        return array_column($used_linked_list, "linked_list");
+    }
+
+    /**
+     * It returns the list control dataset for API calls
+     *
+     * @return array
+     *
+     */
+    public static function getAPIContent(){
+
+        $call_class_name = get_called_class();
+        $class_name = substr(strrchr($call_class_name, "\\"), 1);
+        $database_content = $call_class_name::where('deleted', 0)->where("status",2)->orderBy("required")->orderBy("order")->get()->makeHidden("id")->toArray();
+        $list_info = ListControl::where('name', $class_name)->first();
+        $keys = array_column($database_content, $list_info->key_value); // all keys name
+        $api_res = array();
+        foreach ($keys as $key_index => $key_value){
+            $api_res[$key_value] = $database_content[$key_index];
+
+            $translations = array_column(Translation::where('deleted',0)->where('list', $list_info->id)->where('field_key', $key_value)->get()->toArray(), "translation", "language");
+            foreach($translations as $language => $translation){
+                $api_res[$key_value]["displayed_value"][$language] = $translation;
+            }
+            unset($api_res[$key_value][$list_info->key_value]);
+            unset($api_res[$key_value][$list_info->displayed_value]);
+            $api_res[$key_value]["required"] = Field::convertRequiredAttribute( $database_content[$key_index]["required"]);
+        }
+        return $api_res;
+
     }
 }
