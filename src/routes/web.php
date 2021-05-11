@@ -41,9 +41,17 @@ Route::get('manage_refugees/json/create', [
     'as' => 'manage_refugees.json.create',
     'uses' => '\App\Http\Controllers\ManageRefugeesController@createFromJson'
 ]);
+Route::get('links/json/create', [
+    'as' => 'links.json.create',
+    'uses' => '\App\Http\Controllers\LinkController@createFromJson'
+]);
 Route::post('manage_refugees/json/store', [
     'as' => 'manage_refugees.json.store',
     'uses' => '\App\Http\Controllers\ManageRefugeesController@storeFromJson'
+]);
+Route::post('links/json/store', [
+    'as' => 'links.json.store',
+    'uses' => '\App\Http\Controllers\LinkController@storeFromJson'
 ]);
 
 

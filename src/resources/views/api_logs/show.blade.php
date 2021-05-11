@@ -101,7 +101,11 @@
                                     @foreach($pushed_datas as $pushed_dataID => $pushed_data)
                                         <tr class="border-b">
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                                <a href="{{route(str_replace("api/", "", $log->api_type).".show", $pushed_dataID)}}">{{ $pushed_data }}</a>
+                                                @php
+                                                    $class = "\App\Models\\".$log->model;
+                                                    $route = $class::route_base
+                                                @endphp
+                                                <a href="{{route($route.".show", $pushed_dataID)}}">{{ $pushed_data }}</a>
                                             </td>
                                         </tr>
                                         </tr>
