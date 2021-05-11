@@ -74,8 +74,13 @@ class ManageRefugeesController extends Controller
 
         $refugee["flight_disease"] = ((isset($refugee["flight_disease"]) && $refugee["flight_disease"] == "on") ? 1 : 0);
         $refugee["flight_boarded"] = ((isset($refugee["flight_boarded"]) && $refugee["flight_boarded"] == "on") ? 1 : 0);
-
+        $refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i', time()));
+        $log = ApiLog::createFromRequest($request, "Refugee");
+        $refugee["api_log"] = $log->id;
         $new_ref = Refugee::create($refugee);
+        if ($new_ref == null) {
+            $log->update(["response" => "Error in creation"]);
+        }
 
         return redirect()->route("manage_refugees.index");
     }
@@ -142,6 +147,10 @@ class ManageRefugeesController extends Controller
         $refugee = $request->validated();
         $refugee["flight_disease"] = ((isset($refugee["flight_disease"]) && $refugee["flight_disease"] == "on") ? 1 : 0);
         $refugee["flight_boarded"] = ((isset($refugee["flight_boarded"]) && $refugee["flight_boarded"] == "on") ? 1 : 0);
+        $refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i', time()));
+
+        $log = ApiLog::createFromRequest($request, "Refugee");
+        $refugee["api_log"] = $log->id;
 
         Refugee::find($refugee_id)
             ->update($refugee);
