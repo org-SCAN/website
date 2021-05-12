@@ -36,13 +36,12 @@ class RefugeesDatatables extends LivewireDatatable
 
             Column::name('unique_id')
                 ->label('Reference')
-                ->filterable()
-                ->searchable(),
+                ->filterable(),
 
             Column::callback(["full_name", 'id'], function ($name, $id) {
                 return "<a href='" . route('manage_refugees.show', $id) . "'>$name</a>";
             })
-                ->searchable()
+                ->filterable()
                 ->label('Name'),
 
             Column::name('genders.' . Gender::getDisplayedValue())

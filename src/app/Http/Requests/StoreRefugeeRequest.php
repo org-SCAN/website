@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Field;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Http\FormRequest;
+
 class StoreRefugeeRequest extends FormRequest
 {
     /**
@@ -28,7 +28,6 @@ class StoreRefugeeRequest extends FormRequest
         $hiddens = $hiddens->getHidden();
         $fields = Field::where("status", ">", 0)->get();
         $fields = $fields->makeVisible($hiddens)->toArray();
-
         $rules = array_column($fields, 'validation_laravel', "label");
         return $rules;
     }
