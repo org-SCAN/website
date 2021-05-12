@@ -19,7 +19,7 @@
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('manage_refugees.index') }}" :active="request()->routeIs('manage_refugees.index')">
-                        {{ __('Manage Refugees') }}
+                        {{ __('Manage Persons') }}
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -181,7 +181,7 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('manage_refugees.index') }}"
                                        :active="request()->routeIs('manage_refugees.index')">
-                {{ __('Manage Refugees') }}
+                {{ __('Manage Persons') }}
             </x-jet-responsive-nav-link>
 
             <x-jet-responsive-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.index')">

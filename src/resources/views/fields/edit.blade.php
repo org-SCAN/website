@@ -1,3 +1,4 @@
+@section('title',"Edit ".$field->title." field")
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -19,7 +20,7 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "title")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's title</label>
-                            <input type="text"  value="{{ old($field->{$form_elem}, $field->{$form_elem}) }}" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="Full Name" />
+                            <input type="text" value="{{ old($field->{$form_elem}, $field->{$form_elem}) }}" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="Full Name" />
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500">It'll be shown as title when the field is used.</small>
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -68,7 +69,7 @@
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's activation status </label>
 
                             @php( $list = $lists["status"])
-                            <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
+                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define where the field will be deployed.</small>
 
                             @error($form_elem)
@@ -91,7 +92,7 @@
                             @enderror
                         </div>
 
-                        <!-- TODO : validation_laravel SECTION
+                        <!--
 
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <span class="text-gray-700">Choose the fields validator options</span>
@@ -116,15 +117,15 @@
 
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "linked_list")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's associated list ~
-                                <a href="{{route("lists_control.create")}}" class="inline-flex items-center">
-                                    Create a new list
-                                </a>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
+                                associated list
                             </label>
 
                             @php( $list = $lists["linked_list"])
-                            <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define a list which is associated with this field.</small>
+                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
+                                           class="form-input rounded-md shadow-sm mt-1 block w-full"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define a
+                                list which is associated with this field.</small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>

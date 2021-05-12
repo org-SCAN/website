@@ -13,7 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
         $this->call(UserRoleSeeder::class);
+        $this->call(UserSeeder::class);
         $this->call(ListControlSeeder::class);
         $this->call(LanguageSeeder::class);
         $this->call(FieldSeeder::class);
@@ -22,7 +24,9 @@ class DatabaseSeeder extends Seeder
         $this->call(RouteSeeder::class);
         $this->call(GenderSeeder::class);
         $this->call(RelationSeeder::class);
-        $this->call(RefugeeSeeder::class);
-        $this->call(LinkSeeder::class);
+        if (env('APP_DEBUG')) {
+            $this->call(RefugeeSeeder::class);
+            $this->call(LinkSeeder::class);
+        }
     }
 }

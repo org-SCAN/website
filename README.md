@@ -1,13 +1,34 @@
 # website
+
 Site web du projet :)
 Nomalement on a une synchro automatique de la branche main sur le serveur.
 
 Adresse IP du serveur : 15.236.237.200
 
+# Start the website
+
+In order to deploy the website make sure to :
+
+1. Start the docker (or install all required packets)
+2. Create ``/src/.env`` file (inspired by ``/src/.env.example``).
+    - Make sure ``APP_DEBUG=false`` (in case of production)
+    - Make sure to change DB informations
+    - Make sure to change ``DEFAULT_EMAIL = "test@test.com"`` and ``
+      DEFAULT_PASSWORD ="test123456"`` (it will be the first user loging and password)
+3. Run these lignes in ``src``
+
+```
+npm update
+composer update
+chmod -R 775 storage
+php artisan migrate --seed
+```
+
 # Connection à l'API
 
-Il est maintenant possible de se connecter à l'API pour envoyer des nouveaux refugees ou pour obtenir la dernière version des fields (et des listes).
-Il est OBLIGATOIRE de transmettre un Application-Id dans les headers sinon la requête sera refusée
+Il est maintenant possible de se connecter à l'API pour envoyer des nouveaux refugees ou pour obtenir la dernière
+version des fields (et des listes). Il est OBLIGATOIRE de transmettre un Application-Id dans les headers sinon la
+requête sera refusée
 
 ## Get fields :
 

@@ -1,3 +1,4 @@
+@section('title',"View all relations")
 @livewireStyles
 <x-app-layout>
     <x-slot name="header">

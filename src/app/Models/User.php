@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
@@ -20,7 +21,22 @@ class User extends Authenticatable
     use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use Uuids;
 
+    /**
+     * The data type of the auto-incrementing ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
+     * Indicates if the model's ID is auto-incrementing.
+     *
+     * @var bool
+     */
+
+    public $incrementing = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -89,8 +105,7 @@ class User extends Authenticatable
         $userAdmin = User::where("role",UserRole::orderBy("importance","desc")->first()->id)->get();
         if($users->isEmpty() || $userAdmin->isEmpty() ){
             $this->role=UserRole::orderBy("importance","desc")->first()->id;
-        }
-        else {
+        } else {
 
             $this->role=UserRole::orderBy("importance")->first()->id;
 
@@ -104,9 +119,19 @@ class User extends Authenticatable
         $encrypted_token = $this->token;
         $id = $this->id;
         $decypted = Crypt::decryptString($encrypted_token);
-        $unsalt = preg_replace('/'.md5($id).'/', '', $decypted, 1);
+        $unsalt = preg_replace('/' . md5($id) . '/', '', $decypted, 1);
         return preg_replace('/[0-9]+\|/', '', $unsalt, 1);
     }
 
+    public static function createDefaultUser()
+    {
+        $new_user = self::create([
+            'name' => "Default user",
+            'email' => env("DEFAULT_EMAIL"),
+            'password' => Hash::make(env("DEFAULT_PASSWORD")),
+        ]);
+        $new_user->genToken();
+        $new_user->genRole();
+    }
 
 }
