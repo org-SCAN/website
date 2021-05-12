@@ -1,16 +1,18 @@
+@section('title','View persons')
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Manage Refugees') }}
+            {{ __('Manage Persons') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <a href="{{ route("manage_refugees.create") }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add refugee</a>
+                <a href="{{ route("manage_refugees.create") }}"
+                   class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add person</a>
                 <a href="{{ route("manage_refugees.json.create") }}"
-                   class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add refugee from
+                   class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add persons from
                     json</a>
             </div>
             <div class="flex flex-col">

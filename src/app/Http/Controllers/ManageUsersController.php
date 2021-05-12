@@ -6,6 +6,8 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,7 +17,7 @@ class ManageUsersController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -26,7 +28,7 @@ class ManageUsersController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -37,7 +39,7 @@ class ManageUsersController extends Controller
     /**
      * Create a personal team for the user.
      *
-     * @param  \App\Models\User  $user
+     * @param User $user
      * @return void
      */
     protected function createTeam(User $user)
@@ -52,8 +54,8 @@ class ManageUsersController extends Controller
     /**
      * Create a newly registered user.
      *
-     * @param  array  $input
-     * @return \App\Models\User
+     * @param array $input
+     * @return User
      */
     public function store(StoreUserRequest $request)
     {
@@ -65,7 +67,6 @@ class ManageUsersController extends Controller
                 'password' => Hash::make($user['password']),
                 'role' => $user['role'],
             ]), function (User $created_user) {
-                $this->createTeam($created_user);
                 $created_user->genToken();
                 $created_user->genRole();
             });
@@ -77,8 +78,8 @@ class ManageUsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function show(String $id)
     {
@@ -93,7 +94,7 @@ class ManageUsersController extends Controller
      * @param int $id
      * @param $request
      * @param $user
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit( $id)
     {
@@ -105,10 +106,10 @@ class ManageUsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
      * @param $user
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(UpdateUsersRequest $request, $id)
     {
@@ -129,7 +130,7 @@ class ManageUsersController extends Controller
      *
      * @param int $id
      * @param $user
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

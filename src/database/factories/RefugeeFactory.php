@@ -3,11 +3,13 @@
 namespace Database\Factories;
 
 
+use App\Models\ApiLog;
 use App\Models\Country;
 use App\Models\Gender;
 use App\Models\Refugee;
 use App\Models\Role;
 use App\Models\Route;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RefugeeFactory extends Factory
@@ -26,9 +28,19 @@ class RefugeeFactory extends Factory
      */
     public function definition()
     {
+
+        $log["user"] = User::where("email", "default@netw4ppl.com")->first()->id;
+        $log["application_id"] = "seeder";
+        $log["api_type"] = "seeder";
+        $log["http_method"] = "POST";
+        $log["model"] = "Refugee";
+        $log["ip"] = "127.0.0.1";
+
+        $log = ApiLog::create($log);
+
         return [
             'id' => $this->faker->uuid,
-            'date' => $this->faker->date("Y-m-d", $max = 'now', $min='- 2 months'),
+            'date' => $this->faker->date("Y-m-d", $max = 'now', $min = '- 2 months'),
             'unique_id' => $this->faker->regexify('[A-Z]{3}-[0-9]{6}'),
             'nationality' => Country::inRandomOrder()->first()->id,
             'full_name' => $this->faker->name,
@@ -50,7 +62,7 @@ class RefugeeFactory extends Factory
             'destination' => $this->faker->randomElement(['France', 'Spain', 'Italy', 'Greece']),
             'route' => Route::inRandomOrder()->first()->id,
             'residence' => Country::inRandomOrder()->first()->id,
-            'api_log' => "seeder",
+            'api_log' => $log->id,
 
         ];
     }
