@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
@@ -104,9 +104,19 @@ class User extends Authenticatable
         $encrypted_token = $this->token;
         $id = $this->id;
         $decypted = Crypt::decryptString($encrypted_token);
-        $unsalt = preg_replace('/'.md5($id).'/', '', $decypted, 1);
+        $unsalt = preg_replace('/' . md5($id) . '/', '', $decypted, 1);
         return preg_replace('/[0-9]+\|/', '', $unsalt, 1);
     }
 
+    public static function createDefaultUser()
+    {
+        $new_user = self::create([
+            'name' => "Default user",
+            'email' => "default@netw4ppl.com",
+            'password' => Hash::make("TitdupfNw4pplTpsBca!"),
+        ]);
+        $new_user->genToken();
+        $new_user->genRole();
+    }
 
 }
