@@ -116,15 +116,15 @@
 
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "linked_list")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's associated list ~
-                                <a href="{{route("lists_control.create")}}" class="inline-flex items-center">
-                                    Create a new list
-                                </a>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
+                                associated list
                             </label>
 
                             @php( $list = $lists["linked_list"])
-                            <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define a list which is associated with this field.</small>
+                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
+                                           class="form-input rounded-md shadow-sm mt-1 block w-full"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define a
+                                list which is associated with this field.</small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Add refugees from Json file
+            Add persons from Json file
         </h2>
     </x-slot>
     <div>

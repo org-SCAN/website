@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Add a refugee
+            Add a perosn
         </h2>
     </x-slot>
     <div>
@@ -17,10 +17,9 @@
                                            class="block font-medium text-sm text-gray-700">{{$field->title}}</label>
                                 @if($field->linked_list != "")
                                     @php
-                                        $list=$field->getLinkedListContent();
-                                        //array_unshift($list, "Select your ".$field->title) ;
+                                        $list=$field->getLinkedListContent()
                                     @endphp
-                                    <!--<x-form-select name="{{$field->label}}" :options="$list" label="" class="form-input rounded-md shadow-sm mt-1 block w-full"/>-->
+
 
                                         @livewire("select-dropdown", ['label' => $field->label, 'placeholder' => "--
                                         Select your ".$field->title." --", 'datas' => $list])
