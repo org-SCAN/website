@@ -61,20 +61,18 @@
                                                            value="{{$next_reference}}">
                                                     <button type="submit"
                                                             class="flex-shrink-0 bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded"
-                                                            title="Auto change the ID!">Ref
-                                                        &rarr; {{$next_reference}}</button>
+                                                            title="Auto change the ID!">Assign new ref :
+                                                        {{$next_reference}}</button>
                                                 </form>
                                                 <div class="block mb-2 mt-1">
 
                                                     <form
                                                         action="{{route('manage_refugees.destroy', $user_information->id)}}"
                                                         method="POST">
-                                                        <a href="{{route("manage_refugees.edit", $user_information->id)}}">
-                                                            <button
-                                                                class="flex-shrink-0 bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">
-                                                                <i class="fas fa-edit text-blue-600 hover:text-blue-900"
-                                                                   title="Edit this refugee!"></i>
-                                                            </button>
+                                                        <a href="{{route("manage_refugees.edit", $user_information->id)}}"
+                                                           class="flex-shrink-0 bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded mr-2">
+                                                            <i class="fas fa-edit text-blue-600 hover:text-blue-900"
+                                                               title="Edit this refugee!"></i>
                                                         </a>
                                                         @method('DELETE')
                                                         @csrf
