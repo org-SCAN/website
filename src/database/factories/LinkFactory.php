@@ -6,6 +6,7 @@ use App\Models\ApiLog;
 use App\Models\Link;
 use App\Models\Refugee;
 use App\Models\Relation;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LinkFactory extends Factory

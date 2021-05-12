@@ -9,6 +9,7 @@ use App\Models\Gender;
 use App\Models\Refugee;
 use App\Models\Role;
 use App\Models\Route;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RefugeeFactory extends Factory
