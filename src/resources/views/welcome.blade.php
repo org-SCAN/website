@@ -430,8 +430,13 @@
     @endif
 
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-        <a href="{{route('manage_refugees.index')}}"
-           class="bg-red-200 hover:bg-red-300 hover:text-black text-black font-bold py-2 px-4 rounded">Enter</a>
+        @auth
+            <a href="{{route('manage_refugees.index')}}"
+               class="bg-red-200 hover:bg-red-300 hover:text-black text-black font-bold py-2 px-4 rounded">Enter</a>
+        @else
+            <a href="{{route('login')}}"
+               class="bg-red-200 hover:bg-red-300 hover:text-black text-black font-bold py-2 px-4 rounded">Log in</a>
+        @endauth
     </div>
 </div>
 </body>
