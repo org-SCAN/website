@@ -22,7 +22,7 @@
 
                                 @php( $list = $lists["refugees"])
                                 @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the
-                                first refugee --', 'datas' => $list, 'selected_value' => old($form_elem, $form_elem)])
+                                first person --', 'datas' => $list, 'selected_value' => old($form_elem, $form_elem)])
                                 @stack('scripts')
 
                                 @error($form_elem)
@@ -54,7 +54,7 @@
 
                                 @php( $list = $lists["refugees"])
                                 @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the
-                                second refugee --', 'datas' => $list, 'selected_value' => old($form_elem, $form_elem)])
+                                second person --', 'datas' => $list, 'selected_value' => old($form_elem, $form_elem)])
                                 @stack('scripts')
 
                                 @error($form_elem)
