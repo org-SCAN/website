@@ -140,7 +140,7 @@
                             @enderror
                         </div>
 
-                        <!-- TODO validation_laravel SECTION
+                        <!--
 
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <span class="text-gray-700">Choose the fields validator options</span>

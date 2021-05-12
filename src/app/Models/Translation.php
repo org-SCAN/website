@@ -30,7 +30,7 @@ class Translation extends Model
      *
      * @var array
      */
-    protected $hidden = ['deleted',"created_at","updated_at"]; //TODO : SI on a des bugs à cause des roles c'est ici
+    protected $hidden = ['deleted', "created_at", "updated_at"];
 
     /**
      * Return ISO3 language name
