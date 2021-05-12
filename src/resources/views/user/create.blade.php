@@ -1,3 +1,4 @@
+@section('title',"Add a new user")
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -55,7 +56,7 @@
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Role</label>
 
                             @php( $list = array_column(\App\Models\UserRole::all()->toArray(), 'role', 'id'))
-                            <x-form-select name="{{$form_elem}}" :options="$list"  id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
+                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">The role can be changed later on by an admin</small>
 
                             @error($form_elem)

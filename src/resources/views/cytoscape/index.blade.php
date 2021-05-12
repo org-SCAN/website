@@ -1,7 +1,8 @@
+@section('title',"View network graph")
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Relation graph') }}
+            {{ __('Network graph') }}
         </h2>
     </x-slot>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
