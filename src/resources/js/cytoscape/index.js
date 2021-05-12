@@ -548,10 +548,6 @@ function drawGraph(){
 
     });
 
-    // the default values of each option are outlined below:
-
-    cy.fit()
-    cy.centre()
 
 }
 
