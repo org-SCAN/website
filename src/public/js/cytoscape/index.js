@@ -1263,7 +1263,7 @@ CoSELayout.prototype.classicLayout = function () {
     }
     // The graph associated with this layout is not flat or a forest
     else {
-        // Reduce the trees when incremental mode is not enabled and graph is not a forest
+        // Reduce the trees when incremental mode is not enabled and graph is not a forest 
         this.reduceTrees();
         // Update nodes that gravity will be applied
         this.graphManager.resetAllNodesToApplyGravitation();
@@ -1277,7 +1277,7 @@ CoSELayout.prototype.classicLayout = function () {
       }
   } else {
     if (CoSEConstants.TREE_REDUCTION_ON_INCREMENTAL) {
-        // Reduce the trees in incremental mode if only this constant is set to true
+      // Reduce the trees in incremental mode if only this constant is set to true 
       this.reduceTrees();
       // Update nodes that gravity will be applied
       this.graphManager.resetAllNodesToApplyGravitation();
@@ -1329,7 +1329,7 @@ CoSELayout.prototype.tick = function () {
     this.coolingFactor = Math.max(this.initialCoolingFactor - Math.pow(this.coolingCycle, Math.log(100 * (this.initialCoolingFactor - this.finalTemperature)) / Math.log(this.maxCoolingCycle)) / 100 * this.coolingAdjuster, this.finalTemperature);
     this.animationPeriod = Math.ceil(this.initialAnimationPeriod * Math.sqrt(this.coolingFactor));
   }
-    // Operations while tree is growing again
+  // Operations while tree is growing again 
   if (this.isTreeGrowing) {
     if (this.growTreeIterations % 10 == 0) {
       if (this.prunedNodesAll.length > 0) {
@@ -1647,21 +1647,21 @@ CoSELayout.prototype.calcRepulsionRange = function () {
 
 // Group zero degree members whose parents are not to be tiled, create dummy parents where needed and fill memberGroups by their dummp parent id's
 CoSELayout.prototype.groupZeroDegreeMembers = function () {
-    var self = this;
-    // array of [parent_id x oneDegreeNode_id]
-    var tempMemberGroups = {}; // A temporary map of parent node and its zero degree members
-    this.memberGroups = {}; // A map of dummy parent node and its zero degree members whose parents are not to be tiled
-    this.idToDummyNode = {}; // A map of id to dummy node
+  var self = this;
+  // array of [parent_id x oneDegreeNode_id]
+  var tempMemberGroups = {}; // A temporary map of parent node and its zero degree members
+  this.memberGroups = {}; // A map of dummy parent node and its zero degree members whose parents are not to be tiled
+  this.idToDummyNode = {}; // A map of id to dummy node 
 
-    var zeroDegree = []; // List of zero degree nodes whose parents are not to be tiled
-    var allNodes = this.graphManager.getAllNodes();
+  var zeroDegree = []; // List of zero degree nodes whose parents are not to be tiled
+  var allNodes = this.graphManager.getAllNodes();
 
-    // Fill zero degree list
-    for (var i = 0; i < allNodes.length; i++) {
-        var node = allNodes[i];
-        var parent = node.getParent();
-        // If a node has zero degree and its parent is not to be tiled if exists add that node to zeroDegres list
-        if (this.getNodeDegreeWithChildren(node) === 0 && (parent.id == undefined || !this.getToBeTiled(parent))) {
+  // Fill zero degree list
+  for (var i = 0; i < allNodes.length; i++) {
+    var node = allNodes[i];
+    var parent = node.getParent();
+    // If a node has zero degree and its parent is not to be tiled if exists add that node to zeroDegres list
+    if (this.getNodeDegreeWithChildren(node) === 0 && (parent.id == undefined || !this.getToBeTiled(parent))) {
       zeroDegree.push(node);
     }
   }
@@ -2123,7 +2123,7 @@ CoSELayout.prototype.tilingPostLayout = function () {
 // -----------------------------------------------------------------------------
 // Section: Tree Reduction methods
 // -----------------------------------------------------------------------------
-// Reduce trees
+// Reduce trees 
 CoSELayout.prototype.reduceTrees = function () {
   var prunedNodesAll = [];
   var containsLeaf = true;
@@ -2157,7 +2157,7 @@ CoSELayout.prototype.reduceTrees = function () {
   this.prunedNodesAll = prunedNodesAll;
 };
 
-// Grow tree one step
+// Grow tree one step 
 CoSELayout.prototype.growTree = function (prunedNodesAll) {
   var lengthOfPrunedNodesInStep = prunedNodesAll.length;
   var prunedNodesInStep = prunedNodesAll[lengthOfPrunedNodesInStep - 1];
@@ -2245,7 +2245,7 @@ CoSELayout.prototype.findPlaceforPrunedNode = function (nodeData) {
   } else if (minCount == 2 && min == 0) {
     var random = Math.floor(Math.random() * 2);
     if (controlRegions[0] == 0 && controlRegions[1] == 0) {
-
+      ;
       if (random == 0) {
         gridForPrunedNode = 0;
       } else {
@@ -3776,8 +3776,8 @@ CiSELayout.prototype.convertToClusteredGraph = function (nodes, edges, clusters)
     for (var _i2 = 0; _i2 < clusters.length; _i2++) {
         var _ret = _loop(_i2);
 
-        if (_ret === 'continue')
-            }
+        if (_ret === 'continue') continue;
+    }
 
     // Now, add unclustered nodes to the GraphManager
 
@@ -6358,8 +6358,8 @@ var cxtmenu = function cxtmenu(params) {
       var rx1 = (r + rs) / 2 * Math.cos(midtheta);
       var ry1 = (r + rs) / 2 * Math.sin(midtheta);
 
-        // Arbitrary multiplier to increase the sizing of the space
-        // available for the item.
+      // Arbitrary multiplier to increase the sizing of the space 
+      // available for the item.
       var width = 1 * Math.abs((r - rs) * Math.cos(midtheta));
       var height = 1 * Math.abs((r - rs) * Math.sin(midtheta));
       width = Math.max(width, height);
@@ -6505,9 +6505,9 @@ var cxtmenu = function cxtmenu(params) {
     c2d.translate(tx, ty);
     c2d.rotate(rot);
 
-      // clear the indicator
-      // The indicator size (arrow) depends on the node size as well. If the indicator size is bigger and the rendered node size + padding,
-      // use the rendered node size + padding as the indicator size.
+    // clear the indicator
+    // The indicator size (arrow) depends on the node size as well. If the indicator size is bigger and the rendered node size + padding, 
+    // use the rendered node size + padding as the indicator size.
     var indicatorSize = options.indicatorSize > rs + options.spotlightPadding ? rs + options.spotlightPadding : options.indicatorSize;
     c2d.beginPath();
     c2d.fillRect(-indicatorSize / 2, -indicatorSize / 2, indicatorSize, indicatorSize);
@@ -6923,20 +6923,20 @@ var defaults = {
     }
     */
   ], // function( ele ){ return [ /*...*/ ] }, // example function for commands
-    fillColor: 'rgba(0, 0, 0, 0.75)', // the background colour of the menu
-    activeFillColor: 'rgba(1, 105, 217, 0.75)', // the colour used to indicate the selected command
-    activePadding: 20, // additional size in pixels for the active command
-    indicatorSize: 24, // the size in pixels of the pointer to the active command, will default to the node size if the node size is smaller than the indicator size,
-    separatorWidth: 3, // the empty spacing in pixels between successive commands
-    spotlightPadding: 4, // extra spacing in pixels between the element and the spotlight
-    adaptativeNodeSpotlightRadius: false, // specify whether the spotlight radius should adapt to the node size
-    minSpotlightRadius: 24, // the minimum radius in pixels of the spotlight (ignored for the node if adaptativeNodeSpotlightRadius is enabled but still used for the edge & background)
-    maxSpotlightRadius: 38, // the maximum radius in pixels of the spotlight (ignored for the node if adaptativeNodeSpotlightRadius is enabled but still used for the edge & background)
-    openMenuEvents: 'cxttapstart taphold', // space-separated cytoscape events that will open the menu; only `cxttapstart` and/or `taphold` work here
-    itemColor: 'white', // the colour of text in the command's content
-    itemTextShadowColor: 'transparent', // the text shadow colour of the command's content
-    zIndex: 9999, // the z-index of the ui div
-    atMouse: false, // draw menu at mouse position
+  fillColor: 'rgba(0, 0, 0, 0.75)', // the background colour of the menu
+  activeFillColor: 'rgba(1, 105, 217, 0.75)', // the colour used to indicate the selected command
+  activePadding: 20, // additional size in pixels for the active command
+  indicatorSize: 24, // the size in pixels of the pointer to the active command, will default to the node size if the node size is smaller than the indicator size, 
+  separatorWidth: 3, // the empty spacing in pixels between successive commands
+  spotlightPadding: 4, // extra spacing in pixels between the element and the spotlight
+  adaptativeNodeSpotlightRadius: false, // specify whether the spotlight radius should adapt to the node size
+  minSpotlightRadius: 24, // the minimum radius in pixels of the spotlight (ignored for the node if adaptativeNodeSpotlightRadius is enabled but still used for the edge & background)
+  maxSpotlightRadius: 38, // the maximum radius in pixels of the spotlight (ignored for the node if adaptativeNodeSpotlightRadius is enabled but still used for the edge & background)
+  openMenuEvents: 'cxttapstart taphold', // space-separated cytoscape events that will open the menu; only `cxttapstart` and/or `taphold` work here
+  itemColor: 'white', // the colour of text in the command's content
+  itemTextShadowColor: 'transparent', // the text shadow colour of the command's content
+  zIndex: 9999, // the z-index of the ui div
+  atMouse: false, // draw menu at mouse position
   outsideMenuCancel: false // if set to a number, this will cancel the command if the pointer is released outside of the spotlight, padded by the number given
 };
 
@@ -7717,18 +7717,18 @@ var _require2 = __nested_webpack_require_8493__(4),
 
 var defaults = Object.freeze({
 
-    // 'draft', 'default' or 'proof'
-    // - 'draft' only applies spectral layout
-    // - 'default' improves the quality with subsequent CoSE layout (fast cooling rate)
-    // - 'proof' improves the quality with subsequent CoSE layout (slow cooling rate)
-    quality: "default",
-    // Use random node positions at beginning of layout
-    // if this is set to false, then quality option must be "proof"
-    randomize: true,
-    // Whether or not to animate the layout
-    animate: true,
-    // Duration of animation in ms, if enabled
-    animationDuration: 1000,
+  // 'draft', 'default' or 'proof' 
+  // - 'draft' only applies spectral layout 
+  // - 'default' improves the quality with subsequent CoSE layout (fast cooling rate)
+  // - 'proof' improves the quality with subsequent CoSE layout (slow cooling rate) 
+  quality: "default",
+  // Use random node positions at beginning of layout
+  // if this is set to false, then quality option must be "proof"
+  randomize: true,
+  // Whether or not to animate the layout
+  animate: true,
+  // Duration of animation in ms, if enabled
+  animationDuration: 1000,
   // Easing of animation, if enabled
   animationEasing: undefined,
   // Fit the viewport to the repositioned nodes
@@ -7787,7 +7787,7 @@ var defaults = Object.freeze({
   gravityCompound: 1.0,
   // Gravity range (constant)
   gravityRange: 3.8,
-    // Initial cooling factor for incremental layout
+  // Initial cooling factor for incremental layout  
   initialEnergyOnIncremental: 0.3,
 
   /* constraint options */
@@ -7798,8 +7798,8 @@ var defaults = Object.freeze({
   // Align required nodes in vertical/horizontal direction
   // {vertical: [['n1', 'n2')], ['n3', 'n4']], horizontal: ['n2', 'n4']}
   alignmentConstraint: undefined,
-    // Place two nodes relatively in vertical/horizontal direction
-    // [{top: 'n1', bottom: 'n2', gap: 100}, {left: 'n3', right: 'n4', gap: 75}]
+  // Place two nodes relatively in vertical/horizontal direction 
+  // [{top: 'n1', bottom: 'n2', gap: 100}, {left: 'n3', right: 'n4', gap: 75}]
   relativePlacementConstraint: undefined,
 
   /* layout event callbacks */
@@ -7850,8 +7850,8 @@ var Layout = function () {
         // if packing is not enabled, perform layout on the whole graph
         if (!packingEnabled) {
           if (options.randomize) {
-              var result = spectralLayout(options); // apply spectral layout
-              spectralResult.push(result);
+            var result = spectralLayout(options); // apply spectral layout        
+            spectralResult.push(result);
           }
           // apply cose layout as postprocessing
           if (options.quality == "default" || options.quality == "proof") {
@@ -7899,7 +7899,7 @@ var Layout = function () {
                 for (var i = indexesToBeDeleted.length - 1; i >= 0; i--) {
                   components.splice(indexesToBeDeleted[i], 1);
                   spectralResult.splice(indexesToBeDeleted[i], 1);
-                }
+                };
               }
             }
             components.forEach(function (component, index) {
@@ -8198,7 +8198,7 @@ var coseLayout = function coseLayout(options, spectralResult) {
       theNode.paddingRight = parseInt(theChild.css('padding'));
       theNode.paddingBottom = parseInt(theChild.css('padding'));
 
-        //Attach the label properties to compound if labels will be included in node dimensions
+      //Attach the label properties to compound if labels will be included in node dimensions  
       if (options.nodeDimensionsIncludeLabels) {
         if (theChild.isParent()) {
           theNode.labelWidth = theChild.boundingBox({ includeLabels: true, includeNodes: false, includeOverlays: false }).w;
@@ -8353,33 +8353,33 @@ var SVD = __nested_webpack_require_36859__(0).layoutBase.SVD;
 // main function that spectral layout is processed
 var spectralLayout = function spectralLayout(options) {
 
-    var cy = options.cy;
-    var eles = options.eles;
-    var nodes = eles.nodes();
-    var parentNodes = eles.nodes(":parent");
+  var cy = options.cy;
+  var eles = options.eles;
+  var nodes = eles.nodes();
+  var parentNodes = eles.nodes(":parent");
 
-    var dummyNodes = new Map(); // map to keep dummy nodes and their neighbors
-    var nodeIndexes = new Map(); // map to keep indexes to nodes
-    var parentChildMap = new Map(); // mapping btw. compound and its representative node
-    var allNodesNeighborhood = []; // array to keep neighborhood of all nodes
-    var xCoords = [];
-    var yCoords = [];
+  var dummyNodes = new Map(); // map to keep dummy nodes and their neighbors
+  var nodeIndexes = new Map(); // map to keep indexes to nodes
+  var parentChildMap = new Map(); // mapping btw. compound and its representative node 
+  var allNodesNeighborhood = []; // array to keep neighborhood of all nodes
+  var xCoords = [];
+  var yCoords = [];
 
-    var samplesColumn = []; // sampled vertices
-    var minDistancesColumn = [];
-    var C = []; // column sampling matrix
-    var PHI = []; // intersection of column and row sampling matrices
-    var INV = []; // inverse of PHI
+  var samplesColumn = []; // sampled vertices
+  var minDistancesColumn = [];
+  var C = []; // column sampling matrix
+  var PHI = []; // intersection of column and row sampling matrices 
+  var INV = []; // inverse of PHI 
 
-    var firstSample = void 0; // the first sampled node
-    var nodeSize = void 0;
+  var firstSample = void 0; // the first sampled node
+  var nodeSize = void 0;
 
-    var infinity = 100000000;
-    var small = 0.000000001;
+  var infinity = 100000000;
+  var small = 0.000000001;
 
-    var piTol = options.piTol;
-    var samplingType = options.samplingType; // false for random, true for greedy
-    var nodeSeparation = options.nodeSeparation;
+  var piTol = options.piTol;
+  var samplingType = options.samplingType; // false for random, true for greedy
+  var nodeSeparation = options.nodeSeparation;
   var sampleSize = void 0;
 
   /**** Spectral-preprocessing functions ****/
@@ -8407,7 +8407,7 @@ var spectralLayout = function spectralLayout(options) {
         samplesColumn[count] = sample;
         count++;
       } else {
-
+        continue;
       }
     }
   };
@@ -8531,7 +8531,7 @@ var spectralLayout = function spectralLayout(options) {
     INV = Matrix.multMat(Matrix.multMat(a_v, a_Sig), Matrix.transpose(a_u));
   };
 
-    // calculate final coordinates
+  // calculate final coordinates 
   var powerIteration = function powerIteration() {
     // two largest eigenvalues
     var theta1 = void 0;
@@ -8672,7 +8672,7 @@ var spectralLayout = function spectralLayout(options) {
     allNodesNeighborhood[_i13] = [];
   }
 
-    // form a parent-child map to keep representative node of each compound node
+  // form a parent-child map to keep representative node of each compound node  
   parentNodes.forEach(function (ele) {
     var children = ele.children();
 
@@ -9158,7 +9158,7 @@ ConstraintHandler.handleConstraints = function (layout) {
     }
   }
 
-    // if there exists relative placement constraint without gap value, set it to default
+  // if there exists relative placement constraint without gap value, set it to default 
   if (constraints.relativePlacementConstraint) {
     constraints.relativePlacementConstraint.forEach(function (constraint) {
       if (!constraint.gap && constraint.gap != 0) {
@@ -9182,28 +9182,28 @@ ConstraintHandler.handleConstraints = function (layout) {
   var calculateAvgPosition = function calculateAvgPosition(nodeIdSet) {
     var xPosSum = 0;
     var yPosSum = 0;
-      nodeIdSet.forEach(function (nodeId) {
-          xPosSum += xCoords[nodeIndexes.get(nodeId)];
-          yPosSum += yCoords[nodeIndexes.get(nodeId)];
-      });
+    nodeIdSet.forEach(function (nodeId) {
+      xPosSum += xCoords[nodeIndexes.get(nodeId)];
+      yPosSum += yCoords[nodeIndexes.get(nodeId)];
+    });
 
-      return {x: xPosSum / nodeIdSet.size, y: yPosSum / nodeIdSet.size};
+    return { x: xPosSum / nodeIdSet.size, y: yPosSum / nodeIdSet.size };
   };
 
-    // find an appropriate positioning for the nodes in a given graph according to relative placement constraints
-    // this function also takes the fixed nodes and alignment constraints into account
-    // graph: dag to be evaluated, direction: "horizontal" or "vertical",
-    // fixedNodes: set of fixed nodes to consider during evaluation, dummyPositions: appropriate coordinates of the dummy nodes
-    var findAppropriatePositionForRelativePlacement = function findAppropriatePositionForRelativePlacement(graph, direction, fixedNodes, dummyPositions, componentSources) {
+  // find an appropriate positioning for the nodes in a given graph according to relative placement constraints
+  // this function also takes the fixed nodes and alignment constraints into account
+  // graph: dag to be evaluated, direction: "horizontal" or "vertical", 
+  // fixedNodes: set of fixed nodes to consider during evaluation, dummyPositions: appropriate coordinates of the dummy nodes  
+  var findAppropriatePositionForRelativePlacement = function findAppropriatePositionForRelativePlacement(graph, direction, fixedNodes, dummyPositions, componentSources) {
 
-        // find union of two sets
-        function setUnion(setA, setB) {
-            var union = new Set(setA);
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
+    // find union of two sets
+    function setUnion(setA, setB) {
+      var union = new Set(setA);
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
-            try {
+      try {
         for (var _iterator = setB[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var elem = _step.value;
 
@@ -9583,32 +9583,32 @@ ConstraintHandler.handleConstraints = function (layout) {
       });
     });
 
-      return reversed;
+    return reversed;
   };
 
-    /****  apply transformation to the initial draft layout to better align with constrained nodes ****/
-    // solve the Orthogonal Procrustean Problem to rotate and/or reflect initial draft layout
-    // here we follow the solution in Chapter 20.2 of Borg, I. & Groenen, P. (2005) Modern Multidimensional Scaling: Theory and Applications
+  /****  apply transformation to the initial draft layout to better align with constrained nodes ****/
+  // solve the Orthogonal Procrustean Problem to rotate and/or reflect initial draft layout
+  // here we follow the solution in Chapter 20.2 of Borg, I. & Groenen, P. (2005) Modern Multidimensional Scaling: Theory and Applications 
 
-    /* construct source and target configurations */
+  /* construct source and target configurations */
 
-    var targetMatrix = []; // A - target configuration
-    var sourceMatrix = []; // B - source configuration
-    var standardTransformation = false; // false for no transformation, true for standart (Procrustes) transformation (rotation and/or reflection)
-    var reflectionType = false; // false/true for reflection check, 'reflectOnX', 'reflectOnY' or 'reflectOnBoth' for reflection type if necessary
-    var fixedNodes = new Set();
-    var dag = new Map(); // adjacency list to keep directed acyclic graph (dag) that consists of relative placement constraints
-    var dagUndirected = new Map(); // undirected version of the dag
-    var components = []; // weakly connected components
+  var targetMatrix = []; // A - target configuration
+  var sourceMatrix = []; // B - source configuration 
+  var standardTransformation = false; // false for no transformation, true for standart (Procrustes) transformation (rotation and/or reflection)
+  var reflectionType = false; // false/true for reflection check, 'reflectOnX', 'reflectOnY' or 'reflectOnBoth' for reflection type if necessary
+  var fixedNodes = new Set();
+  var dag = new Map(); // adjacency list to keep directed acyclic graph (dag) that consists of relative placement constraints
+  var dagUndirected = new Map(); // undirected version of the dag
+  var components = []; // weakly connected components
 
-    // fill fixedNodes collection to use later
-    if (constraints.fixedNodeConstraint) {
-        constraints.fixedNodeConstraint.forEach(function (nodeData) {
+  // fill fixedNodes collection to use later
+  if (constraints.fixedNodeConstraint) {
+    constraints.fixedNodeConstraint.forEach(function (nodeData) {
       fixedNodes.add(nodeData.nodeId);
     });
   }
 
-    // construct dag from relative placement constraints
+  // construct dag from relative placement constraints 
   if (constraints.relativePlacementConstraint) {
     // construct both directed and undirected version of the dag
     constraints.relativePlacementConstraint.forEach(function (constraint) {
@@ -9786,27 +9786,27 @@ ConstraintHandler.handleConstraints = function (layout) {
       /* calculate transformation matrix */
       var transformationMatrix = void 0;
       var targetMatrixTranspose = Matrix.transpose(targetMatrix); // A'
-        var sourceMatrixTranspose = Matrix.transpose(sourceMatrix); // B'
+      var sourceMatrixTranspose = Matrix.transpose(sourceMatrix); // B'
 
-        // centralize transpose matrices
-        for (var _i7 = 0; _i7 < targetMatrixTranspose.length; _i7++) {
-            targetMatrixTranspose[_i7] = Matrix.multGamma(targetMatrixTranspose[_i7]);
-            sourceMatrixTranspose[_i7] = Matrix.multGamma(sourceMatrixTranspose[_i7]);
-        }
+      // centralize transpose matrices
+      for (var _i7 = 0; _i7 < targetMatrixTranspose.length; _i7++) {
+        targetMatrixTranspose[_i7] = Matrix.multGamma(targetMatrixTranspose[_i7]);
+        sourceMatrixTranspose[_i7] = Matrix.multGamma(sourceMatrixTranspose[_i7]);
+      }
 
-        // do actual calculation for transformation matrix
-        var tempMatrix = Matrix.multMat(targetMatrixTranspose, Matrix.transpose(sourceMatrixTranspose)); // tempMatrix = A'B
-        var SVDResult = SVD.svd(tempMatrix); // SVD(A'B) = USV', svd function returns U, S and V
-        transformationMatrix = Matrix.multMat(SVDResult.V, Matrix.transpose(SVDResult.U)); // transformationMatrix = T = VU'
+      // do actual calculation for transformation matrix
+      var tempMatrix = Matrix.multMat(targetMatrixTranspose, Matrix.transpose(sourceMatrixTranspose)); // tempMatrix = A'B
+      var SVDResult = SVD.svd(tempMatrix); // SVD(A'B) = USV', svd function returns U, S and V 
+      transformationMatrix = Matrix.multMat(SVDResult.V, Matrix.transpose(SVDResult.U)); // transformationMatrix = T = VU'
 
-        /* apply found transformation matrix to obtain final draft layout */
-        for (var _i8 = 0; _i8 < nodeIndexes.size; _i8++) {
-            var temp1 = [xCoords[_i8], yCoords[_i8]];
-            var temp2 = [transformationMatrix[0][0], transformationMatrix[1][0]];
-            var temp3 = [transformationMatrix[0][1], transformationMatrix[1][1]];
-            xCoords[_i8] = Matrix.dotProduct(temp1, temp2);
-            yCoords[_i8] = Matrix.dotProduct(temp1, temp3);
-        }
+      /* apply found transformation matrix to obtain final draft layout */
+      for (var _i8 = 0; _i8 < nodeIndexes.size; _i8++) {
+        var temp1 = [xCoords[_i8], yCoords[_i8]];
+        var temp2 = [transformationMatrix[0][0], transformationMatrix[1][0]];
+        var temp3 = [transformationMatrix[0][1], transformationMatrix[1][1]];
+        xCoords[_i8] = Matrix.dotProduct(temp1, temp2);
+        yCoords[_i8] = Matrix.dotProduct(temp1, temp3);
+      }
 
       // applied only both alignment and rel. placement constraints exist
       if (reflectionType) {
@@ -9910,7 +9910,7 @@ ConstraintHandler.handleConstraints = function (layout) {
         var fixedNodesOnHorizontal = new Set();
         var fixedNodesOnVertical = new Set();
 
-          // fill maps and sets
+        // fill maps and sets      
         fixedNodes.forEach(function (nodeId) {
           fixedNodesOnHorizontal.add(nodeId);
           fixedNodesOnVertical.add(nodeId);
@@ -10258,7 +10258,7 @@ CoSELayout.prototype.classicLayout = function () {
     }
     // The graph associated with this layout is not flat or a forest
     else {
-        // Reduce the trees when incremental mode is not enabled and graph is not a forest
+        // Reduce the trees when incremental mode is not enabled and graph is not a forest 
         this.reduceTrees();
         // Update nodes that gravity will be applied
         this.graphManager.resetAllNodesToApplyGravitation();
@@ -10272,7 +10272,7 @@ CoSELayout.prototype.classicLayout = function () {
       }
   } else {
     if (CoSEConstants.TREE_REDUCTION_ON_INCREMENTAL) {
-        // Reduce the trees in incremental mode if only this constant is set to true
+      // Reduce the trees in incremental mode if only this constant is set to true 
       this.reduceTrees();
       // Update nodes that gravity will be applied
       this.graphManager.resetAllNodesToApplyGravitation();
@@ -10331,7 +10331,7 @@ CoSELayout.prototype.tick = function () {
     this.coolingFactor = Math.max(this.initialCoolingFactor - Math.pow(this.coolingCycle, Math.log(100 * (this.initialCoolingFactor - this.finalTemperature)) / Math.log(this.maxCoolingCycle)) / 100 * this.coolingAdjuster, this.finalTemperature);
     this.animationPeriod = Math.ceil(this.initialAnimationPeriod * Math.sqrt(this.coolingFactor));
   }
-    // Operations while tree is growing again
+  // Operations while tree is growing again 
   if (this.isTreeGrowing) {
     if (this.growTreeIterations % 10 == 0) {
       if (this.prunedNodesAll.length > 0) {
@@ -10424,7 +10424,7 @@ CoSELayout.prototype.moveNodes = function () {
   var lNodes = this.getAllNodes();
   var node;
 
-    // calculate displacement for each node
+  // calculate displacement for each node 
   for (var i = 0; i < lNodes.length; i++) {
     node = lNodes[i];
     node.calculateDisplacement();
@@ -10616,7 +10616,7 @@ CoSELayout.prototype.initConstraintVariables = function () {
       var subGraphOnHorizontal = new Map(); // subgraph from vertical RP constraints
       var subGraphOnVertical = new Map(); // subgraph from vertical RP constraints
 
-        // construct subgraphs from relative placement constraints
+      // construct subgraphs from relative placement constraints 
       this.constraints.relativePlacementConstraint.forEach(function (constraint) {
         if (constraint.left) {
           var left = nodeToDummyForVerticalAlignment.has(constraint.left) ? nodeToDummyForVerticalAlignment.get(constraint.left) : constraint.left;
@@ -10647,8 +10647,8 @@ CoSELayout.prototype.initConstraintVariables = function () {
         }
       });
 
-        // function to construct components from a given graph
-        // also returns an array that keeps whether each component contains fixed node
+      // function to construct components from a given graph 
+      // also returns an array that keeps whether each component contains fixed node
       var constructComponents = function constructComponents(graph, fixedNodes) {
         var components = [];
         var isFixed = [];
@@ -11126,21 +11126,21 @@ CoSELayout.prototype.calcRepulsionRange = function () {
 
 // Group zero degree members whose parents are not to be tiled, create dummy parents where needed and fill memberGroups by their dummp parent id's
 CoSELayout.prototype.groupZeroDegreeMembers = function () {
-    var self = this;
-    // array of [parent_id x oneDegreeNode_id]
-    var tempMemberGroups = {}; // A temporary map of parent node and its zero degree members
-    this.memberGroups = {}; // A map of dummy parent node and its zero degree members whose parents are not to be tiled
-    this.idToDummyNode = {}; // A map of id to dummy node
+  var self = this;
+  // array of [parent_id x oneDegreeNode_id]
+  var tempMemberGroups = {}; // A temporary map of parent node and its zero degree members
+  this.memberGroups = {}; // A map of dummy parent node and its zero degree members whose parents are not to be tiled
+  this.idToDummyNode = {}; // A map of id to dummy node 
 
-    var zeroDegree = []; // List of zero degree nodes whose parents are not to be tiled
-    var allNodes = this.graphManager.getAllNodes();
+  var zeroDegree = []; // List of zero degree nodes whose parents are not to be tiled
+  var allNodes = this.graphManager.getAllNodes();
 
-    // Fill zero degree list
-    for (var i = 0; i < allNodes.length; i++) {
-        var node = allNodes[i];
-        var parent = node.getParent();
-        // If a node has zero degree and its parent is not to be tiled if exists add that node to zeroDegres list
-        if (this.getNodeDegreeWithChildren(node) === 0 && (parent.id == undefined || !this.getToBeTiled(parent))) {
+  // Fill zero degree list
+  for (var i = 0; i < allNodes.length; i++) {
+    var node = allNodes[i];
+    var parent = node.getParent();
+    // If a node has zero degree and its parent is not to be tiled if exists add that node to zeroDegres list
+    if (this.getNodeDegreeWithChildren(node) === 0 && (parent.id == undefined || !this.getToBeTiled(parent))) {
       zeroDegree.push(node);
     }
   }
@@ -11602,7 +11602,7 @@ CoSELayout.prototype.tilingPostLayout = function () {
 // -----------------------------------------------------------------------------
 // Section: Tree Reduction methods
 // -----------------------------------------------------------------------------
-// Reduce trees
+// Reduce trees 
 CoSELayout.prototype.reduceTrees = function () {
   var prunedNodesAll = [];
   var containsLeaf = true;
@@ -11636,7 +11636,7 @@ CoSELayout.prototype.reduceTrees = function () {
   this.prunedNodesAll = prunedNodesAll;
 };
 
-// Grow tree one step
+// Grow tree one step 
 CoSELayout.prototype.growTree = function (prunedNodesAll) {
   var lengthOfPrunedNodesInStep = prunedNodesAll.length;
   var prunedNodesInStep = prunedNodesAll[lengthOfPrunedNodesInStep - 1];
@@ -11724,7 +11724,7 @@ CoSELayout.prototype.findPlaceforPrunedNode = function (nodeData) {
   } else if (minCount == 2 && min == 0) {
     var random = Math.floor(Math.random() * 2);
     if (controlRegions[0] == 0 && controlRegions[1] == 0) {
-
+      ;
       if (random == 0) {
         gridForPrunedNode = 0;
       } else {
@@ -12378,7 +12378,7 @@ LNode.prototype.updateBounds = function () {
     this.setWidth(childGraph.getRight() - childGraph.getLeft());
     this.setHeight(childGraph.getBottom() - childGraph.getTop());
 
-      // Update compound bounds considering its label properties
+    // Update compound bounds considering its label properties    
     if (LayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS) {
 
       var width = childGraph.getRight() - childGraph.getLeft();
@@ -14470,8 +14470,8 @@ Layout.prototype.runLayout = function () {
   }
 
   if (LayoutConstants.ANIMATE === 'during') {
-      // If this is a 'during' layout animation. Layout is not finished yet.
-      // We need to perform these in index.js when layout is really finished.
+    // If this is a 'during' layout animation. Layout is not finished yet. 
+    // We need to perform these in index.js when layout is really finished.
     return false;
   }
 
@@ -15391,7 +15391,7 @@ FDLayout.prototype.calcRepulsionForce = function (nodeA, nodeB) {
       repulsionForceX = repulsionForce * distanceX / distance;
       repulsionForceY = repulsionForce * distanceY / distance;
 
-        // Apply forces on the two nodes
+      // Apply forces on the two nodes    
       nodeA.repulsionForceX -= repulsionForceX;
       nodeA.repulsionForceY -= repulsionForceY;
       nodeB.repulsionForceX += repulsionForceX;
@@ -15493,7 +15493,7 @@ FDLayout.prototype.calcGrid = function (graph) {
 
   for (var i = 0; i < sizeX; i++) {
     for (var j = 0; j < sizeY; j++) {
-        grid[i][j] = [];
+      grid[i][j] = new Array();
     }
   }
 
@@ -15538,7 +15538,7 @@ FDLayout.prototype.calculateRepulsionForceOfANode = function (nodeA, processedNo
 
   if (this.totalIterations % FDLayoutConstants.GRID_CALCULATION_CHECK_PERIOD == 1 && gridUpdateAllowed || forceToNodeSurroundingUpdate) {
     var surrounding = new Set();
-      nodeA.surrounding = [];
+    nodeA.surrounding = new Array();
     var nodeB;
     var grid = this.grid;
 
@@ -15548,8 +15548,8 @@ FDLayout.prototype.calculateRepulsionForceOfANode = function (nodeA, processedNo
           for (var k = 0; k < grid[i][j].length; k++) {
             nodeB = grid[i][j][k];
 
-              // If both nodes are not members of the same graph,
-              // or both nodes are the same, skip.
+            // If both nodes are not members of the same graph, 
+            // or both nodes are the same, skip.
             if (nodeA.getOwner() != nodeB.getOwner() || nodeA == nodeB) {
               continue;
             }
@@ -15560,8 +15560,8 @@ FDLayout.prototype.calculateRepulsionForceOfANode = function (nodeA, processedNo
               var distanceX = Math.abs(nodeA.getCenterX() - nodeB.getCenterX()) - (nodeA.getWidth() / 2 + nodeB.getWidth() / 2);
               var distanceY = Math.abs(nodeA.getCenterY() - nodeB.getCenterY()) - (nodeA.getHeight() / 2 + nodeB.getHeight() / 2);
 
-                // if the distance between nodeA and nodeB
-                // is less then calculation range
+              // if the distance between nodeA and nodeB 
+              // is less then calculation range
               if (distanceX <= this.repulsionRange && distanceY <= this.repulsionRange) {
                 //then add nodeB to surrounding of nodeA
                 surrounding.add(nodeB);
@@ -15748,7 +15748,7 @@ var UniqueIDGeneretor = __nested_webpack_require_104768__(14);
 function HashSet() {
   this.set = {};
 }
-
+;
 
 HashSet.prototype.add = function (obj) {
   var theId = UniqueIDGeneretor.createID(obj);
@@ -16065,219 +16065,218 @@ module.exports = Quicksort;
 
 
 // Singular Value Decomposition implementation
-            function SVD() {
-            }
+function SVD() {};
 
-            /* Below singular value decomposition (svd) code including hypot function is adopted from https://github.com/dragonfly-ai/JamaJS
-               Some changes are applied to make the code compatible with the fcose code and to make it independent from Jama.
-               Input matrix is changed to a 2D array instead of Jama matrix. Matrix dimensions are taken according to 2D array instead of using Jama functions.
-               An object that includes singular value components is created for return.
-               The types of input parameters of the hypot function are removed.
-               let is used instead of var for the variable initialization.
-            */
-            /*
-                                           Apache License
-                                       Version 2.0, January 2004
-                                    http://www.apache.org/licenses/
+/* Below singular value decomposition (svd) code including hypot function is adopted from https://github.com/dragonfly-ai/JamaJS
+   Some changes are applied to make the code compatible with the fcose code and to make it independent from Jama.
+   Input matrix is changed to a 2D array instead of Jama matrix. Matrix dimensions are taken according to 2D array instead of using Jama functions.
+   An object that includes singular value components is created for return. 
+   The types of input parameters of the hypot function are removed. 
+   let is used instead of var for the variable initialization.
+*/
+/*
+                               Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
 
-               TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
-               1. Definitions.
+   1. Definitions.
 
-                  "License" shall mean the terms and conditions for use, reproduction,
-                  and distribution as defined by Sections 1 through 9 of this document.
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
 
-                  "Licensor" shall mean the copyright owner or entity authorized by
-                  the copyright owner that is granting the License.
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
 
-                  "Legal Entity" shall mean the union of the acting entity and all
-                  other entities that control, are controlled by, or are under common
-                  control with that entity. For the purposes of this definition,
-                  "control" means (i) the power, direct or indirect, to cause the
-                  direction or management of such entity, whether by contract or
-                  otherwise, or (ii) ownership of fifty percent (50%) or more of the
-                  outstanding shares, or (iii) beneficial ownership of such entity.
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
 
-                  "You" (or "Your") shall mean an individual or Legal Entity
-                  exercising permissions granted by this License.
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
 
-                  "Source" form shall mean the preferred form for making modifications,
-                  including but not limited to software source code, documentation
-                  source, and configuration files.
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
 
-                  "Object" form shall mean any form resulting from mechanical
-                  transformation or translation of a Source form, including but
-                  not limited to compiled object code, generated documentation,
-                  and conversions to other media types.
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
 
-                  "Work" shall mean the work of authorship, whether in Source or
-                  Object form, made available under the License, as indicated by a
-                  copyright notice that is included in or attached to the work
-                  (an example is provided in the Appendix below).
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
 
-                  "Derivative Works" shall mean any work, whether in Source or Object
-                  form, that is based on (or derived from) the Work and for which the
-                  editorial revisions, annotations, elaborations, or other modifications
-                  represent, as a whole, an original work of authorship. For the purposes
-                  of this License, Derivative Works shall not include works that remain
-                  separable from, or merely link (or bind by name) to the interfaces of,
-                  the Work and Derivative Works thereof.
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
 
-                  "Contribution" shall mean any work of authorship, including
-                  the original version of the Work and any modifications or additions
-                  to that Work or Derivative Works thereof, that is intentionally
-                  submitted to Licensor for inclusion in the Work by the copyright owner
-                  or by an individual or Legal Entity authorized to submit on behalf of
-                  the copyright owner. For the purposes of this definition, "submitted"
-                  means any form of electronic, verbal, or written communication sent
-                  to the Licensor or its representatives, including but not limited to
-                  communication on electronic mailing lists, source code control systems,
-                  and issue tracking systems that are managed by, or on behalf of, the
-                  Licensor for the purpose of discussing and improving the Work, but
-                  excluding communication that is conspicuously marked or otherwise
-                  designated in writing by the copyright owner as "Not a Contribution."
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
 
-                  "Contributor" shall mean Licensor and any individual or Legal Entity
-                  on behalf of whom a Contribution has been received by Licensor and
-                  subsequently incorporated within the Work.
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
 
-               2. Grant of Copyright License. Subject to the terms and conditions of
-                  this License, each Contributor hereby grants to You a perpetual,
-                  worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-                  copyright license to reproduce, prepare Derivative Works of,
-                  publicly display, publicly perform, sublicense, and distribute the
-                  Work and such Derivative Works in Source or Object form.
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
 
-               3. Grant of Patent License. Subject to the terms and conditions of
-                  this License, each Contributor hereby grants to You a perpetual,
-                  worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-                  (except as stated in this section) patent license to make, have made,
-                  use, offer to sell, sell, import, and otherwise transfer the Work,
-                  where such license applies only to those patent claims licensable
-                  by such Contributor that are necessarily infringed by their
-                  Contribution(s) alone or by combination of their Contribution(s)
-                  with the Work to which such Contribution(s) was submitted. If You
-                  institute patent litigation against any entity (including a
-                  cross-claim or counterclaim in a lawsuit) alleging that the Work
-                  or a Contribution incorporated within the Work constitutes direct
-                  or contributory patent infringement, then any patent licenses
-                  granted to You under this License for that Work shall terminate
-                  as of the date such litigation is filed.
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
 
-               4. Redistribution. You may reproduce and distribute copies of the
-                  Work or Derivative Works thereof in any medium, with or without
-                  modifications, and in Source or Object form, provided that You
-                  meet the following conditions:
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
 
-                  (a) You must give any other recipients of the Work or
-                      Derivative Works a copy of this License; and
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
 
-                  (b) You must cause any modified files to carry prominent notices
-                      stating that You changed the files; and
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
 
-                  (c) You must retain, in the Source form of any Derivative Works
-                      that You distribute, all copyright, patent, trademark, and
-                      attribution notices from the Source form of the Work,
-                      excluding those notices that do not pertain to any part of
-                      the Derivative Works; and
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
 
-                  (d) If the Work includes a "NOTICE" text file as part of its
-                      distribution, then any Derivative Works that You distribute must
-                      include a readable copy of the attribution notices contained
-                      within such NOTICE file, excluding those notices that do not
-                      pertain to any part of the Derivative Works, in at least one
-                      of the following places: within a NOTICE text file distributed
-                      as part of the Derivative Works; within the Source form or
-                      documentation, if provided along with the Derivative Works; or,
-                      within a display generated by the Derivative Works, if and
-                      wherever such third-party notices normally appear. The contents
-                      of the NOTICE file are for informational purposes only and
-                      do not modify the License. You may add Your own attribution
-                      notices within Derivative Works that You distribute, alongside
-                      or as an addendum to the NOTICE text from the Work, provided
-                      that such additional attribution notices cannot be construed
-                      as modifying the License.
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
 
-                  You may add Your own copyright statement to Your modifications and
-                  may provide additional or different license terms and conditions
-                  for use, reproduction, or distribution of Your modifications, or
-                  for any such Derivative Works as a whole, provided Your use,
-                  reproduction, and distribution of the Work otherwise complies with
-                  the conditions stated in this License.
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
 
-               5. Submission of Contributions. Unless You explicitly state otherwise,
-                  any Contribution intentionally submitted for inclusion in the Work
-                  by You to the Licensor shall be under the terms and conditions of
-                  this License, without any additional terms or conditions.
-                  Notwithstanding the above, nothing herein shall supersede or modify
-                  the terms of any separate license agreement you may have executed
-                  with Licensor regarding such Contributions.
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
 
-               6. Trademarks. This License does not grant permission to use the trade
-                  names, trademarks, service marks, or product names of the Licensor,
-                  except as required for reasonable and customary use in describing the
-                  origin of the Work and reproducing the content of the NOTICE file.
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
 
-               7. Disclaimer of Warranty. Unless required by applicable law or
-                  agreed to in writing, Licensor provides the Work (and each
-                  Contributor provides its Contributions) on an "AS IS" BASIS,
-                  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-                  implied, including, without limitation, any warranties or conditions
-                  of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
-                  PARTICULAR PURPOSE. You are solely responsible for determining the
-                  appropriateness of using or redistributing the Work and assume any
-                  risks associated with Your exercise of permissions under this License.
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
 
-               8. Limitation of Liability. In no event and under no legal theory,
-                  whether in tort (including negligence), contract, or otherwise,
-                  unless required by applicable law (such as deliberate and grossly
-                  negligent acts) or agreed to in writing, shall any Contributor be
-                  liable to You for damages, including any direct, indirect, special,
-                  incidental, or consequential damages of any character arising as a
-                  result of this License or out of the use or inability to use the
-                  Work (including but not limited to damages for loss of goodwill,
-                  work stoppage, computer failure or malfunction, or any and all
-                  other commercial damages or losses), even if such Contributor
-                  has been advised of the possibility of such damages.
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
 
-               9. Accepting Warranty or Additional Liability. While redistributing
-                  the Work or Derivative Works thereof, You may choose to offer,
-                  and charge a fee for, acceptance of support, warranty, indemnity,
-                  or other liability obligations and/or rights consistent with this
-                  License. However, in accepting such obligations, You may act only
-                  on Your own behalf and on Your sole responsibility, not on behalf
-                  of any other Contributor, and only if You agree to indemnify,
-                  defend, and hold each Contributor harmless for any liability
-                  incurred by, or claims asserted against, such Contributor by reason
-                  of your accepting any such warranty or additional liability.
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
 
-               END OF TERMS AND CONDITIONS
+   END OF TERMS AND CONDITIONS
 
-               APPENDIX: How to apply the Apache License to your work.
+   APPENDIX: How to apply the Apache License to your work.
 
-                  To apply the Apache License to your work, attach the following
-                  boilerplate notice, with the fields enclosed by brackets "{}"
-                  replaced with your own identifying information. (Don't include
-                  the brackets!)  The text should be enclosed in the appropriate
-                  comment syntax for the file format. We also recommend that a
-                  file or class name and description of purpose be included on the
-                  same "printed page" as the copyright notice for easier
-                  identification within third-party archives.
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "{}"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
 
-               Copyright {yyyy} {name of copyright owner}
+   Copyright {yyyy} {name of copyright owner}
 
-               Licensed under the Apache License, Version 2.0 (the "License");
-               you may not use this file except in compliance with the License.
-               You may obtain a copy of the License at
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
 
-                   http://www.apache.org/licenses/LICENSE-2.0
+       http://www.apache.org/licenses/LICENSE-2.0
 
-               Unless required by applicable law or agreed to in writing, software
-               distributed under the License is distributed on an "AS IS" BASIS,
-               WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-               See the License for the specific language governing permissions and
-               limitations under the License.
-            */
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
 
 SVD.svd = function (A) {
   this.U = null;
@@ -16344,7 +16343,7 @@ SVD.svd = function (A) {
       for (var i = k; i < this.m; i++) {
         this.s[k] = SVD.hypot(this.s[k], A[i][k]);
       }
-
+      ;
       if (this.s[k] !== 0.0) {
         if (A[k][k] < 0.0) {
           this.s[k] = -this.s[k];
@@ -16352,7 +16351,7 @@ SVD.svd = function (A) {
         for (var _i = k; _i < this.m; _i++) {
           A[_i][k] /= this.s[k];
         }
-
+        ;
         A[k][k] += 1.0;
       }
       this.s[k] = -this.s[k];
@@ -16365,30 +16364,30 @@ SVD.svd = function (A) {
         for (var _i2 = k; _i2 < this.m; _i2++) {
           t += A[_i2][k] * A[_i2][j];
         }
-
+        ;
         t = -t / A[k][k];
         for (var _i3 = k; _i3 < this.m; _i3++) {
           A[_i3][j] += t * A[_i3][k];
         }
-
+        ;
       }
       e[j] = A[k][j];
     }
-
+    ;
     if (function (lhs, rhs) {
       return lhs && rhs;
     }(wantu, k < nct)) {
       for (var _i4 = k; _i4 < this.m; _i4++) {
         this.U[_i4][k] = A[_i4][k];
       }
-
+      ;
     }
     if (k < nrt) {
       e[k] = 0;
       for (var _i5 = k + 1; _i5 < this.n; _i5++) {
         e[k] = SVD.hypot(e[k], e[_i5]);
       }
-
+      ;
       if (e[k] !== 0.0) {
         if (e[k + 1] < 0.0) {
           e[k] = -e[k];
@@ -16396,7 +16395,7 @@ SVD.svd = function (A) {
         for (var _i6 = k + 1; _i6 < this.n; _i6++) {
           e[_i6] /= e[k];
         }
-
+        ;
         e[k + 1] += 1.0;
       }
       e[k] = -e[k];
@@ -16406,30 +16405,30 @@ SVD.svd = function (A) {
         for (var _i7 = k + 1; _i7 < this.m; _i7++) {
           work[_i7] = 0.0;
         }
-
+        ;
         for (var _j = k + 1; _j < this.n; _j++) {
           for (var _i8 = k + 1; _i8 < this.m; _i8++) {
             work[_i8] += e[_j] * A[_i8][_j];
           }
-
+          ;
         }
-
+        ;
         for (var _j2 = k + 1; _j2 < this.n; _j2++) {
           var _t = -e[_j2] / e[k + 1];
           for (var _i9 = k + 1; _i9 < this.m; _i9++) {
             A[_i9][_j2] += _t * work[_i9];
           }
-
+          ;
         }
-
+        ;
       }
       if (wantv) {
         for (var _i10 = k + 1; _i10 < this.n; _i10++) {
           this.V[_i10][k] = e[_i10];
-        }
+        };
       }
     }
-  }
+  };
   var p = Math.min(this.n, this.m + 1);
   if (nct < this.n) {
     this.s[nct] = A[nct][nct];
@@ -16446,35 +16445,35 @@ SVD.svd = function (A) {
       for (var _i11 = 0; _i11 < this.m; _i11++) {
         this.U[_i11][_j3] = 0.0;
       }
-
+      ;
       this.U[_j3][_j3] = 1.0;
-    }
+    };
     for (var _k = nct - 1; _k >= 0; _k--) {
       if (this.s[_k] !== 0.0) {
         for (var _j4 = _k + 1; _j4 < nu; _j4++) {
-            var _t2 = 0;
-            for (var _i12 = _k; _i12 < this.m; _i12++) {
-                _t2 += this.U[_i12][_k] * this.U[_i12][_j4];
-            }
-            _t2 = -_t2 / this.U[_k][_k];
-            for (var _i13 = _k; _i13 < this.m; _i13++) {
-                this.U[_i13][_j4] += _t2 * this.U[_i13][_k];
-            }
-        }
+          var _t2 = 0;
+          for (var _i12 = _k; _i12 < this.m; _i12++) {
+            _t2 += this.U[_i12][_k] * this.U[_i12][_j4];
+          };
+          _t2 = -_t2 / this.U[_k][_k];
+          for (var _i13 = _k; _i13 < this.m; _i13++) {
+            this.U[_i13][_j4] += _t2 * this.U[_i13][_k];
+          };
+        };
         for (var _i14 = _k; _i14 < this.m; _i14++) {
           this.U[_i14][_k] = -this.U[_i14][_k];
-        }
+        };
         this.U[_k][_k] = 1.0 + this.U[_k][_k];
         for (var _i15 = 0; _i15 < _k - 1; _i15++) {
           this.U[_i15][_k] = 0.0;
-        }
+        };
       } else {
         for (var _i16 = 0; _i16 < this.m; _i16++) {
           this.U[_i16][_k] = 0.0;
-        }
+        };
         this.U[_k][_k] = 1.0;
       }
-    }
+    };
   }
   if (wantv) {
     for (var _k2 = this.n - 1; _k2 >= 0; _k2--) {
@@ -16482,21 +16481,21 @@ SVD.svd = function (A) {
         return lhs && rhs;
       }(_k2 < nrt, e[_k2] !== 0.0)) {
         for (var _j5 = _k2 + 1; _j5 < nu; _j5++) {
-            var _t3 = 0;
-            for (var _i17 = _k2 + 1; _i17 < this.n; _i17++) {
-                _t3 += this.V[_i17][_k2] * this.V[_i17][_j5];
-            }
-            _t3 = -_t3 / this.V[_k2 + 1][_k2];
-            for (var _i18 = _k2 + 1; _i18 < this.n; _i18++) {
-                this.V[_i18][_j5] += _t3 * this.V[_i18][_k2];
-            }
-        }
+          var _t3 = 0;
+          for (var _i17 = _k2 + 1; _i17 < this.n; _i17++) {
+            _t3 += this.V[_i17][_k2] * this.V[_i17][_j5];
+          };
+          _t3 = -_t3 / this.V[_k2 + 1][_k2];
+          for (var _i18 = _k2 + 1; _i18 < this.n; _i18++) {
+            this.V[_i18][_j5] += _t3 * this.V[_i18][_k2];
+          };
+        };
       }
       for (var _i19 = 0; _i19 < this.n; _i19++) {
         this.V[_i19][_k2] = 0.0;
-      }
+      };
       this.V[_k2][_k2] = 1.0;
-    }
+    };
   }
   var pp = p - 1;
   var iter = 0;
@@ -16513,7 +16512,7 @@ SVD.svd = function (A) {
         e[_k3] = 0.0;
         break;
       }
-    }
+    };
     if (_k3 === p - 2) {
       kase = 4;
     } else {
@@ -16527,7 +16526,7 @@ SVD.svd = function (A) {
           this.s[ks] = 0.0;
           break;
         }
-      }
+      };
       if (ks === _k3) {
         kase = 3;
       } else if (ks === p - 1) {
@@ -16549,18 +16548,18 @@ SVD.svd = function (A) {
             var sn = f / _t5;
             this.s[_j6] = _t5;
             if (_j6 !== _k3) {
-                f = -sn * e[_j6 - 1];
-                e[_j6 - 1] = cs * e[_j6 - 1];
+              f = -sn * e[_j6 - 1];
+              e[_j6 - 1] = cs * e[_j6 - 1];
             }
-              if (wantv) {
-                  for (var _i20 = 0; _i20 < this.n; _i20++) {
-                      _t5 = cs * this.V[_i20][_j6] + sn * this.V[_i20][p - 1];
-                      this.V[_i20][p - 1] = -sn * this.V[_i20][_j6] + cs * this.V[_i20][p - 1];
-                      this.V[_i20][_j6] = _t5;
-                  }
-              }
-          }
-        }
+            if (wantv) {
+              for (var _i20 = 0; _i20 < this.n; _i20++) {
+                _t5 = cs * this.V[_i20][_j6] + sn * this.V[_i20][p - 1];
+                this.V[_i20][p - 1] = -sn * this.V[_i20][_j6] + cs * this.V[_i20][p - 1];
+                this.V[_i20][_j6] = _t5;
+              };
+            }
+          };
+        };
         break;
       case 2:
         {
@@ -16570,18 +16569,18 @@ SVD.svd = function (A) {
             var _t6 = SVD.hypot(this.s[_j7], _f);
             var _cs = this.s[_j7] / _t6;
             var _sn = _f / _t6;
-              this.s[_j7] = _t6;
-              _f = -_sn * e[_j7];
-              e[_j7] = _cs * e[_j7];
-              if (wantu) {
-                  for (var _i21 = 0; _i21 < this.m; _i21++) {
-                      _t6 = _cs * this.U[_i21][_j7] + _sn * this.U[_i21][_k3 - 1];
-                      this.U[_i21][_k3 - 1] = -_sn * this.U[_i21][_j7] + _cs * this.U[_i21][_k3 - 1];
-                      this.U[_i21][_j7] = _t6;
-                  }
-              }
-          }
-        }
+            this.s[_j7] = _t6;
+            _f = -_sn * e[_j7];
+            e[_j7] = _cs * e[_j7];
+            if (wantu) {
+              for (var _i21 = 0; _i21 < this.m; _i21++) {
+                _t6 = _cs * this.U[_i21][_j7] + _sn * this.U[_i21][_k3 - 1];
+                this.U[_i21][_k3 - 1] = -_sn * this.U[_i21][_j7] + _cs * this.U[_i21][_k3 - 1];
+                this.U[_i21][_j7] = _t6;
+              };
+            }
+          };
+        };
         break;
       case 3:
         {
@@ -16621,7 +16620,7 @@ SVD.svd = function (A) {
                 _t7 = _cs2 * this.V[_i22][_j8] + _sn2 * this.V[_i22][_j8 + 1];
                 this.V[_i22][_j8 + 1] = -_sn2 * this.V[_i22][_j8] + _cs2 * this.V[_i22][_j8 + 1];
                 this.V[_i22][_j8] = _t7;
-              }
+              };
             }
             _t7 = SVD.hypot(_f2, g);
             _cs2 = _f2 / _t7;
@@ -16636,12 +16635,12 @@ SVD.svd = function (A) {
                 _t7 = _cs2 * this.U[_i23][_j8] + _sn2 * this.U[_i23][_j8 + 1];
                 this.U[_i23][_j8 + 1] = -_sn2 * this.U[_i23][_j8] + _cs2 * this.U[_i23][_j8 + 1];
                 this.U[_i23][_j8] = _t7;
-              }
+              };
             }
-          }
+          };
           e[p - 2] = _f2;
           iter = iter + 1;
-        }
+        };
         break;
       case 4:
         {
@@ -16650,7 +16649,7 @@ SVD.svd = function (A) {
             if (wantv) {
               for (var _i24 = 0; _i24 <= pp; _i24++) {
                 this.V[_i24][_k3] = -this.V[_i24][_k3];
-              }
+              };
             }
           }
           while (_k3 < pp) {
@@ -16665,23 +16664,23 @@ SVD.svd = function (A) {
                 _t8 = this.V[_i25][_k3 + 1];
                 this.V[_i25][_k3 + 1] = this.V[_i25][_k3];
                 this.V[_i25][_k3] = _t8;
-              }
+              };
             }
             if (wantu && _k3 < this.m - 1) {
               for (var _i26 = 0; _i26 < this.m; _i26++) {
                 _t8 = this.U[_i26][_k3 + 1];
                 this.U[_i26][_k3 + 1] = this.U[_i26][_k3];
                 this.U[_i26][_k3] = _t8;
-              }
+              };
             }
             _k3++;
-          }
+          };
           iter = 0;
           p--;
-        }
+        };
         break;
     }
-  }
+  };
   var result = { U: this.U, V: this.V, S: this.s };
   return result;
 };
@@ -16901,7 +16900,7 @@ module.exports = NeedlemanWunsch;
 
 
 var layoutBase = function layoutBase() {
-
+  return;
 };
 
 layoutBase.FDLayout = __nested_webpack_require_144013__(18);
@@ -19799,7 +19798,7 @@ var solveCubic = function solveCubic(a, b, c, d, result) {
   result[0] = -term1 + r13 * Math.cos(dum1 / 3.0);
   result[2] = -term1 + r13 * Math.cos((dum1 + 2.0 * Math.PI) / 3.0);
   result[4] = -term1 + r13 * Math.cos((dum1 + 4.0 * Math.PI) / 3.0);
-
+  return;
 };
 var sqdistToQuadraticBezier = function sqdistToQuadraticBezier(x, y, x1, y1, x2, y2, x3, y3) {
   // Find minimum distance by using the minimum of the distance
@@ -19891,7 +19890,7 @@ var pointInsidePolygonPoints = function pointInsidePolygonPoints(x, y, points) {
       // }
 
     } else {
-
+      continue;
     }
   }
 
@@ -25670,7 +25669,7 @@ function defineDegreeFunction(callback) {
 
       return degree;
     } else {
-
+      return;
     }
   };
 }
@@ -32662,7 +32661,7 @@ styfn$3.getNonDefaultPropertiesHash = function (ele, propNames, seed) {
     val = ele.pstyle(name, false);
 
     if (val == null) {
-
+      continue;
     } else if (val.pfValue != null) {
       hash[0] = hashInt(chVal, hash[0]);
       hash[1] = hashIntAlt(chVal, hash[1]);
@@ -35052,7 +35051,7 @@ var corefn$8 = {
       };
     }
 
-
+    return;
   },
   zoomRange: function zoomRange(min, max) {
     var _p = this._private;
@@ -36024,7 +36023,7 @@ BreadthFirstLayout.prototype.run = function () {
     var _ele = nodes[_i2];
 
     if (foundByBfs[_ele.id()]) {
-
+      continue;
     } else {
       orphanNodes.push(_ele);
     }
@@ -36293,17 +36292,17 @@ var defaults$a = {
   // duration of animation in ms if enabled
   animationEasing: undefined,
   // easing of animation if enabled
-    animateFilter: function animateFilter(node, i) {
-        return true;
-    },
-    // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
-    ready: undefined,
-    // callback on layoutready
-    stop: undefined,
-    // callback on layoutstop
-    transform: function transform(node, position) {
-        return position;
-    } // transform a given node position. Useful for changing flow direction in discrete layouts
+  animateFilter: function animateFilter(node, i) {
+    return true;
+  },
+  // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
+  ready: undefined,
+  // callback on layoutready
+  stop: undefined,
+  // callback on layoutstop
+  transform: function transform(node, position) {
+    return position;
+  } // transform a given node position. Useful for changing flow direction in discrete layouts 
 
 };
 
@@ -37074,7 +37073,7 @@ var findLCA_aux = function findLCA_aux(node1, node2, graphIx, layoutInfo) {
 
     if (0 === result.count) {
       // Neither node1 nor node2 are present in this subgraph
-
+      continue;
     } else if (1 === result.count) {
       // One of (node1, node2) is present in this subgraph
       c++;
@@ -37321,6 +37320,7 @@ var nodeRepulsion = function nodeRepulsion(node1, node2, layoutInfo, options) {
   // logDebug(s);
 
 
+  return;
 };
 /**
  * @brief  : Determines whether two nodes overlap or not
@@ -37717,6 +37717,7 @@ var updateAncestryBoundaries = function updateAncestryBoundaries(node, layoutInf
   // logDebug(s);
 
 
+  return;
 };
 
 var separateComponents = function separateComponents(layoutInfo, options) {
@@ -37826,17 +37827,17 @@ var defaults$d = {
   // duration of animation in ms if enabled
   animationEasing: undefined,
   // easing of animation if enabled
-    animateFilter: function animateFilter(node, i) {
-        return true;
-    },
-    // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
-    ready: undefined,
-    // callback on layoutready
-    stop: undefined,
-    // callback on layoutstop
-    transform: function transform(node, position) {
-        return position;
-    } // transform a given node position. Useful for changing flow direction in discrete layouts
+  animateFilter: function animateFilter(node, i) {
+    return true;
+  },
+  // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
+  ready: undefined,
+  // callback on layoutready
+  stop: undefined,
+  // callback on layoutstop
+  transform: function transform(node, position) {
+    return position;
+  } // transform a given node position. Useful for changing flow direction in discrete layouts 
 
 };
 
@@ -38195,17 +38196,17 @@ var defaults$g = {
   // duration of animation in ms if enabled
   animationEasing: undefined,
   // easing of animation if enabled
-    animateFilter: function animateFilter(node, i) {
-        return true;
-    },
-    // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
-    ready: undefined,
-    // callback on layoutready
-    stop: undefined,
-    // callback on layoutstop
-    transform: function transform(node, position) {
-        return position;
-    } // transform a given node position. Useful for changing flow direction in discrete layouts
+  animateFilter: function animateFilter(node, i) {
+    return true;
+  },
+  // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
+  ready: undefined,
+  // callback on layoutready
+  stop: undefined,
+  // callback on layoutstop
+  transform: function transform(node, position) {
+    return position;
+  } // transform a given node position. Useful for changing flow direction in discrete layouts 
 
 };
 
@@ -41470,7 +41471,7 @@ BRp$c.load = function () {
       clearTimeout(r.hoverData.tapholdTimeout);
       r.hoverData.tapholdTimeout = setTimeout(function () {
         if (r.hoverData.tapholdCancelled) {
-
+          return;
         } else {
           var ele = r.hoverData.down;
 
@@ -49207,10 +49208,8 @@ module.exports = layout;
 function layout(g, opts) {
   var time = opts && opts.debugTiming ? util.time : util.notime;
   time("layout", function() {
-      var layoutGraph =
-          time("  buildLayoutGraph", function () {
-              return buildLayoutGraph(g);
-          });
+    var layoutGraph = 
+      time("  buildLayoutGraph", function() { return buildLayoutGraph(g); });
     time("  runLayout",        function() { runLayout(layoutGraph, time); });
     time("  updateInputGraph", function() { updateInputGraph(g, layoutGraph); });
   });
@@ -53310,9 +53309,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
   /*
   Insert item x in list a, and keep it sorted assuming a is sorted.
-
+  
   If x is already in a, insert it to the right of the rightmost x.
-
+  
   Optional args lo (default 0) and hi (default a.length) bound the slice
   of a to be searched.
    */
@@ -53379,7 +53378,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
   /*
   Pop and return the current smallest value, and add the new item.
-
+  
   This is more efficient than heappop() followed by heappush(), and can be
   more appropriate when using a fixed size heap. Note that the value
   returned may be larger than item! That constrains reasonable use of
@@ -65127,7 +65126,7 @@ LNode.prototype.updateBounds = function () {
     this.setWidth(childGraph.getRight() - childGraph.getLeft());
     this.setHeight(childGraph.getBottom() - childGraph.getTop());
 
-      // Update compound bounds considering its label properties
+    // Update compound bounds considering its label properties    
     if (LayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS) {
 
       var width = childGraph.getRight() - childGraph.getLeft();
@@ -67209,8 +67208,8 @@ Layout.prototype.runLayout = function () {
   }
 
   if (LayoutConstants.ANIMATE === 'during') {
-      // If this is a 'during' layout animation. Layout is not finished yet.
-      // We need to perform these in index.js when layout is really finished.
+    // If this is a 'during' layout animation. Layout is not finished yet. 
+    // We need to perform these in index.js when layout is really finished.
     return false;
   }
 
@@ -68129,7 +68128,7 @@ FDLayout.prototype.calcRepulsionForce = function (nodeA, nodeB) {
       repulsionForceX = repulsionForce * distanceX / distance;
       repulsionForceY = repulsionForce * distanceY / distance;
 
-        // Apply forces on the two nodes
+      // Apply forces on the two nodes    
       nodeA.repulsionForceX -= repulsionForceX;
       nodeA.repulsionForceY -= repulsionForceY;
       nodeB.repulsionForceX += repulsionForceX;
@@ -68231,7 +68230,7 @@ FDLayout.prototype.calcGrid = function (graph) {
 
   for (var i = 0; i < sizeX; i++) {
     for (var j = 0; j < sizeY; j++) {
-        grid[i][j] = [];
+      grid[i][j] = new Array();
     }
   }
 
@@ -68276,7 +68275,7 @@ FDLayout.prototype.calculateRepulsionForceOfANode = function (nodeA, processedNo
 
   if (this.totalIterations % FDLayoutConstants.GRID_CALCULATION_CHECK_PERIOD == 1 && gridUpdateAllowed || forceToNodeSurroundingUpdate) {
     var surrounding = new Set();
-      nodeA.surrounding = [];
+    nodeA.surrounding = new Array();
     var nodeB;
     var grid = this.grid;
 
@@ -68286,8 +68285,8 @@ FDLayout.prototype.calculateRepulsionForceOfANode = function (nodeA, processedNo
           for (var k = 0; k < grid[i][j].length; k++) {
             nodeB = grid[i][j][k];
 
-              // If both nodes are not members of the same graph,
-              // or both nodes are the same, skip.
+            // If both nodes are not members of the same graph, 
+            // or both nodes are the same, skip.
             if (nodeA.getOwner() != nodeB.getOwner() || nodeA == nodeB) {
               continue;
             }
@@ -68298,8 +68297,8 @@ FDLayout.prototype.calculateRepulsionForceOfANode = function (nodeA, processedNo
               var distanceX = Math.abs(nodeA.getCenterX() - nodeB.getCenterX()) - (nodeA.getWidth() / 2 + nodeB.getWidth() / 2);
               var distanceY = Math.abs(nodeA.getCenterY() - nodeB.getCenterY()) - (nodeA.getHeight() / 2 + nodeB.getHeight() / 2);
 
-                // if the distance between nodeA and nodeB
-                // is less then calculation range
+              // if the distance between nodeA and nodeB 
+              // is less then calculation range
               if (distanceX <= this.repulsionRange && distanceY <= this.repulsionRange) {
                 //then add nodeB to surrounding of nodeA
                 surrounding.add(nodeB);
@@ -68478,9 +68477,9 @@ var UniqueIDGeneretor = __nested_webpack_require_103901__(14);
 function HashSet() {
   this.set = {};
 }
+;
 
-
-            HashSet.prototype.add = function (obj) {
+HashSet.prototype.add = function (obj) {
   var theId = UniqueIDGeneretor.createID(obj);
   if (!this.contains(theId)) this.set[theId] = obj;
 };
@@ -68814,7 +68813,7 @@ module.exports = NeedlemanWunsch;
 
 
 var layoutBase = function layoutBase() {
-
+  return;
 };
 
 layoutBase.FDLayout = __nested_webpack_require_115611__(18);
@@ -78566,8 +78565,8 @@ module.exports = zipObject;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-    /******/
-    /******/ 	// The require function
+/******/ 	
+/******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
 /******/ 		var cachedModule = __webpack_module_cache__[moduleId];
@@ -78580,19 +78579,18 @@ module.exports = zipObject;
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-        /******/
-        /******/ 		// Execute the module function
+/******/ 	
+/******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-        /******/
-        /******/ 		// Flag the module as loaded
+/******/ 	
+/******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-        /******/
-        /******/ 		// Return the exports of the module
+/******/ 	
+/******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-    /******/
-    /************************************************************************/
+/******/ 	
+/************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -78604,8 +78602,8 @@ module.exports = zipObject;
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-    /******/
-    /******/ 	/* webpack/runtime/define property getters */
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
 /******/ 		__webpack_require__.d = (exports, definition) => {
@@ -78616,8 +78614,8 @@ module.exports = zipObject;
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-    /******/
-    /******/ 	/* webpack/runtime/global */
+/******/ 	
+/******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
 /******/ 			if (typeof globalThis === 'object') return globalThis;
@@ -78628,13 +78626,13 @@ module.exports = zipObject;
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-    /******/
-    /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-    /******/
-    /******/ 	/* webpack/runtime/make namespace object */
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
 /******/ 		__webpack_require__.r = (exports) => {
@@ -78644,8 +78642,8 @@ module.exports = zipObject;
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-    /******/
-    /******/ 	/* webpack/runtime/node module decorator */
+/******/ 	
+/******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
 /******/ 			module.paths = [];
@@ -78653,8 +78651,8 @@ module.exports = zipObject;
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-    /******/
-    /************************************************************************/
+/******/ 	
+/************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
@@ -78747,9 +78745,9 @@ function drawGraph() {
       {
         selector: 'node',
         style: {
-            'background-color': '#666',
-            'label': 'data(name)',
-            'font-size': 25
+          'background-color': '#666',
+          'label': 'data(name)',
+          'font-size': 25
         }
       }, {
         selector: 'edge',
@@ -78822,27 +78820,27 @@ function drawGraph() {
         minLen: function minLen(edge) {
           return 1;
         },
-          // number of ranks to keep between the source and target of the edge
-          edgeWeight: function edgeWeight(edge) {
-              return 1;
-          },
-          // higher weight edges are generally made shorter and straighter than lower weight edges
-          // general layout options
-          fit: true,
-          // whether to fit to viewport
-          padding: 50,
-          // fit padding
-          spacingFactor: 1.5,
-          // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
-          nodeDimensionsIncludeLabels: true,
-          // whether labels should be included in determining the space used by a node
-          animate: false,
-          // whether to transition the node positions
-          animateFilter: function animateFilter(node, i) {
-              return true;
-          },
-          // whether to animate specific nodes when animation is on; non-animated nodes immediately go to their final positions
-          animationDuration: 500,
+        // number of ranks to keep between the source and target of the edge
+        edgeWeight: function edgeWeight(edge) {
+          return 1;
+        },
+        // higher weight edges are generally made shorter and straighter than lower weight edges
+        // general layout options
+        fit: true,
+        // whether to fit to viewport
+        padding: 50,
+        // fit padding
+        spacingFactor: 1.5,
+        // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
+        nodeDimensionsIncludeLabels: true,
+        // whether labels should be included in determining the space used by a node
+        animate: false,
+        // whether to transition the node positions
+        animateFilter: function animateFilter(node, i) {
+          return true;
+        },
+        // whether to animate specific nodes when animation is on; non-animated nodes immediately go to their final positions
+        animationDuration: 500,
         // duration of animation in ms if enabled
         animationEasing: undefined,
         // easing of animation if enabled
@@ -78884,27 +78882,27 @@ function drawGraph() {
         // number of ticks per frame; higher is faster but more jerky
         refresh: 10,
         // Animation duration used for animate:'end'
-          animationDuration: undefined,
-          // Easing for animate:'end'
-          animationEasing: undefined,
-          // Whether to fit the viewport to the repositioned graph
-          // true : Fits at end of layout for animate:false or animate:'end'
-          fit: true,
-          // Padding in rendered co-ordinates around the layout
-          padding: 30,
-          // separation amount between nodes in a cluster
-          // note: increasing this amount will also increase the simulation time
-          nodeSeparation: 20,
-          // Inter-cluster edge length factor
-          // (2.0 means inter-cluster edges should be twice as long as intra-cluster edges)
-          idealInterClusterEdgeLengthCoefficient: 1.4,
-          // Whether to pull on-circle nodes inside of the circle
-          allowNodesInsideCircle: false,
-          // Max percentage of the nodes in a circle that can move inside the circle
-          maxRatioOfNodesInsideCircle: 0.1,
-          // - Lower values give looser springs
-          // - Higher values give tighter springs
-          springCoeff: 0.45,
+        animationDuration: undefined,
+        // Easing for animate:'end'
+        animationEasing: undefined,
+        // Whether to fit the viewport to the repositioned graph
+        // true : Fits at end of layout for animate:false or animate:'end'
+        fit: true,
+        // Padding in rendered co-ordinates around the layout
+        padding: 30,
+        // separation amount between nodes in a cluster
+        // note: increasing this amount will also increase the simulation time
+        nodeSeparation: 20,
+        // Inter-cluster edge length factor
+        // (2.0 means inter-cluster edges should be twice as long as intra-cluster edges)
+        idealInterClusterEdgeLengthCoefficient: 1.4,
+        // Whether to pull on-circle nodes inside of the circle
+        allowNodesInsideCircle: false,
+        // Max percentage of the nodes in a circle that can move inside the circle
+        maxRatioOfNodesInsideCircle: 0.1,
+        // - Lower values give looser springs
+        // - Higher values give tighter springs
+        springCoeff: 0.45,
         // Node repulsion (non overlapping) multiplier
         nodeRepulsion: 4500,
         // Gravity force (constant)
@@ -78921,51 +78919,51 @@ function drawGraph() {
 
     if (layout_name == "fcose") {
       cy.layout({
-          name: layout_name,
-          // 'draft', 'default' or 'proof'
-          // - "draft" only applies spectral layout
-          // - "default" improves the quality with incremental layout (fast cooling rate)
-          // - "proof" improves the quality with incremental layout (slow cooling rate)
-          quality: "default",
-          // Use random node positions at beginning of layout
-          // if this is set to false, then quality option must be "proof"
-          randomize: true,
-          // Whether or not to animate the layout
-          animate: false,
-          // Duration of animation in ms, if enabled
-          animationDuration: 1000,
-          // Easing of animation, if enabled
-          animationEasing: undefined,
-          // Fit the viewport to the repositioned nodes
-          fit: true,
-          // Padding around layout
-          padding: 30,
-          // Whether to include labels in node dimensions. Valid in "proof" quality
-          nodeDimensionsIncludeLabels: true,
-          // Whether or not simple nodes (non-compound nodes) are of uniform dimensions
-          uniformNodeDimensions: false,
-          // Whether to pack disconnected components - valid only if randomize: true
-          packComponents: true,
-          // Layout step - all, transformed, enforced, cose - for debug purpose only
-          step: "all",
+        name: layout_name,
+        // 'draft', 'default' or 'proof'
+        // - "draft" only applies spectral layout
+        // - "default" improves the quality with incremental layout (fast cooling rate)
+        // - "proof" improves the quality with incremental layout (slow cooling rate)
+        quality: "default",
+        // Use random node positions at beginning of layout
+        // if this is set to false, then quality option must be "proof"
+        randomize: true,
+        // Whether or not to animate the layout
+        animate: false,
+        // Duration of animation in ms, if enabled
+        animationDuration: 1000,
+        // Easing of animation, if enabled
+        animationEasing: undefined,
+        // Fit the viewport to the repositioned nodes
+        fit: true,
+        // Padding around layout
+        padding: 30,
+        // Whether to include labels in node dimensions. Valid in "proof" quality
+        nodeDimensionsIncludeLabels: true,
+        // Whether or not simple nodes (non-compound nodes) are of uniform dimensions
+        uniformNodeDimensions: false,
+        // Whether to pack disconnected components - valid only if randomize: true
+        packComponents: true,
+        // Layout step - all, transformed, enforced, cose - for debug purpose only
+        step: "all",
 
-          /* spectral layout options */
-          // False for random, true for greedy sampling
-          samplingType: true,
-          // Sample size to construct distance matrix
-          sampleSize: 25,
-          // Separation amount between nodes
-          nodeSeparation: 100,
-          // Power iteration tolerance
-          piTol: 0.0000001,
+        /* spectral layout options */
+        // False for random, true for greedy sampling
+        samplingType: true,
+        // Sample size to construct distance matrix
+        sampleSize: 25,
+        // Separation amount between nodes
+        nodeSeparation: 100,
+        // Power iteration tolerance
+        piTol: 0.0000001,
 
-          /* incremental layout options */
-          // Node repulsion (non overlapping) multiplier
-          nodeRepulsion: function nodeRepulsion(node) {
-              return 4500;
-          },
-          // Ideal edge (non nested) length
-          idealEdgeLength: function idealEdgeLength(edge) {
+        /* incremental layout options */
+        // Node repulsion (non overlapping) multiplier
+        nodeRepulsion: function nodeRepulsion(node) {
+          return 4500;
+        },
+        // Ideal edge (non nested) length
+        idealEdgeLength: function idealEdgeLength(edge) {
           return 50;
         },
         // Divisor to compute edge forces
@@ -79221,18 +79219,15 @@ function drawGraph() {
         var el = bfs[x];
         el.addClass('highlighted');
 
-          if (x < bfs.length) {
-              x++;
-              setTimeout(highlightNextEle);
-          }
+        if (x < bfs.length) {
+          x++;
+          setTimeout(highlightNextEle);
+        }
       };
 
-        highlightNextEle();
+      highlightNextEle();
     }
-  }); // the default values of each option are outlined below:
-
-    cy.fit();
-    cy.centre();
+  });
 }
 
 drawGraph();
