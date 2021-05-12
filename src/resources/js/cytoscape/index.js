@@ -67,11 +67,13 @@ function drawGraph(){
             container: document.getElementById('cy'), // container to render in
             elements: data,
             style: [ // the stylesheet for the graph
+
                 {
                     selector: 'node',
                     style: {
                         'background-color': '#666',
-                        'label': 'data(name)'
+                        'label': 'data(name)',
+                        'font-size': 25
                     }
                 },
 
@@ -159,7 +161,7 @@ function drawGraph(){
                 // general layout options
                 fit: true, // whether to fit to viewport
                 padding: 50, // fit padding
-                spacingFactor: 1, // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
+                spacingFactor: 1.5, // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
                 nodeDimensionsIncludeLabels: true, // whether labels should be included in determining the space used by a node
                 animate: false, // whether to transition the node positions
                 animateFilter: function (node, i) {
@@ -219,7 +221,7 @@ function drawGraph(){
 
                 // separation amount between nodes in a cluster
                 // note: increasing this amount will also increase the simulation time
-                nodeSeparation: 12.5,
+                nodeSeparation: 20,
 
                 // Inter-cluster edge length factor
                 // (2.0 means inter-cluster edges should be twice as long as intra-cluster edges)
@@ -261,7 +263,7 @@ function drawGraph(){
                 // if this is set to false, then quality option must be "proof"
                 randomize: true,
                 // Whether or not to animate the layout
-                animate: true,
+                animate: false,
                 // Duration of animation in ms, if enabled
                 animationDuration: 1000,
                 // Easing of animation, if enabled
@@ -271,7 +273,7 @@ function drawGraph(){
                 // Padding around layout
                 padding: 30,
                 // Whether to include labels in node dimensions. Valid in "proof" quality
-                nodeDimensionsIncludeLabels: false,
+                nodeDimensionsIncludeLabels: true,
                 // Whether or not simple nodes (non-compound nodes) are of uniform dimensions
                 uniformNodeDimensions: false,
                 // Whether to pack disconnected components - valid only if randomize: true
@@ -286,7 +288,7 @@ function drawGraph(){
                 // Sample size to construct distance matrix
                 sampleSize: 25,
                 // Separation amount between nodes
-                nodeSeparation: 75,
+                nodeSeparation: 100,
                 // Power iteration tolerance
                 piTol: 0.0000001,
 
@@ -547,6 +549,9 @@ function drawGraph(){
     });
 
     // the default values of each option are outlined below:
+
+    cy.fit()
+    cy.centre()
 
 }
 

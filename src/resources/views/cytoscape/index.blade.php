@@ -46,12 +46,24 @@
                 </div>
 
                 <div class="block mb-8 mt-8">
-                    <a class="bg-red-200 hover:bg-red-300 text-black hover:text-black font-bold py-2 px-4 rounded" href="?">Clear</a>
-                    <a class="bg-blue-200 hover:bg-blue-300 text-black hover:text-black font-bold py-2 px-4 rounded" href="{{ url()->current().'?'.http_build_query(array_merge(request()->all(),['calcul' => "betweennessCentrality"])) }}">Calculate betweenness Centrality</a>
-                    @livewire("link-select-dropdown", ['label' => "from", 'placeholder' => '-- Select the first refugee --', 'datas' => $refugees, "selected_value" =>  (isset($_GET['from']) ? $_GET['from'] : "")])
-                    @stack('scripts')
-                    @livewire("link-select-dropdown", ['label' => "to", 'placeholder' => '-- Select the second refugee --', 'datas' => $refugees, "selected_value" =>  (isset($_GET['to']) ? $_GET['to'] : "")])
-                    @stack('scripts')
+                    <a class="bg-red-200 hover:bg-red-300 text-black hover:text-black font-bold py-2 px-4 rounded"
+                       href="?">Clear</a>
+                    <a class="bg-blue-200 hover:bg-blue-300 text-black hover:text-black font-bold py-2 px-4 rounded"
+                       href="{{ url()->current().'?'.http_build_query(array_merge(request()->all(),['calcul' => "betweennessCentrality"])) }}">Calculate
+                        betweenness Centrality</a>
+                    <div class="mt-3 mb-2">
+                        @livewire("link-select-dropdown", ['label' => "from", 'placeholder' => '-- Select the first
+                        refugee --', 'datas' => $refugees, "selected_value" => (isset($_GET['from']) ? $_GET['from'] :
+                        "")])
+                        @stack('scripts')
+                    </div>
+                    <div class="mt-2 mb-2">
+                        @livewire("link-select-dropdown", ['label' => "to", 'placeholder' => '-- Select the second
+                        refugee --', 'datas' => $refugees, "selected_value" => (isset($_GET['to']) ? $_GET['to'] : "")])
+                        @stack('scripts')
+                    </div>
+
+
                 </div>
                 <!--
                 <a href="?layout=cise">Cise</a>
