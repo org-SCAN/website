@@ -7,6 +7,7 @@ use App\Http\Controllers\LinkController;
 use App\Http\Controllers\ListControlController;
 use App\Http\Controllers\ManageRefugeesController;
 use App\Http\Controllers\ManageUsersController;
+use App\Http\Controllers\RequestRole;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -65,6 +66,10 @@ Route::resource("manage_refugees", ManageRefugeesController::class);
 Route::resource("fields", FieldsController::class);
 Route::resource("lists_control", ListControlController::class);
 Route::resource("links", LinkController::class);
+
+Route::get('request', [RequestRole::class, 'getrequest']);
+Route::post('request', [RequestRole::class, 'request']);
+Route::post('request/grant', [RequestRole::class, 'grant']);
 Route::resource("user", ManageUsersController::class);
 Route::resource("duplicate", DuplicateController::class);
 Route::resource("api_logs", ApiLogController::class);

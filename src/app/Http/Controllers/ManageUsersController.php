@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -84,7 +85,8 @@ class ManageUsersController extends Controller
     public function show(String $id)
     {
         $user = User::find($id);
-        return view("user.show", compact("user"));
+        $roles = UserRole::all();
+        return view("user.show", compact("user", "roles"));
 
     }
 

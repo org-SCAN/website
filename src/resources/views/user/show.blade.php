@@ -78,7 +78,103 @@
                                         Roles
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                        {{ $user->role }}
+                                        @php
+                                            $user_role = $user->role
+
+                                        @endphp
+
+
+
+
+
+
+
+                                        @php
+                                            $currentUser = Auth::user();
+                                            $importance  = App\Models\UserRole::select('importance')->where('role',$user->role)->get()->last()->importance;
+                                            $currentUser_importance = App\Models\UserRole::select('importance')->where('role',$currentUser->role)->get()->last()->importance
+
+                                        @endphp
+                                        @if ($importance==3)
+                                            <div class="ml-2 text-sm text-gray-400">
+                                                {{ $user->role }}
+                                            </div>
+                                        @elseif($currentUser_importance==0 && $user->id!=$currentUser->id)
+                                            @php
+                                                $roless=array()
+                                            @endphp
+                                            @foreach ($roles as $rol)
+                                                @php
+                                                    $roless[$rol->id]=$rol->role
+                                                @endphp
+                                            @endforeach
+                                            <form class="inline-block" action="request/grant" method="POST">
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                                <div class="ml-2 text-sm text-gray-400 underline">
+
+                                                    @livewire("select-dropdown", ['label' => 'role', 'placeholder' =>
+                                                    "--
+                                                    Select the role --", 'datas' => $roless, "selected"
+                                                    =>array_search($user->role,$roless)])
+                                                    @stack('scripts')
+                                                    @php
+                                                        $requested_role = App\Models\RoleRequest::where('user_id',$user->id)->get();
+                                                        $requested_role = $requested_role->last()
+                                                    @endphp
+                                                    @if (!is_null($requested_role))
+                                                        @if ($requested_role->granted)
+                                                            {{ __('Granted:') }}
+                                                            {{ $roless[$requested_role->role] }}
+                                                        @elseif (!$requested_role->granted)
+                                                            {{ __('Requested:') }}
+                                                            {{ $roless[$requested_role->role] }}
+                                                        @endif
+                                                    @endif
+                                                    <button
+                                                        class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none">
+                                                        {{ __('Grant') }}
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        @else
+                                            @php
+                                                $roless=array()
+                                            @endphp
+                                            @foreach ($roles as $rol)
+                                                @php
+                                                    $roless[$rol->id]=$rol->role
+                                                @endphp
+                                            @endforeach
+                                            <form class="inline-block" action="request" method="POST">
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                                <div class="ml-2 text-sm text-gray-400 underline">
+                                                    @livewire("select-dropdown", ['label' => 'role', 'placeholder' =>
+                                                    "--
+                                                    Select the role --", 'datas' => $roless, "selected"
+                                                    =>array_search($user->role,$roless)])
+                                                    @stack('scripts')
+                                                    @php
+                                                        $requested_role = App\Models\RoleRequest::where('user_id',$user->id)->get();
+                                                        $requested_role = $requested_role->last()
+                                                    @endphp
+                                                    @if (!is_null($requested_role))
+                                                        @if ($requested_role->granted)
+                                                            {{ __('Granted:') }}
+                                                            {{ $roless[$requested_role->role] }}
+                                                        @elseif (!$requested_role->granted)
+                                                            {{ __('Requested:') }}
+                                                            {{ $roless[$requested_role->role] }}
+                                                        @endif
+                                                    @endif
+                                                    <button
+                                                        class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none">
+                                                        {{ __('Request') }}
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                                 </tr>
