@@ -1,4 +1,5 @@
 <div>
+    @if(1==0)
     <!-- Generate API Token -->
     <x-jet-form-section submit="createApiToken">
         <x-slot name="title">
@@ -33,7 +34,7 @@
                 </div>
             @endif
         </x-slot>
-
+        @endif
         <x-slot name="actions">
             <x-jet-action-message class="mr-3" on="created">
                 {{ __('Created.') }}

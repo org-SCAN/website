@@ -53,6 +53,18 @@ Route::post('links/json/store', [
     'as' => 'links.json.store',
     'uses' => '\App\Http\Controllers\LinkController@storeFromJson'
 ]);
+Route::post('user/request_role/{id}', [
+    'as' => 'user.request_role',
+    'uses' => '\App\Http\Controllers\ManageUsersController@RequestRole'
+]);
+Route::get('user/grant_role/{id}', [
+    'as' => 'user.grant_role',
+    'uses' => '\App\Http\Controllers\ManageUsersController@GrantRole'
+]);
+Route::get('user/reject_role/{id}', [
+    'as' => 'user.reject_role',
+    'uses' => '\App\Http\Controllers\ManageUsersController@RejectRole'
+]);
 
 
 Route::put('manage_refugees/fix_duplicated_reference/{id} ', [
