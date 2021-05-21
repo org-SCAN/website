@@ -59,7 +59,7 @@ class ApiLog extends Model
     {
         $log = array();
         $log["user"] = $request->user()->id;
-        $log["application_id"] = (!empty($request->header("Application-id")) ? $request->header("Application-id") : "website");
+        $log["application_id"] = (!empty($request->header("Application-id")) ? $request->header("Application-id") : (!empty($request->validated()[0]["application_id"]) ? $request->validated()[0]["application_id"] : "website"));
         $log["api_type"] = $request->path();
         $log["http_method"] = $request->method();
         $log["model"] = $model;

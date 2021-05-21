@@ -93,11 +93,20 @@ class ManageRefugeesController extends Controller
      */
     public function storeFromJson(FileRefugeeRequest $request)
     {
+
         $log = ApiLog::createFromRequest($request, "Refugee");
         foreach ($request->validated() as $refugee) {
             $refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i', time()));
             $refugee["api_log"] = $log->id;
-            Refugee::create($refugee);
+            $potential_refugee = Refugee::where("application_id", $refugee["application_id"])->where('unique_id', $refugee["unique_id"])->first();
+            if ($potential_refugee != null) {
+                $potential_refugee->update($refugee);
+            } else {
+                $stored_ref = Refugee::create($refugee);
+                if ($stored_ref == null) {
+                    $log->update(["response" => "Error while creating a refugee"]);
+                }
+            }
         }
         return redirect()->route("manage_refugees.index");
     }
