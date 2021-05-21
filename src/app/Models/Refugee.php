@@ -159,15 +159,18 @@ class Refugee extends Model
      * @param $value Is the id of the element
      * @return String
      */
-    public function getRouteId(){
+    public function getRouteId()
+    {
         return $this->attributes['route'];
     }
+
     /**
      * Indicate the residence according the UUID stored in DB
      * @param $value Is the id of the element
      * @return String
      */
-    public function getResidenceAttribute($value){
+    public function getResidenceAttribute($value)
+    {
 
         return Country::getDisplayedValueContent($value);
     }
@@ -177,7 +180,15 @@ class Refugee extends Model
      * @param $value Is the id of the element
      * @return String
      */
-    public function getResidenceId(){
+    public function getResidenceId()
+    {
         return $this->attributes['residence'];
+    }
+
+    public static function getRefugeeIdFromReference($reference, $application_id)
+    {
+        $refugee = self::where("application_id", $application_id)->where('unique_id', $reference)->first();
+
+        return !empty($refugee) ? $refugee->id : null;
     }
 }

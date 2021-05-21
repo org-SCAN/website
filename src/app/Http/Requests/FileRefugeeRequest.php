@@ -8,4 +8,9 @@ class FileRefugeeRequest extends StoreRefugeeApiRequest
     {
         return json_decode($this->refugee_json->getContent(), true);
     }
+
+    public function rules()
+    {
+        return parent::rules() + ["*.application_id" => "required"];
+    }
 }
