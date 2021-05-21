@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Link;
 use App\Models\Relation;
+use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
@@ -55,7 +56,10 @@ class LinksDatatables extends LivewireDatatable
                 ->label('To name'),
 
             Column::callback(['id'], function ($id) {
-                return "<a href='" . route('links.show', $id) . "'>Edit</a>";
+                if (Auth::user()->hasPermission("links.edit")) {
+                    return "<a href='" . route('links.edit', $id) . "'>Edit</a>";
+                }
+                return "Ø";
             })
                 ->label('Edit')
         ];
