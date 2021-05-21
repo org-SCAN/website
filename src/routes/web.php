@@ -7,7 +7,6 @@ use App\Http\Controllers\LinkController;
 use App\Http\Controllers\ListControlController;
 use App\Http\Controllers\ManageRefugeesController;
 use App\Http\Controllers\ManageUsersController;
-use App\Http\Controllers\RequestRole;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -54,6 +53,18 @@ Route::post('links/json/store', [
     'as' => 'links.json.store',
     'uses' => '\App\Http\Controllers\LinkController@storeFromJson'
 ]);
+Route::post('user/request_role/{id}', [
+    'as' => 'user.request_role',
+    'uses' => '\App\Http\Controllers\ManageUsersController@RequestRole'
+]);
+Route::get('user/grant_role/{id}', [
+    'as' => 'user.grant_role',
+    'uses' => '\App\Http\Controllers\ManageUsersController@GrantRole'
+]);
+Route::get('user/reject_role/{id}', [
+    'as' => 'user.reject_role',
+    'uses' => '\App\Http\Controllers\ManageUsersController@RejectRole'
+]);
 
 
 Route::put('manage_refugees/fix_duplicated_reference/{id} ', [
@@ -66,10 +77,6 @@ Route::resource("manage_refugees", ManageRefugeesController::class);
 Route::resource("fields", FieldsController::class);
 Route::resource("lists_control", ListControlController::class);
 Route::resource("links", LinkController::class);
-
-Route::get('request', [RequestRole::class, 'getrequest']);
-Route::post('request', [RequestRole::class, 'request']);
-Route::post('request/grant', [RequestRole::class, 'grant']);
 Route::resource("user", ManageUsersController::class);
 Route::resource("duplicate", DuplicateController::class);
 Route::resource("api_logs", ApiLogController::class);

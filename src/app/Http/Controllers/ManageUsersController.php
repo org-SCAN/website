@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUsersRequest;
+use App\Models\RoleRequest;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\UserRole;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +25,8 @@ class ManageUsersController extends Controller
     public function index()
     {
         $users = User::all();
-        return view("user.index", compact("users"));
+        $request_roles = RoleRequest::where("granted", null)->get();
+        return view("user.index", compact("users", "request_roles"));
     }
 
     /**
@@ -137,9 +140,60 @@ class ManageUsersController extends Controller
     public function destroy($id)
     {
 
-        $user = User :: where("id",$id);
-        $user ->delete();
+        $user = User:: where("id", $id);
+        $user->delete();
         $users = User::all();
         return view("user.index", compact("users"));
+    }
+
+
+    /**
+     * Add user role request to the request list
+     *
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function RequestRole(Request $request, $id)
+    {
+
+        $role = $request->input('role');
+        $user = User::find($id);
+
+        if ($user->getRoleid() == $role) {
+            return redirect()->back();
+        }
+        RoleRequest::create(['user' => $user->id, 'role' => $role]);
+        return redirect()->back();
+    }
+
+    /**
+     * Grant the user role request
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function GrantRole($id)
+    {
+        $request = RoleRequest::find($id);
+        $user = User::find($request->getUserId());
+        $user->update(["role" => $request->getRoleId()]);
+        $request->update(["granted" => date("Y-m-d H:i:s")]);
+
+        return redirect()->back();
+    }
+
+    /**
+     * Grant the user role request
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function RejectRole($id)
+    {
+        $request = RoleRequest::find($id);
+        $request->update(["granted" => date("Y-m-d H:i:s")]);
+
+        return redirect()->back();
     }
 }

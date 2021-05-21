@@ -29,7 +29,7 @@ class RoleRequest extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
+        'user',
         'role',
         'granted'
     ];
@@ -40,4 +40,25 @@ class RoleRequest extends Model
      * @var array
      */
     protected $hidden = ['deleted', "created_at", "updated_at"]; //TODO : SI on a des bugs à cause des user roles c'est ici
+
+
+    public function getRoleAttribute($value)
+    {
+        return UserRole::find($value)->role;
+    }
+
+    public function getRoleId()
+    {
+        return $this->attributes["role"];
+    }
+
+    public function getUserAttribute($value)
+    {
+        return User::find($value)->name;
+    }
+
+    public function getUserId()
+    {
+        return $this->attributes["user"];
+    }
 }

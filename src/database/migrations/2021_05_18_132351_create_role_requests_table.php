@@ -15,9 +15,9 @@ class CreateRoleRequestsTable extends Migration
     {
         Schema::create('role_requests', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->references('id')->on('users');
+            $table->foreignUuid('user')->references('id')->on('users');
             $table->string('role');
-            $table->boolean('granted')->default(false);
+            $table->date('granted')->nullable()->default(null);
             $table->timestamps();
         });
     }
