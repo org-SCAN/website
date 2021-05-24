@@ -100,22 +100,12 @@ class LinkController extends Controller
             if (isset($link["detail"]) && !empty($link["detail"])) {
                 $relation["detail"] = $link["detail"];
             }
-            $potential_link = Link::where("application_id", $relation["application_id"])
-                ->where("from", $from)
-                ->where("to", $to)
-                ->where("relation", Relation::getIdFromValue($link["relation"]))
-                ->first();
 
-            if ($potential_link != null) {
-                $potential_link->update($relation);
-            } else {
-                $stored_link = Link::create($relation);
-
-                if ($stored_link == null) {
-                    $log->update(["response" => "Error while creating a relation"]);
-                    break;
-                }
-
+            //from there handle API request relation
+            $stored_link = Link::handleApiRequest($relation);
+            if ($stored_link == null) {
+                $log->update(["response" => "Error while creating a relation"]);
+                return response("Error while creating this refugee :" . json_encode($link), 500);
             }
         }
         return redirect()->route("links.index");
@@ -192,6 +182,7 @@ class LinkController extends Controller
 
                 $relation["api_log"] = $log->id;
                 $relation["application_id"] = $log->application_id;
+
                 $from = Refugee::getRefugeeIdFromReference($link["from_unique_id"], $relation["application_id"]);
                 if ($from != null) {
                     $relation["from"] = $from;
@@ -213,23 +204,11 @@ class LinkController extends Controller
                 if (isset($link["detail"])) {
                     $relation["detail"] = $link["detail"];
                 }
-
-                $potential_link = Link::where("application_id", $relation["application_id"])
-                    ->where("from", $from)
-                    ->where("to", $to)
-                    ->where("relation", Relation::getIdFromValue($link["relation"]))
-                    ->first();
-
-                if ($potential_link != null) {
-                    $potential_link->update($relation);
-                } else {
-                    $stored_link = Link::create($relation);
-
-                    if ($stored_link == null) {
-                        $log->update(["response" => "Error while creating a relation"]);
-                        return response("Error while creating this refugee :" . json_encode($link), 500);
-                    }
-
+                //from there handle API request relation
+                $stored_link = Link::handleApiRequest($relation);
+                if ($stored_link == null) {
+                    $log->update(["response" => "Error while creating a relation"]);
+                    return response("Error while creating this refugee :" . json_encode($link), 500);
                 }
             }
             return response("Success !", 201);

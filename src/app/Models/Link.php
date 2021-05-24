@@ -126,4 +126,29 @@ class Link extends Model
     {
         $this->attributes["relation"] = Relation::getIdFromValue($value);
     }
+
+    public static function relationExists($from, $to, $relation_type, $application_id)
+    {
+        $potential_link = self::where("application_id", $application_id)
+            ->where("from", $from)
+            ->where("to", $to)
+            ->where("relation", Relation::getIdFromValue($relation_type))
+            ->first();
+
+        return empty($potential_link) ? null : $potential_link;
+    }
+
+    public static function handleApiRequest($relation)
+    {
+
+        $ref = null;
+        $potential_link = Link::relationExists($relation["from"], $relation["to"], $relation["relation"], $relation["application_id"]);
+
+        if ($potential_link != null) {
+            $ref = $potential_link->update($relation);
+        } else {
+            $ref = Link::create($relation);
+        }
+        return $ref;
+    }
 }
