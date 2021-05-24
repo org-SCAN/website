@@ -216,7 +216,8 @@ class Refugee extends Model
                     }
                 }
                 unset($refugee["date_update"]);
-                $ref = $potential_refugee->update($refugee);
+                $potential_refugee->update($refugee);
+                $ref = true;
             }
         } else {
             unset($refugee["date_update"]);
