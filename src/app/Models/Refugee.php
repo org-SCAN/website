@@ -219,6 +219,7 @@ class Refugee extends Model
                 $ref = $potential_refugee->update($refugee);
             }
         } else {
+            unset($refugee["date_update"]);
             $ref = Refugee::create($refugee);
         }
         return $ref;
