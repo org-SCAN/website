@@ -23,7 +23,7 @@ class Duplicate extends Model
         if (empty($duplicate_ids)) {
             return array();
         }
-        return Refugee::whereIn("unique_id", $duplicate_ids)->orderBy("date", "desc")->get()->groupBy('unique_id');
+        return Refugee::where("deleted", 0)->whereIn("unique_id", $duplicate_ids)->orderBy("date", "desc")->get()->groupBy('unique_id');
     }
 
     public static function nextID($currentID)

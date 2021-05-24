@@ -94,26 +94,35 @@ class User extends Authenticatable
      */
     public function genToken()
     {
-        $token = $this->createToken('api_token', ["read","create","update"])->plainTextToken;
-        $this->token = Crypt::encryptString(md5($this->id).$token);
+        $token = $this->createToken('api_token', ["read", "create", "update"])->plainTextToken;
+        $this->token = Crypt::encryptString(md5($this->id) . $token);
         $this->save();
     }
+
+    /**
+     * Generate a role by default
+     */
 
     public function genRole()
     {
         $users = User::all();
-        $userAdmin = User::where("role",UserRole::orderBy("importance","desc")->first()->id)->get();
-        if($users->isEmpty() || $userAdmin->isEmpty() ){
-            $this->role=UserRole::orderBy("importance","desc")->first()->id;
+        $userAdmin = User::where("role", UserRole::orderBy("importance", "desc")->first()->id)->get();
+        if ($users->isEmpty() || $userAdmin->isEmpty()) {
+            $this->role = UserRole::orderBy("importance", "desc")->first()->id;
         } else {
 
-            $this->role=UserRole::orderBy("importance")->first()->id;
+            $this->role = UserRole::orderBy("importance")->first()->id;
 
         }
 
         $this->save();
     }
 
+    /**
+     * Return an API token
+     *
+     * @return string|string[]|null
+     */
     public function getToken()
     {
         $encrypted_token = $this->token;
@@ -123,6 +132,10 @@ class User extends Authenticatable
         return preg_replace('/[0-9]+\|/', '', $unsalt, 1);
     }
 
+    /**
+     * Create the default user
+     *
+     */
     public static function createDefaultUser()
     {
         $new_user = self::create([
@@ -134,4 +147,9 @@ class User extends Authenticatable
         $new_user->genRole();
     }
 
+
+    public function hasPermission(string $routeName)
+    {
+        return UserRole::find($this->getRoleId())->hasPermission($routeName);
+    }
 }

@@ -11,44 +11,59 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('cytoscape.index') }}"
-                                    :active="request()->routeIs('cytoscape.index')">
-                        {{ __('Network graph') }}
-                    </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('manage_refugees.index') }}" :active="request()->routeIs('manage_refugees.index')">
-                        {{ __('Manage Persons') }}
-                    </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.index')">
-                        {{ __('Manage relations') }}
-                    </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('duplicate.index') }}"
-                                    :active="request()->routeIs('duplicate.index')">
-                        {{ __('Duplicates') }}
-                    </x-jet-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('fields.index') }}" :active="request()->routeIs('fields.index')">
-                        {{ __('Manage fields') }}
-                    </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('api_logs.index') }}" :active="request()->routeIs('api_logs.index')">
-                        {{ __('Api logs') }}
-                    </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.index')">
-                        {{ __('Users') }}
-                    </x-jet-nav-link>
-                </div>
+                @if(Auth::user()->hasPermission("cytoscape.index"))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('cytoscape.index') }}"
+                                        :active="request()->routeIs('cytoscape.index')">
+                            {{ __('Network graph') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endif
+                @if(Auth::user()->hasPermission("manage_refugees.index"))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('manage_refugees.index') }}"
+                                        :active="request()->routeIs('manage_refugees.index')">
+                            {{ __('Manage Persons') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endif
+                @if(Auth::user()->hasPermission("links.index"))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.index')">
+                            {{ __('Manage relations') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endif
+                @if(Auth::user()->hasPermission("duplicate.index"))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('duplicate.index') }}"
+                                        :active="request()->routeIs('duplicate.index')">
+                            {{ __('Duplicates') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endif
+                @if(Auth::user()->hasPermission("fields.index"))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('fields.index') }}" :active="request()->routeIs('fields.index')">
+                            {{ __('Manage fields') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endif
+                @if(Auth::user()->hasPermission("api_logs.index"))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('api_logs.index') }}"
+                                        :active="request()->routeIs('api_logs.index')">
+                            {{ __('Api logs') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endif
+                @if(Auth::user()->hasPermission("user.index"))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.index')">
+                            {{ __('Users') }}
+                        </x-jet-nav-link>
+                    </div>
+            @endif
             <!--
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('lists_control.index') }}" :active="request()->routeIs('lists_control.index')">
@@ -179,24 +194,31 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('manage_refugees.index') }}"
-                                       :active="request()->routeIs('manage_refugees.index')">
-                {{ __('Manage Persons') }}
-            </x-jet-responsive-nav-link>
+            @if(Auth::user()->hasPermission("manage_refugees.index"))
+                <x-jet-responsive-nav-link href="{{ route('manage_refugees.index') }}"
+                                           :active="request()->routeIs('manage_refugees.index')">
+                    {{ __('Manage Persons') }}
+                </x-jet-responsive-nav-link>
+            @endif
+            @if(Auth::user()->hasPermission("links.index"))
 
-            <x-jet-responsive-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.index')">
-                {{ __('Manage relations') }}
-            </x-jet-responsive-nav-link>
-
-            <x-jet-responsive-nav-link href="{{ route('duplicate.index') }}"
-                                       :active="request()->routeIs('duplicate.index')">
-                {{ __('Duplicates') }}
-            </x-jet-responsive-nav-link>
-
-            <x-jet-responsive-nav-link href="{{ route('api_logs.index') }}"
-                                       :active="request()->routeIs('api_logs.index')">
-                {{ __('Api logs') }}
-            </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('links.index') }}"
+                                           :active="request()->routeIs('links.index')">
+                    {{ __('Manage relations') }}
+                </x-jet-responsive-nav-link>
+            @endif
+            @if(Auth::user()->hasPermission("duplicate.index"))
+                <x-jet-responsive-nav-link href="{{ route('duplicate.index') }}"
+                                           :active="request()->routeIs('duplicate.index')">
+                    {{ __('Duplicates') }}
+                </x-jet-responsive-nav-link>
+            @endif
+            @if(Auth::user()->hasPermission("api_logs.index"))
+                <x-jet-responsive-nav-link href="{{ route('api_logs.index') }}"
+                                           :active="request()->routeIs('api_logs.index')">
+                    {{ __('Api logs') }}
+                </x-jet-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
