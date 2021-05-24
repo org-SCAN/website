@@ -386,7 +386,7 @@
         "label": "destination",
         "placeholder": "",
         "html_data_type": "text",
-        "android_type": "AutoCompleteTextView",
+        "android_type": "EditText",
         "linked_list": "",
         "required": 2,
         "status": 2,
