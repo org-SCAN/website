@@ -191,4 +191,36 @@ class Refugee extends Model
 
         return !empty($refugee) ? $refugee->id : null;
     }
+
+    public static function handleApiRequest($refugee)
+    {
+        $potential_refugee = Refugee::getRefugeeIdFromReference($refugee["unique_id"], $refugee["application_id"]);
+        $ref = null;
+        if ($potential_refugee != null) {
+            $potential_refugee = self::find($potential_refugee);
+
+            if (isset($refugee["date_update"])) {
+                if ($refugee["date_update"] > $potential_refugee->updated_at) {
+                    if ($potential_refugee->application_id != $refugee["application_id"]) {
+                        foreach ($refugee as $field => $refugee_field) {
+                            if ($potential_refugee->$refugee_field != null) {
+                                unset($refugee[$refugee_field]);
+                            }
+                        }
+                    }
+                } else {
+                    foreach ($refugee as $field => $refugee_field) {
+                        if ($potential_refugee->$refugee_field != null) {
+                            unset($refugee[$refugee_field]);
+                        }
+                    }
+                }
+                unset($refugee["date_update"]);
+                $ref = $potential_refugee->update($refugee);
+            }
+        } else {
+            $ref = Refugee::create($refugee);
+        }
+        return $ref;
+    }
 }
