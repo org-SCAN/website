@@ -95,7 +95,7 @@ class FieldsController extends Controller
     {
         $field = Field::find($id);
         $linked_list_id = $field->getLinkedListId();
-        $lists["database_type"] = array("string" => "Small text", "integer" => "Number", "date" => "Date", "boolean" => "Yes / No ");
+        $lists["database_type"] = array("string" => "Small text", "text" => "Long text", "integer" => "Number", "date" => "Date", "boolean" => "Yes / No ");
         $lists["database_type"] = [$field->database_type => $lists["database_type"][$field->database_type]] + $lists["database_type"];
 
         $lists["required"] = array(0 => "Auto generated", 2 => "Strongly advised", 3 => "Advised", 4 => "If possible", 100 => "Undefined");
