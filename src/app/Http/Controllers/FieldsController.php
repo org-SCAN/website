@@ -70,16 +70,16 @@ class FieldsController extends Controller
         $field = Field::find($id);
         //die(var_dump($field));
         $display_elements = [
-            "title"=>"Title",
-            "label"=>"Label",
-            "placeholder"=>"Placeholder",
-            "html_data_type"=>"Html type",
-            "UI_type"=>"Java type",
+            "title" => "Title",
+            "label" => "Label",
+            "placeholder" => "Placeholder",
+            "html_data_type" => "Html type",
+            "android_type" => "Java type",
             // "linked_list"=>"Associate list", is removed because it needs a particular display
-            "required"=>"Requirement state",
-            "status"=>"Status",
-            "attribute"=>"Attribute",
-            "database_type"=>"Database type",
+            "required" => "Requirement state",
+            "status" => "Status",
+            "attribute" => "Attribute",
+            "database_type" => "Database type",
             "order" => "Order",
             "validation_laravel" => "Validations attributes"];
         return view("fields.show",compact('field', 'display_elements'));
