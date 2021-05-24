@@ -220,7 +220,8 @@ class Refugee extends Model
             }
         } else {
             unset($refugee["date_update"]);
-            $ref = Refugee::create($refugee);
+            Refugee::create($refugee);
+            $ref = true;
         }
         return $ref;
     }
