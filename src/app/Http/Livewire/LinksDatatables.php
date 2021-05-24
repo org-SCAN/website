@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Link;
 use App\Models\Relation;
+use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
@@ -32,10 +33,14 @@ class LinksDatatables extends LivewireDatatable
         return [
             // Column::checkbox(),
 
-            Column::callback(["from_refugee.full_name", 'from'], function ($nameFrom, $idFrom) {
-                return "<a href='" . route('manage_refugees.show', $idFrom) . "'>$nameFrom</a>";
-            })
-                ->searchable()
+            Column::name('from')
+                ->hide(),
+            Column::name('to')
+                ->hide(),
+
+            Column::name("from_refugee.full_name")
+                ->searchable("from_refugee.full_name")
+                ->view("datatable.linktoFrom")
                 ->filterable()
                 ->label('From name'),
 
@@ -44,15 +49,17 @@ class LinksDatatables extends LivewireDatatable
                 ->alignCenter()
                 ->filterable(Relation::pluck(Relation::getDisplayedValue())),
 
-            Column::callback(["to_refugee.full_name", 'to'], function ($nameTo, $idTo) {
-                return "<a href='" . route('manage_refugees.show', $idTo) . "'>$nameTo</a>";
-            })
-                ->searchable()
+            Column::name("to_refugee.full_name")
+                ->searchable("to_refugee.full_name")
+                ->view("datatable.linktoTo")
                 ->filterable()
                 ->label('To name'),
 
             Column::callback(['id'], function ($id) {
-                return "<a href='" . route('links.show', $id) . "'>Edit</a>";
+                if (Auth::user()->hasPermission("links.edit")) {
+                    return "<a href='" . route('links.edit', $id) . "'>Edit</a>";
+                }
+                return "Ø";
             })
                 ->label('Edit')
         ];

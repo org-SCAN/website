@@ -10,13 +10,8 @@ class FileLinkRequest extends StoreLinkApiRequest
 
     public function rules()
     {
-        return [
-            "*.from_unique_id" => "Required|string|exists:refugees,unique_id",
-            "*.to_unique_id" => "Required|string|exists:refugees,unique_id|different:*.from_unique_id",
-            "*.relation" => "Required|exists:relations,short",
-            "*.detail" => "String|nullable",
-            "*.date" => "Required|date",
-            "*.application_id" => "Required|string",
-        ];
+        $rules = parent::rules();
+        $rules["*.application_id"] = "Required|string";
+        return $rules;
     }
 }

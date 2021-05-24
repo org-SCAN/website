@@ -159,15 +159,18 @@ class Refugee extends Model
      * @param $value Is the id of the element
      * @return String
      */
-    public function getRouteId(){
+    public function getRouteId()
+    {
         return $this->attributes['route'];
     }
+
     /**
      * Indicate the residence according the UUID stored in DB
      * @param $value Is the id of the element
      * @return String
      */
-    public function getResidenceAttribute($value){
+    public function getResidenceAttribute($value)
+    {
 
         return Country::getDisplayedValueContent($value);
     }
@@ -177,7 +180,47 @@ class Refugee extends Model
      * @param $value Is the id of the element
      * @return String
      */
-    public function getResidenceId(){
+    public function getResidenceId()
+    {
         return $this->attributes['residence'];
+    }
+
+    public static function getRefugeeIdFromReference($reference, $application_id)
+    {
+        $refugee = self::where("application_id", $application_id)->where('unique_id', $reference)->first();
+
+        return !empty($refugee) ? $refugee->id : null;
+    }
+
+    public static function handleApiRequest($refugee)
+    {
+        $potential_refugee = Refugee::getRefugeeIdFromReference($refugee["unique_id"], $refugee["application_id"]);
+        $ref = null;
+        if ($potential_refugee != null) {
+            $potential_refugee = self::find($potential_refugee);
+
+            if (isset($refugee["date_update"])) {
+                if ($refugee["date_update"] > $potential_refugee->updated_at) {
+                    if ($potential_refugee->application_id != $refugee["application_id"]) {
+                        foreach ($refugee as $field => $refugee_field) {
+                            if ($potential_refugee->$refugee_field != null) {
+                                unset($refugee[$refugee_field]);
+                            }
+                        }
+                    }
+                } else {
+                    foreach ($refugee as $field => $refugee_field) {
+                        if ($potential_refugee->$refugee_field != null) {
+                            unset($refugee[$refugee_field]);
+                        }
+                    }
+                }
+                unset($refugee["date_update"]);
+                $ref = $potential_refugee->update($refugee);
+            }
+        } else {
+            $ref = Refugee::create($refugee);
+        }
+        return $ref;
     }
 }
