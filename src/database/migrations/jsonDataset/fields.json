@@ -21,7 +21,7 @@
         "title": {
             "eng": "Nationality",
             "fra": "Nationalité",
-            "esp": "Nationality"
+            "esp": "Nacionalidad"
         },
         "label": "nationality",
         "placeholder": "Switzerland",
@@ -39,7 +39,7 @@
         "title": {
             "eng": "Full Name",
             "fra": "Nom complet",
-            "esp": "Full Name"
+            "esp": "Nombre completo"
         },
         "label": "full_name",
         "placeholder": "John Doe",
@@ -75,7 +75,7 @@
         "title": {
             "eng": "Other names",
             "fra": "Autres noms",
-            "esp": "Other names"
+            "esp": "Otro nombre"
         },
         "label": "other_names",
         "placeholder": "",
@@ -93,7 +93,7 @@
         "title": {
             "eng": "Disaster",
             "fra": "Sinistre",
-            "esp": "Disaster"
+            "esp": "Desastre"
         },
         "label": "disaster",
         "placeholder": "Sfax",
@@ -111,7 +111,7 @@
         "title": {
             "eng": "Mother's full names",
             "fra": "Nom de la mère",
-            "esp": "Mother's full names"
+            "esp": "Nombres completos de la madre"
         },
         "label": "mothers_names",
         "placeholder": "",
@@ -129,7 +129,7 @@
         "title": {
             "eng": "Father's full names",
             "fra": "Nom du père",
-            "esp": "Father's full names"
+            "esp": "Nombres completos del padre"
         },
         "label": "fathers_names",
         "placeholder": "",
@@ -147,7 +147,7 @@
         "title": {
             "eng": "Role",
             "fra": "Role",
-            "esp": "Role"
+            "esp": "Papel"
         },
         "label": "role",
         "placeholder": "",
@@ -165,7 +165,7 @@
         "title": {
             "eng": "Age (years)",
             "fra": "Age (années)",
-            "esp": "Age"
+            "esp": "Edad (años)"
         },
         "label": "age",
         "placeholder": "",
@@ -183,7 +183,7 @@
         "title": {
             "eng": "Date of birth",
             "fra": "Date de naissance",
-            "esp": "Date of birth"
+            "esp": "Fecha de nacimiento"
         },
         "label": "birth_date",
         "placeholder": "YYYY-mm-dd",
@@ -201,7 +201,7 @@
         "title": {
             "eng": "Date when last seen well",
             "fra": "Date de la dernière fois vu en forme",
-            "esp": "Date when last seen well"
+            "esp": "Fecha de la última vez que fue bueno"
         },
         "label": "date_last_seen",
         "placeholder": "YYYY-mm-dd",
@@ -219,7 +219,7 @@
         "title": {
             "eng": "Place of birth",
             "fra": "Lieu de naissance",
-            "esp": "Place of birth"
+            "esp": "Lugar de nacimiento"
         },
         "label": "birth_place",
         "placeholder": "Paris",
@@ -255,7 +255,7 @@
         "title": {
             "eng": "Passport number",
             "fra": "Numéro de passeport",
-            "esp": "Passport number"
+            "esp": "Número de pasaporte"
         },
         "label": "passport_number",
         "placeholder": "",
@@ -271,45 +271,9 @@
     },
     {
         "title": {
-            "eng": "Presumably boarded the flight",
-            "fra": "Presumably boarded the flight",
-            "esp": "Presumably boarded the flight"
-        },
-        "label": "flight_boarded",
-        "placeholder": "",
-        "html_data_type": "radio",
-        "android_type": "RadioButton",
-        "linked_list": "",
-        "required": 4,
-        "status": 0,
-        "attribute": "",
-        "database_type": "boolean",
-        "order": 100,
-        "validation_laravel": "string|nullable|max:250"
-    },
-    {
-        "title": {
-            "eng": "Flight disease",
-            "fra": "Flight disease",
-            "esp": "Flight disease"
-        },
-        "label": "flight_disease",
-        "placeholder": "",
-        "html_data_type": "radio",
-        "android_type": "Spinner",
-        "linked_list": "",
-        "required": 4,
-        "status": 0,
-        "attribute": "",
-        "database_type": "boolean",
-        "order": 100,
-        "validation_laravel": "string|nullable|max:250"
-    },
-    {
-        "title": {
             "eng": "Embarkation date",
             "fra": "Data d'embarcation",
-            "esp": "Embarkation date"
+            "esp": "Fecha de embarque"
         },
         "label": "embarkation_date",
         "placeholder": "YYYY-mm-dd",
@@ -327,7 +291,7 @@
         "title": {
             "eng": "Place of Detention",
             "fra": "Lieu de détention",
-            "esp": "Place of Detention"
+            "esp": "Lugar de detención"
         },
         "label": "detention_place",
         "placeholder": "Aleppo",
@@ -345,7 +309,7 @@
         "title": {
             "eng": "Place of embarkation",
             "fra": "Lieu d'embarcation",
-            "esp": "Place of embarkation"
+            "esp": "Lugar de embarque"
         },
         "label": "embarkation_place",
         "placeholder": "Roubaix",
@@ -363,7 +327,7 @@
         "title": {
             "eng": "Details",
             "fra": "Informations supplémentaires",
-            "esp": "Details"
+            "esp": "Informaciones suplementarias"
         },
         "label": "detail",
         "placeholder": "Shoes found",
@@ -381,7 +345,7 @@
         "title": {
             "eng": "Travel to",
             "fra": "Destination",
-            "esp": "Travel to"
+            "esp": "Viajar a"
         },
         "label": "destination",
         "placeholder": "",
@@ -397,81 +361,9 @@
     },
     {
         "title": {
-            "eng": "Travel date (start)",
-            "fra": "Date de départ (voyage)",
-            "esp": "Travel date (start)"
-        },
-        "label": "travel_start",
-        "placeholder": "YYYY-mm-dd",
-        "html_data_type": "date",
-        "android_type": "EditText",
-        "linked_list": "",
-        "required": 4,
-        "status": 0,
-        "attribute": "",
-        "database_type": "date",
-        "order": 12,
-        "validation_laravel": "date|nullable"
-    },
-    {
-        "title": {
-            "eng": "Travel date (arrival)",
-            "fra": "Date d'arrivée (voyage)",
-            "esp": "Travel date (arrival)"
-        },
-        "label": "travel_end",
-        "placeholder": "YYYY-mm-dd",
-        "html_data_type": "date",
-        "android_type": "EditText",
-        "linked_list": "",
-        "required": 4,
-        "status": 0,
-        "attribute": "",
-        "database_type": "date",
-        "order": 13,
-        "validation_laravel": "date|nullable|after_or_equal:travel_start"
-    },
-    {
-        "title": {
-            "eng": "Place of last health control",
-            "fra": "Lieu du dernier contrôle de santé",
-            "esp": "Place of last health control"
-        },
-        "label": "health_control_place",
-        "placeholder": "Aleppo",
-        "html_data_type": "text",
-        "android_type": "EditText",
-        "linked_list": "",
-        "required": 4,
-        "status": 0,
-        "attribute": "",
-        "database_type": "string",
-        "order": 100,
-        "validation_laravel": "string|nullable|max:250"
-    },
-    {
-        "title": {
-            "eng": "Last health control date",
-            "fra": "Date du dernier contrôle de santé",
-            "esp": "Last health control date"
-        },
-        "label": "health_control_date",
-        "placeholder": "YYYY-mm-dd",
-        "html_data_type": "date",
-        "android_type": "EditText",
-        "linked_list": "",
-        "required": 4,
-        "status": 0,
-        "attribute": "",
-        "database_type": "date",
-        "order": 100,
-        "validation_laravel": "date|nullable"
-    },
-    {
-        "title": {
             "eng": "Route",
             "fra": "Route",
-            "esp": "Route"
+            "esp": "Camino"
         },
         "label": "route",
         "placeholder": "",
@@ -489,7 +381,7 @@
         "title": {
             "eng": "Country of residence",
             "fra": "Pays de residence",
-            "esp": "Residence"
+            "esp": "País de residencia"
         },
         "label": "residence",
         "placeholder": "Syria",
