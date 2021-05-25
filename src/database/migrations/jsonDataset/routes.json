@@ -4,7 +4,7 @@
         "full": {
             "eng": "Western Mediterranean",
             "fra": "Méditerranée occidentale",
-            "esp": "Western Mediterranean"
+            "esp": "Mediterráneo occidental"
         }
     },
     {
@@ -12,7 +12,7 @@
         "full": {
             "eng": "Central Mediterranean",
             "fra": "Méditerranée centrale",
-            "esp": "Central Mediterranean"
+            "esp": "Mediterráneo central"
         }
     },
     {
@@ -20,7 +20,7 @@
         "full": {
             "eng": "Eastern Mediterranean",
             "fra": "Méditerranée orientale",
-            "esp": "Eastern Mediterranean"
+            "esp": "Mediterráneo oriental"
         }
     }
 ]

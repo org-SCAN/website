@@ -3,7 +3,7 @@
         "name": {
             "eng": "Biological relationship",
             "fra": "Relation biologique",
-            "esp": "Biological relationship"
+            "esp": "Relación biológica"
         },
         "short": "BR",
         "color" : "0099ff",
@@ -13,7 +13,7 @@
         "name": {
             "eng": "Non-biological relationship",
             "fra": "Relation non biologique",
-            "esp": "Non-biological relationship"
+            "esp": "Relación no biológica"
         },
         "short": "NBR",
         "color" : "cbaf1d",
@@ -23,7 +23,7 @@
         "name": {
             "eng": "Travelled with",
             "fra": "A voyagé avec",
-            "esp": "Travelled with"
+            "esp": "Viajado con"
         },
         "short": "TW",
         "color" : "00ff2a",
@@ -33,7 +33,7 @@
         "name": {
             "eng": "Saw",
             "fra": "A vu",
-            "esp": "Saw"
+            "esp": "Ha visto"
         },
         "short": "SA",
         "color" : "734d39",
@@ -43,7 +43,7 @@
         "name": {
             "eng": "Service",
             "fra": "Service",
-            "esp": "Service"
+            "esp": "Servicio"
         },
         "short": "SE",
         "color" : "7e00ff",
