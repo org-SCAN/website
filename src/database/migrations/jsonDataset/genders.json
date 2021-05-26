@@ -3,20 +3,20 @@
   "full": {
       "eng" : "Female",
       "fra" : "Femme",
-      "esp" : "Señora"
+      "spa": "Señora"
   }
 },{
   "short": "M",
     "full": {
         "eng" : "Male",
         "fra" : "Homme",
-        "esp" : "Señor"
+        "spa": "Señor"
     }
 },{
   "short": "O",
     "full": {
         "eng" : "Other",
         "fra" : "Autre",
-        "esp" : "Otro"
+        "spa": "Otro"
     }
 }]

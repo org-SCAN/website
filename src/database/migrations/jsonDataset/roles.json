@@ -3,7 +3,7 @@
         "short": {
             "eng": "sought",
             "fra": "recherché",
-            "esp": "buscado"
+            "spa": "buscado"
         },
         "descr": "the police is looking for this person",
         "key" : "sought"
@@ -12,7 +12,7 @@
         "short": {
             "eng": "possibly sought",
             "fra": "possiblement recherché",
-            "esp": "posiblemente buscado"
+            "spa": "posiblemente buscado"
         },
         "descr": "the police might be looking for this person",
         "key" : "possibly_sought"
@@ -21,7 +21,7 @@
         "short": {
             "eng": "witness",
             "fra": "témoin",
-            "esp": "testigo"
+            "spa": "testigo"
         },
         "descr": "",
         "key" : "witness"
@@ -30,7 +30,7 @@
         "short": {
             "eng": "survivor",
             "fra": "survivant",
-            "esp": "sobreviviente"
+            "spa": "sobreviviente"
         },
         "descr": "",
         "key": "survivor"
@@ -39,7 +39,7 @@
         "short": {
             "eng": "deceased",
             "fra": "décédé",
-            "esp": "fallecido"
+            "spa": "fallecido"
         },
         "descr": "",
         "key": "deceased"
@@ -48,7 +48,7 @@
         "short": {
             "eng": "informant",
             "fra": "informateur",
-            "esp": "informante"
+            "spa": "informante"
         },
         "descr": "",
         "key": "informant"
@@ -57,7 +57,7 @@
         "short": {
             "eng": "relative",
             "fra": "proche",
-            "esp": "familiar"
+            "spa": "familiar"
         },
         "descr": "",
         "key" : "relative"
