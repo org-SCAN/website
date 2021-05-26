@@ -5,13 +5,18 @@
         "default" : 1
     },
     {
-        "language" : "fra",
-        "language_name" : "Français",
-        "default" : 0
+        "language": "fra",
+        "language_name": "Français",
+        "default": 0
     },
     {
-        "language" : "esp",
-        "language_name" : "Español",
-        "default" : 0
+        "language": "spa",
+        "language_name": "Español",
+        "default": 0
+    },
+    {
+        "language": "ita",
+        "language_name": "Italian",
+        "default": 0
     }
 ]
