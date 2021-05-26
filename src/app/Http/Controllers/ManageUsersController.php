@@ -64,6 +64,7 @@ class ManageUsersController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = $request->validated();
+
         DB::transaction(function () use ($user) {
             return tap(User::create([
                 'name' => $user['name'],
