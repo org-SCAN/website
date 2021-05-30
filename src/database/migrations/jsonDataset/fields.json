@@ -236,7 +236,7 @@
     {
         "title": {
             "eng": "Embarkation date",
-            "fra": "Data d'embarcation",
+            "fra": "Date d'embarcation",
             "spa": "Fecha de embarque"
         },
         "label": "embarkation_date",
