@@ -19,21 +19,21 @@
     },
     {
         "title": {
-            "eng": "Nationality",
-            "fra": "Nationalité",
-            "spa": "Nacionalidad"
+            "eng": "Sex",
+            "fra": "Sexe",
+            "spa": "Sexo"
         },
-        "label": "nationality",
-        "placeholder": "Switzerland",
+        "label": "gender",
+        "placeholder": "F",
         "html_data_type": "text",
-        "android_type": "AutoCompleteTextView",
-        "linked_list": "Country",
-        "required": 2,
+        "android_type": "Spinner",
+        "linked_list": "Gender",
+        "required": 1,
         "status": 2,
         "attribute": "",
         "database_type": "string",
-        "order": 6,
-        "validation_laravel": "string|nullable"
+        "order": 2,
+        "validation_laravel": "string|required"
     },
     {
         "title": {
@@ -55,93 +55,39 @@
     },
     {
         "title": {
-            "eng": "Alias",
-            "fra": "Alias",
-            "spa": "Alias"
+            "eng": "Age (years)",
+            "fra": "Age (années)",
+            "spa": "Edad (años)"
         },
-        "label": "alias",
-        "placeholder": "Big Joe",
-        "html_data_type": "text",
-        "android_type": "EditText",
-        "linked_list": "",
-        "required": 3,
-        "status": 2,
-        "attribute": "",
-        "database_type": "string",
-        "order": 5,
-        "validation_laravel": "string|nullable|max:250"
-    },
-    {
-        "title": {
-            "eng": "Other names",
-            "fra": "Autres noms",
-            "spa": "Otro nombre"
-        },
-        "label": "other_names",
+        "label": "age",
         "placeholder": "",
         "html_data_type": "text",
         "android_type": "EditText",
         "linked_list": "",
-        "required": 3,
+        "required": 1,
         "status": 2,
         "attribute": "",
-        "database_type": "string",
+        "database_type": "integer",
         "order": 4,
-        "validation_laravel": "string|nullable|max:250"
+        "validation_laravel": "required|integer"
     },
     {
         "title": {
-            "eng": "Disaster",
-            "fra": "Sinistre",
-            "spa": "Desastre"
+            "eng": "Nationality",
+            "fra": "Nationalité",
+            "spa": "Nacionalidad"
         },
-        "label": "disaster",
-        "placeholder": "Sfax",
+        "label": "nationality",
+        "placeholder": "Switzerland",
         "html_data_type": "text",
-        "android_type": "EditText",
-        "linked_list": "",
+        "android_type": "AutoCompleteTextView",
+        "linked_list": "Country",
         "required": 2,
         "status": 2,
         "attribute": "",
         "database_type": "string",
         "order": 5,
-        "validation_laravel": "string|nullable|max:250"
-    },
-    {
-        "title": {
-            "eng": "Mother's full names",
-            "fra": "Nom de la mère",
-            "spa": "Nombres completos de la madre"
-        },
-        "label": "mothers_names",
-        "placeholder": "",
-        "html_data_type": "text",
-        "android_type": "EditText",
-        "linked_list": "",
-        "required": 3,
-        "status": 2,
-        "attribute": "",
-        "database_type": "string",
-        "order": 100,
-        "validation_laravel": "string|nullable|max:250"
-    },
-    {
-        "title": {
-            "eng": "Father's full names",
-            "fra": "Nom du père",
-            "spa": "Nombres completos del padre"
-        },
-        "label": "fathers_names",
-        "placeholder": "",
-        "html_data_type": "text",
-        "android_type": "EditText",
-        "linked_list": "",
-        "required": 3,
-        "status": 2,
-        "attribute": "",
-        "database_type": "string",
-        "order": 100,
-        "validation_laravel": "string|nullable|max:250"
+        "validation_laravel": "string|nullable"
     },
     {
         "title": {
@@ -158,26 +104,8 @@
         "status": 2,
         "attribute": "",
         "database_type": "string",
-        "order": 7,
+        "order": 6,
         "validation_laravel": "string|nullable"
-    },
-    {
-        "title": {
-            "eng": "Age (years)",
-            "fra": "Age (années)",
-            "spa": "Edad (años)"
-        },
-        "label": "age",
-        "placeholder": "",
-        "html_data_type": "text",
-        "android_type": "EditText",
-        "linked_list": "",
-        "required": 1,
-        "status": 2,
-        "attribute": "",
-        "database_type": "integer",
-        "order": 8,
-        "validation_laravel": "required|integer"
     },
     {
         "title": {
@@ -194,25 +122,7 @@
         "status": 2,
         "attribute": "",
         "database_type": "date",
-        "order": 8,
-        "validation_laravel": "date|nullable"
-    },
-    {
-        "title": {
-            "eng": "Date when last seen well",
-            "fra": "Date de la dernière fois vu en forme",
-            "spa": "Fecha de la última vez que fue bueno"
-        },
-        "label": "date_last_seen",
-        "placeholder": "YYYY-mm-dd",
-        "html_data_type": "date",
-        "android_type": "CalendarView",
-        "linked_list": "",
-        "required": 3,
-        "status": 2,
-        "attribute": "",
-        "database_type": "date",
-        "order": 100,
+        "order": 7,
         "validation_laravel": "date|nullable"
     },
     {
@@ -230,26 +140,8 @@
         "status": 2,
         "attribute": "",
         "database_type": "string",
-        "order": 9,
+        "order": 8,
         "validation_laravel": "string|nullable|max:250"
-    },
-    {
-        "title": {
-            "eng": "Sex",
-            "fra": "Sexe",
-            "spa": "Sexo"
-        },
-        "label": "gender",
-        "placeholder": "F",
-        "html_data_type": "text",
-        "android_type": "Spinner",
-        "linked_list": "Gender",
-        "required": 1,
-        "status": 2,
-        "attribute": "",
-        "database_type": "string",
-        "order": 1,
-        "validation_laravel": "string|required"
     },
     {
         "title": {
@@ -266,80 +158,8 @@
         "status": 2,
         "attribute": "",
         "database_type": "string",
-        "order": 10,
+        "order": 9,
         "validation_laravel": "string|nullable|max:250"
-    },
-    {
-        "title": {
-            "eng": "Embarkation date",
-            "fra": "Data d'embarcation",
-            "spa": "Fecha de embarque"
-        },
-        "label": "embarkation_date",
-        "placeholder": "YYYY-mm-dd",
-        "html_data_type": "date",
-        "android_type": "CalendarView",
-        "linked_list": "",
-        "required": 3,
-        "status": 2,
-        "attribute": "",
-        "database_type": "date",
-        "order": 100,
-        "validation_laravel": "date|nullable"
-    },
-    {
-        "title": {
-            "eng": "Place of Detention",
-            "fra": "Lieu de détention",
-            "spa": "Lugar de detención"
-        },
-        "label": "detention_place",
-        "placeholder": "Aleppo",
-        "html_data_type": "text",
-        "android_type": "EditText",
-        "linked_list": "",
-        "required": 3,
-        "status": 2,
-        "attribute": "",
-        "database_type": "string",
-        "order": 12,
-        "validation_laravel": "string|nullable"
-    },
-    {
-        "title": {
-            "eng": "Place of embarkation",
-            "fra": "Lieu d'embarcation",
-            "spa": "Lugar de embarque"
-        },
-        "label": "embarkation_place",
-        "placeholder": "Roubaix",
-        "html_data_type": "text",
-        "android_type": "EditText",
-        "linked_list": "",
-        "required": 3,
-        "status": 2,
-        "attribute": "",
-        "database_type": "string",
-        "order": 12,
-        "validation_laravel": "string|nullable"
-    },
-    {
-        "title": {
-            "eng": "Details",
-            "fra": "Informations supplémentaires",
-            "spa": "Informaciones suplementarias"
-        },
-        "label": "detail",
-        "placeholder": "Shoes found",
-        "html_data_type": "textarea",
-        "android_type": "EditText",
-        "linked_list": "",
-        "required": 4,
-        "status": 1,
-        "attribute": "",
-        "database_type": "text",
-        "order": 22,
-        "validation_laravel": "nullable|String"
     },
     {
         "title": {
@@ -356,7 +176,7 @@
         "status": 2,
         "attribute": "",
         "database_type": "string",
-        "order": 11,
+        "order": 10,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -374,7 +194,7 @@
         "status": 2,
         "attribute": "",
         "database_type": "string",
-        "order": 14,
+        "order": 11,
         "validation_laravel": "string|nullable"
     },
     {
@@ -392,7 +212,187 @@
         "status": 2,
         "attribute": "",
         "database_type": "string",
-        "order": 100,
+        "order": 12,
+        "validation_laravel": "string|nullable|max:250"
+    },
+    {
+        "title": {
+            "eng": "Alias",
+            "fra": "Alias",
+            "spa": "Alias"
+        },
+        "label": "alias",
+        "placeholder": "Big Joe",
+        "html_data_type": "text",
+        "android_type": "EditText",
+        "linked_list": "",
+        "required": 3,
+        "status": 2,
+        "attribute": "",
+        "database_type": "string",
+        "order": 13,
+        "validation_laravel": "string|nullable|max:250"
+    },
+    {
+        "title": {
+            "eng": "Embarkation date",
+            "fra": "Data d'embarcation",
+            "spa": "Fecha de embarque"
+        },
+        "label": "embarkation_date",
+        "placeholder": "YYYY-mm-dd",
+        "html_data_type": "date",
+        "android_type": "CalendarView",
+        "linked_list": "",
+        "required": 3,
+        "status": 2,
+        "attribute": "",
+        "database_type": "date",
+        "order": 14,
+        "validation_laravel": "date|nullable"
+    },
+    {
+        "title": {
+            "eng": "Place of embarkation",
+            "fra": "Lieu d'embarcation",
+            "spa": "Lugar de embarque"
+        },
+        "label": "embarkation_place",
+        "placeholder": "Roubaix",
+        "html_data_type": "text",
+        "android_type": "EditText",
+        "linked_list": "",
+        "required": 3,
+        "status": 2,
+        "attribute": "",
+        "database_type": "string",
+        "order": 15,
+        "validation_laravel": "string|nullable"
+    },
+    {
+        "title": {
+            "eng": "Place of Detention",
+            "fra": "Lieu de détention",
+            "spa": "Lugar de detención"
+        },
+        "label": "detention_place",
+        "placeholder": "Aleppo",
+        "html_data_type": "text",
+        "android_type": "EditText",
+        "linked_list": "",
+        "required": 3,
+        "status": 2,
+        "attribute": "",
+        "database_type": "string",
+        "order": 16,
+        "validation_laravel": "string|nullable"
+    },
+    {
+        "title": {
+            "eng": "Date when last seen well",
+            "fra": "Date de la dernière fois vu en forme",
+            "spa": "Fecha de la última vez que fue bueno"
+        },
+        "label": "date_last_seen",
+        "placeholder": "YYYY-mm-dd",
+        "html_data_type": "date",
+        "android_type": "CalendarView",
+        "linked_list": "",
+        "required": 3,
+        "status": 2,
+        "attribute": "",
+        "database_type": "date",
+        "order": 17,
+        "validation_laravel": "date|nullable"
+    },
+    {
+        "title": {
+            "eng": "Mother's full names",
+            "fra": "Nom de la mère",
+            "spa": "Nombres completos de la madre"
+        },
+        "label": "mothers_names",
+        "placeholder": "",
+        "html_data_type": "text",
+        "android_type": "EditText",
+        "linked_list": "",
+        "required": 3,
+        "status": 2,
+        "attribute": "",
+        "database_type": "string",
+        "order": 18,
+        "validation_laravel": "string|nullable|max:250"
+    },
+    {
+        "title": {
+            "eng": "Father's full names",
+            "fra": "Nom du père",
+            "spa": "Nombres completos del padre"
+        },
+        "label": "fathers_names",
+        "placeholder": "",
+        "html_data_type": "text",
+        "android_type": "EditText",
+        "linked_list": "",
+        "required": 3,
+        "status": 2,
+        "attribute": "",
+        "database_type": "string",
+        "order": 19,
+        "validation_laravel": "string|nullable|max:250"
+    },
+    {
+        "title": {
+            "eng": "Details",
+            "fra": "Informations supplémentaires",
+            "spa": "Informaciones suplementarias"
+        },
+        "label": "detail",
+        "placeholder": "Phone number",
+        "html_data_type": "textarea",
+        "android_type": "EditText",
+        "linked_list": "",
+        "required": 4,
+        "status": 2,
+        "attribute": "",
+        "database_type": "text",
+        "order": 20,
+        "validation_laravel": "nullable|String"
+    },
+    {
+        "title": {
+            "eng": "Other names",
+            "fra": "Autres noms",
+            "spa": "Otro nombre"
+        },
+        "label": "other_names",
+        "placeholder": "",
+        "html_data_type": "text",
+        "android_type": "EditText",
+        "linked_list": "",
+        "required": 100,
+        "status": 0,
+        "attribute": "",
+        "database_type": "string",
+        "order": 21,
+        "validation_laravel": "string|nullable|max:250"
+    },
+    {
+        "title": {
+            "eng": "Disaster",
+            "fra": "Sinistre",
+            "spa": "Desastre"
+        },
+        "label": "disaster",
+        "placeholder": "Sfax",
+        "html_data_type": "text",
+        "android_type": "EditText",
+        "linked_list": "",
+        "required": 100,
+        "status": 0,
+        "attribute": "",
+        "database_type": "string",
+        "order": 22,
         "validation_laravel": "string|nullable|max:250"
     }
 ]
