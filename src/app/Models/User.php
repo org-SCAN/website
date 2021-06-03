@@ -84,7 +84,7 @@ class User extends Authenticatable
      * @return String
      */
     public function getRoleId(){
-        return $this->attributes['role'];
+        return (!empty($this->attributes['role']) ? $this->attributes['role'] : "");
     }
 
     /**
