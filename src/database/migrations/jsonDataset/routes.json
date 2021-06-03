@@ -22,5 +22,13 @@
             "fra": "Méditerranée orientale",
             "spa": "Mediterráneo oriental"
         }
+    },
+    {
+        "short": "CI",
+        "full": {
+            "eng": "Canary Islands",
+            "fra": "Iles Canaries",
+            "spa": "Islas Canarias"
+        }
     }
 ]
