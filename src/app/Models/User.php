@@ -101,6 +101,7 @@ class User extends Authenticatable
 
     /**
      * Generate a role by default
+     *
      */
 
     public function genRole()
