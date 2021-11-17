@@ -10,6 +10,7 @@ use App\Models\ListControl;
 use App\Models\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class FieldsController extends Controller
 {
@@ -50,6 +51,7 @@ class FieldsController extends Controller
         $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field["database_type"]);
         $field["android_type"] = Field::getUITypeFromForm($field["database_type"]);
         $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
+        $field["crew_id"] = Auth::user()->getCurrentTeamId();
         $field = Field::create($field);
         if($field->exists){
             $field->addFieldtoRefugees();
