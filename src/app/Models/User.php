@@ -165,6 +165,7 @@ class User extends Authenticatable
             'name' => "Default user",
             'email' => env("DEFAULT_EMAIL"),
             'password' => Hash::make(env("DEFAULT_PASSWORD")),
+            'current_team_id' => Crew::getDefaultCrewId()
         ]);
         $new_user->genToken();
         $new_user->genRole();

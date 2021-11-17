@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Crew;
 use App\Models\Field;
 use App\Models\ListControl;
 
@@ -34,6 +35,7 @@ class FieldSeeder extends GlobalListControlSeeder
                 }
                 $to_store[$keyField] = $fieldValue;
             }
+            $to_store["crew_id"] = Crew::getDefaultCrewId();
             Field::create($to_store);
         }
     }

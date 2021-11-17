@@ -31,4 +31,12 @@ class Crew extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public static function getDefaultCrewId(){
+        $id = self::where("name", env("DEFAULT_TEAM"))->get()->first()->id;
+        if(empty($id)){
+            die("No default team");
+        }
+        return $id;
+    }
 }
