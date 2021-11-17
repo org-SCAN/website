@@ -77,7 +77,7 @@ class CrewController extends Controller
     public function update(UpdateCrewRequest $request, $id)
     {
         $crew = $request->validated();
-        $crew = Crew::find($id)->update($crew);
+        Crew::find($id)->update($crew);
 
         return redirect()->route("crew.index");
     }

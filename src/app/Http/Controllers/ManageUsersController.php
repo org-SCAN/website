@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 
 class ManageUsersController extends Controller
@@ -195,6 +196,22 @@ class ManageUsersController extends Controller
         $request = RoleRequest::find($id);
         $request->update(["granted" => date("Y-m-d H:i:s")]);
 
+        return redirect()->back();
+    }
+
+    /**
+     * Add user role request to the request list
+     *
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function ChangeTeam(Request $request, $id)
+    {
+        $crew = $request->input('crew');
+        $user = User::find($id);
+        $user->current_team_id = $crew;
+        $user->save();
         return redirect()->back();
     }
 }

@@ -78,6 +78,17 @@ class User extends Authenticatable
         return empty($user_role) ? "" : $user_role->role;
     }
 
+
+    /**
+     * Indicate the current team of the user according the UUID stored in DB
+     * @param $value Is the id of the element
+     * @return String
+     */
+    public function getCurrentTeamIdAttribute($value){
+        $crew = Crew::find($value);
+        return empty($crew) ? "" : $crew->name;
+    }
+
     /**
      * Indicate the the UUID stored in DB
      * @param $value Is the id of the element
@@ -85,6 +96,15 @@ class User extends Authenticatable
      */
     public function getRoleId(){
         return (!empty($this->attributes['role']) ? $this->attributes['role'] : "");
+    }
+
+    /**
+     * Indicate the the UUID stored in DB
+     * @param $value Is the id of the element
+     * @return String
+     */
+    public function getCurrentTeamId(){
+        return (!empty($this->attributes['current_team_id']) ? $this->attributes['current_team_id'] : "");
     }
 
     /**
