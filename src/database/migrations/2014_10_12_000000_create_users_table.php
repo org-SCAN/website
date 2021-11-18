@@ -22,7 +22,12 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->foreignUuid('current_team_id')->nullable();
             $table->text('profile_photo_path')->nullable();
+            $table->foreignUuid("role")->nullable();
+            $table->string("token", 500)
+                ->unique()
+                ->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

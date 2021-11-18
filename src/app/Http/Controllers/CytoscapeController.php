@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Storage;
 class CytoscapeController extends Controller
 {
     public function index(){
-        $relations = \App\Models\Link::where('deleted',0)->get();
+        $relations = \App\Models\Link::all();
         /*
             $nodes = array();
             foreach ($refugees as $refugee){

@@ -5,10 +5,11 @@ namespace App\Models;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ListControl extends Model
 {
-    use Uuids;
+    use Uuids, SoftDeletes;
     /**
      * The data type of the auto-incrementing ID.
      *
@@ -36,7 +37,7 @@ class ListControl extends Model
      *
      * @var array
      */
-    protected $hidden = ['deleted',"created_at","updated_at"];
+    protected $hidden = ['deleted_at',"created_at","updated_at"];
 
     public function addNewList(){
         // 1. Create a new table -> for the list
@@ -110,14 +111,14 @@ class ListControl extends Model
         $call_class_name = get_called_class();
         $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg Country / Gender / …
 
-        $database_content = $call_class_name::where('deleted', 0)->get()->makeHidden("id")->toArray();
+        $database_content = $call_class_name::all()->makeHidden("id")->toArray();
         $list_info = ListControl::where('name', $class_name)->first();
         $keys = array_column($database_content, $list_info->key_value); // all keys name
         $api_res = array();
         foreach ($keys as $key_index => $key_value){
             $api_res[$key_value] = $database_content[$key_index];
 
-            $translations = array_column(Translation::where('deleted',0)->where('list', $list_info->id)->where('field_key', $key_value)->get()->toArray(), "translation", "language");
+            $translations = array_column(Translation::where('list', $list_info->id)->where('field_key', $key_value)->get()->toArray(), "translation", "language");
             foreach($translations as $language => $translation){
                 $api_res[$key_value]["displayed_value"][$language] = $translation;
             }

@@ -17,8 +17,7 @@ class ListControlController extends Controller
      */
     public function index()
     {
-        $lists = ListControl::where("deleted", 0)
-            ->get();
+        $lists = ListControl::all();
         return view("lists_control.index", compact("lists"));
     }
 
@@ -92,8 +91,7 @@ class ListControlController extends Controller
      */
     public function destroy(String $id)
     {
-        ListControl::find($id)
-        ->update(["deleted"=>1]);
+        ListControl::find($id)->delete();
         return redirect()->route("lists_control.index");
     }
 }

@@ -19,6 +19,7 @@ class CreateLanguagesTable extends Migration
             $table->string("language");
             $table->string("language_name");
             $table->boolean("default")->default(0);
+            $table->softDeletes();
         });
     }
 

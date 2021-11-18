@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Duplicate extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * Returns duplicated values in array : Array ( [ABC-000004] => Array ( [0] => 5decaba8-f82f-4b61-858f-bfbf133f0c4f [1] => 95904830-52a5-4fad-982e-b0eed3a5f73b ) )
@@ -18,12 +19,12 @@ class Duplicate extends Model
      */
     public static function getDuplicates()
     {
-        $duplicate_ids = DB::table("refugees")->select("unique_id")->where("deleted", 0)->groupBy("unique_id")->havingRaw('count(*) > 1')->pluck("unique_id");
+        $duplicate_ids = DB::table("refugees")->select("unique_id")->whereNull("deleted_at")->groupBy("unique_id")->havingRaw('count(*) > 1')->pluck("unique_id");
 
         if (empty($duplicate_ids)) {
             return array();
         }
-        return Refugee::where("deleted", 0)->whereIn("unique_id", $duplicate_ids)->orderBy("date", "desc")->get()->groupBy('unique_id');
+        return Refugee::whereIn("unique_id", $duplicate_ids)->orderBy("date", "desc")->get()->groupBy('unique_id');
     }
 
     public static function nextID($currentID)

@@ -113,7 +113,7 @@ class FieldsController extends Controller
         } else {
             $lists["linked_list"] = array_column(ListControl::where('id', $linked_list_id)->get()->toArray(), "title", "id");
         }
-        $lists["linked_list"] += array_column(ListControl::where("deleted", 0)->where("id", "!=", $linked_list_id)->get()->toArray(), "title", "id");
+        $lists["linked_list"] += array_column(ListControl::where("id", "!=", $linked_list_id)->get()->toArray(), "title", "id");
         return view("fields.edit", compact('field', "lists"));
     }
 
@@ -143,8 +143,7 @@ class FieldsController extends Controller
      */
     public function destroy(String $id)
     {
-        Field::find($id)
-        ->update(["deleted"=>1]);
+        Field::find($id)->delete();
         return redirect()->route("fields.index");
     }
 

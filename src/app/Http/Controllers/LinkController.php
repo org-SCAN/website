@@ -23,7 +23,7 @@ class LinkController extends Controller
      */
     public function index()
     {
-        $links = Link::where('deleted',0)->get();
+        $links = Link::all();
         return view("links.index", compact('links'));
     }
 
@@ -34,8 +34,8 @@ class LinkController extends Controller
      */
     public function create()
     {
-        $lists["refugees"] = array_column(Refugee::where("deleted", 0)->get()->toArray(), "full_name", "id");
-        $lists["relations"] = array_column(Relation::where("deleted", 0)->get()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
+        $lists["refugees"] = array_column(Refugee::all()->toArray(), "full_name", "id");
+        $lists["relations"] = array_column(Relation::all()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
         return view("links.create", compact("lists"));
     }
 
@@ -163,8 +163,7 @@ class LinkController extends Controller
      */
     public function destroy($id)
     {
-        Link::where("id",$id)
-            ->update(["deleted"=>1]);
+        Link::find($id)->delete();
         return redirect()->route("links.index");
     }
 

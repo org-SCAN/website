@@ -17,7 +17,7 @@ class LinksDatatables extends LivewireDatatable
     public function builder()
     {
         return Link::query()
-            ->where("links.deleted", 0)
+            ->whereNull("links.deleted_at")
             ->leftJoin('refugees as from_refugee', 'from_refugee.id', 'links.from')
             ->leftJoin('refugees as to_refugee', 'to_refugee.id', 'links.to')
             ->leftJoin('relations', 'relations.id', 'links.relation');

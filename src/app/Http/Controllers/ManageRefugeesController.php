@@ -28,9 +28,7 @@ class ManageRefugeesController extends Controller
     {
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $refugees = Refugee::where("deleted", 0)
-            ->orderBy("date", "desc")
-            ->get();
+        $refugees = Refugee::orderByDesc("date")->get();
 
         return view("manage_refugees.index", compact("refugees"));
     }
@@ -118,7 +116,7 @@ class ManageRefugeesController extends Controller
             ->orderBy("order")
             ->get();
         $refugee = Refugee::find($id);
-        $links = Link::where("deleted",0)->where("from", $id)->orWhere("to", $id)->get();
+        $links = Link::where("from", $id)->orWhere("to", $id)->get();
 
         return view("manage_refugees.show", compact("refugee", "fields", "links"));
     }
@@ -188,8 +186,7 @@ class ManageRefugeesController extends Controller
     {
 
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        Refugee::find($refugee_id)
-            ->update(["deleted"=>1]);
+        Refugee::find($refugee_id)->delete();
         return redirect()->route("manage_refugees.index");
     }
 

@@ -90,6 +90,8 @@ class CrewController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //TODO : moove attached user to the default team
+        Crew::find($id)->delete();
+        return redirect()->route("crew.index");
     }
 }

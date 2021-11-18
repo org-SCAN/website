@@ -142,10 +142,8 @@ class ManageUsersController extends Controller
     public function destroy($id)
     {
 
-        $user = User:: where("id", $id);
-        $user->delete();
-        $users = User::all();
-        return view("user.index", compact("users"));
+        User::find($id)->delete();
+        return redirect()->route("user.index");
     }
 
 

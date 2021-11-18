@@ -23,6 +23,7 @@ class CreateApiLogsTable extends Migration
             $table->string("response")->default("success");
             $table->string("model")->nullable();
             $table->string("http_method");
+            $table->softDeletes();
         });
     }
 

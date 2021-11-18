@@ -20,8 +20,7 @@ class CreateRelationsTable extends Migration
             $table->string("color")->default('000000');
             $table->integer("importance")->default(1);
             $table->string("short");
-            $table->boolean("deleted")
-                ->default(0);
+            $table->softDeletes();
         });
     }
 

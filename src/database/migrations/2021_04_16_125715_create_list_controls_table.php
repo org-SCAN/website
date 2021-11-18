@@ -20,10 +20,11 @@ class CreateListControlsTable extends Migration
             $table->timestamps();
             $table->string("title");
             $table->string("displayed_value");
+            $table->string("key_value");
             $table->string("name")
                 ->unique();
-            $table->boolean("deleted")
-                ->default(0);
+
+            $table->softDeletes();
         });
     }
 

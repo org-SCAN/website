@@ -4,10 +4,12 @@ namespace App\Models;
 
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ApiLog extends Model
 {
     use Uuids;
+    use SoftDeletes;
     /**
      * The data type of the auto-incrementing ID.
      *
