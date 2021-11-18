@@ -43,7 +43,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', "token", "role"
+        'name', 'email', 'password', "token", "role_id", "crew_id"
     ];
 
     /**
@@ -65,46 +65,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime'
     ];
 
-    /**
-     * Indicate the role of the user according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRoleAttribute($value){
-        $user_role = UserRole::find($value);
-        return empty($user_role) ? "" : $user_role->role;
+    public function crew(){
+        return $this->belongsTo(Crew::class)->withDefault();
     }
 
-
-    /**
-     * Indicate the current team of the user according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getCurrentTeamIdAttribute($value){
-        $crew = Crew::find($value);
-        return empty($crew) ? "" : $crew->name;
-    }
-
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRoleId(){
-        return (!empty($this->attributes['role']) ? $this->attributes['role'] : "");
-    }
-
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getCurrentTeamId(){
-        return (!empty($this->attributes['current_team_id']) ? $this->attributes['current_team_id'] : "");
+    public function role(){
+        return $this->belongsTo(UserRole::class)->withDefault();
     }
 
     /**
@@ -126,17 +95,14 @@ class User extends Authenticatable
 
     public function genRole()
     {
-        if (empty($this->getRoleId())) {
+        if (empty($this->role->id)) {
             $users = User::all();
-            $userAdmin = User::where("role", UserRole::orderBy("importance", "desc")->first()->id)->get();
+            $userAdmin = User::where("role_id", UserRole::biggestRole())->get();
             if ($users->isEmpty() || $userAdmin->isEmpty()) {
-                $this->role = UserRole::orderBy("importance", "desc")->first()->id;
+                $this->role_id = UserRole::biggestRole();
             } else {
-
-                $this->role = UserRole::orderBy("importance")->first()->id;
-
+                $this->role_id = UserRole::smallestRole();
             }
-
             $this->save();
         }
     }
@@ -165,7 +131,7 @@ class User extends Authenticatable
             'name' => "Default user",
             'email' => env("DEFAULT_EMAIL"),
             'password' => Hash::make(env("DEFAULT_PASSWORD")),
-            'current_team_id' => Crew::getDefaultCrewId()
+            'crew_id' => Crew::getDefaultCrewId()
         ]);
         $new_user->genToken();
         $new_user->genRole();
@@ -174,6 +140,6 @@ class User extends Authenticatable
 
     public function hasPermission(string $routeName)
     {
-        return UserRole::find($this->getRoleId())->hasPermission($routeName);
+        return UserRole::find($this->role->id)->hasPermission($routeName);
     }
 }

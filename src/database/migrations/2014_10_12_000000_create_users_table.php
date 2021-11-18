@@ -20,9 +20,9 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->foreignUuid('current_team_id')->nullable();
+            $table->foreignUuid('crew_id')->nullable();
             $table->text('profile_photo_path')->nullable();
-            $table->foreignUuid("role")->nullable();
+            $table->foreignUuid("role_id")->nullable();
             $table->string("token", 500)
                 ->unique()
                 ->nullable();

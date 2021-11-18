@@ -33,7 +33,7 @@ class UpdateUsersRequest extends FormRequest
                 'required',
                 "unique:users,email,{$this->user}",
             ],
-            'role'   => [
+            'role_id'   => [
                 'required',
                 'exists:user_roles,id',
             ],

@@ -53,8 +53,13 @@
                             <label for="role" class="block font-medium text-sm text-gray-700">Role</label>
 
                             <div class="switch-toggle switch-3 switch-candy">
-                                @foreach($roles = \App\Models\UserRole::get() as $role)
-                                    @if(($role->id) == ($user_found->getRoleId()))
+                                @livewire("select-dropdown", ['label' => 'role', 'placeholder' => "-- Select the role --", 'datas' =>
+                                array_column(\App\Models\UserRole::orderBy("importance")->get()->toArray() , 'role', 'id'), "selected_value"=>$user_found->role->id])
+                                @stack('scripts')
+
+                                <!--
+                                @foreach($roles = \App\Models\UserRole::all() as $role)
+                                    @if(($role->id) == ($user_found->role->id))
                                         <input id="na" name="role" type="radio" checked value="{{$role->id}}"/>
                                         <button for="na" onclick="">{{$role->role}}</button>
                                     @else
@@ -62,7 +67,7 @@
                                         <button for="on" onclick="">{{$role->role}}</button>
                                     @endif
                                 @endforeach
-
+                                -->
                             </div>
                         </div>
 

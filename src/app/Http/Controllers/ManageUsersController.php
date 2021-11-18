@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateCrewRequest;
 use App\Http\Requests\UpdateUsersRequest;
+use App\Http\Requests\StoreRequestRoleRequest;
+use App\Models\Crew;
 use App\Models\RoleRequest;
-use App\Models\Team;
 use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Http\RedirectResponse;
@@ -25,6 +27,7 @@ class ManageUsersController extends Controller
      */
     public function index()
     {
+
         $users = User::all();
         $request_roles = RoleRequest::where("granted", null)->get();
         return view("user.index", compact("users", "request_roles"));
@@ -42,21 +45,6 @@ class ManageUsersController extends Controller
 
 
     /**
-     * Create a personal team for the user.
-     *
-     * @param User $user
-     * @return void
-     */
-    protected function createTeam(User $user)
-    {
-        $user->ownedTeams()->save(Team::forceCreate([
-            'user_id' => $user->id,
-            'name' => explode(' ', $user->name, 2)[0]."'s Team",
-            'personal_team' => true,
-        ]));
-    }
-
-    /**
      * Create a newly registered user.
      *
      * @param array $input
@@ -65,13 +53,13 @@ class ManageUsersController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = $request->validated();
-
         DB::transaction(function () use ($user) {
             return tap(User::create([
                 'name' => $user['name'],
                 'email' => $user['email'],
                 'password' => Hash::make($user['password']),
-                'role' => $user['role'],
+                'role_id' => $user['role'],
+                "crew_id" => Crew::getDefaultCrewId()
             ]), function (User $created_user) {
                 $created_user->genToken();
                 $created_user->genRole();
@@ -150,17 +138,15 @@ class ManageUsersController extends Controller
     /**
      * Add user role request to the request list
      *
-     * @param Request $request
+     * @param StoreRequestRoleRequest $request
      * @param $id
      * @return RedirectResponse
      */
-    public function RequestRole(Request $request, $id)
+    public function RequestRole(StoreRequestRoleRequest $request, $id)
     {
-
         $role = $request->input('role');
         $user = User::find($id);
-
-        if ($user->getRoleid() == $role) {
+        if ($user->role->id == $role) {
             return redirect()->back();
         }
         RoleRequest::create(['user' => $user->id, 'role' => $role]);
@@ -177,7 +163,7 @@ class ManageUsersController extends Controller
     {
         $request = RoleRequest::find($id);
         $user = User::find($request->getUserId());
-        $user->update(["role" => $request->getRoleId()]);
+        $user->update(["role_id" => $request->getRoleId()]);
         $request->update(["granted" => date("Y-m-d H:i:s")]);
 
         return redirect()->back();
@@ -204,11 +190,11 @@ class ManageUsersController extends Controller
      * @param $id
      * @return RedirectResponse
      */
-    public function ChangeTeam(Request $request, $id)
+    public function ChangeTeam(UpdateCrewRequest $request, $id)
     {
         $crew = $request->input('crew');
         $user = User::find($id);
-        $user->current_team_id = $crew;
+        $user->crew_id = $crew;
         $user->save();
         return redirect()->back();
     }

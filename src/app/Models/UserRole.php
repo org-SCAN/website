@@ -87,4 +87,18 @@ class UserRole extends Model
 
         return ($this->importance >= $permissions[$routeNameExploded[0]]);
     }
+
+    public function users(){
+        return $this->hasMany(User::class);
+    }
+
+    public static function biggestRole()
+    {
+        return self::orderBy("importance", "desc")->first()->id;
+    }
+
+    public static function smallestRole()
+    {
+        return self::orderBy("importance")->first()->id;;
+    }
 }

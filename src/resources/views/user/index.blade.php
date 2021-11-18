@@ -46,10 +46,10 @@
                                             <a href="{{route("user.show", $user->id)}}" class="text-indigo-600 hover:text-blue-900">{{$user->email}}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("user.show", $user->id)}}" class="text-indigo-600 hover:text-blue-900">{{$user->role}}</a>
+                                            <a href="{{route("user.show", $user->id)}}" class="text-indigo-600 hover:text-blue-900">{{$user->role->role}}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("crew.show", $user->getCurrentTeamId())}}" class="text-indigo-600 hover:text-blue-900">{{$user->current_team_id}}</a>
+                                            <a href="{{route("crew.show", $user->crew->id)}}" class="text-indigo-600 hover:text-blue-900">{{$user->crew->name}}</a>
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
