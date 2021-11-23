@@ -42,6 +42,15 @@ class Refugee extends Model
     const route_base = "manage_refugees";
 
     /**
+     * The fields that describe the user.
+     */
+    public function fields()
+    {
+        return $this->belongsToMany(Field::class)->withTimestamps();;
+    }
+
+
+    /**
      * It returns a representative value, witch could be shown to discribe the element
      *
      * @return mixed
