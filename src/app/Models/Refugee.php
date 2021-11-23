@@ -46,7 +46,9 @@ class Refugee extends Model
      */
     public function fields()
     {
-        return $this->belongsToMany(Field::class)->withTimestamps();;
+        return $this->belongsToMany(Field::class)
+            ->withPivot("value")
+            ->withTimestamps();;
     }
 
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Faker\Factory as Faker;
 
-class FieldRefugee extends Model
+class FieldRefugee extends Pivot
 {
     use HasFactory, Uuids;
 
