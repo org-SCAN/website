@@ -212,9 +212,24 @@ class Field extends Model
      * @param $value
      * @return string
      */
+    /*
     public function getLinkedListAttribute($value){
         $linked_list =  ListControl::find($value);
         return (empty($linked_list) ? "" : $linked_list->title);
+    }
+    */
+    public function getValue(){
+        if(empty(($this->linked_list))) {
+            return $this->pivot->value;
+        }
+        $model = 'App\Models\\' . $this->linkedList->name;
+        $id = $this->pivot->value;
+        $displayed_value = $this->linkedList->displayed_value;
+        return $model::find($id)->$displayed_value;
+    }
+
+    public function linkedList(){
+        return $this->hasOne(ListControl::class, "id","linked_list");
     }
 
     /**

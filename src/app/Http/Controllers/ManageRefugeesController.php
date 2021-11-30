@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateRefugeeRequest;
 use App\Models\ApiLog;
 use App\Models\Field;
 use App\Models\Link;
+use App\Models\ListControl;
 use App\Models\Refugee;
 use Illuminate\Http\Request;
 use Illuminate\Http\RequestRefugeeRequest;
@@ -115,6 +116,7 @@ class ManageRefugeesController extends Controller
             ->orderBy("required")
             ->orderBy("order")
             ->get();
+
         $refugee = Refugee::find($id);
         $links = Link::where("from", $id)->orWhere("to", $id)->get();
 

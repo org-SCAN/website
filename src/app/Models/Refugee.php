@@ -48,7 +48,7 @@ class Refugee extends Model
     {
         return $this->belongsToMany(Field::class)
             ->withPivot("value")
-            ->withTimestamps();;
+            ->withTimestamps();
     }
 
 
@@ -196,6 +196,19 @@ class Refugee extends Model
     {
         return $this->attributes['residence'];
     }
+    /*
+    public function relations(){
+        return $this->fromRelation() + $this->toRelation();
+    }
+    */
+    public function fromRelation(){
+        return $this->belongsToMany(Relation::class, "links", "from", "relation");
+    }
+
+    public function toRelation(){
+        return $this->belongsToMany(Relation::class, "links", "to", "relation");
+    }
+
 
     public static function getRefugeeIdFromReference($reference, $application_id)
     {

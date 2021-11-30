@@ -45,6 +45,14 @@ class ListControl extends Model
         // 2. Create a new table -> for the list column name
     }
 
+    public function fields(){
+        return $this->hasMany(Field::class, "linked_list");
+    }
+
+    public function list_content(){
+        $model = 'App\Models\\' . $this->name;
+        return $this->hasMany($model);
+    }
     public function getListContent()
     {
 

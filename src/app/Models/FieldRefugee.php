@@ -38,6 +38,10 @@ class FieldRefugee extends Pivot
 
     public $incrementing = false;
 
+    public function hello(){
+        return "ni hao";
+    }
+
     public static function random_fields(){
         $faker = Faker::create();
         return [
