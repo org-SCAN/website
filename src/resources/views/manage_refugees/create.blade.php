@@ -19,24 +19,24 @@
                         @foreach($fields as $field)
 
                             <div class="px-4 py-5 bg-white sm:p-6">
-                                <label for="{{$field->label}}"
+                                <label for="{{$field->id}}"
                                        class="block font-medium text-sm text-gray-700">{{$field->title}}</label>
                                 @if($field->linked_list != "")
                                     @php
-                                        $list=$field->getLinkedListContent()
+                                        $list=$field->getLinkedListContent();
                                     @endphp
 
 
-                                    @livewire("select-dropdown", ['label' => $field->label, 'placeholder' => "--
+                                    @livewire("select-dropdown", ['label' => $field->id, 'placeholder' => "--
                                     Select your ".$field->title." --", 'datas' => $list])
                                     @stack('scripts')
                                 @elseif($field->html_data_type == "textarea")
-                                    <textarea name="{{$field->label}}" id="{{$field->label}}"
+                                    <textarea name="{{$field->id}}" id="{{$field->id}}"
                                               class="form-input rounded-md shadow-sm mt-1 block w-full"
                                               placeholder="{{$field->placeholder ?? ''}}"></textarea>
                                 @else
-                                    <input type="{{$field->html_data_type}}" name="{{$field->label}}"
-                                           id="{{$field->label}}"
+                                    <input type="{{$field->html_data_type}}" name="{{$field->id}}"
+                                           id="{{$field->id}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"
                                            placeholder="{{$field->placeholder ?? ''}}"/>
                                 @endif

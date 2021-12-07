@@ -68,7 +68,8 @@ class ManageRefugeesController extends Controller
      */
     public function store(StoreRefugeeRequest $request)
     {
-
+        var_dump($request);
+        die();
         $refugee = $request->validated();
 
         $refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i', time()));
