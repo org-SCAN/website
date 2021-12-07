@@ -15,6 +15,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 1,
+		"descriptive_value" : 1,
+		"best_descriptive_value" : 0,
         "validation_laravel": "regex:/^[A-Z]{3}-[0-9]{6}$/|nullable"
     },
     {
@@ -33,6 +35,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 2,
+		"descriptive_value" : 1,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|required"
     },
     {
@@ -51,6 +55,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 3,
+		"descriptive_value" : 1,
+		"best_descriptive_value" : 1,
         "validation_laravel": "string|required|max:250"
     },
     {
@@ -69,6 +75,8 @@
         "attribute": "",
         "database_type": "integer",
         "order": 4,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "required|integer"
     },
     {
@@ -87,6 +95,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 5,
+		"descriptive_value" : 1,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable"
     },
     {
@@ -105,6 +115,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 6,
+		"descriptive_value" : 1,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable"
     },
     {
@@ -123,6 +135,8 @@
         "attribute": "",
         "database_type": "date",
         "order": 7,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "date|nullable"
     },
     {
@@ -141,6 +155,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 8,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -159,6 +175,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 9,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -177,6 +195,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 10,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -195,6 +215,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 11,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable"
     },
     {
@@ -213,6 +235,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 12,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -231,6 +255,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 13,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -249,6 +275,8 @@
         "attribute": "",
         "database_type": "date",
         "order": 14,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "date|nullable"
     },
     {
@@ -267,6 +295,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 15,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable"
     },
     {
@@ -285,6 +315,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 16,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable"
     },
     {
@@ -303,6 +335,8 @@
         "attribute": "",
         "database_type": "date",
         "order": 17,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "date|nullable"
     },
     {
@@ -321,6 +355,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 18,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -339,6 +375,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 19,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -357,6 +395,8 @@
         "attribute": "",
         "database_type": "text",
         "order": 20,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "nullable|String"
     },
     {
@@ -375,6 +415,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 21,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -393,6 +435,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 22,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     }
 ]

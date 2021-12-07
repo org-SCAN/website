@@ -45,6 +45,12 @@ class CreateFieldsTable extends Migration
             $table->string("validation_laravel")
                 ->nullable();
             $table->foreignUuid("crew_id");
+            $table->boolean("best_descriptive_value")
+                ->default(0)
+                ->nullable();
+            $table->boolean("descriptive_value")
+                ->default(0)
+                ->nullable();
 
             $table->softDeletes();
             $table->timestamps();

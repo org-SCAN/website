@@ -66,22 +66,24 @@
                                 </th>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-800 uppercase tracking-wider"></th>
                                 </thead>
-                                @foreach($links as $link)
-                                    <tr class="border-b">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                            <a href="{{route("manage_refugees.show", $link->getFromId())}}">{{$link->from }}</a>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                            {{ $link->relation }}
-                                            <small>{{$link->detail}}</small>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                            <a href="{{route("manage_refugees.show", $link->getToId())}}">{{$link->to }}</a>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                            <a href="{{route("links.edit", $link->id)}}">Edit</a>
-                                        </td>
-                                    </tr>
+                                @foreach($refugee->relations as $sided_relations)
+                                    @foreach($sided_relations as $link)
+                                        <tr class="border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                <a href="{{route("manage_refugees.show", $link->pivot->from)}}">{{$link->pivot->refugeeFrom->best_descriptive_value }}</a>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                {{ $link->name }}
+                                                <small>{{$link->detail}}</small>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                <a href="{{route("manage_refugees.show", $link->pivot->to)}}">{{$link->pivot->refugeeTo->best_descriptive_value }}</a>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                <a href="{{route("links.edit", $link->id)}}">Edit</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 @endforeach
                             </table>
                         </div>

@@ -202,11 +202,11 @@ class Refugee extends Model
     }
     */
     public function fromRelation(){
-        return $this->belongsToMany(Relation::class, "links", "from", "relation");
+        return $this->belongsToMany(Relation::class, "links", "from", "relation")->using(Link::class)->withPivot("to");
     }
 
     public function toRelation(){
-        return $this->belongsToMany(Relation::class, "links", "to", "relation");
+        return $this->belongsToMany(Relation::class, "links", "to", "relation")->using(Link::class)->withPivot("from");
     }
 
 
@@ -217,6 +217,17 @@ class Refugee extends Model
         return !empty($refugee) ? $refugee->id : null;
     }
 
+    public function getRepresentativeValuesAttribute(){
+        return $this->fields->where("representative_value", 1);
+    }
+
+    public function getBestDescriptiveValueAttribute(){
+        return $this->fields->where("best_descriptive_value", 1)->first()->pivot->value;
+    }
+
+    public function getRelationsAttribute(){
+        return [$this->fromRelation,$this->toRelation];
+    }
     public static function handleApiRequest($refugee)
     {
         $potential_refugee = Refugee::getRefugeeIdFromReference($refugee["unique_id"], $refugee["application_id"]);
