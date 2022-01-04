@@ -142,4 +142,9 @@ class User extends Authenticatable
     {
         return UserRole::find($this->role->id)->hasPermission($routeName);
     }
+
+    public function getRoleNameAttribute()
+    {
+        return $this->role->role;
+    }
 }

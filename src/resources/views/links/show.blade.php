@@ -48,10 +48,11 @@
                                         Associate list
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-900 bg-white divide-y divide-gray-200">
-                                        @if(!empty($field->linked_list))
-                                            <a href="{{route("lists_control.show", $field->getLinkedListId())}}">{{ $field->linked_list }}</a>
+                                        @if(!empty($field->pivot->from))
+                                            <a href="{{route("lists_control.show", $field->pivot->from)}}">{{ $field->pivot->refugeeFrom->best_descriptive_value}}</a>
+                                            <a href="{{route("lists_control.show", $field->pivot->to)}}">{{ $field->pivot->refugeeTo->best_descriptive_value }}</a>
                                         @else
-                                            {{ $field->linked_list }}
+
                                         @endif
                                     </td>
                                 </tr>

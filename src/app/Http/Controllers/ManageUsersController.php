@@ -21,6 +21,17 @@ use Illuminate\Support\Facades\Hash;
 class ManageUsersController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //  $this->authorizeResource(User::class, 'user');
+    }
+
+
+    /**
      * Display a listing of the resource.
      *
      * @return Response

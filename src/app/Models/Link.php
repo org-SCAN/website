@@ -63,6 +63,11 @@ class Link extends Pivot
         return $this->belongsTo(Refugee::class, "to");
     }
 
+    public function relation()
+    {
+        return $this->belongsTo(Relation::class, "relation");
+    }
+
     /**
      *
      * Get relation name
