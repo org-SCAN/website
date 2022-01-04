@@ -4,9 +4,8 @@ namespace App\Models;
 
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Link extends Pivot
 {
@@ -54,10 +53,13 @@ class Link extends Pivot
         return $this->from . " <-> " . $this->to;
     }
 
-    public function refugeeFrom(){
+    public function refugeeFrom()
+    {
         return $this->belongsTo(Refugee::class, "from");
     }
-    public function refugeeTo(){
+
+    public function refugeeTo()
+    {
         return $this->belongsTo(Refugee::class, "to");
     }
 

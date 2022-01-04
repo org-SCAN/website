@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRequestRoleRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateCrewRequest;
 use App\Http\Requests\UpdateUsersRequest;
-use App\Http\Requests\StoreRequestRoleRequest;
 use App\Models\Crew;
 use App\Models\RoleRequest;
 use App\Models\User;
@@ -13,9 +13,9 @@ use App\Models\UserRole;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 
 
 class ManageUsersController extends Controller
@@ -27,6 +27,7 @@ class ManageUsersController extends Controller
      */
     public function index()
     {
+        $this->authorize("viewAny", Auth::user());
 
         $users = User::all();
         $request_roles = RoleRequest::where("granted", null)->get();
@@ -40,6 +41,7 @@ class ManageUsersController extends Controller
      */
     public function create()
     {
+        $this->authorize("create", Auth::user());
         return view('user.create');
     }
 
@@ -52,6 +54,7 @@ class ManageUsersController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+        $this->authorize("create", Auth::user());
         $user = $request->validated();
         DB::transaction(function () use ($user) {
             return tap(User::create([
@@ -77,6 +80,7 @@ class ManageUsersController extends Controller
      */
     public function show(String $id)
     {
+        $this->authorize("view", Auth::user());
         $user = User::find($id);
         $roles = UserRole::all();
         return view("user.show", compact("user", "roles"));
@@ -93,6 +97,7 @@ class ManageUsersController extends Controller
      */
     public function edit( $id)
     {
+        $this->authorize("edit", Auth::user());
         $user_found = User::find($id);
         return view("user.edit", compact("user_found"));
 
@@ -108,9 +113,10 @@ class ManageUsersController extends Controller
      */
     public function update(UpdateUsersRequest $request, $id)
     {
-       // $id->update($request->validated());
+        // $id->update($request->validated());
         //$user->roles()->sync($request->input('roles', []));
 
+        $this->authorize("edit", Auth::user());
         $user = $request->validated();
 
         User::find($id)
@@ -129,7 +135,7 @@ class ManageUsersController extends Controller
      */
     public function destroy($id)
     {
-
+        $this->authorize("delete", Auth::user());
         User::find($id)->delete();
         return redirect()->route("user.index");
     }

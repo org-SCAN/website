@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateRefugeeRequest;
 use App\Models\ApiLog;
 use App\Models\Field;
 use App\Models\Link;
-use App\Models\ListControl;
 use App\Models\Refugee;
 use Illuminate\Http\Request;
 use Illuminate\Http\RequestRefugeeRequest;
@@ -46,6 +45,7 @@ class ManageRefugeesController extends Controller
             ->orderBy("required")
             ->orderBy("order")
             ->get();
+
         return view("manage_refugees.create", compact("fields"));
     }
 
@@ -68,14 +68,21 @@ class ManageRefugeesController extends Controller
      */
     public function store(StoreRefugeeRequest $request)
     {
-        var_dump($request);
-        die();
-        $refugee = $request->validated();
-
-        $refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i', time()));
+        $fields = $request->validated();
+        foreach ($fields as $key => $value) {
+            if (!empty($value)) {
+                $ref[$key] = ["value" => $value];
+            }
+        }
+        var_dump($ref);
+        //$refugee["date"] = ((isset($fields[Field::where("label", "date")->get()->first()->id]) && !empty($fields[Field::where("label", "date")->get()->first()->id])))
+        //    ? $fields[Field::where("label", "date")->get()->first()->id]
+        //    : date('Y-m-d H:i', time());
+        $refugee["date"] = date('Y-m-d H:i', time());
         $log = ApiLog::createFromRequest($request, "Refugee");
         $refugee["api_log"] = $log->id;
         $new_ref = Refugee::create($refugee);
+        $new_ref->fields()->attach($ref);
         if ($new_ref == null) {
             $log->update(["response" => "Error in creation"]);
         }

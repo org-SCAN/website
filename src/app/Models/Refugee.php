@@ -48,7 +48,8 @@ class Refugee extends Model
     {
         return $this->belongsToMany(Field::class)
             ->withPivot("value")
-            ->withTimestamps();
+            ->withTimestamps()
+            ->using(FieldRefugee::class);
     }
 
 

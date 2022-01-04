@@ -28,21 +28,23 @@
 
 
                                     @livewire("select-dropdown", ['label' => $field->id, 'placeholder' => "--
-                                    Select your ".$field->title." --", 'datas' => $list])
+                                    Select your ".$field->title." --", 'datas' => $list, 'selected_value' =>
+                                    old($field->id)])
                                     @stack('scripts')
                                 @elseif($field->html_data_type == "textarea")
                                     <textarea name="{{$field->id}}" id="{{$field->id}}"
                                               class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                              placeholder="{{$field->placeholder ?? ''}}"></textarea>
+                                              placeholder="{{$field->placeholder ?? ''}}">{{old($field->id)}}</textarea>
                                 @else
                                     <input type="{{$field->html_data_type}}" name="{{$field->id}}"
                                            id="{{$field->id}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                           placeholder="{{$field->placeholder ?? ''}}"/>
-                                @endif
-                                @error($field->label)
-                                <p class="text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                           placeholder="{{$field->placeholder ?? ''}}" value=@error($field->id) "" @else
+                                        "{{old($field->id)}}" @enderror/>
+                                    @endif
+                                    @error($field->id)
+                                    <p class="text-sm text-red-600">{{ Str::replace($field->id, $field->title, $message) }}</p>
+                                    @enderror
                             </div>
                         @endforeach
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">

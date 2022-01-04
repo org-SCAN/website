@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Field;
 use App\Traits\Uuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Pivot;
 use Faker\Factory as Faker;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class FieldRefugee extends Pivot
 {
@@ -38,9 +36,6 @@ class FieldRefugee extends Pivot
 
     public $incrementing = false;
 
-    public function hello(){
-        return "ni hao";
-    }
 
     public static function random_fields(){
         $faker = Faker::create();

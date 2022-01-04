@@ -2,22 +2,28 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <b>{{ $refugee->full_name }}</b> details
+            <b>{{ $refugee->best_descriptive_value }}</b> details
         </h2>
     </x-slot>
 
     <div>
         <div class="max-w-6xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <form action="{{route('manage_refugees.destroy', $refugee->id)}}" method="POST" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                    <a href="{{ route('manage_refugees.index') }}" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to list</a>
+                <form action="{{route('manage_refugees.destroy', $refugee->id)}}" method="POST"
+                      class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <a href="{{ route('manage_refugees.index') }}"
+                       class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to list</a>
                     @if(Auth::user()->hasPermission("manage_refugees.edit"))
-                    <a href="{{ route('manage_refugees.edit', $refugee->id) }}" class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">Edit</a>
+                        <a href="{{ route('manage_refugees.edit', $refugee->id) }}"
+                           class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">Edit</a>
                     @endif
                     @method('DELETE')
                     @csrf
                     @if(Auth::user()->hasPermission("manage_refugees.destroy"))
-                    <button type="submit" class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">Delete</button>
+                        <button type="submit"
+                                class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
+                            Delete
+                        </button>
                     @endif
                 </form>
             </div>
