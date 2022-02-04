@@ -49,7 +49,9 @@ class Refugee extends Model
         return $this->belongsToMany(Field::class)
             ->withPivot("value")
             ->withTimestamps()
-            ->using(FieldRefugee::class);
+            ->using(FieldRefugee::class)
+            ->orderBy("required")
+            ->orderBy("order");
     }
 
 

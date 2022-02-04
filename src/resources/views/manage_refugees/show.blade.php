@@ -1,4 +1,4 @@
-@section('title','View '.$refugee->full_name." details")
+@section('title','View '.$refugee->best_descriptive_value." details")
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">

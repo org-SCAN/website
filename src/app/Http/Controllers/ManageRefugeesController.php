@@ -74,7 +74,6 @@ class ManageRefugeesController extends Controller
                 $ref[$key] = ["value" => $value];
             }
         }
-        var_dump($ref);
         //$refugee["date"] = ((isset($fields[Field::where("label", "date")->get()->first()->id]) && !empty($fields[Field::where("label", "date")->get()->first()->id])))
         //    ? $fields[Field::where("label", "date")->get()->first()->id]
         //    : date('Y-m-d H:i', time());
@@ -124,7 +123,6 @@ class ManageRefugeesController extends Controller
             ->orderBy("required")
             ->orderBy("order")
             ->get();
-
         $refugee = Refugee::find($id);
         $links = Link::where("from", $id)->orWhere("to", $id)->get();
 
@@ -145,7 +143,12 @@ class ManageRefugeesController extends Controller
             ->orderBy("required")
             ->orderBy("order")
             ->get();
-        return view("manage_refugees.edit", compact("refugee", "fields"));
+
+        $labels = array_column($refugee->fields->toArray(), "label");
+        $values = array_column(array_column($refugee->fields->toArray(), "pivot"), "value");
+        $refugee_detail = array_combine($labels, $values);
+
+        return view("manage_refugees.edit", compact("refugee", "fields", "refugee_detail"));
     }
 
     /**
