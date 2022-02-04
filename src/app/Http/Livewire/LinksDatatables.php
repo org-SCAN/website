@@ -44,16 +44,6 @@ class LinksDatatables extends LivewireDatatable
         }
 
         return [
-            // Column::checkbox()
-
-            /*
-        Column::name('from')
-            ->hide(),
-        Column::name('to')
-            ->hide(),
-            */
-
-
             Column::callback('id', function ($id) {
                 $ref = Link::find($id)->refugeeFrom;
                 $nameFrom = $ref->best_descriptive_value;
