@@ -50,27 +50,28 @@
                         </div>
 
                         <div class="px-4 py-5 bg-white sm:p-6">
-                            <label for="role" class="block font-medium text-sm text-gray-700">Role</label>
+                            <label for="role_id" class="block font-medium text-sm text-gray-700">Role</label>
 
                             <div class="switch-toggle switch-3 switch-candy">
-                                @livewire("select-dropdown", ['label' => 'role', 'placeholder' => "-- Select the role --", 'datas' =>
-                                array_column(\App\Models\UserRole::orderBy("importance")->get()->toArray() , 'role', 'id'), "selected_value"=>$user_found->role->id])
+                                @livewire("select-dropdown", ['label' => 'role_id', 'placeholder' => "-- Select the role
+                                --", 'datas' =>
+                                array_column(\App\Models\UserRole::orderBy("importance")->get()->toArray() , 'role',
+                                'id'), "selected_value"=>$user_found->role->id])
                                 @stack('scripts')
-
-                                <!--
-                                @foreach($roles = \App\Models\UserRole::all() as $role)
-                                    @if(($role->id) == ($user_found->role->id))
-                                        <input id="na" name="role" type="radio" checked value="{{$role->id}}"/>
-                                        <button for="na" onclick="">{{$role->role}}</button>
-                                    @else
-                                        <input id="on" name="role" type="radio" value="{{$role->id}}"/>
-                                        <button for="on" onclick="">{{$role->role}}</button>
-                                    @endif
-                                @endforeach
-                                -->
                             </div>
                         </div>
 
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            <label for="crew_id" class="block font-medium text-sm text-gray-700">Team</label>
+
+                            <div class="switch-toggle switch-3 switch-candy">
+                                @livewire("select-dropdown", ['label' => 'crew_id', 'placeholder' => "-- Select the team
+                                --", 'datas' =>
+                                array_column(\App\Models\Crew::all()->toArray() , 'name', 'id'),
+                                "selected_value"=>$user_found->crew->id])
+                                @stack('scripts')
+                            </div>
+                        </div>
 
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button

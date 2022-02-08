@@ -29,14 +29,18 @@ class UpdateUsersRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'email'   => [
+            'email' => [
                 'required',
                 "unique:users,email,{$this->user}",
             ],
-            'role'   => [
+            'role_id' => [
                 'required',
                 'exists:user_roles,id',
             ],
+            'crew_id' => [
+                'required',
+                'exists:crews,id',
+            ]
         ];
 
         return $rules;

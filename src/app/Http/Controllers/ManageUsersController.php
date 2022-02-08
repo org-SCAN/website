@@ -108,7 +108,7 @@ class ManageUsersController extends Controller
      */
     public function edit( $id)
     {
-        $this->authorize("edit", Auth::user());
+        $this->authorize("update", Auth::user());
         $user_found = User::find($id);
         return view("user.edit", compact("user_found"));
 
@@ -127,7 +127,7 @@ class ManageUsersController extends Controller
         // $id->update($request->validated());
         //$user->roles()->sync($request->input('roles', []));
 
-        $this->authorize("edit", Auth::user());
+        $this->authorize("update", Auth::user());
         $user = $request->validated();
 
         User::find($id)
