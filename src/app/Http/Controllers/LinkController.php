@@ -34,7 +34,7 @@ class LinkController extends Controller
      */
     public function create()
     {
-        $lists["refugees"] = array_column(Refugee::all()->toArray(), "full_name", "id");
+        $lists["refugees"] = Refugee::getAllBestDescriptiveValues();
         $lists["relations"] = array_column(Relation::all()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
         return view("links.create", compact("lists"));
     }
