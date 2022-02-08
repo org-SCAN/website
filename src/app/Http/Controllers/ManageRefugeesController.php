@@ -160,10 +160,21 @@ class ManageRefugeesController extends Controller
      */
     public function update(UpdateRefugeeRequest $request, $refugee_id)
     {
-        $refugee = $request->validated();
-        $refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i', time()));
+        $refugee = Refugee::find($refugee_id);
+        $ids = array_column($refugee->fields->toArray(), "id");
+        $values = array_column(array_column($refugee->fields->toArray(), "pivot"), "value");
+        $old = array_combine($ids, $values);
+
+        foreach (array_diff($request->validated(), $old) as $key => $value) {
+            if (!empty($value)) {
+                $refugee->fields()->updateExistingPivot($key, ["value" => $value]);
+
+            }
+        }
+        //$refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i', time()));
 
         $log = ApiLog::createFromRequest($request, "Refugee");
+        $refugee = [];
         $refugee["api_log"] = $log->id;
 
         Refugee::find($refugee_id)

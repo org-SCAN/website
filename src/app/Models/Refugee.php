@@ -47,6 +47,7 @@ class Refugee extends Model
     public function fields()
     {
         return $this->belongsToMany(Field::class)
+            ->withPivot("id")
             ->withPivot("value")
             ->withTimestamps()
             ->using(FieldRefugee::class)
@@ -204,12 +205,22 @@ class Refugee extends Model
         return $this->fromRelation() + $this->toRelation();
     }
     */
-    public function fromRelation(){
-        return $this->belongsToMany(Relation::class, "links", "from", "relation")->using(Link::class)->withPivot("to");
+    public function fromRelation()
+    {
+        return $this->belongsToMany(Relation::class, "links", "from", "relation")
+            ->using(Link::class)
+            ->wherePivotNull("deleted_at")
+            ->withPivot("to")
+            ->withPivot("id");
     }
 
-    public function toRelation(){
-        return $this->belongsToMany(Relation::class, "links", "to", "relation")->using(Link::class)->withPivot("from");
+    public function toRelation()
+    {
+        return $this->belongsToMany(Relation::class, "links", "to", "relation")
+            ->using(Link::class)
+            ->wherePivotNull("deleted_at")
+            ->withPivot("from")
+            ->withPivot("id");
     }
 
 
@@ -220,7 +231,8 @@ class Refugee extends Model
         return !empty($refugee) ? $refugee->id : null;
     }
 
-    public function getRepresentativeValuesAttribute(){
+    public function getRepresentativeValuesAttribute()
+    {
         return $this->fields->where("representative_value", 1);
     }
 

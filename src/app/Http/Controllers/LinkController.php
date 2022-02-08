@@ -133,7 +133,7 @@ class LinkController extends Controller
     public function edit($id)
     {
         $link = Link::find($id);
-        $lists["relations"] = [$link->getRelationId() => $link->relation]+array_column(Relation::where("deleted",0)->get()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
+        $lists["relations"] = [$link->getRelationId() => $link->relation] + array_column(Relation::all()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
         return view("links.edit", compact("link","lists"));
     }
 

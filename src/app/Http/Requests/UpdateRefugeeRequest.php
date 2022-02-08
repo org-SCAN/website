@@ -28,7 +28,7 @@ class UpdateRefugeeRequest extends FormRequest
         $hiddens = $hiddens->getHidden();
         $fields = Field::where("status", ">", 0)->get();
         $fields = $fields->makeVisible($hiddens)->toArray();
-        $rules = array_column($fields, 'validation_laravel', "label");
+        $rules = array_column($fields, 'validation_laravel', "id");
         return $rules;
     }
 }
