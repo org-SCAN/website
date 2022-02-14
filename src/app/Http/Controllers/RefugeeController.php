@@ -48,6 +48,28 @@ class RefugeeController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param \App\Models\Refugee $manage_refugee
+     * @return Response
+     **/
+    public function show(Refugee $manage_refugee)
+    {
+        // ddd($manage_refugee);
+        //$this->authorize("view", $id);
+        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $fields = Field::where("status", ">", 0)
+            ->where("crew_id", Auth::user()->crew->id)
+            ->orderBy("required")
+            ->orderBy("order")
+            ->get();
+        //$refugee = Refugee::find($id);
+        $links = Link::where("from", $refugee->id)->orWhere("to", $refugee->id)->get();
+
+        return view("manage_refugees.show", compact("refugee", "fields", "links"));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response
