@@ -19,6 +19,15 @@ use Illuminate\Support\Facades\URL;
 
 class ManageRefugeesController extends Controller
 {
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // $this->authorizeResource(Refugee::class, 'refugee');
+    }
 
     /**
      * Display a listing of the resource.
@@ -28,8 +37,11 @@ class ManageRefugeesController extends Controller
     public function index()
     {
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $refugees = Refugee::orderByDesc("date")->get();
+        $refugees = Refugee::with(['crew' => function ($query) {
+            $query->where('crews.id', Auth::user()->crew->id);
+        }])
+            ->orderByDesc("date")
+            ->get();
 
         return view("manage_refugees.index", compact("refugees"));
     }
@@ -117,7 +129,7 @@ class ManageRefugeesController extends Controller
      *
      * @param String $id
      * @return Response
-     */
+     **/
     public function show(String $id)
     {
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -214,6 +226,7 @@ class ManageRefugeesController extends Controller
     {
 
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        die();
         Refugee::find($refugee_id)->delete();
         return redirect()->route("manage_refugees.index");
     }

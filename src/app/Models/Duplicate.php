@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Duplicate extends Model
 {
@@ -19,6 +19,7 @@ class Duplicate extends Model
      */
     public static function getDuplicates()
     {
+
         $duplicate_ids = DB::table("refugees")->select("unique_id")->whereNull("deleted_at")->groupBy("unique_id")->havingRaw('count(*) > 1')->pluck("unique_id");
 
         if (empty($duplicate_ids)) {

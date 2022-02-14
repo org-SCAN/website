@@ -6,6 +6,7 @@ use App\Models\Country;
 use App\Models\Gender;
 use App\Models\Refugee;
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
@@ -31,10 +32,10 @@ class RefugeesDatatables extends LivewireDatatable
                 }
                 die();*/
         return Refugee::query()
+            ->leftJoin("api_logs", "api_logs.id", "refugees.api_log")
+            ->leftJoin("crews", "crews.id", "api_logs.crew_id")
+            ->where('crews.id', '=', Auth::user()->crew->id)
             ->orderByDesc("date");
-        //  ->leftJoin("field_refugee", "field_refugee.refugee_id", "refugees.id")
-        //    ->leftJoin("fields", "fields.id", "field_refugee.field_id")
-        //   ->where('fields.label', '=', $this->field->label);
 
     }
 
@@ -58,7 +59,10 @@ class RefugeesDatatables extends LivewireDatatable
         return [
 
             Column::callback('id', function ($id) {
-                $reference = Refugee::find($id)
+                $reference = Refugee::with(['crew' => function ($query) {
+                    $query->where('crews.id', Auth::user()->crew->id);
+                }])
+                    ->find($id)
                     ->fields->where("label", "unique_id")->first();
                 return $reference ? $reference->pivot->value : "";
             }, "1")
@@ -66,7 +70,10 @@ class RefugeesDatatables extends LivewireDatatable
                 ->filterable(),
 
             Column::callback('id', function ($id) {
-                $name = Refugee::find($id)
+                $name = Refugee::with(['crew' => function ($query) {
+                    $query->where('crews.id', Auth::user()->crew->id);
+                }])
+                    ->find($id)
                     ->fields
                     ->where("label", "full_name")
                     ->first();
@@ -78,7 +85,10 @@ class RefugeesDatatables extends LivewireDatatable
 
             Column::callback('id', function ($id) {
                 $displayed = Gender::getDisplayedValue();
-                $gender = Refugee::find($id)
+                $gender = Refugee::with(['crew' => function ($query) {
+                    $query->where('crews.id', Auth::user()->crew->id);
+                }])
+                    ->find($id)
                     ->fields
                     ->where("label", "gender")
                     ->first();
@@ -90,7 +100,10 @@ class RefugeesDatatables extends LivewireDatatable
 
             Column::callback('id', function ($id) {
                 $displayed = Country::getDisplayedValue();
-                $country = Refugee::find($id)
+                $country = Refugee::with(['crew' => function ($query) {
+                    $query->where('crews.id', Auth::user()->crew->id);
+                }])
+                    ->find($id)
                     ->fields
                     ->where("label", "nationality")
                     ->first();
@@ -101,7 +114,10 @@ class RefugeesDatatables extends LivewireDatatable
 
             Column::callback('id', function ($id) {
                 $displayed = Role::getDisplayedValue();
-                $role = Refugee::find($id)
+                $role = Refugee::with(['crew' => function ($query) {
+                    $query->where('crews.id', Auth::user()->crew->id);
+                }])
+                    ->find($id)
                     ->fields
                     ->where("label", "role")
                     ->first();

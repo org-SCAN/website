@@ -61,156 +61,28 @@ class Refugee extends Model
 
     /**
      * The Api log to which the refugee is associated.
+     **/
+    /* public function api_log()
+     {
+         return $this->belongsTo(ApiLog::class, "api_log");
+     }
+ */
+    /**
+     * The crew to which the refugee is associated.
      */
-    public function api_log()
+    public function crew()
     {
-        return $this->belongsTo(ApiLog::class, "api_log");
+        return $this->hasOneThrough(Crew::class, ApiLog::class, "id", "id", "api_log", "crew_id");
     }
 
     /**
-     * It returns a representative value, witch could be shown to discribe the element
-     *
-     * @return mixed
+     * The user to which the refugee is associated.
      */
-    public function getRepresentativeValue()
+    public function user()
     {
-        return $this->full_name;
+        return $this->hasOneThrough(User::class, ApiLog::class, "id", "id", "api_log", "user_id");
     }
 
-    /**
-     * Indicate the nationality according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getNationalityAttribute($value){
-        return Country::getDisplayedValueContent($value);
-    }
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getNationalityId(){
-        return $this->attributes['nationality'];
-    }
-
-    /**
-     * Store the country id accorting its key or its ISO3 contry code
-     * @param $value
-     */
-
-    public function setNationalityAttribute($value){
-        $this->attributes["nationality"] = Country::getIdFromValue($value);
-    }
-
-    /**
-     * Store the sex id accorting its key or its code
-     * @param $value
-     */
-
-    public function setGenderAttribute($value){
-        $this->attributes["gender"] = Gender::getIdFromValue($value);
-    }
-
-    /**
-     * Store the role id accorting its key or its code
-     * @param $value
-     */
-
-    public function setRoleAttribute($value){
-        $this->attributes["role"] = Role::getIdFromValue($value);
-    }
-
-    /**
-     * Store the route id accorting its key or its code
-     * @param $value
-     */
-
-    public function setRouteAttribute($value){
-        $this->attributes["route"] = Route::getIdFromValue($value);
-    }
-
-    /**
-     * Store the residence id accorting its key or its code
-     * @param $value
-     */
-
-    public function setResidenceAttribute($value){
-        $this->attributes["residence"] = Country::getIdFromValue($value);
-    }
-
-    /**
-     * Indicate the role according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRoleAttribute($value){
-        return Role::getDisplayedValueContent($value);
-    }
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRoleId(){
-        return $this->attributes['role'];
-    }
-    /**
-     * Indicate the gender according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getGenderAttribute($value){
-        return Gender::getDisplayedValueContent($value);
-    }
-
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getGenderId(){
-        return $this->attributes['gender'];
-    }
-    /**
-     * Indicate the route according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRouteAttribute($value){
-        return Route::getDisplayedValueContent($value);
-    }
-
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRouteId()
-    {
-        return $this->attributes['route'];
-    }
-
-    /**
-     * Indicate the residence according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getResidenceAttribute($value)
-    {
-
-        return Country::getDisplayedValueContent($value);
-    }
-
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getResidenceId()
-    {
-        return $this->attributes['residence'];
-    }
     /*
     public function relations(){
         return $this->fromRelation() + $this->toRelation();
