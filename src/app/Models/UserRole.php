@@ -66,7 +66,7 @@ class UserRole extends Model
                 "edit" => 2,
                 "json" => 2
             ],
-            "manage_refugees" => [
+            "person" => [
                 "index" => 1,
                 "store" => 2,
                 "create" => 2,

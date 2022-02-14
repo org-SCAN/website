@@ -26,7 +26,7 @@ class RefugeeController extends Controller
      */
     public function __construct()
     {
-        $this->authorizeResource(Refugee::class, 'manage_refugee');
+        $this->authorizeResource(Refugee::class, 'person');
     }
 
     /**
@@ -36,37 +36,32 @@ class RefugeeController extends Controller
      */
     public function index()
     {
-        //$this->authorize("viewAny", Auth::user());
-        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $refugees = Refugee::with(['crew' => function ($query) {
             $query->where('crews.id', Auth::user()->crew->id);
         }])
             ->orderByDesc("date")
             ->get();
 
-        return view("manage_refugees.index", compact("refugees"));
+        return view("person.index", compact("refugees"));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Refugee $manage_refugee
+     * @param \App\Models\Refugee $person
      * @return Response
      **/
-    public function show(Refugee $manage_refugee)
+    public function show(Refugee $person)
     {
-        // ddd($manage_refugee);
-        //$this->authorize("view", $id);
-        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $fields = Field::where("status", ">", 0)
             ->where("crew_id", Auth::user()->crew->id)
             ->orderBy("required")
             ->orderBy("order")
             ->get();
-        //$refugee = Refugee::find($id);
-        $links = Link::where("from", $refugee->id)->orWhere("to", $refugee->id)->get();
 
-        return view("manage_refugees.show", compact("refugee", "fields", "links"));
+        $links = Link::where("from", $person->id)->orWhere("to", $person->id)->get();
+
+        return view("person.show", compact("person", "fields", "links"));
     }
 
     /**
@@ -76,15 +71,14 @@ class RefugeeController extends Controller
      */
     public function create()
     {
-        // $this->authorize("create", Auth::user());
-        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $fields = Field::where("status", ">", 0)
             ->where("crew_id", Auth::user()->crew->id)
             ->orderBy("required")
             ->orderBy("order")
             ->get();
 
-        return view("manage_refugees.create", compact("fields"));
+        return view("person.create", compact("fields"));
     }
 
     /**
@@ -94,8 +88,8 @@ class RefugeeController extends Controller
      */
     public function createFromJson()
     {
-        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view("manage_refugees.create_from_json");
+
+        return view("person.create_from_json");
     }
 
     /**
@@ -106,7 +100,7 @@ class RefugeeController extends Controller
      */
     public function store(StoreRefugeeRequest $request)
     {
-        //$this->authorize("create", Auth::user());
+
         $fields = $request->validated();
         foreach ($fields as $key => $value) {
             if (!empty($value)) {
@@ -125,7 +119,7 @@ class RefugeeController extends Controller
             $log->update(["response" => "Error in creation"]);
         }
 
-        return redirect()->route("manage_refugees.index");
+        return redirect()->route("person.index");
     }
 
     /**
@@ -146,51 +140,48 @@ class RefugeeController extends Controller
                 $log->update(["response" => "Error while creating a refugee"]);
             }
         }
-        return redirect()->route("manage_refugees.index");
+        return redirect()->route("person.index");
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param String $id
+     * @param Refugee $person
      * @return Response
      */
-    public function edit(String  $id)
+    public function edit(Refugee $person)
     {
-        //$this->authorize("update", Auth::user());
-        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $refugee = Refugee::find($id);
+
         $fields = Field::where("status", ">", 0)
             ->where("crew_id", Auth::user()->crew->id)
             ->orderBy("required")
             ->orderBy("order")
             ->get();
 
-        $labels = array_column($refugee->fields->toArray(), "label");
-        $values = array_column(array_column($refugee->fields->toArray(), "pivot"), "value");
+        $labels = array_column($person->fields->toArray(), "label");
+        $values = array_column(array_column($person->fields->toArray(), "pivot"), "value");
         $refugee_detail = array_combine($labels, $values);
 
-        return view("manage_refugees.edit", compact("refugee", "fields", "refugee_detail"));
+        return view("person.edit", compact("person", "fields", "refugee_detail"));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param RequestRefugeeRequest $request
-     * @param String $refugee_id
+     * @param Refugee $person
      * @return Response
      */
-    public function update(UpdateRefugeeRequest $request, $refugee_id)
+    public function update(UpdateRefugeeRequest $request, Refugee $person)
     {
-        //$this->authorize("update", Auth::user());
-        $refugee = Refugee::find($refugee_id);
-        $ids = array_column($refugee->fields->toArray(), "id");
-        $values = array_column(array_column($refugee->fields->toArray(), "pivot"), "value");
+
+        $ids = array_column($person->fields->toArray(), "id");
+        $values = array_column(array_column($person->fields->toArray(), "pivot"), "value");
         $old = array_combine($ids, $values);
 
         foreach (array_diff($request->validated(), $old) as $key => $value) {
             if (!empty($value)) {
-                $refugee->fields()->updateExistingPivot($key, ["value" => $value]);
+                $person->fields()->updateExistingPivot($key, ["value" => $value]);
 
             }
         }
@@ -200,9 +191,9 @@ class RefugeeController extends Controller
         $refugee = [];
         $refugee["api_log"] = $log->id;
 
-        Refugee::find($refugee_id)
+        $person
             ->update($refugee);
-        return redirect()->route("manage_refugees.index");
+        return redirect()->route("person.index");
     }
 
     /**
@@ -226,16 +217,13 @@ class RefugeeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param string $refugee_id
+     * @param Refugee $person
      * @return Response
      */
-    public function destroy($refugee_id)
+    public function destroy(Refugee $person)
     {
-        // $this->authorize("delete", Auth::user());
-        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        die();
-        Refugee::find($refugee_id)->delete();
-        return redirect()->route("manage_refugees.index");
+        $person->delete();
+        return redirect()->route("person.index");
     }
 
     /**

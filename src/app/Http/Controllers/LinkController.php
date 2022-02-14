@@ -47,7 +47,7 @@ class LinkController extends Controller
      */
     public function createFromJson()
     {
-        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('person_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view("links.create_from_json");
     }
 

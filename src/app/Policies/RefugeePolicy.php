@@ -29,10 +29,10 @@ class RefugeePolicy
      * Determine whether the user can view the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\Refugee $refugee
+     * @param \App\Models\Refugee $person
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Refugee $refugee)
+    public function view(User $user, Refugee $person)
     {
 
         return $user->role_name == ("viewer") || $user->role_name == ("editor") || $user->role_name == ("admin")
@@ -57,10 +57,10 @@ class RefugeePolicy
      * Determine whether the user can update the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\Refugee $refugee
+     * @param \App\Models\Refugee $person
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Refugee $refugee)
+    public function update(User $user, Refugee $person)
     {
         return $user->role_name == ("editor") || $user->role_name == ("admin")
             ? Response::allow()
@@ -71,13 +71,12 @@ class RefugeePolicy
      * Determine whether the user can delete the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\Refugee $refugee
+     * @param \App\Models\Refugee $person
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Refugee $refugee)
+    public function delete(User $user, Refugee $person)
     {
-
-        return ($user->role_name == ("editor") && $refugee->user->id == $user->id) || $user->role_name == ("admin")
+        return ($user->role_name == ("editor") && $person->user->id == $user->id) || $user->role_name == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -86,10 +85,10 @@ class RefugeePolicy
      * Determine whether the user can restore the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\Refugee $refugee
+     * @param \App\Models\Refugee $person
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Refugee $refugee)
+    public function restore(User $user, Refugee $person)
     {
         //
     }
@@ -98,10 +97,10 @@ class RefugeePolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\Refugee $refugee
+     * @param \App\Models\Refugee $person
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Refugee $refugee)
+    public function forceDelete(User $user, Refugee $person)
     {
         //
     }

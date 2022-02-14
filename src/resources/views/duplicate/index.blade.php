@@ -41,7 +41,7 @@
                                         @php($next_reference = \App\Models\Duplicate::nextID($user_information->unique_id))
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <a href="{{route("manage_refugees.show", $user_information->id)}}"
+                                                <a href="{{route("person.show", $user_information->id)}}"
                                                    class="text-indigo-600 hover:text-blue-900">{{$user_information->full_name}}
                                                     <small>({{$user_information->unique_id}})</small></a>
                                             </td>
@@ -55,7 +55,7 @@
                                             <td class="px-6 py-4 whitespace-nowrap">
 
                                                 <form method="post"
-                                                      action="{{ route('manage_refugees.fix_duplicated_reference', $user_information->id) }}">
+                                                      action="{{ route('person.fix_duplicated_reference', $user_information->id) }}">
                                                     @csrf
                                                     @method('PUT')
                                                     <input type="hidden" name="unique_id" id="unique_id"
@@ -68,9 +68,9 @@
                                                 <div class="block mb-2 mt-1">
 
                                                     <form
-                                                        action="{{route('manage_refugees.destroy', $user_information->id)}}"
+                                                        action="{{route('person.destroy', $user_information->id)}}"
                                                         method="POST">
-                                                        <a href="{{route("manage_refugees.edit", $user_information->id)}}"
+                                                        <a href="{{route("person.edit", $user_information->id)}}"
                                                            class="flex-shrink-0 bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded mr-2">
                                                             <i class="fas fa-edit text-blue-600 hover:text-blue-900"
                                                                title="Edit this refugee!"></i>

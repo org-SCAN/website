@@ -40,7 +40,7 @@ class Refugee extends Model
      * Give the route pattern, used in api log
      * @var string
      */
-    const route_base = "manage_refugees";
+    const route_base = "person";
 
     /**
      * The fields that describe the user.
@@ -80,7 +80,7 @@ class Refugee extends Model
      */
     public function user()
     {
-        return $this->hasOneThrough(User::class, ApiLog::class, "id", "id", "api_log", "user_id");
+        return $this->hasOneThrough(User::class, ApiLog::class, "id", "id", "api_log", "user");
     }
 
     /*

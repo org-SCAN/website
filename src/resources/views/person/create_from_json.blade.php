@@ -13,7 +13,7 @@
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <form method="post" action="{{route('manage_refugees.json.store') }}" enctype="multipart/form-data">
+                <form method="post" action="{{route('person.json.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
@@ -22,11 +22,14 @@
                             </label>
                             <div class="flex flex-col flex-grow mb-3">
                                 <div class="flex flex-col flex-grow mb-3">
-                                    <div x-data="{ files: null }" id="FileUpload" class="block w-full py-2 px-3 relative bg-white appearance-none border-2 border-gray-300 border-dashed rounded-md hover:shadow-outline-gray">
+                                    <div x-data="{ files: null }" id="FileUpload"
+                                         class="block w-full py-2 px-3 relative bg-white appearance-none border-2 border-gray-300 border-dashed rounded-md hover:shadow-outline-gray">
                                         <input type="file"
                                                class="absolute inset-0 z-50 m-0 p-0 w-full h-full outline-none opacity-0"
                                                x-on:change="files = $event.target.files; console.log($event.target.files);"
-                                               x-on:dragover="$el.classList.add('active')" x-on:dragleave="$el.classList.remove('active')" x-on:drop="$el.classList.remove('active')"
+                                               x-on:dragover="$el.classList.add('active')"
+                                               x-on:dragleave="$el.classList.remove('active')"
+                                               x-on:drop="$el.classList.remove('active')"
                                                accept="application/json"
                                                name="refugee_json"
                                                id="refugee_json"

@@ -1,8 +1,8 @@
-@section('title','Edit '.$refugee->full_name)
+@section('title','Edit '.$person->full_name)
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit : <b>{{$refugee->full_name}}</b>
+            Edit : <b>{{$person->full_name}}</b>
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <form method="post" action="{{ route('manage_refugees.update', $refugee) }}">
+                <form method="post" action="{{ route('person.update', $person) }}">
                     @csrf
                     @method('PUT')
                     <div class="shadow overflow-hidden sm:rounded-md">

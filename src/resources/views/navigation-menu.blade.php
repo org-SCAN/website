@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('manage_refugees.index') }}">
+                    <a href="{{ route('person.index') }}">
                         <x-jet-application-mark class="block h-9 w-auto"/>
                     </a>
                 </div>
@@ -19,10 +19,10 @@
                         </x-jet-nav-link>
                     </div>
                 @endif
-                @if(Auth::user()->hasPermission("manage_refugees.index"))
+                @if(Auth::user()->hasPermission("person.index"))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('manage_refugees.index') }}"
-                                        :active="request()->routeIs('manage_refugees.index')">
+                        <x-jet-nav-link href="{{ route('person.index') }}"
+                                        :active="request()->routeIs('person.index')">
                             {{ __('Manage Persons') }}
                         </x-jet-nav-link>
                     </div>
@@ -202,9 +202,9 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            @if(Auth::user()->hasPermission("manage_refugees.index"))
-                <x-jet-responsive-nav-link href="{{ route('manage_refugees.index') }}"
-                                           :active="request()->routeIs('manage_refugees.index')">
+            @if(Auth::user()->hasPermission("person.index"))
+                <x-jet-responsive-nav-link href="{{ route('person.index') }}"
+                                           :active="request()->routeIs('person.index')">
                     {{ __('Manage Persons') }}
                 </x-jet-responsive-nav-link>
             @endif

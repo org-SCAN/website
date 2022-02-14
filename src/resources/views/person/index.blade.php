@@ -9,12 +9,12 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mb-8">
-                @if(Auth::user()->hasPermission("manage_refugees.create"))
-                    <a href="{{ route("manage_refugees.create") }}"
+                @if(Auth::user()->hasPermission("person.create"))
+                    <a href="{{ route("person.create") }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add person</a>
                 @endif
-                @if(Auth::user()->hasPermission("manage_refugees.json.create"))
-                    <a href="{{ route("manage_refugees.json.create") }}"
+                @if(Auth::user()->hasPermission("person.json.create"))
+                    <a href="{{ route("person.json.create") }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add persons from
                         json</a>
                 @endif

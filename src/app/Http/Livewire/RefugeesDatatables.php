@@ -78,7 +78,7 @@ class RefugeesDatatables extends LivewireDatatable
                     ->where("label", "full_name")
                     ->first();
                 $name = $name ? $name->pivot->value : "";
-                return "<a href='" . route('manage_refugees.show', Refugee::find($id)) . "'>$name</a>";
+                return "<a href='" . route('person.show', Refugee::find($id)) . "'>$name</a>";
             }, "2")
                 ->filterable()
                 ->label('Name'),
@@ -141,7 +141,7 @@ class RefugeesDatatables extends LivewireDatatable
                 ->filterable(),
 
             Column::callback(["full_name", 'id'], function ($name, $id) {
-                return "<a href='" . route('manage_refugees.show', $id) . "'>$name</a>";
+                return "<a href='" . route('person.show', $id) . "'>$name</a>";
             })
                 ->filterable()
                 ->label('Name'),
