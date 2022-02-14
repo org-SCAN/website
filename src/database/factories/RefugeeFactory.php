@@ -4,11 +4,7 @@ namespace Database\Factories;
 
 
 use App\Models\ApiLog;
-use App\Models\Country;
-use App\Models\Gender;
 use App\Models\Refugee;
-use App\Models\Role;
-use App\Models\Route;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -35,6 +31,7 @@ class RefugeeFactory extends Factory
         $log["http_method"] = "POST";
         $log["model"] = "Refugee";
         $log["ip"] = "127.0.0.1";
+        $log["crew_id"] = User::where("email", env("DEFAULT_EMAIL"))->first()->crew->id;
 
         $log = ApiLog::create($log);
 

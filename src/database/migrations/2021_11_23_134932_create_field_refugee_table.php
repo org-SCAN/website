@@ -29,6 +29,6 @@ class CreateFieldRefugeeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('field_refugees');
+        Schema::dropIfExists('field_refugee');
     }
 }

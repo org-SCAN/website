@@ -17,6 +17,7 @@ class CreateApiLogsTable extends Migration
             $table->uuid("id")->primary()->unique();
             $table->timestamps();
             $table->foreignUuid("user");
+            $table->foreignUuid("crew_id");
             $table->string("application_id");
             $table->string("api_type");
             $table->ipAddress("ip")->nullable();

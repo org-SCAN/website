@@ -32,6 +32,7 @@ class LinkFactory extends Factory
         $log["http_method"] = "POST";
         $log["model"] = "Link";
         $log["ip"] = "127.0.0.1";
+        $log["crew_id"] = User::where("email", env("DEFAULT_EMAIL"))->first()->crew->id;
 
         $log = ApiLog::create($log);
         return [

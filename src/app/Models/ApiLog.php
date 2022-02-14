@@ -57,6 +57,11 @@ class ApiLog extends Model
         return self::find($push_id)->user;
     }
 
+    public function crew()
+    {
+        return $this->belongsTo(Crew::class)->withDefault();
+    }
+
     public static function createFromRequest($request, $model = null)
     {
         $log = array();
@@ -66,6 +71,7 @@ class ApiLog extends Model
         $log["http_method"] = $request->method();
         $log["model"] = $model;
         $log["ip"] = $request->ip();
+        $log["crew_id"] = $request->user()->crew->id;
 
         return self::create($log);
     }

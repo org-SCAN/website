@@ -13,6 +13,7 @@ use App\Models\Refugee;
 use Illuminate\Http\Request;
 use Illuminate\Http\RequestRefugeeRequest;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 
 
@@ -42,6 +43,7 @@ class ManageRefugeesController extends Controller
     {
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $fields = Field::where("status", ">", 0)
+            ->where("crew_id", Auth::user()->crew->id)
             ->orderBy("required")
             ->orderBy("order")
             ->get();
@@ -120,6 +122,7 @@ class ManageRefugeesController extends Controller
     {
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $fields = Field::where("status", ">", 0)
+            ->where("crew_id", Auth::user()->crew->id)
             ->orderBy("required")
             ->orderBy("order")
             ->get();
@@ -140,6 +143,7 @@ class ManageRefugeesController extends Controller
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $refugee = Refugee::find($id);
         $fields = Field::where("status", ">", 0)
+            ->where("crew_id", Auth::user()->crew->id)
             ->orderBy("required")
             ->orderBy("order")
             ->get();

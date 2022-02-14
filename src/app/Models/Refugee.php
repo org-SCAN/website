@@ -6,6 +6,7 @@ use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Refugee extends Model
 {
@@ -46,7 +47,10 @@ class Refugee extends Model
      */
     public function fields()
     {
+
+        $crew_id = empty(Auth::user()->crew->id) ? User::where("email", env("DEFAULT_EMAIL"))->get()->first()->crew->id : Auth::user()->crew->id;
         return $this->belongsToMany(Field::class)
+            ->where("crew_id", $crew_id)
             ->withPivot("id")
             ->withPivot("value")
             ->withTimestamps()
@@ -55,6 +59,13 @@ class Refugee extends Model
             ->orderBy("order");
     }
 
+    /**
+     * The Api log to which the refugee is associated.
+     */
+    public function api_log()
+    {
+        return $this->belongsTo(ApiLog::class, "api_log");
+    }
 
     /**
      * It returns a representative value, witch could be shown to discribe the element

@@ -51,13 +51,14 @@ class FieldsController extends Controller
         $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field["database_type"]);
         $field["android_type"] = Field::getUITypeFromForm($field["database_type"]);
         $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
-        $field["crew_id"] = Auth::user()->getCurrentTeamId();
+        $field["crew_id"] = Auth::user()->crew->id;
         $field = Field::create($field);
+        /*
         if($field->exists){
             $field->addFieldtoRefugees();
         }else{
             //DROP error ?
-        }
+        }*/
         return redirect()->route("fields.index");
     }
 
@@ -129,7 +130,8 @@ class FieldsController extends Controller
 
         $field = Field::find($id);
         $to_update = $request->validated();
-        $to_update["database_type"] = $field->database_type; $to_update["validation_laravel"] = Field::getValidationLaravelFromForm($to_update);
+        $to_update["database_type"] = $field->database_type;
+        $to_update["validation_laravel"] = Field::getValidationLaravelFromForm($to_update);
         $field->update($to_update);
 
         return redirect()->route("fields.index");

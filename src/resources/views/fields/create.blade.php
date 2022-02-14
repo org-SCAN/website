@@ -129,7 +129,7 @@
                                     </a>-->
                             </label>
 
-                            @php( $list = [" " => "Choose an associate list"]+array_column(\App\Models\ListControl::where("deleted",0)->get()->toArray(), "title", "id"))
+                            @php( $list = [" " => "Choose an associate list"]+array_column(\App\Models\ListControl::all()->toArray(), "title", "id"))
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define a
