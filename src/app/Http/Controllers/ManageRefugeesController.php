@@ -36,6 +36,7 @@ class ManageRefugeesController extends Controller
      */
     public function index()
     {
+        //$this->authorize("viewAny", Auth::user());
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $refugees = Refugee::with(['crew' => function ($query) {
             $query->where('crews.id', Auth::user()->crew->id);
@@ -53,6 +54,7 @@ class ManageRefugeesController extends Controller
      */
     public function create()
     {
+        // $this->authorize("create", Auth::user());
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $fields = Field::where("status", ">", 0)
             ->where("crew_id", Auth::user()->crew->id)
@@ -82,6 +84,7 @@ class ManageRefugeesController extends Controller
      */
     public function store(StoreRefugeeRequest $request)
     {
+        //$this->authorize("create", Auth::user());
         $fields = $request->validated();
         foreach ($fields as $key => $value) {
             if (!empty($value)) {
@@ -132,6 +135,7 @@ class ManageRefugeesController extends Controller
      **/
     public function show(String $id)
     {
+        $this->authorize("view", Auth::user());
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $fields = Field::where("status", ">", 0)
             ->where("crew_id", Auth::user()->crew->id)
@@ -152,6 +156,7 @@ class ManageRefugeesController extends Controller
      */
     public function edit(String  $id)
     {
+        //$this->authorize("update", Auth::user());
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $refugee = Refugee::find($id);
         $fields = Field::where("status", ">", 0)
@@ -176,6 +181,7 @@ class ManageRefugeesController extends Controller
      */
     public function update(UpdateRefugeeRequest $request, $refugee_id)
     {
+        //$this->authorize("update", Auth::user());
         $refugee = Refugee::find($refugee_id);
         $ids = array_column($refugee->fields->toArray(), "id");
         $values = array_column(array_column($refugee->fields->toArray(), "pivot"), "value");
@@ -224,7 +230,7 @@ class ManageRefugeesController extends Controller
      */
     public function destroy($refugee_id)
     {
-
+        // $this->authorize("delete", Auth::user());
         //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         die();
         Refugee::find($refugee_id)->delete();

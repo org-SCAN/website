@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class FieldsController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +22,7 @@ class FieldsController extends Controller
      */
     public function index()
     {
-
+        $this->authorize("viewAny", Auth::user());
         return view("fields.index");
     }
 
@@ -32,7 +33,7 @@ class FieldsController extends Controller
      */
     public function create()
     {
-
+        $this->authorize("create", Auth::user());
         return view("fields.create");
     }
 
@@ -44,6 +45,7 @@ class FieldsController extends Controller
      */
     public function store(StoreFieldRequest $request)
     {
+        $this->authorize("create", Auth::user());
         $field = $request->validated();
         if(empty($field["order"])){
             $field["order"]=100;
@@ -70,6 +72,7 @@ class FieldsController extends Controller
      */
     public function show(String $id)
     {
+        $this->authorize("view", Auth::user());
         $field = Field::find($id);
         //die(var_dump($field));
         $display_elements = [
@@ -96,6 +99,7 @@ class FieldsController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize("update", Auth::user());
         $field = Field::find($id);
         $linked_list_id = $field->getLinkedListId();
         $lists["database_type"] = array("string" => "Small text", "text" => "Long text", "integer" => "Number", "date" => "Date", "boolean" => "Yes / No ");
@@ -127,7 +131,7 @@ class FieldsController extends Controller
      */
     public function update(UpdateFieldRequest $request, $id)
     {
-
+        $this->authorize("update", Auth::user());
         $field = Field::find($id);
         $to_update = $request->validated();
         $to_update["database_type"] = $field->database_type;
@@ -145,6 +149,7 @@ class FieldsController extends Controller
      */
     public function destroy(String $id)
     {
+        $this->authorize("delete", Auth::user());
         Field::find($id)->delete();
         return redirect()->route("fields.index");
     }

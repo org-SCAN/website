@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ApiLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApiLogController extends Controller
 {
@@ -14,6 +15,7 @@ class ApiLogController extends Controller
      */
     public function index()
     {
+        $this->authorize("viewAny", Auth::user());
         $logs = ApiLog::orderBy("created_at", "desc")->get();
         return view("api_logs.index", compact("logs"));
     }
@@ -47,6 +49,7 @@ class ApiLogController extends Controller
      */
     public function show($apiLogId)
     {
+        $this->authorize("view", Auth::user());
         $log = ApiLog::find($apiLogId);
         if($log->http_method == "POST"){
             $pushed_datas = $log->getPushedDatas();

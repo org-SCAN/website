@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreCrewRequest;
 use App\Http\Requests\UpdateCrewRequest;
 use App\Models\Crew;
+use Illuminate\Support\Facades\Auth;
 
 class CrewController extends Controller
 {
@@ -16,6 +17,7 @@ class CrewController extends Controller
      */
     public function index()
     {
+        $this->authorize("viewAny", Auth::user());
         $crews = Crew::all();
         return view("crew.index", compact("crews"));
     }
@@ -27,6 +29,7 @@ class CrewController extends Controller
      */
     public function create()
     {
+        $this->authorize("create", Auth::user());
         return view("crew.create");
     }
 
@@ -38,6 +41,7 @@ class CrewController extends Controller
      */
     public function store(StoreCrewRequest $request)
     {
+        $this->authorize("create", Auth::user());
         $crew = $request->validated();
         Crew::create($crew);
         return redirect()->route("crew.index");
@@ -51,6 +55,7 @@ class CrewController extends Controller
      */
     public function show($id)
     {
+        $this->authorize("view", Auth::user());
         $crew = Crew::find($id);
         return view("crew.show", compact("crew"));
     }
@@ -63,6 +68,7 @@ class CrewController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize("update", Auth::user());
         $crew = Crew::find($id);
         return view("crew.edit", compact("crew"));
     }
@@ -76,6 +82,7 @@ class CrewController extends Controller
      */
     public function update(UpdateCrewRequest $request, $id)
     {
+        $this->authorize("update", Auth::user());
         $crew = $request->validated();
         Crew::find($id)->update($crew);
 
@@ -91,6 +98,7 @@ class CrewController extends Controller
     public function destroy($id)
     {
         //TODO : moove attached user to the default team
+        $this->authorize("delete", Auth::user());
         Crew::find($id)->delete();
         return redirect()->route("crew.index");
     }
