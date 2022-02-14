@@ -26,7 +26,7 @@ class RefugeeController extends Controller
      */
     public function __construct()
     {
-        //$this->authorizeResource(Refugee::class, 'refugee');
+        $this->authorizeResource(Refugee::class, 'manage_refugee');
     }
 
     /**
