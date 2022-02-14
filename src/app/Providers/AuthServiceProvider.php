@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Crew;
 use App\Models\Refugee;
 use App\Models\Team;
+use App\Policies\CrewPolicy;
 use App\Policies\RefugeePolicy;
 use App\Policies\TeamPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -17,7 +19,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Team::class => TeamPolicy::class,
-        Refugee::class => RefugeePolicy::class
+        Refugee::class => RefugeePolicy::class,
+        Crew::class => CrewPolicy::class
     ];
 
     /**

@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\ApiLogController;
+use App\Http\Controllers\CrewController;
 use App\Http\Controllers\DuplicateController;
 use App\Http\Controllers\FieldsController;
 use App\Http\Controllers\LinkController;
-use App\Http\Controllers\CrewController;
 use App\Http\Controllers\ListControlController;
-use App\Http\Controllers\ManageRefugeesController;
 use App\Http\Controllers\ManageUsersController;
+use App\Http\Controllers\RefugeeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,7 +40,7 @@ Route::get('cytoscape', [
 
 Route::get('manage_refugees/json/create', [
     'as' => 'manage_refugees.json.create',
-    'uses' => '\App\Http\Controllers\ManageRefugeesController@createFromJson'
+    'uses' => '\App\Http\Controllers\RefugeeController@createFromJson'
 ])->middleware('auth');
 Route::get('links/json/create', [
     'as' => 'links.json.create',
@@ -48,7 +48,7 @@ Route::get('links/json/create', [
 ])->middleware('auth');
 Route::post('manage_refugees/json/store', [
     'as' => 'manage_refugees.json.store',
-    'uses' => '\App\Http\Controllers\ManageRefugeesController@storeFromJson'
+    'uses' => '\App\Http\Controllers\RefugeeController@storeFromJson'
 ])->middleware('auth');
 Route::post('links/json/store', [
     'as' => 'links.json.store',
@@ -74,11 +74,11 @@ Route::get('user/reject_role/{id}', [
 
 Route::put('manage_refugees/fix_duplicated_reference/{id} ', [
     'as' => 'manage_refugees.fix_duplicated_reference',
-    'uses' => '\App\Http\Controllers\ManageRefugeesController@fixDuplicatedReference'
+    'uses' => '\App\Http\Controllers\RefugeeController@fixDuplicatedReference'
 ])->middleware('auth');
 
 
-Route::resource("manage_refugees", ManageRefugeesController::class)->middleware('auth');
+Route::resource("manage_refugees", RefugeeController::class)->middleware('auth');
 Route::resource("fields", FieldsController::class)->middleware('auth');
 Route::resource("lists_control", ListControlController::class)->middleware('auth');
 Route::resource("links", LinkController::class)->middleware('auth');

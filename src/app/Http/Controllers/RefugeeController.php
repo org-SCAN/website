@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 
 
-class ManageRefugeesController extends Controller
+class RefugeeController extends Controller
 {
     /**
      * Create the controller instance.
@@ -26,7 +26,7 @@ class ManageRefugeesController extends Controller
      */
     public function __construct()
     {
-        // $this->authorizeResource(Refugee::class, 'refugee');
+        //$this->authorizeResource(Refugee::class, 'refugee');
     }
 
     /**
@@ -125,27 +125,6 @@ class ManageRefugeesController extends Controller
             }
         }
         return redirect()->route("manage_refugees.index");
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param String $id
-     * @return Response
-     **/
-    public function show(String $id)
-    {
-        $this->authorize("view", Auth::user());
-        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $fields = Field::where("status", ">", 0)
-            ->where("crew_id", Auth::user()->crew->id)
-            ->orderBy("required")
-            ->orderBy("order")
-            ->get();
-        $refugee = Refugee::find($id);
-        $links = Link::where("from", $id)->orWhere("to", $id)->get();
-
-        return view("manage_refugees.show", compact("refugee", "fields", "links"));
     }
 
     /**
