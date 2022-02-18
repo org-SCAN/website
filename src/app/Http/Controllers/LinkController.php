@@ -142,7 +142,7 @@ class LinkController extends Controller
     public function edit(Link $link)
     {
         $lists["relations"] = [$link->getRelationId() => $link->relation] + array_column(Relation::all()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
-        return view("links.edit", compact("link","lists"));
+        return view("links.edit", compact("link", "lists"));
     }
 
     /**

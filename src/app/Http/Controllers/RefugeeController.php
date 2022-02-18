@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateRefugeeRequest;
 use App\Models\ApiLog;
 use App\Models\Field;
 use App\Models\Link;
+use App\Models\ListControl;
 use App\Models\Refugee;
 use Illuminate\Http\Request;
 use Illuminate\Http\RequestRefugeeRequest;
@@ -36,13 +37,33 @@ class RefugeeController extends Controller
      */
     public function index()
     {
+        $fields = Field::where("crew_id", Auth::user()->crew->id)->where("descriptive_value", 1)->orderBy("order")->get();
+        $fields_array = $fields->pluck("title", "id")->toArray();
+
         $refugees = Refugee::with(['crew' => function ($query) {
             $query->where('crews.id', Auth::user()->crew->id);
         }])
+            ->with(['fields' => function ($query) {
+                $query->where('fields.descriptive_value', 1);
+            }])
             ->orderByDesc("date")
             ->get();
+        $formated_refugees = [];
+        foreach ($refugees as $refugee) {
+            $formated_refugees[$refugee->id] = array();
+            foreach ($refugee->fields as $field) {
+                $value = $field->pivot->value ? $field->pivot->value : "";
 
-        return view("person.index", compact("refugees"));
+                if (!empty($field->linked_list)) {//idrandom
+                    $list = ListControl::find($field->linked_list); //role -> Role
+                    $model = "App\Models\\" . $list->name; // App\Models\Role
+                    $value = $model::find($value)->{$list->displayed_value};
+                }
+                $formated_refugees[$refugee->id][$field->id] = $value;
+            }
+        }
+        $refugees = $formated_refugees;
+        return view("person.index", compact("refugees", "fields"));
     }
 
     /**

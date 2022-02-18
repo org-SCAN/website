@@ -112,7 +112,7 @@ class ManageUsersController extends Controller
      * @param User $user
      * @return Response
      */
-    public function update(UpdateUsersRequest $request, $id)
+    public function update(UpdateUsersRequest $request, User $user)
     {
         // $id->update($request->validated());
         //$user->roles()->sync($request->input('roles', []));
