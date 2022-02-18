@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Country;
+use App\Models\Field;
+use App\Models\FieldRefugee;
 use App\Models\Gender;
+use App\Models\Country;
+use App\Models\ListControl;
 use App\Models\Refugee;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
@@ -45,16 +48,51 @@ class RefugeesDatatables extends LivewireDatatable
      * @return array
      */
     public function columns()
-    {
-        /*$arr = [];
-        foreach(Field::where("descriptive_value", 1)->get() as $field){
+    {/*
+        $arr = [];
+        foreach(Field::where("descriptive_value", 1)->orderByDesc("best_descriptive_value")->get() as $field){
             array_push($arr,
-                Column::callback('id', function ($id, $field) {
-                    return Refugee::find($id)
-                        ->fields->where("label", $field->label)->first()->pivot->value;
-                })->label($field->title), (string) $field->id);
-        }*/
-        //return $arr;
+                Column::name("field_refugee.value")
+                    ->label($field->title)
+            );
+           // var_dump($field->id);
+            break;
+        }
+
+        return $arr;*/
+        /*
+                $arr = [];
+                $i = 1;
+                foreach(Field::where("descriptive_value", 1)->orderBy("order")->get() as $field){
+                    if(!empty($field->linked_list)){
+                        $filter = ListControl::find($field->linked_list)->getListDisplayedValue();
+                    }else{
+                        $filter = "";
+                    }
+                    array_push($arr,
+                        Column::callback(['id', "field_refugee.field_id"] , function ($id, $field) {
+                            $field = Field::find($field);
+                            $reference = Refugee::with(['crew' => function ($query) {
+                                $query->where('crews.id', Auth::user()->crew->id);
+                            }])
+                                ->find($id)
+                                ->fields->where("id", $field->id)->first();
+                            $person_detail = $reference ? $reference->pivot->value : "";
+                            if(!empty($field->linked_list)){//idrandom
+                                $list = ListControl::find($field->linked_list); //role -> Role
+                                $model = "App\Models\\".$list->name; // App\Models\Role
+                                $person_detail = $model::find($person_detail)->{$list->displayed_value};
+                            }
+                            if($field->best_descriptive_value == 1){
+                                $person_detail = "<a href='" . route('person.show', Refugee::find($id)) . "'>$reference</a>";
+                            }
+                            return $person_detail;
+                        }, $i++)
+                            ->label($field->title)
+                            ->filterable($filter)
+                    );
+                }
+                return $arr;*/
         // var_dump($arr);
         return [
 

@@ -53,15 +53,21 @@ class ListControl extends Model
         $model = 'App\Models\\' . $this->name;
         return $this->hasMany($model);
     }
+
     public function getListContent()
     {
 
         $model = 'App\Models\\' . $this->name;
         $list = $model::orderBy($this->displayed_value)
-            ->get()
-            ->toArray();
+            ->get();
 
         return $list;
+    }
+
+
+    public function getListDisplayedValue()
+    {
+        return $this->getListContent()->pluck($this->displayed_value);
     }
 
     public static function getDisplayedValue()
