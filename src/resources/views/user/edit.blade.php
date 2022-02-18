@@ -43,7 +43,8 @@
                             <label for="email" class="block font-medium text-sm text-gray-700">Email</label>
                             <input type="email" name="email" id="email"
                                    class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                   value="{{ old('email', $user_found->email) }}"/>
+                                   value="{{ old('email', $user_found->email) }}"
+                                   disabled/>
                             @error('email')
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror

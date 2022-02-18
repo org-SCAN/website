@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Auth;
 
 class FieldsController extends Controller
 {
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Field::class, 'field');
+    }
 
     /**
      * Display a listing of the resource.
@@ -22,7 +31,6 @@ class FieldsController extends Controller
      */
     public function index()
     {
-        $this->authorize("viewAny", Auth::user());
         return view("fields.index");
     }
 
@@ -33,7 +41,6 @@ class FieldsController extends Controller
      */
     public function create()
     {
-        $this->authorize("create", Auth::user());
         return view("fields.create");
     }
 
@@ -45,7 +52,6 @@ class FieldsController extends Controller
      */
     public function store(StoreFieldRequest $request)
     {
-        $this->authorize("create", Auth::user());
         $field = $request->validated();
         if(empty($field["order"])){
             $field["order"]=100;
@@ -67,14 +73,11 @@ class FieldsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param String $id
+     * @param Field $field
      * @return Response
      */
-    public function show(String $id)
+    public function show(Field $field)
     {
-        $this->authorize("view", Auth::user());
-        $field = Field::find($id);
-        //die(var_dump($field));
         $display_elements = [
             "title" => "Title",
             "label" => "Label",
@@ -94,13 +97,11 @@ class FieldsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param Field $field
      * @return Response
      */
-    public function edit($id)
+    public function edit(Field $field)
     {
-        $this->authorize("update", Auth::user());
-        $field = Field::find($id);
         $linked_list_id = $field->getLinkedListId();
         $lists["database_type"] = array("string" => "Small text", "text" => "Long text", "integer" => "Number", "date" => "Date", "boolean" => "Yes / No ");
         $lists["database_type"] = [$field->database_type => $lists["database_type"][$field->database_type]] + $lists["database_type"];
@@ -126,13 +127,11 @@ class FieldsController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param string $id
+     * @param Field $field
      * @return Response
      */
-    public function update(UpdateFieldRequest $request, $id)
+    public function update(UpdateFieldRequest $request, Field $field)
     {
-        $this->authorize("update", Auth::user());
-        $field = Field::find($id);
         $to_update = $request->validated();
         $to_update["database_type"] = $field->database_type;
         $to_update["validation_laravel"] = Field::getValidationLaravelFromForm($to_update);
@@ -144,13 +143,12 @@ class FieldsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param String $id
+     * @param Field $field
      * @return Response
      */
-    public function destroy(String $id)
+    public function destroy(Field $field)
     {
-        $this->authorize("delete", Auth::user());
-        Field::find($id)->delete();
+        $field->delete();
         return redirect()->route("fields.index");
     }
 

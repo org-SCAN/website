@@ -20,7 +20,10 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Team::class => TeamPolicy::class,
         Refugee::class => RefugeePolicy::class,
-        Crew::class => CrewPolicy::class
+        Crew::class => CrewPolicy::class,
+        ApiLog::class => ApiLogPolicy::class,
+        Field::class => FieldPolicy::class,
+        User::class => UserPolicy::class
     ];
 
     /**

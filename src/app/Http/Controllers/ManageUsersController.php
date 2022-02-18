@@ -27,7 +27,7 @@ class ManageUsersController extends Controller
      */
     public function __construct()
     {
-        //  $this->authorizeResource(User::class, 'user');
+        $this->authorizeResource(User::class, 'user');
     }
 
 
@@ -38,8 +38,6 @@ class ManageUsersController extends Controller
      */
     public function index()
     {
-        $this->authorize("viewAny", Auth::user());
-
         $users = User::all();
         $request_roles = RoleRequest::where("granted", null)->get();
         return view("user.index", compact("users", "request_roles"));
@@ -52,7 +50,6 @@ class ManageUsersController extends Controller
      */
     public function create()
     {
-        $this->authorize("create", Auth::user());
         return view('user.create');
     }
 
@@ -65,7 +62,6 @@ class ManageUsersController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $this->authorize("create", Auth::user());
         $user = $request->validated();
         DB::transaction(function () use ($user) {
             return tap(User::create([
@@ -86,13 +82,11 @@ class ManageUsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param User $user
      * @return Response
      */
-    public function show(String $id)
+    public function show(User $user)
     {
-        $this->authorize("view", Auth::user());
-        $user = User::find($id);
         $roles = UserRole::all();
         return view("user.show", compact("user", "roles"));
 
@@ -101,15 +95,12 @@ class ManageUsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @param $request
-     * @param $user
+     * @param User $user
      * @return Response
      */
-    public function edit( $id)
+    public function edit(User $user)
     {
-        $this->authorize("update", Auth::user());
-        $user_found = User::find($id);
+        $user_found = $user;
         return view("user.edit", compact("user_found"));
 
     }
@@ -118,20 +109,15 @@ class ManageUsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param int $id
-     * @param $user
+     * @param User $user
      * @return Response
      */
     public function update(UpdateUsersRequest $request, $id)
     {
         // $id->update($request->validated());
         //$user->roles()->sync($request->input('roles', []));
-
-        $this->authorize("update", Auth::user());
-        $user = $request->validated();
-
-        User::find($id)
-            ->update($user);
+        $changes = $request->validated();
+        $user->update($changes);
 
         return redirect()->route('user.index');
 
@@ -140,14 +126,12 @@ class ManageUsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @param $user
+     * @param User $user
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $this->authorize("delete", Auth::user());
-        User::find($id)->delete();
+        $user->delete();
         return redirect()->route("user.index");
     }
 
@@ -156,13 +140,13 @@ class ManageUsersController extends Controller
      * Add user role request to the request list
      *
      * @param StoreRequestRoleRequest $request
-     * @param $id
+     * @param String $id
      * @return RedirectResponse
      */
     public function RequestRole(StoreRequestRoleRequest $request, $id)
     {
-        $role = $request->input('role');
         $user = User::find($id);
+        $role = $request->input('role');
         if ($user->role->id == $role) {
             return redirect()->back();
         }
@@ -204,13 +188,12 @@ class ManageUsersController extends Controller
      * Add user role request to the request list
      *
      * @param Request $request
-     * @param $id
+     * @param User $user
      * @return RedirectResponse
      */
-    public function ChangeTeam(UpdateCrewRequest $request, $id)
+    public function ChangeTeam(UpdateCrewRequest $request, User $user)
     {
         $crew = $request->input('crew');
-        $user = User::find($id);
         $user->crew_id = $crew;
         $user->save();
         return redirect()->back();

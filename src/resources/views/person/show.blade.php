@@ -70,7 +70,8 @@
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                     To
                                 </th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-800 uppercase tracking-wider"></th>
+                                @can("update")
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-800 uppercase tracking-wider"></th>@endcan
                                 </thead>
                                 @foreach($person->relations as $sided_relations)
                                     @foreach($sided_relations as $link)
@@ -85,9 +86,11 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
                                                 <a href="{{route("person.show", $link->pivot->to)}}">{{$link->pivot->refugeeTo->best_descriptive_value}}</a>
                                             </td>
+                                            @can("update")
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
                                                 <a href="{{route("links.edit", $link->pivot->id)}}">Edit</a>
                                             </td>
+                                            @endcan
                                         </tr>
                                     @endforeach
                                 @endforeach

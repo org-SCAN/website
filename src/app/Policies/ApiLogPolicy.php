@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\ApiLog;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class ApiLogPolicy
 {
