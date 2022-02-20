@@ -32,9 +32,22 @@ class ListControlController extends Controller
     }
 
     /**
+     * This function is used to add an element to an existing list
+     *
+     * @param ListControl $lists_control
+     * @return \Illuminate\Http\Response
+     *
+     */
+    public function addToList(ListControl $lists_control)
+    {
+
+        return view("lists_control.add_to_list", compact("lists_control"));
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreListControlRequest $request
+     * @param \App\Http\Requests\StoreListControlRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreListControlRequest $request)
@@ -48,26 +61,25 @@ class ListControlController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  String  $id
+     * @param ListControl $lists_control
      * @return \Illuminate\Http\Response
      */
-    public function show(String $id)
+    public function show(ListControl $lists_control)
     {
-        $list=ListControl::find($id);
-        $list_content = $list->getListContent();
-        return view("lists_control.show", compact("list", "list_content"));
+        $list_content = $lists_control->getListContent()->toArray();
+        return view("lists_control.show", compact("lists_control", "list_content"));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  String  $id
+     * @param ListControl $lists_control
      * @return \Illuminate\Http\Response
      */
-    public function edit(String $id)
+    public function edit(ListControl $lists_control)
     {
-        $list=ListControl::find($id);
-        return view("lists_control.edit", compact("list"));
+        //$fields = $lists_control
+        return view("lists_control.edit", compact("lists_control"));
     }
 
     /**
@@ -86,12 +98,12 @@ class ListControlController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  String  $id
+     * @param ListControl $lists_control
      * @return \Illuminate\Http\Response
      */
-    public function destroy(String $id)
+    public function destroy(ListControl $lists_control)
     {
-        ListControl::find($id)->delete();
+        $lists_control->delete();
         return redirect()->route("lists_control.index");
     }
 }
