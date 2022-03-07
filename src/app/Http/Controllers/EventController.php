@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ApiLog;
+use App\Models\Event;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
-class ApiLogController extends Controller
+class EventController extends Controller
 {
-
     /**
      * Create the controller instance.
      *
@@ -17,7 +14,7 @@ class ApiLogController extends Controller
      */
     public function __construct()
     {
-        $this->authorizeResource(ApiLog::class, 'api_log');
+        $this->authorizeResource(Event::class, 'event');
     }
 
     /**
@@ -27,8 +24,8 @@ class ApiLogController extends Controller
      */
     public function index()
     {
-        $logs = ApiLog::orderBy("created_at", "desc")->get();
-        return view("api_logs.index", compact("logs"));
+        $events = Event::all();
+        return view("event.index", compact("events"));
     }
 
     /**
@@ -38,57 +35,52 @@ class ApiLogController extends Controller
      */
     public function create()
     {
-        //
+        return view("event.create");
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $event = $request->validated();
+        Event::create($event);
+        return redirect()->route("event.index");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\ApiLog $api_log
+     * @param \App\Models\Event $event
      * @return \Illuminate\Http\Response
      */
-    public function show(ApiLog $api_log)
+    public function show(Event $event)
     {
-
-        //$log = ApiLog::find($apiLog);
-        if ($api_log->http_method == "POST") {
-            $pushed_datas = $api_log->getPushedDatas();
-            return view("api_logs.show", compact("api_log", "pushed_datas"));
-        }
-
-        return view("api_logs.show", compact("api_log"));
+        return view("event.show", compact("event"));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ApiLog  $apiLog
+     * @param \App\Models\Event $event
      * @return \Illuminate\Http\Response
      */
-    public function edit(ApiLog $apiLog)
+    public function edit(Event $event)
     {
-        //
+        return view("event.edit", compact("event"));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ApiLog  $apiLog
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Event $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ApiLog $apiLog)
+    public function update(Request $request, Event $event)
     {
         //
     }
@@ -96,10 +88,10 @@ class ApiLogController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ApiLog  $apiLog
+     * @param \App\Models\Event $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ApiLog $apiLog)
+    public function destroy(Event $event)
     {
         //
     }

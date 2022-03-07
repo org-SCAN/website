@@ -28,10 +28,10 @@ class ApiLogPolicy
      * Determine whether the user can view the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\ApiLog $apiLog
+     * @param \App\Models\ApiLog $api_log
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, ApiLog $apiLog)
+    public function view(User $user, ApiLog $api_log)
     {
         return $user->role_name == ("admin")
             ? Response::allow()

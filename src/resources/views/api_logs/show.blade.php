@@ -1,15 +1,16 @@
-@section('title',"Show ".$log->id." details")
+@section('title',"Show ".$api_log->id." details")
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Detail of push: <b> {{$log->id}}</b>
+            Detail of push: <b> {{$api_log->id}}</b>
         </h2>
     </x-slot>
 
     <div>
         <div class="max-w-6xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <a href="{{ route('api_logs.index') }}" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to list</a>
+                <a href="{{ route('api_logs.index') }}"
+                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to list</a>
             </div>
             <div class="block mt-8 flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -23,7 +24,7 @@
                                         Date
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                        {{ $log->created_at }}
+                                        {{ $api_log->created_at }}
                                     </td>
                                 </tr>
 
@@ -33,7 +34,8 @@
                                         User
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                        <a href="{{route("user.show", $log->getUserId())}}" class="text-indigo-600 hover:text-blue-900">{{$log->user}}</a>
+                                        <a href="{{route("user.show", $api_log->getUserId())}}"
+                                           class="text-indigo-600 hover:text-blue-900">{{$api_log->user}}</a>
                                     </td>
                                 </tr>
                                 <tr class="border-b">
@@ -42,7 +44,7 @@
                                         Ip address
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                        {{$log->ip}}
+                                        {{$api_log->ip}}
                                     </td>
                                 </tr>
 
@@ -52,7 +54,7 @@
                                         Application Id
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                        {{ $log->application_id }}
+                                        {{ $api_log->application_id }}
                                     </td>
                                 </tr>
 
@@ -62,7 +64,7 @@
                                         Api type
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                        {{ $log->api_type }}
+                                        {{ $api_log->api_type }}
                                     </td>
                                 </tr>
 
@@ -72,7 +74,7 @@
                                         Http Method
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                        {{ $log->http_method }}
+                                        {{ $api_log->http_method }}
                                     </td>
                                 </tr>
 
@@ -82,7 +84,7 @@
                                         Response
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                        {{ $log->response }}
+                                        {{ $api_log->response }}
                                     </td>
                                 </tr>
                                 </tr>
@@ -103,7 +105,7 @@
                                         <tr class="border-b">
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
                                                 @php
-                                                    $class = "\App\Models\\".$log->model;
+                                                    $class = "\App\Models\\".$api_log->model;
                                                     $route = $class::route_base
                                                 @endphp
                                                 <a href="{{route($route.".show", $pushed_dataID)}}">{{ $pushed_data }}</a>

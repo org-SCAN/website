@@ -22,9 +22,10 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-Route::get('/', function () {
-    return view('person.index');
-})->middleware('auth');
+Route::get('/', [
+    'as' => 'person.index',
+    'uses' => '\App\Http\Controllers\RefugeeController@index'
+])->middleware('auth');
 Route::get('/content.json', function () {
     return Storage::disk('public')->get('content.json');
 })->middleware('auth');

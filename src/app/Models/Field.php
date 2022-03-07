@@ -241,7 +241,7 @@ class Field extends Model
     public function getLinkedListContent()
     {
         $list_control = ListControl::find($this->getLinkedListId());
-        $list = $list_control->getListContent();
+        $list = $list_control->getListContent()->toArray();
         $displayed_value = $list_control->displayed_value;
         return array_column($list, $displayed_value, "id");
     }

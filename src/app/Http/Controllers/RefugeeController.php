@@ -37,9 +37,9 @@ class RefugeeController extends Controller
      */
     public function index()
     {
+
         $fields = Field::where("crew_id", Auth::user()->crew->id)->where("descriptive_value", 1)->orderBy("order")->get();
         $fields_array = $fields->pluck("title", "id")->toArray();
-
         $refugees = Refugee::with(['crew' => function ($query) {
             $query->where('crews.id', Auth::user()->crew->id);
         }])
