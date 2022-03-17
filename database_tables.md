@@ -55,7 +55,7 @@ classDiagram
 	}
 	<<pivot_table>> field_person
 	fields <|--|> field_person : fields(id) = field_personfield_id)
-	persons <|--|> field_person : person(id) = field_person(person_id)
+	persons <|--|> field_person : persons(id) = field_person(person_id)
 	
 	class links {
 		id
