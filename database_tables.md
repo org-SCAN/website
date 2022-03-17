@@ -11,7 +11,7 @@ classDiagram
 	}
 	<<table>> crews
 	
-	class refugees {
+	class persons {
 		id
 		date
 		api_log
@@ -20,7 +20,7 @@ classDiagram
 		updated_at
 		deleted_at
 	}
-	<<table>> refugees
+	<<table>> persons
 	
 	class fields {
 		id
@@ -45,17 +45,17 @@ classDiagram
 	}
 	<<table>> fields
 	
-	class field_refugee {
+	class field_person {
 		id
 		field_id
-		refugee_id
+		person_id
 		value
 		created_at
 		updated_at
 	}
-	<<pivot_table>> field_refugee
-	fields <|--|> field_refugee : fields(id) = field_refugee(field_id)
-	refugees <|--|> field_refugee : refugee(id) = field_refugee(refugee_id)
+	<<pivot_table>> field_person
+	fields <|--|> field_person : fields(id) = field_personfield_id)
+	persons <|--|> field_person : person(id) = field_person(person_id)
 	
 	class links {
 		id
@@ -84,8 +84,8 @@ classDiagram
 	}
 	<<table>> relations
 	links <|--|> relations : links(relation) = relations(id)
-	links <|--|> refugees : links(from) = refugee(id)
-	links <|--|> refugees : links(to) = refugee(id)
+	links <|--|> persons : links(from) = person(id)
+	links <|--|> persons : links(to) = person(id)
 	
 	class users {
 		id
