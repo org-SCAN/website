@@ -1,9 +1,5 @@
 # website
-
-Site web du projet :)
-Nomalement on a une synchro automatique de la branche main sur le serveur.
-
-Adresse IP du serveur : 15.236.237.200
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=TC-netw4ppl_website&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=TC-netw4ppl_website)
 
 # Start the website
 
