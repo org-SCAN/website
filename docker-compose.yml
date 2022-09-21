@@ -4,7 +4,6 @@ services:
  github-action-sql:
   image: mysql:5.7
   container_name : 'github-action-sql'
-  restart : unless-stopped
   environment:
    MYSQL_DATABASE: ${DATABASE_NAME}
    MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
