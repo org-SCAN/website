@@ -10,6 +10,9 @@ jobs:
  
       runs-on: self-hosted
       
+      container:
+            image:netw4ppl/website:latest
+      
       steps:
         - name: Checkout
           uses: actions/checkout@v2
