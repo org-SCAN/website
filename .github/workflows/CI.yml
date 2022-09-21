@@ -11,7 +11,7 @@ jobs:
       runs-on: self-hosted
       
       container:
-            image:netw4ppl/website:latest
+            image: netw4ppl/website:latest
       
       steps:
         - name: Checkout
