@@ -25,7 +25,7 @@ jobs:
         app:
          image: netw4ppl/website:latest
          volumes :
-          - src/:/var/www/html/
+          - src:/var/www/html/
           - /etc/apache2/sites-available/docker_config.conf:/etc/apache2/sites-available/000-default.conf
          ports:
           - '7080:80'
