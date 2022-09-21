@@ -11,4 +11,4 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: whoami
-        run: whoiam
+        run: whoami
