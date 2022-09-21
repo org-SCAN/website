@@ -2,7 +2,6 @@ name: CI
  
 on:
   - pull_request
-  - push
   
 jobs:
   tests:
@@ -21,7 +20,7 @@ jobs:
 
         - name: Prepare Laravel Application
           run: |
-            cp .env.testing .env
+            cp .env.example .env
             php artisan key:generate
         - name: Migrate and seed
           run: |
