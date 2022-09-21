@@ -16,7 +16,8 @@ jobs:
         - name: Prepare Laravel Application
           run: |
             docker-compose up -d
-            # docker exec -i $(docker ps --latest --quiet) sh
+            docker ps
+            docker exec -it $(docker ps --latest --quiet) sh
             ls
             whoami
             cp .env.example .env
