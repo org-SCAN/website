@@ -16,7 +16,7 @@ jobs:
         - name: Prepare Laravel Application
           run: |
             docker-compose up -d
-            docker exec --interactive --tty github-action-app /bin/bash
+            echo 'echo hello > grr.txt' | docker exec -i github-action-app /bin/bash
             ls
             whoami
             cp .env.example .env
