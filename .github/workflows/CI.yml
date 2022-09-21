@@ -43,7 +43,7 @@ jobs:
         - name: Prepare Laravel Application
           run: |
             pwd
-            docker exec -it $(docker ps --latest --quiet) bash
+            docker exec -i $(docker ps --latest --quiet) bash
             pwd
             ls
             whoami
