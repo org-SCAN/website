@@ -7,6 +7,7 @@ jobs:
   tests:
       name: Tests
       runs-on: self-hosted
+      container: test
       services:
          github-action-sql:
           image: mysql:5.7
@@ -43,8 +44,7 @@ jobs:
         - name: Prepare Laravel Application
           run: |
             pwd
-            docker exec -i $(docker ps --latest --quiet) sh
-            pwd
+            # docker exec -i $(docker ps --latest --quiet) sh
             ls
             whoami
             cp .env.example .env
