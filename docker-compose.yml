@@ -3,7 +3,7 @@ version: '3.7'
 services:
  github-action-sql:
   image: mysql:5.7
-  container_name : 'sql'
+  container_name : 'github-action-sql'
   restart : unless-stopped
   environment:
    MYSQL_DATABASE: ${DATABASE_NAME}
@@ -11,12 +11,13 @@ services:
    MYSQL_PASSWORD: ${DATABASE_PASSWORD}
    MYSQL_USER: ${DATABASE_USERNAME}
   volumes:
-    - /var/N4P/sql-volume:/var/lib/mysql
+    - /home/github/N4P/sql-volume:/var/lib/mysql
   ports:
     - 3309:3306
 
  github-action-app:
   image: netw4ppl/website:latest
+  container_name : 'github-action-app'
   volumes :
    - ./src/:/var/www/html/
    - /etc/apache2/sites-available/docker_config.conf:/etc/apache2/sites-available/000-default.conf
@@ -26,5 +27,6 @@ services:
   
  github-action-redis:
    image: redis:6-alpine
+   container_name : 'github-action-redis'
    ports:
     - 6379:6379
