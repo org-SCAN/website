@@ -43,7 +43,9 @@ jobs:
 
         - name: Prepare Laravel Application
           run: |
-            cd src/
+            pwd
+            ls
+            whoami
             cp .env.example .env
             php artisan key:generate
         - name: Migrate and seed
