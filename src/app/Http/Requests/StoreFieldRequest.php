@@ -32,7 +32,9 @@ class StoreFieldRequest extends FormRequest
             "required" => "integer|required",
             "status" => "integer|required",
             "linked_list" => "nullable|uuid|exists:list_controls,id",
-            "order" => "integer|nullable"
+            "order" => "integer|nullable",
+            "descriptive_value" => "integer|nullable",
+            "best_descriptive_value" => "integer|nullable"
 
         ];
         return $rules;

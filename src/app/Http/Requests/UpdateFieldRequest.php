@@ -29,7 +29,9 @@ class UpdateFieldRequest extends FormRequest
             "required" => "integer|required",
             "status" => "integer|required",
             "order" => "integer",
-            "linked_list" => "uuid|exists:list_controls,id|nullable"
+            "linked_list" => "uuid|exists:list_controls,id|nullable",
+            "descriptive_value" => "boolean",
+            "best_descriptive_value" => "boolean"
 
         ];
         return $rules;

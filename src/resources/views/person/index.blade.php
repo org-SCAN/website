@@ -40,7 +40,7 @@
                                                 @if($field->best_descriptive_value == 1)
                                                     <a href="{{route('person.show',$refugee_id)}}">{{$refugee[$field->id]}}</a>
                                                 @else
-                                                    {{$refugee[$field->id]}}
+                                                    {{$refugee[$field->id]?? ''}}
                                                 @endif
                                             </td>
                                         @endforeach
