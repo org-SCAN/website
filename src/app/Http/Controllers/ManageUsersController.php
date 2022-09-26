@@ -116,7 +116,6 @@ class ManageUsersController extends Controller
     {
         // $id->update($request->validated());
         //$user->roles()->sync($request->input('roles', []));
-        ddd($user);
         $changes = $request->validated();
         $user->update($changes);
 
