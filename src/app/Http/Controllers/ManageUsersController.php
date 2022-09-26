@@ -116,6 +116,7 @@ class ManageUsersController extends Controller
     {
         // $id->update($request->validated());
         //$user->roles()->sync($request->input('roles', []));
+        ddd($user);
         $changes = $request->validated();
         $user->update($changes);
 
@@ -191,9 +192,10 @@ class ManageUsersController extends Controller
      * @param User $user
      * @return RedirectResponse
      */
-    public function ChangeTeam(UpdateCrewRequest $request, User $user)
+    public function ChangeTeam(UpdateCrewRequest $request)
     {
-        $crew = $request->input('crew');
+        $crew = $request->input('name');
+        $user = $request->user();
         $user->crew_id = $crew;
         $user->save();
         return redirect()->back();
