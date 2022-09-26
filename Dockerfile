@@ -34,10 +34,10 @@ RUN chown -R www-data:www-data /var/www/html \
     && a2enmod rewrite \
     && a2enmod ssl
 
-RUN composer update
-RUN npm update
-RUN chmod -R 775 /var/www/html/storage
-RUN cd /var/www/html && php artisan cache:clear && composer dump-autoload && php artisan key:generate
+#RUN composer update
+#RUN npm update
+#RUN chmod -R 775 /var/www/html/storage
+#RUN cd /var/www/html && php artisan cache:clear && composer dump-autoload && php artisan key:generate
 
 
 # RUN chmod -R 775 /var/www/html/storage # Run cette commande si une erreur sur laravel
