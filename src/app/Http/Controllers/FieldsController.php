@@ -136,6 +136,12 @@ class FieldsController extends Controller
     public function update(UpdateFieldRequest $request, Field $field)
     {
         $to_update = $request->validated();
+        if (!$request->has('descriptive_value')) {
+            $to_update['descriptive_value'] = 0;
+        }
+        if (!$request->has('best_descriptive_value')) {
+            $to_update['best_descriptive_value'] = 0;
+        }
         $to_update["database_type"] = $field->database_type;
         $to_update["validation_laravel"] = Field::getValidationLaravelFromForm($to_update);
         $field->update($to_update);

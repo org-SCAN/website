@@ -110,7 +110,7 @@
                             <input value="1" type="checkbox" name="{{$form_elem}}" id="{{$form_elem}}"
                                    class="form-input rounded-md shadow-sm mt-1 block" @checked($old == 1)/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">If checked,
-                                it will be displayed in the Manage Persons section OLD = {{$old?? 'incomming'}} </small>
+                                it will be displayed in the Manage Persons section</small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -130,8 +130,7 @@
                             <input value="1" type="checkbox" name="{{$form_elem}}" id="{{$form_elem}}"
                                    class="form-input rounded-md shadow-sm mt-1 block" @checked($old == 1)/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">If checked,
-                                it will be displayed in the Manage Persons section as the main field.
-                                OLD = {{$old?? 'incomming'}}</small>
+                                it will be displayed in the Manage Persons section as the main field.</small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
