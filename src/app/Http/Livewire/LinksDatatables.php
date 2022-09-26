@@ -48,7 +48,7 @@ class LinksDatatables extends LivewireDatatable
                 $ref = Link::find($id)->refugeeFrom;
                 $nameFrom = $ref->best_descriptive_value;
                 return "<a href='" . route('person.show', $ref->id) . "'>$nameFrom</a>";
-            }, "1")
+            }, ["1"])
                 /*
                 ->searchable("to_refugee.full_name")
                 ->view("datatable.linktoTo")
@@ -58,7 +58,7 @@ class LinksDatatables extends LivewireDatatable
 
             Column::callback('id', function ($id) {
                 return Link::find($id)->relation;
-            }, "2")
+            }, ["2"])
                 ->filterable(Relation::pluck(Relation::getDisplayedValue()))
                 ->label('Relation')
                 ->alignCenter(),
@@ -67,7 +67,7 @@ class LinksDatatables extends LivewireDatatable
                 $ref = Link::find($id)->refugeeTo;
                 $nameTo = $ref->best_descriptive_value;
                 return "<a href='" . route('person.show', $ref->id) . "'>$nameTo</a>";
-            }, "3")
+            }, ["3"])
                 /*
                 ->searchable("to_refugee.full_name")
                 ->view("datatable.linktoTo")
@@ -81,7 +81,7 @@ class LinksDatatables extends LivewireDatatable
                     return "<a href='" . route('links.edit', $id) . "'>Edit</a>";
                 }
                 return "Ø";
-            }, "4")
+            }, ["4"])
                 ->label('Edit')
         ];
     }
