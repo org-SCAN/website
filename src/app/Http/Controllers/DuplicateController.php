@@ -17,7 +17,8 @@ class DuplicateController extends Controller
     public function index()
     {
         $this->authorize("viewAny", Auth::user());
-        $duplicates = Duplicate::getDuplicates();
+        //$duplicates = Duplicate::getDuplicates();
+        $duplicates = [];
         return view("duplicate.index", compact("duplicates"));
     }
 
