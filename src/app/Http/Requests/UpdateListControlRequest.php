@@ -4,8 +4,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Field;
-use Illuminate\Support\Facades\Gate;
 
 class UpdateListControlRequest extends FormRequest
 {
@@ -29,7 +27,8 @@ class UpdateListControlRequest extends FormRequest
         $rules =[
             "title" => "string|required",
             "displayed_value" => "string|required",
-            "name" => "string|required"
+            "name" => "string|required",
+            "key_value" => "string|required"
         ];
         return $rules;
     }
