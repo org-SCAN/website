@@ -38,6 +38,7 @@ class RefugeeController extends Controller
     public function index()
     {
 
+
         $fields = Field::where("crew_id", Auth::user()->crew->id)->where("descriptive_value", 1)->orderBy("order")->get();
         $fields_array = $fields->pluck("title", "id")->toArray();
         $refugees = Refugee::with(['crew' => function ($query) {
@@ -45,9 +46,11 @@ class RefugeeController extends Controller
         }])
             ->with(['fields' => function ($query) {
                 $query->where('fields.descriptive_value', 1);
+                $query->where('crew_id', Auth::user()->crew->id);
             }])
             ->orderByDesc("date")
             ->get();
+
         $formated_refugees = [];
         foreach ($refugees as $refugee) {
             $formated_refugees[$refugee->id] = array();
@@ -60,6 +63,9 @@ class RefugeeController extends Controller
                     $value = $model::find($value)->{$list->displayed_value};
                 }
                 $formated_refugees[$refugee->id][$field->id] = $value;
+            }
+            if (empty($formated_refugees[$refugee->id])) {
+                unset($formated_refugees[$refugee->id]);
             }
         }
         $refugees = $formated_refugees;
@@ -121,7 +127,6 @@ class RefugeeController extends Controller
      */
     public function store(StoreRefugeeRequest $request)
     {
-
         $fields = $request->validated();
         foreach ($fields as $key => $value) {
             if (!empty($value)) {

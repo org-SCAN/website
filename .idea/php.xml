@@ -128,6 +128,23 @@
       <path value="$PROJECT_DIR$/src/vendor/markbaker/complex" />
       <path value="$PROJECT_DIR$/src/vendor/markbaker/matrix" />
       <path value="$PROJECT_DIR$/src/vendor/myclabs/php-enum" />
+      <path value="$PROJECT_DIR$/src/vendor/nette/utils" />
+      <path value="$PROJECT_DIR$/src/vendor/nette/schema" />
+      <path value="$PROJECT_DIR$/src/vendor/league/config" />
+      <path value="$PROJECT_DIR$/src/vendor/dflydev/dot-access-data" />
+      <path value="$PROJECT_DIR$/src/vendor/laravel/serializable-closure" />
+      <path value="$PROJECT_DIR$/src/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/src/vendor/reedware/laravel-relation-joins" />
+      <path value="$PROJECT_DIR$/src/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/src/vendor/spatie/flare-client-php" />
+      <path value="$PROJECT_DIR$/src/vendor/spatie/backtrace" />
+      <path value="$PROJECT_DIR$/src/vendor/spatie/ignition" />
+      <path value="$PROJECT_DIR$/src/vendor/spatie/laravel-ignition" />
+      <path value="$PROJECT_DIR$/src/vendor/symfony/uid" />
+      <path value="$PROJECT_DIR$/src/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/src/vendor/symfony/polyfill-uuid" />
+      <path value="$PROJECT_DIR$/src/vendor/fruitcake/php-cors" />
+      <path value="$PROJECT_DIR$/src/vendor/nunomaduro/termwind" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.3">

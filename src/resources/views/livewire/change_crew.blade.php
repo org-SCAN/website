@@ -14,7 +14,7 @@
         <div class="flex items-center mt-4">
                 <form class="inline-block" action="{{route('user.change_team',  $user->id)}}" method="POST">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    @livewire("select-dropdown", ['label' => 'crew', 'placeholder' => "--Select the team --", 'datas' =>
+                    @livewire("select-dropdown", ['label' => 'name', 'placeholder' => "--Select the team --", 'datas' =>
                     array_column($crews->toArray() , 'name', 'id'), "selected_value"=>$user->crew->id])
                     @stack('scripts')
                     <button
