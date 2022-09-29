@@ -54,7 +54,7 @@ class FieldsController extends Controller
     {
         $field = $request->validated();
         if(empty($field["order"])){
-            $field["order"]=100;
+            $field["order"] = Field::where('crew_id', Auth::user()->crew->id)->get()->sortByDesc('order')->first()->order + 1;
         }
         $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field["database_type"]);
         $field["android_type"] = Field::getUITypeFromForm($field["database_type"]);
@@ -90,7 +90,10 @@ class FieldsController extends Controller
             "attribute" => "Attribute",
             "database_type" => "Database type",
             "order" => "Order",
-            "validation_laravel" => "Validations attributes"];
+            "validation_laravel" => "Validations attributes",
+            "descriptive_value" => "Descriptive value",
+            "best_descriptive_value" => "Best descriptive value"
+        ];
         return view("fields.show",compact('field', 'display_elements'));
     }
 
@@ -133,6 +136,12 @@ class FieldsController extends Controller
     public function update(UpdateFieldRequest $request, Field $field)
     {
         $to_update = $request->validated();
+        if (!$request->has('descriptive_value')) {
+            $to_update['descriptive_value'] = 0;
+        }
+        if (!$request->has('best_descriptive_value')) {
+            $to_update['best_descriptive_value'] = 0;
+        }
         $to_update["database_type"] = $field->database_type;
         $to_update["validation_laravel"] = Field::getValidationLaravelFromForm($to_update);
         $field->update($to_update);

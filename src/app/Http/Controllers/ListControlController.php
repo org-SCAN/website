@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ListControl;
 use App\Http\Requests\StoreListControlRequest;
 use App\Http\Requests\UpdateListControlRequest;
-use App\Traits\Uuids;
+use App\Models\ListControl;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 
 class ListControlController extends Controller
 {
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(ListControl::class, 'lists_control');
+    }
+
     /**
      * Display a listing of the resource.
      *

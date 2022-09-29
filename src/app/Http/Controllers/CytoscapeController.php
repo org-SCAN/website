@@ -31,8 +31,8 @@ class CytoscapeController extends Controller
             $node["data"]["name"] = $relation->refugeeTo->best_descriptive_value;
             array_push($nodes, $node);
 
-            $refugees[$relation->getToId()]=$relation->to;
-            $refugees[$relation->getFromId()]=$relation->from;
+            $refugees[$relation->getToId()] = $relation->refugeeTo->best_descriptive_value;
+            $refugees[$relation->getFromId()] = $relation->refugeeFrom->best_descriptive_value;
 
             $link["data"] = array();
             $link["data"]["id"] = $relation->id;

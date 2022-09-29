@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Field;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateRefugeeRequest extends FormRequest
 {
@@ -26,7 +27,7 @@ class UpdateRefugeeRequest extends FormRequest
     {
         $hiddens = new Field();
         $hiddens = $hiddens->getHidden();
-        $fields = Field::where("status", ">", 0)->get();
+        $fields = Field::where("status", ">", 0)->where("crew_id", Auth::user()->crew->id)->get();
         $fields = $fields->makeVisible($hiddens)->toArray();
         $rules = array_column($fields, 'validation_laravel', "id");
         return $rules;
