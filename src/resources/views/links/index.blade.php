@@ -23,11 +23,41 @@
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg p-2">
+                        {{--<div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg p-2">
                             <livewire:links-datatables
                                 per-page="25"
                                 exportable
                             />
+                        </div>--}}
+                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg p-2">
+                            <table id="person" class="display">
+                                <thead>
+                                <tr>
+                                    <th>From</th>
+                                    <th>Relation</th>
+                                    <th>To</th>
+                                    @can('update', $links->first())
+                                        <th></th>
+                                    @endcan
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($links as $link)
+                                    <tr>
+                                        <td>
+                                            <a href="{{route('person.show',  $link->refugeeFrom->id)}}"> {{ $link->refugeeFrom->best_descriptive_value }}</a>
+                                        </td>
+                                        <td>{{ $link->relation }}</td>
+                                        <td>
+                                            <a href="{{route('person.show',  $link->refugeeTo->id)}}">{{ $link->refugeeTo->best_descriptive_value }}</a>
+                                        </td>
+                                        @can('update', $link)
+                                            <td><a href="{{route('links.edit',  $link->id)}}">Edit</a></td>
+                                        @endcan
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

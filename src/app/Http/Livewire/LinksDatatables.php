@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 
-use App\Models\Field;
 use App\Models\Link;
 use App\Models\Relation;
 use Illuminate\Support\Facades\Auth;
@@ -19,8 +18,8 @@ class LinksDatatables extends LivewireDatatable
     {
         /*return Link::query()
             ->whereNull("links.deleted_at")
-            ->leftJoin('refugees as from_refugee', 'from_refugee.id', 'links.from')
-            ->leftJoin('refugees as to_refugee', 'to_refugee.id', 'links.to')
+            ->leftJoin('field_refugees as from_refugee', 'from_refugee.id', 'links.from')
+            ->leftJoin('field_refugees as to_refugee', 'to_refugee.id', 'links.to')
             ->leftJoin('relations', 'relations.id', 'links.relation');
 
         */
@@ -34,6 +33,7 @@ class LinksDatatables extends LivewireDatatable
      */
     public function columns()
     {
+        /*
         $arr = [];
         foreach (Field::all() as $field) {
             array_push($arr,
@@ -42,6 +42,20 @@ class LinksDatatables extends LivewireDatatable
                         ->fields->where("label", $field->label)->first()->pivot->value;
                 })->label($field->title), (string)$field->id);
         }
+    */
+
+
+        return [
+
+            Column::name('refugeeFrom.id')->label('From'),
+            //Column::name('refugeeFrom.bestDescriptiveValue.value'),
+            Column::name('relation.name')
+                ->filterable(Relation::pluck(Relation::getDisplayedValue()))->label('Relation'),
+            Column::name('refugeeTo.id')->label('To'),
+            // Column::name('refugeeTo.bestDescriptiveValue.value'),
+
+        ];
+
 
         return [
             Column::callback('id', function ($id) {
@@ -56,12 +70,14 @@ class LinksDatatables extends LivewireDatatable
                 ->filterable()
                 ->label('From name'),
 
-            Column::callback('id', function ($id) {
-                return Link::find($id)->relation;
-            }, ["2"])
-                ->filterable(Relation::pluck(Relation::getDisplayedValue()))
-                ->label('Relation')
-                ->alignCenter(),
+//            Column::callback('id', function ($id) {
+//                return Link::find($id)->relation;
+//            }, ["2"])
+//                ->filterable(Relation::pluck(Relation::getDisplayedValue()))
+//                ->label('Relation')
+//                ->alignCenter(),
+            Column::name('relation.name')
+                ->filterable(Relation::pluck(Relation::getDisplayedValue())),
 
             Column::callback('id', function ($id) {
                 $ref = Link::find($id)->refugeeTo;
