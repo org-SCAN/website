@@ -60,6 +60,9 @@
                                 'id'), "selected_value"=>$user_found->role->id])
                                 @stack('scripts')
                             </div>
+                            @error('role_id')
+                            <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="px-4 py-5 bg-white sm:p-6">
