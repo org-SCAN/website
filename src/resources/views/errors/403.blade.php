@@ -518,8 +518,8 @@
             </div>
 
             <div class="ml-4 text-lg text-gray-500 uppercase tracking-wider">
-                You do not have the right to do this. <a href="{{ route('person.index') }}"
-                                                         style="text-decoration: underline"> Home Page</a></div>
+                {{ $exception->getMessage() }} <a href="{{ route('person.index') }}"
+                                                  style="text-decoration: underline"> Home Page</a></div>
         </div>
     </div>
 </div>
