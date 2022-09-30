@@ -18,6 +18,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->post('/manage_refugees', "\App\Http\Controllers\ManageRefugeesController@handleApiRequest");
+Route::middleware('auth:sanctum')->post('/person', "\App\Http\Controllers\RefugeeController@handleApiRequest");
 Route::middleware('auth:sanctum')->post('/links', "\App\Http\Controllers\LinkController@handleApiRequest");
 Route::middleware('auth:sanctum')->get('/fields', "\App\Http\Controllers\FieldsController@handleApiRequest");

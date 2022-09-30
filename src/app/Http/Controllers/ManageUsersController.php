@@ -2,21 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRequestRoleRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateCrewRequest;
 use App\Http\Requests\UpdateUsersRequest;
+use App\Models\Crew;
 use App\Models\RoleRequest;
-use App\Models\Team;
 use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 
 class ManageUsersController extends Controller
 {
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -41,21 +55,6 @@ class ManageUsersController extends Controller
 
 
     /**
-     * Create a personal team for the user.
-     *
-     * @param User $user
-     * @return void
-     */
-    protected function createTeam(User $user)
-    {
-        $user->ownedTeams()->save(Team::forceCreate([
-            'user_id' => $user->id,
-            'name' => explode(' ', $user->name, 2)[0]."'s Team",
-            'personal_team' => true,
-        ]));
-    }
-
-    /**
      * Create a newly registered user.
      *
      * @param array $input
@@ -64,13 +63,13 @@ class ManageUsersController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = $request->validated();
-
         DB::transaction(function () use ($user) {
             return tap(User::create([
                 'name' => $user['name'],
                 'email' => $user['email'],
                 'password' => Hash::make($user['password']),
-                'role' => $user['role'],
+                'role_id' => $user['role'],
+                "crew_id" => Crew::getDefaultCrewId()
             ]), function (User $created_user) {
                 $created_user->genToken();
                 $created_user->genRole();
@@ -83,12 +82,11 @@ class ManageUsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param User $user
      * @return Response
      */
-    public function show(String $id)
+    public function show(User $user)
     {
-        $user = User::find($id);
         $roles = UserRole::all();
         return view("user.show", compact("user", "roles"));
 
@@ -97,14 +95,12 @@ class ManageUsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @param $request
-     * @param $user
+     * @param User $user
      * @return Response
      */
-    public function edit( $id)
+    public function edit(User $user)
     {
-        $user_found = User::find($id);
+        $user_found = $user;
         return view("user.edit", compact("user_found"));
 
     }
@@ -113,19 +109,15 @@ class ManageUsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param int $id
-     * @param $user
+     * @param User $user
      * @return Response
      */
-    public function update(UpdateUsersRequest $request, $id)
+    public function update(UpdateUsersRequest $request, User $user)
     {
-       // $id->update($request->validated());
+        // $id->update($request->validated());
         //$user->roles()->sync($request->input('roles', []));
-
-        $user = $request->validated();
-
-        User::find($id)
-            ->update($user);
+        $changes = $request->validated();
+        $user->update($changes);
 
         return redirect()->route('user.index');
 
@@ -134,34 +126,28 @@ class ManageUsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @param $user
+     * @param User $user
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-
-        $user = User:: where("id", $id);
         $user->delete();
-        $users = User::all();
-        return view("user.index", compact("users"));
+        return redirect()->route("user.index");
     }
 
 
     /**
      * Add user role request to the request list
      *
-     * @param Request $request
-     * @param $id
+     * @param StoreRequestRoleRequest $request
+     * @param String $id
      * @return RedirectResponse
      */
-    public function RequestRole(Request $request, $id)
+    public function RequestRole(StoreRequestRoleRequest $request, $id)
     {
-
-        $role = $request->input('role');
         $user = User::find($id);
-
-        if ($user->getRoleid() == $role) {
+        $role = $request->input('role');
+        if ($user->role->id == $role) {
             return redirect()->back();
         }
         RoleRequest::create(['user' => $user->id, 'role' => $role]);
@@ -178,7 +164,7 @@ class ManageUsersController extends Controller
     {
         $request = RoleRequest::find($id);
         $user = User::find($request->getUserId());
-        $user->update(["role" => $request->getRoleId()]);
+        $user->update(["role_id" => $request->getRoleId()]);
         $request->update(["granted" => date("Y-m-d H:i:s")]);
 
         return redirect()->back();
@@ -195,6 +181,22 @@ class ManageUsersController extends Controller
         $request = RoleRequest::find($id);
         $request->update(["granted" => date("Y-m-d H:i:s")]);
 
+        return redirect()->back();
+    }
+
+    /**
+     * Add user role request to the request list
+     *
+     * @param Request $request
+     * @param User $user
+     * @return RedirectResponse
+     */
+    public function ChangeTeam(UpdateCrewRequest $request)
+    {
+        $crew = $request->input('name');
+        $user = $request->user();
+        $user->crew_id = $crew;
+        $user->save();
         return redirect()->back();
     }
 }

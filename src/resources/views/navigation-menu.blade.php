@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('manage_refugees.index') }}">
+                    <a href="{{ route('person.index') }}">
                         <x-jet-application-mark class="block h-9 w-auto"/>
                     </a>
                 </div>
@@ -14,37 +14,37 @@
                 @if(Auth::user()->hasPermission("cytoscape.index"))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('cytoscape.index') }}"
-                                        :active="request()->routeIs('cytoscape.index')">
+                                        :active="request()->routeIs('cytoscape.*')">
                             {{ __('Network graph') }}
                         </x-jet-nav-link>
                     </div>
                 @endif
-                @if(Auth::user()->hasPermission("manage_refugees.index"))
+                @if(Auth::user()->hasPermission("person.index"))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('manage_refugees.index') }}"
-                                        :active="request()->routeIs('manage_refugees.index')">
-                            {{ __('Manage Persons') }}
+                        <x-jet-nav-link href="{{ route('person.index') }}"
+                                        :active="request()->routeIs('person.*')">
+                            {{ __('Persons') }}
                         </x-jet-nav-link>
                     </div>
                 @endif
                 @if(Auth::user()->hasPermission("links.index"))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.index')">
-                            {{ __('Manage relations') }}
+                        <x-jet-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.*')">
+                            {{ __('Relations') }}
                         </x-jet-nav-link>
                     </div>
                 @endif
                 @if(Auth::user()->hasPermission("duplicate.index"))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('duplicate.index') }}"
-                                        :active="request()->routeIs('duplicate.index')">
+                                        :active="request()->routeIs('duplicate.*')">
                             {{ __('Duplicates') }}
                         </x-jet-nav-link>
                     </div>
                 @endif
                 @if(Auth::user()->hasPermission("fields.index"))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('fields.index') }}" :active="request()->routeIs('fields.index')">
+                        <x-jet-nav-link href="{{ route('fields.index') }}" :active="request()->routeIs('fields.*')">
                             {{ __('Manage fields') }}
                         </x-jet-nav-link>
                     </div>
@@ -52,19 +52,27 @@
                 @if(Auth::user()->hasPermission("api_logs.index"))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('api_logs.index') }}"
-                                        :active="request()->routeIs('api_logs.index')">
+                                        :active="request()->routeIs('api_logs.*')">
                             {{ __('Api logs') }}
                         </x-jet-nav-link>
                     </div>
                 @endif
                 @if(Auth::user()->hasPermission("user.index"))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.index')">
+                        <x-jet-nav-link href="{{ route('crew.index') }}" :active="request()->routeIs('crew.*')">
+                            {{ __('Crews') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endif
+
+                @if(Auth::user()->hasPermission("user.index"))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.*')">
                             {{ __('Users') }}
                         </x-jet-nav-link>
                     </div>
-            @endif
-            <!--
+                @endif
+                <!--
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('lists_control.index') }}" :active="request()->routeIs('lists_control.index')">
                         {{ __('Manage lists') }}
@@ -194,9 +202,9 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            @if(Auth::user()->hasPermission("manage_refugees.index"))
-                <x-jet-responsive-nav-link href="{{ route('manage_refugees.index') }}"
-                                           :active="request()->routeIs('manage_refugees.index')">
+            @if(Auth::user()->hasPermission("person.index"))
+                <x-jet-responsive-nav-link href="{{ route('person.index') }}"
+                                           :active="request()->routeIs('person.index')">
                     {{ __('Manage Persons') }}
                 </x-jet-responsive-nav-link>
             @endif
@@ -288,3 +296,14 @@
         </div>
     </div>
 </nav>
+<link rel="stylesheet" type="text/css"
+      href="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/sc-2.0.5/sb-1.3.1/sp-1.4.0/datatables.min.css"/>
+
+<script type="text/javascript"
+        src="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/sc-2.0.5/sb-1.3.1/sp-1.4.0/datatables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#person').DataTable({});
+    });
+</script>

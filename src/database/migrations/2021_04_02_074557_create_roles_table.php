@@ -30,8 +30,7 @@ class CreateRolesTable extends Migration
             $table->string("descr");
             $table->string("key");
             $table->timestamps();
-            $table->boolean("deleted")
-                ->default(0);
+            $table->softDeletes();
         });
     }
 

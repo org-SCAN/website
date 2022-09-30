@@ -30,9 +30,26 @@
                         <!--  LABEL SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "name")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">List's label</label>
-                            <input type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="country" />
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used as list identifier.</small>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">List's
+                                label</label>
+                            <input type="text" name="{{$form_elem}}" id="{{$form_elem}}"
+                                   class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="country"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
+                                used as list identifier : (the model to which the list is associated)</small>
+                            @error($form_elem)
+                            <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!--  key value SECTION  -->
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            @php($form_elem = "key_value")
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">List's key
+                                value</label>
+                            <input type="text" name="{{$form_elem}}" id="{{$form_elem}}"
+                                   class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="ex: key"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
+                                used as list id</small>
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -41,9 +58,12 @@
                         <!--  DISPLAYED VALUE SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "displayed_value")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Displayed value</label>
-                            <input type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="short" />
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It's the name of the attribute that has to be shown.</small>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Displayed
+                                value</label>
+                            <input type="text" name="{{$form_elem}}" id="{{$form_elem}}"
+                                   class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="short"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It's the
+                                name of the attribute that has to be shown.</small>
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror

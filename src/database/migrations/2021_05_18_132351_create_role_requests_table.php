@@ -19,6 +19,7 @@ class CreateRoleRequestsTable extends Migration
             $table->string('role');
             $table->date('granted')->nullable()->default(null);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ListControl;
 use App\Http\Requests\StoreListControlRequest;
 use App\Http\Requests\UpdateListControlRequest;
-use App\Traits\Uuids;
+use App\Models\ListControl;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 
 class ListControlController extends Controller
 {
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(ListControl::class, 'lists_control');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,8 +29,7 @@ class ListControlController extends Controller
      */
     public function index()
     {
-        $lists = ListControl::where("deleted", 0)
-            ->get();
+        $lists = ListControl::all();
         return view("lists_control.index", compact("lists"));
     }
 
@@ -33,9 +44,22 @@ class ListControlController extends Controller
     }
 
     /**
+     * This function is used to add an element to an existing list
+     *
+     * @param ListControl $lists_control
+     * @return \Illuminate\Http\Response
+     *
+     */
+    public function addToList(ListControl $lists_control)
+    {
+
+        return view("lists_control.add_to_list", compact("lists_control"));
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreListControlRequest $request
+     * @param \App\Http\Requests\StoreListControlRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreListControlRequest $request)
@@ -49,26 +73,25 @@ class ListControlController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  String  $id
+     * @param ListControl $lists_control
      * @return \Illuminate\Http\Response
      */
-    public function show(String $id)
+    public function show(ListControl $lists_control)
     {
-        $list=ListControl::find($id);
-        $list_content = $list->getListContent();
-        return view("lists_control.show", compact("list", "list_content"));
+        $list_content = $lists_control->getListContent()->toArray();
+        return view("lists_control.show", compact("lists_control", "list_content"));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  String  $id
+     * @param ListControl $lists_control
      * @return \Illuminate\Http\Response
      */
-    public function edit(String $id)
+    public function edit(ListControl $lists_control)
     {
-        $list=ListControl::find($id);
-        return view("lists_control.edit", compact("list"));
+        //$fields = $lists_control
+        return view("lists_control.edit", compact("lists_control"));
     }
 
     /**
@@ -87,13 +110,12 @@ class ListControlController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  String  $id
+     * @param ListControl $lists_control
      * @return \Illuminate\Http\Response
      */
-    public function destroy(String $id)
+    public function destroy(ListControl $lists_control)
     {
-        ListControl::find($id)
-        ->update(["deleted"=>1]);
+        $lists_control->delete();
         return redirect()->route("lists_control.index");
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddKeyValueToListControls extends Migration
+class CreateCrewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddKeyValueToListControls extends Migration
      */
     public function up()
     {
-        Schema::table('list_controls', function (Blueprint $table) {
-            $table->string("key_value");
+        Schema::create('crews', function (Blueprint $table) {
+            $table->uuid("id")->primary();
+            $table->string("name")->unique();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -25,8 +28,6 @@ class AddKeyValueToListControls extends Migration
      */
     public function down()
     {
-        Schema::table('list_controls', function (Blueprint $table) {
-            $table->dropColumn("key_value");
-        });
+        Schema::dropIfExists('crews');
     }
 }

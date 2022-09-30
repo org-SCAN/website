@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Factories\EventFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(UserRoleSeeder::class);
+        $this->call(CrewSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(ListControlSeeder::class);
         $this->call(LanguageSeeder::class);
@@ -25,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GenderSeeder::class);
         $this->call(RelationSeeder::class);
         if (env('APP_DEBUG')) {
+            $this->call(EventSeeder::class);
             $this->call(RefugeeSeeder::class);
             $this->call(LinkSeeder::class);
         }

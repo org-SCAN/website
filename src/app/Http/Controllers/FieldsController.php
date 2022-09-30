@@ -10,9 +10,20 @@ use App\Models\ListControl;
 use App\Models\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class FieldsController extends Controller
 {
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Field::class, 'field');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +31,6 @@ class FieldsController extends Controller
      */
     public function index()
     {
-
         return view("fields.index");
     }
 
@@ -31,7 +41,6 @@ class FieldsController extends Controller
      */
     public function create()
     {
-
         return view("fields.create");
     }
 
@@ -45,30 +54,30 @@ class FieldsController extends Controller
     {
         $field = $request->validated();
         if(empty($field["order"])){
-            $field["order"]=100;
+            $field["order"] = Field::where('crew_id', Auth::user()->crew->id)->get()->sortByDesc('order')->first()->order + 1;
         }
         $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field["database_type"]);
         $field["android_type"] = Field::getUITypeFromForm($field["database_type"]);
         $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
+        $field["crew_id"] = Auth::user()->crew->id;
         $field = Field::create($field);
+        /*
         if($field->exists){
             $field->addFieldtoRefugees();
         }else{
             //DROP error ?
-        }
+        }*/
         return redirect()->route("fields.index");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param String $id
+     * @param Field $field
      * @return Response
      */
-    public function show(String $id)
+    public function show(Field $field)
     {
-        $field = Field::find($id);
-        //die(var_dump($field));
         $display_elements = [
             "title" => "Title",
             "label" => "Label",
@@ -81,19 +90,21 @@ class FieldsController extends Controller
             "attribute" => "Attribute",
             "database_type" => "Database type",
             "order" => "Order",
-            "validation_laravel" => "Validations attributes"];
+            "validation_laravel" => "Validations attributes",
+            "descriptive_value" => "Descriptive value",
+            "best_descriptive_value" => "Best descriptive value"
+        ];
         return view("fields.show",compact('field', 'display_elements'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param Field $field
      * @return Response
      */
-    public function edit($id)
+    public function edit(Field $field)
     {
-        $field = Field::find($id);
         $linked_list_id = $field->getLinkedListId();
         $lists["database_type"] = array("string" => "Small text", "text" => "Long text", "integer" => "Number", "date" => "Date", "boolean" => "Yes / No ");
         $lists["database_type"] = [$field->database_type => $lists["database_type"][$field->database_type]] + $lists["database_type"];
@@ -111,7 +122,7 @@ class FieldsController extends Controller
         } else {
             $lists["linked_list"] = array_column(ListControl::where('id', $linked_list_id)->get()->toArray(), "title", "id");
         }
-        $lists["linked_list"] += array_column(ListControl::where("deleted", 0)->where("id", "!=", $linked_list_id)->get()->toArray(), "title", "id");
+        $lists["linked_list"] += array_column(ListControl::where("id", "!=", $linked_list_id)->get()->toArray(), "title", "id");
         return view("fields.edit", compact('field', "lists"));
     }
 
@@ -119,15 +130,20 @@ class FieldsController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param string $id
+     * @param Field $field
      * @return Response
      */
-    public function update(UpdateFieldRequest $request, $id)
+    public function update(UpdateFieldRequest $request, Field $field)
     {
-
-        $field = Field::find($id);
         $to_update = $request->validated();
-        $to_update["database_type"] = $field->database_type; $to_update["validation_laravel"] = Field::getValidationLaravelFromForm($to_update);
+        if (!$request->has('descriptive_value')) {
+            $to_update['descriptive_value'] = 0;
+        }
+        if (!$request->has('best_descriptive_value')) {
+            $to_update['best_descriptive_value'] = 0;
+        }
+        $to_update["database_type"] = $field->database_type;
+        $to_update["validation_laravel"] = Field::getValidationLaravelFromForm($to_update);
         $field->update($to_update);
 
         return redirect()->route("fields.index");
@@ -136,13 +152,12 @@ class FieldsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param String $id
+     * @param Field $field
      * @return Response
      */
-    public function destroy(String $id)
+    public function destroy(Field $field)
     {
-        Field::find($id)
-        ->update(["deleted"=>1]);
+        $field->delete();
         return redirect()->route("fields.index");
     }
 

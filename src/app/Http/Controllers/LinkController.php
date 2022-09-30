@@ -17,13 +17,23 @@ use Illuminate\Http\Response;
 class LinkController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Link::class, 'link');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return Response
      */
     public function index()
     {
-        $links = Link::where('deleted',0)->get();
+        $links = Link::all();
         return view("links.index", compact('links'));
     }
 
@@ -34,8 +44,8 @@ class LinkController extends Controller
      */
     public function create()
     {
-        $lists["refugees"] = array_column(Refugee::where("deleted", 0)->get()->toArray(), "full_name", "id");
-        $lists["relations"] = array_column(Relation::where("deleted", 0)->get()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
+        $lists["refugees"] = Refugee::getAllBestDescriptiveValues();
+        $lists["relations"] = array_column(Relation::all()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
         return view("links.create", compact("lists"));
     }
 
@@ -47,7 +57,7 @@ class LinkController extends Controller
      */
     public function createFromJson()
     {
-        //abort_if(Gate::denies('manage_refugees_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('person_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view("links.create_from_json");
     }
 
@@ -114,12 +124,11 @@ class LinkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param string $id
+     * @param Link $link
      * @return Response
      */
-    public function show($id)
+    public function show(Link $link)
     {
-        $link = Link::find($id);
         //return view("links.show", compact("links"));
         return redirect()->route("links.edit", compact("link"));
     }
@@ -127,30 +136,29 @@ class LinkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param Link $link
      * @return Response
      */
-    public function edit($id)
+    public function edit(Link $link)
     {
-        $link = Link::find($id);
-        $lists["relations"] = [$link->getRelationId() => $link->relation]+array_column(Relation::where("deleted",0)->get()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
-        return view("links.edit", compact("link","lists"));
+        $lists["relations"] = [$link->getRelationId() => $link->relation] + array_column(Relation::all()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
+        return view("links.edit", compact("link", "lists"));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param int $id
+     * @param Link $link
      * @return Response
      */
-    public function update(UpdateLinkRequest $request, $id)
+    public function update(UpdateLinkRequest $request, Link $link)
     {
 
         $log = ApiLog::createFromRequest($request, "Link");
-        $link = $request->validated();
-        $link["api_log"] = $log->id;
-        $link = Link::find($id)->update($link);
+        $linkv = $request->validated();
+        $linkv["api_log"] = $log->id;
+        $link->update($linkv);
 
         return redirect()->route("links.index");
     }
@@ -158,13 +166,12 @@ class LinkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param string $id
+     * @param Link $link
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Link $link)
     {
-        Link::where("id",$id)
-            ->update(["deleted"=>1]);
+        $link->delete();
         return redirect()->route("links.index");
     }
 

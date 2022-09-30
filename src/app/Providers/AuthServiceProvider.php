@@ -2,8 +2,18 @@
 
 namespace App\Providers;
 
-use App\Models\Team;
-use App\Policies\TeamPolicy;
+use App\Models\ApiLog;
+use App\Models\Crew;
+use App\Models\Field;
+use App\Models\ListControl;
+use App\Models\Refugee;
+use App\Models\User;
+use App\Policies\ApiLogPolicy;
+use App\Policies\CrewPolicy;
+use App\Policies\FieldPolicy;
+use App\Policies\ListControlPolicy;
+use App\Policies\RefugeePolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -14,7 +24,12 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Team::class => TeamPolicy::class,
+        Refugee::class => RefugeePolicy::class,
+        Crew::class => CrewPolicy::class,
+        ApiLog::class => ApiLogPolicy::class,
+        Field::class => FieldPolicy::class,
+        User::class => UserPolicy::class,
+        ListControl::class => ListControlPolicy::class
     ];
 
     /**

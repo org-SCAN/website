@@ -1,1 +1,1 @@
-<a href='{{route('manage_refugees.show', $row->from)}}'> {{$value}} </a>
+<a href='{{route('person.show', $row->from)}}'> {{$value}} </a>

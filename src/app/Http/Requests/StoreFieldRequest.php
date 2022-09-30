@@ -26,13 +26,15 @@ class StoreFieldRequest extends FormRequest
     {
         $rules = [
             "title" => "required|string",
-            "label" => "required|string|unique:fields,label,0,deleted",
+            "label" => "required|string|unique:fields,label,null,deleted_at",
             "placeholder" => "string|max:80|nullable",
             "database_type" => "string|required",
             "required" => "integer|required",
             "status" => "integer|required",
             "linked_list" => "nullable|uuid|exists:list_controls,id",
-            "order" => "integer|nullable"
+            "order" => "integer|nullable",
+            "descriptive_value" => "integer|nullable",
+            "best_descriptive_value" => "integer|nullable"
 
         ];
         return $rules;

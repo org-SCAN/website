@@ -5,10 +5,11 @@ namespace App\Models;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserRole extends Model
 {
-    use HasFactory, Uuids;
+    use HasFactory, Uuids, SoftDeletes;
     /**
      * The data type of the auto-incrementing ID.
      *
@@ -40,7 +41,7 @@ class UserRole extends Model
      *
      * @var array
      */
-    protected $hidden = ['deleted', "created_at", "updated_at"];
+    protected $hidden = ['deleted_at', "created_at", "updated_at"];
 
 
     public function hasPermission(string $routeName)
@@ -65,7 +66,7 @@ class UserRole extends Model
                 "edit" => 2,
                 "json" => 2
             ],
-            "manage_refugees" => [
+            "person" => [
                 "index" => 1,
                 "store" => 2,
                 "create" => 2,
@@ -85,5 +86,19 @@ class UserRole extends Model
         }
 
         return ($this->importance >= $permissions[$routeNameExploded[0]]);
+    }
+
+    public function users(){
+        return $this->hasMany(User::class);
+    }
+
+    public static function biggestRole()
+    {
+        return self::orderBy("importance", "desc")->first()->id;
+    }
+
+    public static function smallestRole()
+    {
+        return self::orderBy("importance")->first()->id;;
     }
 }

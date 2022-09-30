@@ -23,22 +23,20 @@ class UpdateUsersRequest extends FormRequest
      */
     public function rules()
     {
-
         $rules = [
             'name'    => [
                 'string',
                 'required',
             ],
-            'email'   => [
-                'required',
-                "unique:users,email,{$this->user}",
-            ],
-            'role'   => [
+            'role_id' => [
                 'required',
                 'exists:user_roles,id',
             ],
+            'crew_id' => [
+                'required',
+                'exists:crews,id',
+            ]
         ];
-
         return $rules;
     }
 }

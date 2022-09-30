@@ -5,10 +5,12 @@ namespace App\Models;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Refugee extends Model
 {
-    use HasFactory, Uuids;
+    use HasFactory, Uuids, SoftDeletes;
     /**
      * The data type of the auto-incrementing ID.
      *
@@ -38,151 +40,79 @@ class Refugee extends Model
      * Give the route pattern, used in api log
      * @var string
      */
-    const route_base = "manage_refugees";
+    const route_base = "person";
 
     /**
-     * It returns a representative value, witch could be shown to discribe the element
-     *
-     * @return mixed
+     * The fields that describe the user.
      */
-    public function getRepresentativeValue()
-    {
-        return $this->full_name;
-    }
-
-    /**
-     * Indicate the nationality according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getNationalityAttribute($value){
-        return Country::getDisplayedValueContent($value);
-    }
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getNationalityId(){
-        return $this->attributes['nationality'];
-    }
-
-    /**
-     * Store the country id accorting its key or its ISO3 contry code
-     * @param $value
-     */
-
-    public function setNationalityAttribute($value){
-        $this->attributes["nationality"] = Country::getIdFromValue($value);
-    }
-
-    /**
-     * Store the sex id accorting its key or its code
-     * @param $value
-     */
-
-    public function setGenderAttribute($value){
-        $this->attributes["gender"] = Gender::getIdFromValue($value);
-    }
-
-    /**
-     * Store the role id accorting its key or its code
-     * @param $value
-     */
-
-    public function setRoleAttribute($value){
-        $this->attributes["role"] = Role::getIdFromValue($value);
-    }
-
-    /**
-     * Store the route id accorting its key or its code
-     * @param $value
-     */
-
-    public function setRouteAttribute($value){
-        $this->attributes["route"] = Route::getIdFromValue($value);
-    }
-
-    /**
-     * Store the residence id accorting its key or its code
-     * @param $value
-     */
-
-    public function setResidenceAttribute($value){
-        $this->attributes["residence"] = Country::getIdFromValue($value);
-    }
-
-    /**
-     * Indicate the role according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRoleAttribute($value){
-        return Role::getDisplayedValueContent($value);
-    }
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRoleId(){
-        return $this->attributes['role'];
-    }
-    /**
-     * Indicate the gender according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getGenderAttribute($value){
-        return Gender::getDisplayedValueContent($value);
-    }
-
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getGenderId(){
-        return $this->attributes['gender'];
-    }
-    /**
-     * Indicate the route according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRouteAttribute($value){
-        return Route::getDisplayedValueContent($value);
-    }
-
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRouteId()
-    {
-        return $this->attributes['route'];
-    }
-
-    /**
-     * Indicate the residence according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getResidenceAttribute($value)
+    public function fields()
     {
 
-        return Country::getDisplayedValueContent($value);
+        $crew_id = empty(Auth::user()->crew->id) ? User::where("email", env("DEFAULT_EMAIL"))->get()->first()->crew->id : Auth::user()->crew->id;
+        return $this->belongsToMany(Field::class)
+            ->where("crew_id", $crew_id)
+            ->withPivot("id")
+            ->withPivot("value")
+            ->withTimestamps()
+            ->using(FieldRefugee::class)
+            ->orderBy("required")
+            ->orderBy("order");
     }
 
     /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
+     * The Api log to which the refugee is associated.
+     **/
+    /* public function api_log()
+     {
+         return $this->belongsTo(ApiLog::class, "api_log");
+     }
+ */
+    /**
+     * The crew to which the refugee is associated.
      */
-    public function getResidenceId()
+    public function crew()
     {
-        return $this->attributes['residence'];
+        return $this->hasOneThrough(Crew::class, ApiLog::class, "id", "id", "api_log", "crew_id");
+    }
+
+    /**
+     * The user to which the refugee is associated.
+     */
+    public function user()
+    {
+        return $this->hasOneThrough(User::class, ApiLog::class, "id", "id", "api_log", "user");
+    }
+
+    /*
+    public function relations(){
+        return $this->fromRelation() + $this->toRelation();
+    }
+    */
+    public function fromRelation()
+    {
+        return $this->belongsToMany(Relation::class, "links", "from", "relation")
+            ->using(Link::class)
+            ->wherePivotNull("deleted_at")
+            ->withPivot("to")
+            ->withPivot("id");
+    }
+
+    public function toRelation()
+    {
+        return $this->belongsToMany(Relation::class, "links", "to", "relation")
+            ->using(Link::class)
+            ->wherePivotNull("deleted_at")
+            ->withPivot("from")
+            ->withPivot("id");
+    }
+
+    public static function getAllBestDescriptiveValues()
+    {
+        $best_descriptive_values = [];
+        foreach (self::all() as $elem) {
+            $best_descriptive_values[$elem->id] = $elem->best_descriptive_value;
+        }
+        return $best_descriptive_values;
     }
 
     public static function getRefugeeIdFromReference($reference, $application_id)
@@ -192,6 +122,18 @@ class Refugee extends Model
         return !empty($refugee) ? $refugee->id : null;
     }
 
+    public function getRepresentativeValuesAttribute()
+    {
+        return $this->fields->where("representative_value", 1);
+    }
+
+    public function getBestDescriptiveValueAttribute(){
+        return $this->fields->where("best_descriptive_value", 1)->first()->pivot->value;
+    }
+
+    public function getRelationsAttribute(){
+        return [$this->fromRelation,$this->toRelation];
+    }
     public static function handleApiRequest($refugee)
     {
         $potential_refugee = Refugee::getRefugeeIdFromReference($refugee["unique_id"], $refugee["application_id"]);

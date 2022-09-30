@@ -3,7 +3,6 @@
 Site web du projet :)
 Nomalement on a une synchro automatique de la branche main sur le serveur.
 
-Adresse IP du serveur : 15.236.237.200
 
 # Start the website
 
@@ -141,7 +140,7 @@ Il faut maintenant envoyer une requête post avec le json à l'intérieur :
 Exemple :
 
 ```
-POST /api/manage_refugees HTTP/1.1
+POST /api/person HTTP/1.1
 Host: 15.236.237.200:80
 Accept: application/json
 Content-Type: application/json

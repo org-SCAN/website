@@ -6,10 +6,11 @@ use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Field extends Model
 {
-    use Uuids;
+    use Uuids, SoftDeletes;
     /**
      * The data type of the auto-incrementing ID.
      *
@@ -37,7 +38,7 @@ class Field extends Model
      *
      * @var array
      */
-    protected $hidden = ['deleted', "created_at", "updated_at", "status", "html_data_type", "validation_laravel", "attribute", "order"];
+    protected $hidden = ['deleted_at', "created_at", "updated_at", "status", "html_data_type", "validation_laravel", "attribute", "order"];
 
 
     /**
@@ -211,9 +212,24 @@ class Field extends Model
      * @param $value
      * @return string
      */
+    /*
     public function getLinkedListAttribute($value){
         $linked_list =  ListControl::find($value);
         return (empty($linked_list) ? "" : $linked_list->title);
+    }
+    */
+    public function getValue(){
+        if(empty(($this->linked_list))) {
+            return $this->pivot->value;
+        }
+        $model = 'App\Models\\' . $this->linkedList->name;
+        $id = $this->pivot->value;
+        $displayed_value = $this->linkedList->displayed_value;
+        return $model::find($id)->$displayed_value;
+    }
+
+    public function linkedList(){
+        return $this->hasOne(ListControl::class, "id","linked_list");
     }
 
     /**
@@ -225,7 +241,7 @@ class Field extends Model
     public function getLinkedListContent()
     {
         $list_control = ListControl::find($this->getLinkedListId());
-        $list = $list_control->getListContent();
+        $list = $list_control->getListContent()->toArray();
         $displayed_value = $list_control->displayed_value;
         return array_column($list, $displayed_value, "id");
     }
@@ -278,14 +294,14 @@ class Field extends Model
 
         $call_class_name = get_called_class();
         $class_name = substr(strrchr($call_class_name, "\\"), 1);
-        $database_content = $call_class_name::where('deleted', 0)->where("status",2)->orderBy("required")->orderBy("order")->get()->makeHidden("id")->toArray();
+        $database_content = $call_class_name::where("status",2)->orderBy("required")->orderBy("order")->get()->makeHidden("id")->toArray();
         $list_info = ListControl::where('name', $class_name)->first();
         $keys = array_column($database_content, $list_info->key_value); // all keys name
         $api_res = array();
         foreach ($keys as $key_index => $key_value){
             $api_res[$key_value] = $database_content[$key_index];
 
-            $translations = array_column(Translation::where('deleted',0)->where('list', $list_info->id)->where('field_key', $key_value)->get()->toArray(), "translation", "language");
+            $translations = array_column(Translation::where('list', $list_info->id)->where('field_key', $key_value)->get()->toArray(), "translation", "language");
             foreach($translations as $language => $translation){
                 $api_res[$key_value]["displayed_value"][$language] = $translation;
             }

@@ -4,11 +4,18 @@ namespace App\Models;
 
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Link extends Model
+class Link extends Pivot
 {
-    use HasFactory, Uuids;
+    use HasFactory, Uuids, SoftDeletes;
+
+    /**
+     * Table
+     */
+
+    protected $table = "links";
     /**
      * The data type of the auto-incrementing ID.
      *
@@ -46,6 +53,21 @@ class Link extends Model
         return $this->from . " <-> " . $this->to;
     }
 
+    public function refugeeFrom()
+    {
+        return $this->belongsTo(Refugee::class, "from");
+    }
+
+    public function refugeeTo()
+    {
+        return $this->belongsTo(Refugee::class, "to");
+    }
+
+    public function relation()
+    {
+        return $this->belongsTo(Relation::class, "relation");
+    }
+
     /**
      *
      * Get relation name
@@ -71,15 +93,7 @@ class Link extends Model
         return $this->attributes["relation"];
     }
 
-    /**
-     * Get refugee1 fullname
-     * @param $refugee1
-     * @return mixed
-     */
-    public function getFromAttribute($from)
-    {
-        return Refugee::find($from)->full_name;
-    }
+
 
 
     /**
@@ -91,15 +105,6 @@ class Link extends Model
         return $this->attributes["from"];
     }
 
-    /**
-     * Get to fullname
-     * @param $to
-     * @return mixed
-     */
-    public function getToAttribute($to)
-    {
-        return Refugee::find($to)->full_name;
-    }
 
     /**
      * Get to Id

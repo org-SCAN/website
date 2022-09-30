@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -18,10 +18,10 @@ class User extends Authenticatable
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
-    use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
     use Uuids;
+    use SoftDeletes;
 
     /**
      * The data type of the auto-incrementing ID.
@@ -43,7 +43,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', "token", "role"
+        'name', 'email', 'password', "token", "role_id", "crew_id"
     ];
 
     /**
@@ -65,26 +65,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime'
     ];
 
-    /**
-     * Indicate the role of the user according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRoleAttribute($value){
-        $user_role = UserRole::find($value);
-        return empty($user_role) ? "" : $user_role->role;
+    public function crew(){
+        return $this->belongsTo(Crew::class)->withDefault();
     }
 
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRoleId(){
-        return (!empty($this->attributes['role']) ? $this->attributes['role'] : "");
+    public function role(){
+        return $this->belongsTo(UserRole::class)->withDefault();
     }
 
     /**
@@ -101,21 +90,19 @@ class User extends Authenticatable
 
     /**
      * Generate a role by default
+     *
      */
 
     public function genRole()
     {
-        if (empty($this->getRoleId())) {
+        if (empty($this->role->id)) {
             $users = User::all();
-            $userAdmin = User::where("role", UserRole::orderBy("importance", "desc")->first()->id)->get();
+            $userAdmin = User::where("role_id", UserRole::biggestRole())->get();
             if ($users->isEmpty() || $userAdmin->isEmpty()) {
-                $this->role = UserRole::orderBy("importance", "desc")->first()->id;
+                $this->role_id = UserRole::biggestRole();
             } else {
-
-                $this->role = UserRole::orderBy("importance")->first()->id;
-
+                $this->role_id = UserRole::smallestRole();
             }
-
             $this->save();
         }
     }
@@ -144,6 +131,7 @@ class User extends Authenticatable
             'name' => "Default user",
             'email' => env("DEFAULT_EMAIL"),
             'password' => Hash::make(env("DEFAULT_PASSWORD")),
+            'crew_id' => Crew::getDefaultCrewId()
         ]);
         $new_user->genToken();
         $new_user->genRole();
@@ -152,6 +140,11 @@ class User extends Authenticatable
 
     public function hasPermission(string $routeName)
     {
-        return UserRole::find($this->getRoleId())->hasPermission($routeName);
+        return UserRole::find($this->role->id)->hasPermission($routeName);
+    }
+
+    public function getRoleNameAttribute()
+    {
+        return $this->role->role;
     }
 }
