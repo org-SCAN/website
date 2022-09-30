@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\NotLastMoreImportantRole;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUsersRequest extends FormRequest
@@ -31,6 +32,7 @@ class UpdateUsersRequest extends FormRequest
             'role_id' => [
                 'required',
                 'exists:user_roles,id',
+                new NotLastMoreImportantRole,
             ],
             'crew_id' => [
                 'required',
