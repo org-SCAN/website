@@ -9,13 +9,17 @@
 
     <x-slot name="content">
         <div class="max-w-xl text-sm text-gray-600">
-            {{ __('If necessary, you can ask for a new role. Your request need to be accepted by an admin') }}
+            {{ __('If necessary, you can ask for a new role. Your request need to be accepted by an admin.') }}
+            @if($errors->any())
+                {!! implode('', $errors->all('<span class="text text-danger"><br>:message</span>')) !!}
+            @endif
         </div>
         <div class="flex items-center mt-4">
             @if(empty($request))
                 <form class="inline-block" action="{{route('user.request_role',  $user->id)}}" method="POST">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    @livewire("select-dropdown", ['label' => 'role', 'placeholder' => "-- Select the role --", 'datas' =>
+                    @livewire("select-dropdown", ['label' => 'role', 'placeholder' => "-- Select the role --", 'datas'
+                    =>
                     array_column($roles->toArray() , 'role', 'id'), "selected_value"=>$user->role->id])
                     @stack('scripts')
                     <button

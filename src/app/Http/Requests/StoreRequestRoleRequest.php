@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\NotLastMoreImportantRole;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequestRoleRequest extends FormRequest
@@ -24,7 +25,7 @@ class StoreRequestRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            "role" => "string|required|exists:user_roles,id"
+            "role" => ['string', 'required', 'exists:user_roles,id', new NotLastMoreImportantRole]
         ];
     }
 }
