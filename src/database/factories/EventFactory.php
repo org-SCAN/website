@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\ApiLog;
 use App\Models\Country;
 use App\Models\Event;
 use App\Models\User;
-use App\Models\ApiLog;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EventFactory extends Factory
 {
@@ -24,7 +24,7 @@ class EventFactory extends Factory
      */
     public function definition()
     {
-        $log["user"] = User::where("email", env("DEFAULT_EMAIL"))->first()->id;
+        $log["user_id"] = User::where("email", env("DEFAULT_EMAIL"))->first()->id;
         $log["application_id"] = "seeder";
         $log["api_type"] = "seeder";
         $log["http_method"] = "POST";
