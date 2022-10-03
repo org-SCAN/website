@@ -10,11 +10,14 @@ use App\Models\Crew;
 use App\Models\RoleRequest;
 use App\Models\User;
 use App\Models\UserRole;
+use App\Rules\NotLastMoreImportantRole;
+use App\Rules\notLastUser;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 
 class ManageUsersController extends Controller
@@ -130,8 +133,23 @@ class ManageUsersController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-        return redirect()->route("user.index");
+        // if there is no more user then error
+
+        $rules = [
+            "user" => [
+                new notLastUser,
+                new notLastMoreImportantRole($user)
+            ]
+        ];
+
+        $v = Validator::make(["user" => $user->id], $rules);
+        if ($v->fails()) {
+            return redirect()->back()->withErrors(['cantDeleteUser' => $v->errors()]);
+        } else {
+            $user->delete();
+            return redirect()->route("user.index");
+        }
+
     }
 
 

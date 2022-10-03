@@ -5,7 +5,6 @@ namespace App\Rules;
 use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Contracts\Validation\InvokableRule;
-use Illuminate\Support\Facades\Auth;
 
 class NotLastMoreImportantRole implements InvokableRule
 {
@@ -17,11 +16,18 @@ class NotLastMoreImportantRole implements InvokableRule
      * @param \Closure $fail
      * @return void
      */
+
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
+    public User $user;
+
     public function __invoke($attribute, $value, $fail)
     {
-        $actual_role = Auth::user()->role;
 
-        $sup_role = UserRole::where("importance", ">=", $actual_role->importance)->get()->pluck("id")->all();
+        $sup_role = UserRole::where("importance", ">=", $this->user->role->importance)->get()->pluck("id")->all();
         $count = User::whereIn("role_id", $sup_role)->get();
 
         if ($count->count() <= 1) {
