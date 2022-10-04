@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
 class ListControl extends Model
@@ -123,7 +122,8 @@ class ListControl extends Model
      * @return array
      *
      */
-    public static function getAPIContent(){
+    public static function getAPIContent(User $user)
+    {
         $call_class_name = get_called_class();
         $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg Country / Gender / …
 
@@ -131,7 +131,7 @@ class ListControl extends Model
         $list_info = ListControl::where('name', $class_name)->first();
         $keys = array_column($database_content, $list_info->key_value); // all keys name
         $api_res = array();
-        foreach ($keys as $key_index => $key_value){
+        foreach ($keys as $key_index => $key_value) {
             $api_res[$key_value] = $database_content[$key_index];
 
             $translations = array_column(Translation::where('list', $list_info->id)->where('field_key', $key_value)->get()->toArray(), "translation", "language");

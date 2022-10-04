@@ -173,7 +173,7 @@ class FieldsController extends Controller
             $datas = array();
             foreach (ListControl::all() as $list) {
                 $call_class = '\App\Models\\' . $list->name;
-                $datas[$list->name] = $call_class::getAPIContent();
+                $datas[$list->name] = $call_class::getAPIContent($request->user());
             }
             return response(json_encode($datas), 200)->header('Content-Type', 'application/json');
         }
