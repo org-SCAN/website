@@ -10,7 +10,7 @@ Site web du projet :)
 ### Using portainer on your machine
 
 You can go to [https://portainer.netw4ppl.tech](https://portainer.netw4ppl.tech) to manage the docker server but also
-your machine locally, provided you register your machine.
+your machine locally, providing you the ability to register your machine.
 
 To do so:
 
