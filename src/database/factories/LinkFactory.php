@@ -26,7 +26,7 @@ class LinkFactory extends Factory
     public function definition()
     {
 
-        $log["user"] = User::where("email", env("DEFAULT_EMAIL"))->first()->id;
+        $log["user_id"] = User::where("email", env("DEFAULT_EMAIL"))->first()->id;
         $log["application_id"] = "seeder";
         $log["api_type"] = "seeder";
         $log["http_method"] = "POST";

@@ -10,11 +10,14 @@ use App\Models\Crew;
 use App\Models\RoleRequest;
 use App\Models\User;
 use App\Models\UserRole;
+use App\Rules\NotLastMoreImportantRole;
+use App\Rules\NotLastUser;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 
 class ManageUsersController extends Controller
@@ -33,7 +36,7 @@ class ManageUsersController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
     public function index()
     {
@@ -45,7 +48,7 @@ class ManageUsersController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
     public function create()
     {
@@ -57,7 +60,7 @@ class ManageUsersController extends Controller
      * Create a newly registered user.
      *
      * @param array $input
-     * @return User
+     * @return RedirectResponse
      */
     public function store(StoreUserRequest $request)
     {
@@ -82,7 +85,7 @@ class ManageUsersController extends Controller
      * Display the specified resource.
      *
      * @param User $user
-     * @return Response
+     * @return View
      */
     public function show(User $user)
     {
@@ -95,7 +98,7 @@ class ManageUsersController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param User $user
-     * @return Response
+     * @return View
      */
     public function edit(User $user)
     {
@@ -109,7 +112,7 @@ class ManageUsersController extends Controller
      *
      * @param Request $request
      * @param User $user
-     * @return Response
+     * @return RedirectResponse
      */
     public function update(UpdateUsersRequest $request, User $user)
     {
@@ -126,12 +129,27 @@ class ManageUsersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param User $user
-     * @return Response
+     * @return RedirectResponse
      */
     public function destroy(User $user)
     {
-        $user->delete();
-        return redirect()->route("user.index");
+        // if there is no more user then error
+
+        $rules = [
+            "user" => [
+                new notLastUser,
+                new notLastMoreImportantRole($user)
+            ]
+        ];
+
+        $v = Validator::make(["user" => $user->id], $rules);
+        if ($v->fails()) {
+            return redirect()->back()->withErrors(['cantDeleteUser' => $v->errors()]);
+        } else {
+            $user->delete();
+            return redirect()->route("user.index");
+        }
+
     }
 
 

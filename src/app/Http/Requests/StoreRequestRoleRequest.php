@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\NotLastMoreImportantRole;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreRequestRoleRequest extends FormRequest
 {
@@ -25,7 +26,7 @@ class StoreRequestRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            "role" => ['string', 'required', 'exists:user_roles,id', new NotLastMoreImportantRole]
+            "role" => ['string', 'required', 'exists:user_roles,id', new NotLastMoreImportantRole(Auth::user())]
         ];
     }
 }

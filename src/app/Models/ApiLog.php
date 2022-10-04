@@ -32,29 +32,9 @@ class ApiLog extends Model
      */
     protected $guarded = [];
 
-    /**
-     * Get the user email
-     *
-     * @param $value
-     * @return string (user's email)
-     */
-    public function getUserAttribute($value){
-        return User::find($value)->email;
-    }
-
-    /**
-     * Return the guid of the user
-     *
-     * @return guid
-     */
-    public function getUserId()
-    {
-        return $this->attributes['user'];
-    }
-
     public static function getUser($push_id)
     {
-        return self::find($push_id)->user;
+        return self::find($push_id)->user_id;
     }
 
     public function crew()
@@ -62,10 +42,15 @@ class ApiLog extends Model
         return $this->belongsTo(Crew::class)->withDefault();
     }
 
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id')->withTrashed();
+    }
+
     public static function createFromRequest($request, $model = null)
     {
         $log = array();
-        $log["user"] = $request->user()->id;
+        $log["user_id"] = $request->user()->id;
         $log["application_id"] = (!empty($request->header("Application-id")) ? $request->header("Application-id") : (!empty($request->validated()[0]["application_id"]) ? $request->validated()[0]["application_id"] : "website"));
         $log["api_type"] = $request->path();
         $log["http_method"] = $request->method();
@@ -82,7 +67,7 @@ class ApiLog extends Model
         $pushed_datas = ($base_name . $this->model)::where("api_log", $this->id)->get();
         $res = array();
         foreach ($pushed_datas as $pushed_data) {
-            $res[$pushed_data->id] = $pushed_data->getRepresentativeValue();
+            $res[$pushed_data->id] = $pushed_data->bestDescriptiveValue;
         }
 
         return $res;
