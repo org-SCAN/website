@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Duplicate;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class DuplicatePolicy
 {
@@ -18,7 +19,7 @@ class DuplicatePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -32,7 +33,7 @@ class DuplicatePolicy
      */
     public function view(User $user, Duplicate $duplicate)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -45,7 +46,7 @@ class DuplicatePolicy
      */
     public function create(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -59,7 +60,7 @@ class DuplicatePolicy
      */
     public function update(User $user, Duplicate $duplicate)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -73,7 +74,7 @@ class DuplicatePolicy
      */
     public function delete(User $user, Duplicate $duplicate)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -87,7 +88,7 @@ class DuplicatePolicy
      */
     public function restore(User $user, Duplicate $duplicate)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -101,7 +102,7 @@ class DuplicatePolicy
      */
     public function forceDelete(User $user, Duplicate $duplicate)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }

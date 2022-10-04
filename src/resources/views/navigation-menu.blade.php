@@ -11,67 +11,66 @@
                 </div>
 
                 <!-- Navigation Links -->
-                @if(Auth::user()->hasPermission("cytoscape.index"))
+                @can('viewAny', App\Models\Cytoscape::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('cytoscape.index') }}"
                                         :active="request()->routeIs('cytoscape.*')">
                             {{ __('Network graph') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
-                @if(Auth::user()->hasPermission("person.index"))
+                @endcan
+                @can('viewAny', App\Models\Refugee::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('person.index') }}"
                                         :active="request()->routeIs('person.*')">
                             {{ __('Persons') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
-                @if(Auth::user()->hasPermission("links.index"))
+                @endcan
+                @can('viewAny', App\Models\Link::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.*')">
                             {{ __('Relations') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
-                @if(Auth::user()->hasPermission("duplicate.index"))
+                @endcan
+                @can('viewAny', App\Models\Duplicate::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('duplicate.index') }}"
                                         :active="request()->routeIs('duplicate.*')">
                             {{ __('Duplicates') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
-                @if(Auth::user()->hasPermission("fields.index"))
+                @endcan
+                @can('viewAny', App\Models\Field::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('fields.index') }}" :active="request()->routeIs('fields.*')">
                             {{ __('Manage fields') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
-                @if(Auth::user()->hasPermission("api_logs.index"))
+                @endcan
+                @can('viewAny', App\Models\ApiLog::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('api_logs.index') }}"
                                         :active="request()->routeIs('api_logs.*')">
                             {{ __('Api logs') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
-                @if(Auth::user()->hasPermission("user.index"))
+                @endcan
+                @can('viewAny', App\Models\Crew::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('crew.index') }}" :active="request()->routeIs('crew.*')">
                             {{ __('Crews') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
-
-                @if(Auth::user()->hasPermission("user.index"))
+                @endcan
+                @can('viewAny', App\Models\User::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.*')">
                             {{ __('Users') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
+                @endcan
                 <!--
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('lists_control.index') }}" :active="request()->routeIs('lists_control.index')">
@@ -202,31 +201,49 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            @if(Auth::user()->hasPermission("person.index"))
+            <x-jet-responsive-nav-link href="{{ route('cytoscape.index') }}"
+                                       :active="request()->routeIs('cytoscape.*')">
+                {{ __('Network graph') }}
+            </x-jet-responsive-nav-link>
+            @can('viewAny',App\Models\Refugee::class)
                 <x-jet-responsive-nav-link href="{{ route('person.index') }}"
-                                           :active="request()->routeIs('person.index')">
-                    {{ __('Manage Persons') }}
+                                           :active="request()->routeIs('person.*')">
+                    {{ __('Persons') }}
                 </x-jet-responsive-nav-link>
-            @endif
-            @if(Auth::user()->hasPermission("links.index"))
-
+            @endcan
+            @can('viewAny',App\Models\Link::class)
                 <x-jet-responsive-nav-link href="{{ route('links.index') }}"
-                                           :active="request()->routeIs('links.index')">
-                    {{ __('Manage relations') }}
+                                           :active="request()->routeIs('links.*')">
+                    {{ __('Relations') }}
                 </x-jet-responsive-nav-link>
-            @endif
-            @if(Auth::user()->hasPermission("duplicate.index"))
+            @endcan
+            @can('viewAny',App\Models\Duplicate::class)
                 <x-jet-responsive-nav-link href="{{ route('duplicate.index') }}"
-                                           :active="request()->routeIs('duplicate.index')">
+                                           :active="request()->routeIs('duplicate.*')">
                     {{ __('Duplicates') }}
                 </x-jet-responsive-nav-link>
-            @endif
-            @if(Auth::user()->hasPermission("api_logs.index"))
+            @endcan
+            @can('viewAny',App\Models\Field::class)
+                <x-jet-responsive-nav-link href="{{ route('fields.index') }}" :active="request()->routeIs('fields.*')">
+                    {{ __('Manage fields') }}
+                </x-jet-responsive-nav-link>
+            @endcan
+            @can('viewAny',App\Models\ApiLog::class)
                 <x-jet-responsive-nav-link href="{{ route('api_logs.index') }}"
-                                           :active="request()->routeIs('api_logs.index')">
+                                           :active="request()->routeIs('api_logs.*')">
                     {{ __('Api logs') }}
                 </x-jet-responsive-nav-link>
             @endif
+            @can('viewAny',App\Models\Crew::class)
+                <x-jet-responsive-nav-link href="{{ route('crew.index') }}" :active="request()->routeIs('crew.*')">
+                    {{ __('Crews') }}
+                </x-jet-responsive-nav-link>
+            @endcan
+            @can('viewAny',App\Models\User::class)
+                <x-jet-responsive-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.*')">
+                    {{ __('Users') }}
+                </x-jet-responsive-nav-link>
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->

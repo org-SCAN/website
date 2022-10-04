@@ -19,7 +19,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -33,7 +33,7 @@ class UserPolicy
      */
     public function view(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -46,7 +46,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -60,7 +60,7 @@ class UserPolicy
      */
     public function update(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -74,7 +74,7 @@ class UserPolicy
      */
     public function delete(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -88,7 +88,7 @@ class UserPolicy
      */
     public function restore(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -102,28 +102,28 @@ class UserPolicy
      */
     public function forceDelete(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
 
     public function GrantRole(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
 
     public function RejectRole(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
 
     public function ChangeTeam(User $user)
     {
-        return $user->role_name == ("user")
+        return $user->role->role == ("user")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }

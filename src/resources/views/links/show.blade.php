@@ -13,10 +13,10 @@
                       class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <a href="{{ route('fields.index') }}"
                        class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to list</a>
-                    @if(Auth::user()->hasPermission("links.create"))
+                    @can('create', App\Models\Link::class)
                         <a href="{{ route('fields.edit', $field->id) }}"
                            class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">Edit</a>
-                    @endif
+                    @endcan
                     @method('DELETE')
                     @csrf
 

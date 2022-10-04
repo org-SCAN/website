@@ -19,7 +19,7 @@ class ApiLogPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -33,7 +33,7 @@ class ApiLogPolicy
      */
     public function view(User $user, ApiLog $api_log)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -46,7 +46,7 @@ class ApiLogPolicy
      */
     public function create(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -60,7 +60,7 @@ class ApiLogPolicy
      */
     public function update(User $user, ApiLog $apiLog)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -74,7 +74,7 @@ class ApiLogPolicy
      */
     public function delete(User $user, ApiLog $apiLog)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -88,7 +88,7 @@ class ApiLogPolicy
      */
     public function restore(User $user, ApiLog $apiLog)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -102,7 +102,7 @@ class ApiLogPolicy
      */
     public function forceDelete(User $user, ApiLog $apiLog)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
