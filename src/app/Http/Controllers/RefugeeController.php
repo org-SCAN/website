@@ -11,8 +11,9 @@ use App\Models\Field;
 use App\Models\Link;
 use App\Models\ListControl;
 use App\Models\Refugee;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\RequestRefugeeRequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
@@ -33,7 +34,7 @@ class RefugeeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
     public function index()
     {
@@ -76,7 +77,7 @@ class RefugeeController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Refugee $person
-     * @return Response
+     * @return View
      **/
     public function show(Refugee $person)
     {
@@ -94,7 +95,7 @@ class RefugeeController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
     public function create()
     {
@@ -111,7 +112,7 @@ class RefugeeController extends Controller
     /**
      * Show the form for creating a new resource from a json file.
      *
-     * @return Response
+     * @return View
      */
     public function createFromJson()
     {
@@ -122,8 +123,8 @@ class RefugeeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return Response
+     * @param StoreRefugeeRequest $request
+     * @return RedirectResponse
      */
     public function store(StoreRefugeeRequest $request)
     {
@@ -151,8 +152,8 @@ class RefugeeController extends Controller
     /**
      * Store a newly created resource from json file in storage.
      *
-     * @param Request $request
-     * @return Response
+     * @param FileRefugeeRequest $request
+     * @return RedirectResponse
      */
     public function storeFromJson(FileRefugeeRequest $request)
     {
@@ -173,7 +174,7 @@ class RefugeeController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Refugee $person
-     * @return Response
+     * @return View
      */
     public function edit(Refugee $person)
     {
@@ -194,9 +195,9 @@ class RefugeeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param RequestRefugeeRequest $request
+     * @param UpdateRefugeeRequest $request
      * @param Refugee $person
-     * @return Response
+     * @return RedirectResponse
      */
     public function update(UpdateRefugeeRequest $request, Refugee $person)
     {
@@ -206,9 +207,13 @@ class RefugeeController extends Controller
         $old = array_combine($ids, $values);
 
         foreach (array_diff($request->validated(), $old) as $key => $value) {
+            //ddd(array_diff($request->validated()));
             if (!empty($value)) {
-                $person->fields()->updateExistingPivot($key, ["value" => $value]);
-
+                if ($person->fields()->wherePivot('field_id', $key)->exists()) {
+                    $person->fields()->updateExistingPivot($key, ["value" => $value]);
+                } else {
+                    $person->fields()->attach([$key => ['value' => $value]]);
+                }
             }
         }
         //$refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i', time()));
@@ -227,7 +232,7 @@ class RefugeeController extends Controller
      *
      * @param Request $request
      * @param String $refugee_id
-     * @return Response
+     * @return RedirectResponse
      */
     public function fixDuplicatedReference(Request $request, $refugee_id)
     {
@@ -244,7 +249,7 @@ class RefugeeController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Refugee $person
-     * @return Response
+     * @return RedirectResponse
      */
     public function destroy(Refugee $person)
     {
@@ -255,8 +260,8 @@ class RefugeeController extends Controller
     /**
      * Handle the API request
      *
-     * @param  StoreRefugeeApiRequest  $request
-     * @return array
+     * @param StoreRefugeeApiRequest $request
+     * @return Response
      */
     public static function handleApiRequest(StoreRefugeeApiRequest $request)
     {
