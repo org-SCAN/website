@@ -1,353 +1,165 @@
 # website
 
 Site web du projet :)
-Nomalement on a une synchro automatique de la branche main sur le serveur.
 
 
-# Start the website
+# Start the project
 
-In order to deploy the website make sure to :
+## Using docker
 
-1. Start the docker (or install all required packets)
-2. Create ``/src/.env`` file (inspired by ``/src/.env.example``).
-    - Make sure ``APP_DEBUG=false`` (in case of production)
-    - Make sure to change DB informations
-    - Make sure to change ``DEFAULT_EMAIL = "test@test.com"`` and ``
-      DEFAULT_PASSWORD ="test123456"`` (it will be the first user loging and password)
-3. Run these lignes in ``src``
+### Using portainer on your machine
 
-```
-npm update
-composer update
-chmod -R 775 storage
-php artisan migrate --seed
-```
+You can go to [https://portainer.netw4ppl.tech](https://portainer.netw4ppl.tech) to manage the docker server but also
+your machine locally, providing you the ability to register your machine.
 
-# Connection à l'API
+To do so:
 
-Il est maintenant possible de se connecter à l'API pour envoyer des nouveaux refugees ou pour obtenir la dernière
-version des fields (et des listes). Il est OBLIGATOIRE de transmettre un Application-Id dans les headers sinon la
-requête sera refusée
+- Connect to the portainer space with the credentials present in the keepass
+- Go to *Environments*.
+  - Add an environment
+  - Choose *Edge Agent* and enter a name, choose the group *Local Machine* and leave the other parameters as default
+  - Click on *Add environment*.
 
-## Get fields :
+![add_edge](img/portainer_add_edge.png)
 
-Voici un exemple de requête et la réponse associée :
+Depending on your configuration, choose the right deployment script. For mac and wsl, it is possible to choose Linux and
+docker standalone.
 
-```
-GET /api/fields HTTP/1.1
-Host: 15.236.237.200:80
-Authorization: Bearer YOUR_API_TOKEN
-Accept: application/json
-Content-Type: application/json
-Application-id: YOUR_APPLICATION_ID
-```
+- Copy the script and run it on your machine.
+- Finish by clicking on *Update environment*.
 
-Exemple de réponse du serveur :
-```
-{
-    "fields": {
-            "unique_id": {
-                "placeholder": "AAA-000001",
-                "database_type": "string",
-                "android_type": "EditText",
-                "linked_list": "",
-                "required": 0,
-                "displayed_value": {
-                    "eng": "Unique ID",
-                    "fra": "ID Unique",
-                    "esp": "Unico ID"
-                }
-            },
-            "gender": {
-                "placeholder": "F",
-                "database_type": "string",
-                "android_type": "Spinner",
-                "linked_list": "Gender",
-                "required": 1,
-                "displayed_value": {
-                    "eng": "Sex",
-                    "fra": "Sexe",
-                    "esp": "Sexo"
-                }
-            },
-            "full_name": {
-                "placeholder": "John Doe",
-                "database_type": "string",
-                "android_type": "EditText",
-                "linked_list": "",
-                "required": 1,
-                "displayed_value": {
-                    "eng": "Full Name",
-                    "fra": "Nom complet",
-                    "esp": "Full Name"
-                }
-            },
-            ...
-    },
-    relations": {
-            "BR": {
-                "color": "000000",
-                "importance": 1,
-                "displayed_value": {
-                    "eng": "Biological relationship",
-                    "fra": "Relation biologique",
-                    "esp": "Biological relationship"
-                }
-            },
-            "NBR": {
-                "color": "000000",
-                "importance": 1,
-                "displayed_value": {
-                    "eng": "Non-biological relationship",
-                    "fra": "Relation non biologique",
-                    "esp": "Non-biological relationship"
-                }
-            },
-            "TW": {
-                "color": "000000",
-                "importance": 1,
-                "displayed_value": {
-                    "eng": "Travelled with",
-                    "fra": "A voyagé avec",
-                    "esp": "Travelled with"
-                }
-            },
-            "SA": {
-                "color": "000000",
-                "importance": 1,
-                "displayed_value": {
-                    "eng": "Saw",
-                    "fra": "A vu",
-                    "esp": "Saw"
-                }
-            },
-            "SE": {
-                "color": "000000",
-                "importance": 1,
-                "displayed_value": {
-                    "eng": "Service",
-                    "fra": "Service",
-                    "esp": "Service"
-                }
-            }
-    }
- }
-```
-## Add refugees :
+You should find your machine in *Home*.
 
-Il faut maintenant envoyer une requête post avec le json à l'intérieur :
+![Portainer home](img/portainer_home.png)
 
-Exemple :
+### How to run the project?
 
-```
-POST /api/person HTTP/1.1
-Host: 15.236.237.200:80
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer YOUR_API_TOKEN
-Application-id: YOUR_APPLICATION_ID
-Content-Length: 256
+1. Clone the github project
+2. With portainer, create a new *stack*.
+  1. Choose *custom template* and choose the *n4p-website* template
+  2. Adapt the compose according to the deployment environment
 
-[
-    {
-    "unique_id" : "ABC-000001",
-    "full_name" : "full name",
-    "nationality" : "FRA",
-    "date" : "2021-04-12",
-    "age" : 68,
-    "gender" : "F"
-    },
-    {
-    "unique_id" : "ABC-000002",
-    "full_name" : "full name",
-    "nationality" : "USA",
-    "date" : "2021-04-12",
-    "age" : 92,
-    "gender" : "F"
-    }
-]
-```
+**IMPORTANT** :
 
-Le serveur répondra une erreur si la donnée envoyée n'est pas valide, je détaillerai plus tard comment et ce que vous
-pouvez en faire, sinon un message de succès est envoyé. En cas de succès on recoit un message de type 201
+It is necessary to **add the environment variables** which define the identifiers of the database.
 
-## API post Link
+Your must correctly create and associate the volumes (*you can create theses directories wherever you want, as long as you
+associate them correctly in the docker compose*)
 
-L'API post permet aussi d'envoyer la liste des relations. Pour l'utiliser il faut :
+- `/var/N4P/sql-volume` : to store the data of the database
+- `/var/www/website/` : path to the website source code (if cloned from github, be careful to point to the `src` folder)
+- `/srv/www/web_apps/website/ssl`: :warning: **Not necessary if ssl is not required**
+- `/etc/apache2/sites-available/docker_config.conf` points to an apache configuration file (see below)
 
-- Que les deux refugees (personnes) soient déjà présente dans la database. Autrement dit, il faut d'abord effectuer une
-  requete POST add refugee
-- Préciser le `unique_id de chaque personne et la date à laquelle le champ a été créé
-- Préciser une relation appartenant à la liste des relations prédéfinies.
+#### Here is the apache configuration file required by `/etc/apache2/sites-available/docker_config.conf`
 
-On peut aussi préciser un détail sur la relation
+```apacheconf
+      # conf/vhost.conf
+      <VirtualHost *:80>
+          DocumentRoot /var/www/html/public
 
-```
-POST /api/links HTTP/1.1
-Host: 15.236.237.200:80
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer YOUR_API_TOKEN
-Application-id: YOUR_APPLICATION_ID
-Content-Length: 249
+          <Directory "/var/www/html">
+              AllowOverride all
+              Require all granted
+          </Directory>
 
-[
-    {
-    "from_unique_id" : "ABC-000008",
-    "to_unique_id" : "ABC-000009",``
-    "relation" : "TW",
-    "date" : "2021-05-14 8:51:53",
-    "detail" : "at the port"
-    }
-]
-```
+          ErrorLog ${APACHE_LOG_DIR}/error.log
+          CustomLog ${APACHE_LOG_DIR}/access.log combined
+      </VirtualHost>
 
-En cas de succès on recoit un message de type `201`
+      # Delete the lines below if you don't use ssl 
+      <IfModule mod_ssl.c>
+      <VirtualHost *:443>
+          DocumentRoot /var/www/html/public
 
-### Erreurs possibles :
+          <Directory "/var/www/html">
+              AllowOverride all
+              Require all granted
+          </Directory>
 
-Si les données fournies ne sont pas bonnes, le serveur renvoie une erreur de type `422` :
+          SSLCertificateFile /var/imported/ssl/fullchain.pem
+          SSLCertificateKeyFile /var/imported/ssl/privkey.pem
+          SSLEngine on
+      </VirtualHost>
+      </IfModule>
+``` 
 
-```
-{
-    "message": "The given data was invalid.",
-    "errors": {
-        "0.refugee1_full_name": [
-            "The 0.refugee1_full_name field is required."
-        ],
-        "1.refugee1_full_name": [
-            "The 1.refugee1_full_name field is required."
-        ],
-        "2.refugee1_full_name": [
-            "The 2.refugee1_full_name field is required."
-        ],
-        "3.refugee1_full_name": [
-            "The 3.refugee1_full_name field is required."
-        ],
-        "0.refugee1_unique_id": [
-            "The 0.refugee1_unique_id field is required."
-        ],
-        "1.refugee1_unique_id": [
-            "The 1.refugee1_unique_id field is required."
-        ],
-        "2.refugee1_unique_id": [
-            "The 2.refugee1_unique_id field is required."
-        ],
-        "3.refugee1_unique_id": [
-            "The 3.refugee1_unique_id field is required."
-        ],
-        "0.refugee2_full_name": [
-            "The 0.refugee2_full_name field is required."
-        ],
-        "1.refugee2_full_name": [
-            "The 1.refugee2_full_name field is required."
-        ],
-        "2.refugee2_full_name": [
-            "The 2.refugee2_full_name field is required."
-        ],
-        "3.refugee2_full_name": [
-            "The 3.refugee2_full_name field is required."
-        ],
-        "0.refugee2_unique_id": [
-            "The 0.refugee2_unique_id field is required."
-        ],
-        "1.refugee2_unique_id": [
-            "The 1.refugee2_unique_id field is required."
-        ],
-        "2.refugee2_unique_id": [
-            "The 2.refugee2_unique_id field is required."
-        ],
-        "3.refugee2_unique_id": [
-            "The 3.refugee2_unique_id field is required."
-        ],
-        "0.relation": [
-            "The 0.relation field is required."
-        ],
-        "1.relation": [
-            "The 1.relation field is required."
-        ],
-        "2.relation": [
-            "The 2.relation field is required."
-        ],
-        "3.relation": [
-            "The 3.relation field is required."
-        ]
-    }
-}
-```
-On retrouve le détail de tous les champs mal renseignés
+3. Deploy the stack
 
-## Obtenir son API Token :
+#### Finalize the configuration :
 
-Il faut se créer un compte sur le site puis se rendre dans profil. Ici il y a une section permettant de consulter son api token.
+4. Make sure there is a `.env` file in your source directory. This file is required by Laravel to run the project
 
-## Docker ou comment bosser de chez moi :
+You can use the following template paying particular attention to the following elements:
 
-À partir de `.env.example` créer le fichier `.env` avec les bons logs (à la racine du dossier) :
-`cp .env.example .env`
+- `APP_DEBUG` : if true, Laravel displays error log (only use it in dev mode)
+- `DB_HOST` : if you use docker, you have to put the sql docker container's name
+- `DB_DATABASE`: the name of the DB you had defined in the docker composer environment (step 2)
+- `DB_USERNAME` : the username you had defined in the docker composer environment (step 2)
+- `DB_PASSWORD` : the password you had defined in the docker composer environment (step 2)
+- `DEFAULT_EMAIL` : the email for the default account
+- `DEFAULT_PASSWORD` : the password for the default account
+- `DEFAULT_TEAM` :  the default team
 
-Pour lancer le projet, on peut plus ou moins utiliser docker. Pour ce faire 
+```.env
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=
 
-via docker : 
+LOG_CHANNEL=stack
+LOG_LEVEL=debug
 
-    docker-compose build && docker-compose up -d
-
-Ou mieux : (bien avoir les droits d'éxecution sur start-laravel)
-
-    ./start-laravel
-
-On peut alors consulter `127.0.0.1:8080`
-
-Pour stopper le tout :
-
-    docker-compose down
-
-### Associer la database
-
-Pour pouvoir bosser avec la database, il est nécessaire de motifier le fichier `src/.env`.
-
-Voici un exemple de ce qu'il doit contenir, où les valeurs `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` doivent correspondre aux informations saisies dans le `.env` de racine (utilisé par docker pour générer le service de mongodb).
-
-```
 DB_CONNECTION=mysql
-DB_HOST=sql
+DB_HOST=sql_container_name
 DB_PORT=3306
-DB_DATABASE=DB_DATABASE_NAME
-DB_USERNAME=user_example
-DB_PASSWORD=my_passwd
+DB_DATABASE='database_name'
+DB_USERNAME=USER
+DB_PASSWORD='PASSWORD'
+
+BROADCAST_DRIVER=log
+CACHE_DRIVER=file
+QUEUE_CONNECTION=sync
+SESSION_DRIVER=database
+SESSION_LIFETIME=120
+
+MEMCACHED_HOST=127.0.0.1
+
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=null
+MAIL_FROM_NAME="${APP_NAME}"
+
+DEFAULT_EMAIL="default user email"
+DEFAULT_PASSWORD="default user password"
+DEFAULT_TEAM="default user team"
 ```
 
+5. Run the following commands :
 
-# Lancement de Laravel
+**:warning: These commands MUST be run within the application docker container**
 
-Après avoir exécuté `./start_laravel`, il faut se connecter à ce conteneur et exécuter les commandes suivantes :
-
-```
+```bash
+npm update
+cd /var/www/html
 composer update
-php artisan migrate --seed
+php artisan cache:clear
+composer dump-autoload
+php artisan key:generate
+chmod -R 777 storage/
+php artisan migrate:refresh --seed
 ```
 
-Cela permet de télécharger les dépendances et de mettre à jour la base de donnée avec les fichiers nécessaires.
+# N4P API
 
-
-
-## Séance du 02/04/21
-
-- Mise en place des premiers scripts de migration de la database
-- Mise en place du Docker de manière stable
-- Rédaction de premier scripts (toujours dans le domaine de la DB)
-
-
-
-## Séance du 03/03/21
-
-Brainstorm sur les choses à implémenter, discussion sur le back et le front rapidement, choix de Laravel et on monte laravel sur le serveur.
-
-![Brainstorm](/img/website-brainstorm.png)
-
-## Séance du 15/03/21
-
-Travail sur Laravel, on a regardé comment on pouvait faire les migrations DB (ça tourne sur le serveur).
-Réflexion sur le contenu des pages du site. [Ici](https://www.figma.com/file/SfFnr65viq4wDuNNmEdbqp/Untitled?node-id=0%3A1).
-Réflexion sur les liens entre les pages.
-
+You can find the API documentation
+here : [https://documenter.getpostman.com/view/15399454/2s83tJGAMW](https://documenter.getpostman.com/view/15399454/2s83tJGAMW)
