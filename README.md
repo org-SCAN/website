@@ -43,7 +43,7 @@ You should find your machine in *Home*.
 
 It is necessary to **add the environment variables** which define the identifiers of the database.
 
-Your must correctly create and associate the volumes (*you can create theses directories wherever you while, while you
+Your must correctly create and associate the volumes (*you can create theses directories wherever you want, as long as you
 associate them correctly in the docker compose*)
 
 - `/var/N4P/sql-volume` : to store the data of the database
