@@ -80,7 +80,7 @@ class Refugee extends Model
      */
     public function user()
     {
-        return $this->hasOneThrough(User::class, ApiLog::class, "id", "id", "api_log", "user");
+        return $this->hasOneThrough(User::class, ApiLog::class, "id", "id", "api_log", "user_id");
     }
 
     /*

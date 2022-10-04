@@ -48,9 +48,9 @@ class Link extends Pivot
      *
      * @return mixed
      */
-    public function getRepresentativeValue()
+    public function getBestDescriptiveValueAttribute()
     {
-        return $this->from . " <-> " . $this->to;
+        return $this->refugeeFrom->bestDescriptiveValue . " <-> " . $this->refugeeTo->bestDescriptiveValue;
     }
 
     public function refugeeFrom()
