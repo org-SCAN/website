@@ -10,15 +10,15 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mb-8">
-                @if(Auth::user()->hasPermission("person.create"))
+                @can('create', \App\Models\Refugee::class)
                     <a href="{{ route("person.create") }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add person</a>
-                @endif
-                @if(Auth::user()->hasPermission("person.json.create"))
+                @endcan
+                @can('createFromJson', \App\Models\Refugee::class)
                     <a href="{{ route("person.json.create") }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add persons from
                         json</a>
-                @endif
+                @endcan
             </div>
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

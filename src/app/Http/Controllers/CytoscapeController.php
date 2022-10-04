@@ -1,11 +1,23 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Cytoscape;
 use Illuminate\Support\Facades\Storage;
 
 class CytoscapeController extends Controller
 {
-    public function index(){
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Cytoscape::class, 'cytoscape');
+    }
+
+    public function index()
+    {
         $relations = \App\Models\Link::all();
         /*
             $nodes = array();

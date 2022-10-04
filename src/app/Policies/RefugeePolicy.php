@@ -20,7 +20,7 @@ class RefugeePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role_name == ("viewer") || $user->role_name == ("editor") || $user->role_name == ("admin")
+        return $user->role->role == ("viewer") || $user->role->role == ("editor") || $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -35,7 +35,7 @@ class RefugeePolicy
     public function view(User $user, Refugee $person)
     {
 
-        return $user->role_name == ("viewer") || $user->role_name == ("editor") || $user->role_name == ("admin")
+        return $user->role->role == ("viewer") || $user->role->role == ("editor") || $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -48,7 +48,20 @@ class RefugeePolicy
      */
     public function create(User $user)
     {
-        return $user->role_name == ("editor") || $user->role_name == ("admin")
+        return $user->role->role == ("editor") || $user->role->role == ("admin")
+            ? Response::allow()
+            : Response::deny('You do not have the right to do this.');
+    }
+
+    /**
+     * Determine whether the user can create models.
+     *
+     * @param \App\Models\User $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function createFromJson(User $user)
+    {
+        return $user->role->role == ("editor") || $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -62,7 +75,7 @@ class RefugeePolicy
      */
     public function update(User $user, Refugee $person)
     {
-        return $user->role_name == ("editor") || $user->role_name == ("admin")
+        return $user->role->role == ("editor") || $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -76,7 +89,7 @@ class RefugeePolicy
      */
     public function delete(User $user, Refugee $person)
     {
-        return ($user->role_name == ("editor") && $person->user->id == $user->id) || $user->role_name == ("admin")
+        return ($user->role->role == ("editor") && $person->user->id == $user->id) || $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }

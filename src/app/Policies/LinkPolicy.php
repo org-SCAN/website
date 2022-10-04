@@ -19,7 +19,7 @@ class LinkPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role_name == ("viewer") || $user->role_name == ("editor") || $user->role_name == ("admin")
+        return $user->role->role == ("viewer") || $user->role->role == ("editor") || $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -33,7 +33,7 @@ class LinkPolicy
      */
     public function view(User $user, Link $link)
     {
-        return $user->role_name == ("viewer") || $user->role_name == ("editor") || $user->role_name == ("admin")
+        return $user->role->role == ("viewer") || $user->role->role == ("editor") || $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -46,7 +46,20 @@ class LinkPolicy
      */
     public function create(User $user)
     {
-        return $user->role_name == ("editor") || $user->role_name == ("admin")
+        return $user->role->role == ("editor") || $user->role->role == ("admin")
+            ? Response::allow()
+            : Response::deny('You do not have the right to do this.');
+    }
+
+    /**
+     * Determine whether the user can create models using a Json
+     *
+     * @param \App\Models\User $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function createFromJson(User $user)
+    {
+        return $user->role->role == ("editor") || $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -60,7 +73,7 @@ class LinkPolicy
      */
     public function update(User $user, Link $link)
     {
-        return $user->role_name == ("editor") || $user->role_name == ("admin")
+        return $user->role->role == ("editor") || $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -74,7 +87,7 @@ class LinkPolicy
      */
     public function delete(User $user, Link $link)
     {
-        return ($user->role_name == ("editor") && $link->user->id == $user->id) || $user->role_name == ("admin")
+        return ($user->role->role == ("editor") && $link->user->id == $user->id) || $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }

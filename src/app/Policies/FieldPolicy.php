@@ -20,7 +20,7 @@ class FieldPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -34,7 +34,7 @@ class FieldPolicy
      */
     public function view(User $user, Field $field)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -47,7 +47,7 @@ class FieldPolicy
      */
     public function create(User $user)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -61,7 +61,7 @@ class FieldPolicy
      */
     public function update(User $user, Field $field)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -75,7 +75,7 @@ class FieldPolicy
      */
     public function delete(User $user, Field $field)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -89,7 +89,7 @@ class FieldPolicy
      */
     public function restore(User $user, Field $field)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -103,7 +103,7 @@ class FieldPolicy
      */
     public function forceDelete(User $user, Field $field)
     {
-        return $user->role_name == ("admin")
+        return $user->role->role == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }

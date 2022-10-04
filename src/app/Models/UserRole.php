@@ -43,51 +43,6 @@ class UserRole extends Model
      */
     protected $hidden = ['deleted_at', "created_at", "updated_at"];
 
-
-    public function hasPermission(string $routeName)
-    {
-
-        $routeNameExploded = explode(".", $routeName);
-
-        $permissions = [
-            "api_logs" => 3,
-            "cytoscape" => [
-                "index" => 1
-            ],
-            "duplicate" => 3,
-            "fields" => 3,
-            "lists_control" => 3,
-            "links" => [
-                "index" => 1,
-                "store" => 2,
-                "create" => 2,
-                "show" => 1,
-                "destroy" => 2,
-                "edit" => 2,
-                "json" => 2
-            ],
-            "person" => [
-                "index" => 1,
-                "store" => 2,
-                "create" => 2,
-                "show" => 1,
-                "destroy" => 2,
-                "edit" => 2,
-                "json" => 2
-            ],
-            "user" => 3,
-        ];
-
-        if (is_array($permissions[$routeNameExploded[0]])) {
-            if (is_array($permissions[$routeNameExploded[0]][$routeNameExploded[1]])) {
-                return ($this->importance >= $permissions[$routeNameExploded[0]][$routeNameExploded[1]][$routeNameExploded[2]]);
-            }
-            return ($this->importance >= $permissions[$routeNameExploded[0]][$routeNameExploded[1]]);
-        }
-
-        return ($this->importance >= $permissions[$routeNameExploded[0]]);
-    }
-
     public function users(){
         return $this->hasMany(User::class);
     }

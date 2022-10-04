@@ -4,12 +4,14 @@ namespace App\Providers;
 
 use App\Models\ApiLog;
 use App\Models\Crew;
+use App\Models\Cytoscape;
 use App\Models\Field;
 use App\Models\ListControl;
 use App\Models\Refugee;
 use App\Models\User;
 use App\Policies\ApiLogPolicy;
 use App\Policies\CrewPolicy;
+use App\Policies\CytoscapePolicy;
 use App\Policies\FieldPolicy;
 use App\Policies\ListControlPolicy;
 use App\Policies\RefugeePolicy;
@@ -29,7 +31,8 @@ class AuthServiceProvider extends ServiceProvider
         ApiLog::class => ApiLogPolicy::class,
         Field::class => FieldPolicy::class,
         User::class => UserPolicy::class,
-        ListControl::class => ListControlPolicy::class
+        ListControl::class => ListControlPolicy::class,
+        Cytoscape::class => CytoscapePolicy::class
     ];
 
     /**

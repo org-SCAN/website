@@ -136,15 +136,4 @@ class User extends Authenticatable
         $new_user->genToken();
         $new_user->genRole();
     }
-
-
-    public function hasPermission(string $routeName)
-    {
-        return UserRole::find($this->role->id)->hasPermission($routeName);
-    }
-
-    public function getRoleNameAttribute()
-    {
-        return $this->role->role;
-    }
 }
