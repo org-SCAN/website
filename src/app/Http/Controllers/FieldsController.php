@@ -7,9 +7,9 @@ use App\Http\Requests\UpdateFieldRequest;
 use App\Models\ApiLog;
 use App\Models\Field;
 use App\Models\ListControl;
-use App\Models\Relation;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class FieldsController extends Controller
@@ -27,7 +27,7 @@ class FieldsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
     public function index()
     {
@@ -37,7 +37,7 @@ class FieldsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
     public function create()
     {
@@ -47,8 +47,8 @@ class FieldsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param App\Http\Requests\StoreFieldRequest $request
-     * @return Response
+     * @param StoreFieldRequest $request
+     * @return RedirectResponse
      */
     public function store(StoreFieldRequest $request)
     {
@@ -74,7 +74,7 @@ class FieldsController extends Controller
      * Display the specified resource.
      *
      * @param Field $field
-     * @return Response
+     * @return View
      */
     public function show(Field $field)
     {
@@ -101,7 +101,7 @@ class FieldsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Field $field
-     * @return Response
+     * @return View
      */
     public function edit(Field $field)
     {
@@ -129,9 +129,9 @@ class FieldsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param UpdateFieldRequest $request
      * @param Field $field
-     * @return Response
+     * @return RedirectResponse
      */
     public function update(UpdateFieldRequest $request, Field $field)
     {
@@ -153,7 +153,7 @@ class FieldsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Field $field
-     * @return Response
+     * @return RedirectResponse
      */
     public function destroy(Field $field)
     {
@@ -169,13 +169,11 @@ class FieldsController extends Controller
     public function handleApiRequest(Request $request)
     {
         $log = ApiLog::createFromRequest($request, "Refugee");
-        if($request->user()->tokenCan("read")){
+        if ($request->user()->tokenCan("read")) {
             $datas = array();
-            $datas["fields"] = Field::getAPIContent();
-            $datas["Relations"] = Relation::getAPIContent();
-            foreach (Field::getUsedLinkedList() as $list){
-                $call_class = '\App\Models\\'.$list;
-                $datas[$list] = $call_class::getAPIContent();
+            foreach (ListControl::all() as $list) {
+                $call_class = '\App\Models\\' . $list->name;
+                $datas[$list->name] = $call_class::getAPIContent();
             }
             return response(json_encode($datas), 200)->header('Content-Type', 'application/json');
         }
