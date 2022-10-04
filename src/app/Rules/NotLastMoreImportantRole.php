@@ -30,7 +30,7 @@ class NotLastMoreImportantRole implements InvokableRule
         $sup_role = UserRole::where("importance", ">=", $this->user->role->importance)->get()->pluck("id")->all();
         $count = User::whereIn("role_id", $sup_role)->get();
 
-        if ($count->count() <= 1) {
+        if ($count->count() <= 1 && $this->user->role->id != $value) {
             $fail('You are the user with the highest permissions, you can\'t change your role : you will not be able to get it back');
         }
     }
