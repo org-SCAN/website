@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\ListControl;
 
 class CreateFieldsTable extends Migration
 {
@@ -51,7 +50,7 @@ class CreateFieldsTable extends Migration
             $table->boolean("descriptive_value")
                 ->default(0)
                 ->nullable();
-
+            $table->foreignUuid('api_log');
             $table->softDeletes();
             $table->timestamps();
         });

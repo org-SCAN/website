@@ -52,21 +52,21 @@ class FieldsController extends Controller
      */
     public function store(StoreFieldRequest $request)
     {
+        $apiLog = ApiLog::createFromRequest($request, 'Field');
         $field = $request->validated();
-        if(empty($field["order"])){
-            $field["order"] = Field::where('crew_id', Auth::user()->crew->id)->get()->sortByDesc('order')->first()->order + 1;
+        $field["api_log"] = $apiLog->id;
+        if (empty($field["order"])) {
+            $last_order = Field::where('crew_id', Auth::user()->crew->id)->get()->sortByDesc('order')->first();
+            $field["order"] = empty($last_order) ? 1 : $last_order->order + 1;
         }
         $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field["database_type"]);
         $field["android_type"] = Field::getUITypeFromForm($field["database_type"]);
         $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
         $field["crew_id"] = Auth::user()->crew->id;
+
         $field = Field::create($field);
-        /*
-        if($field->exists){
-            $field->addFieldtoRefugees();
-        }else{
-            //DROP error ?
-        }*/
+        $apiLog->response = "success";
+        $apiLog->save();
         return redirect()->route("fields.index");
     }
 
@@ -135,6 +135,7 @@ class FieldsController extends Controller
      */
     public function update(UpdateFieldRequest $request, Field $field)
     {
+        $apiLog = ApiLog::createFromRequest($request, 'Field');
         $to_update = $request->validated();
         if (!$request->has('descriptive_value')) {
             $to_update['descriptive_value'] = 0;
@@ -143,9 +144,11 @@ class FieldsController extends Controller
             $to_update['best_descriptive_value'] = 0;
         }
         $to_update["database_type"] = $field->database_type;
+        $to_update["api_log"] = $apiLog->id;
         $to_update["validation_laravel"] = Field::getValidationLaravelFromForm($to_update);
         $field->update($to_update);
-
+        $apiLog->response = "success";
+        $apiLog->save();
         return redirect()->route("fields.index");
     }
 
