@@ -28,7 +28,7 @@ class FieldSeeder extends GlobalListControlSeeder
             $log["application_id"] = "seeder";
             $log["api_type"] = "seeder";
             $log["http_method"] = "POST";
-            $log["model"] = "Link";
+            $log["model"] = "Field";
             $log["ip"] = "127.0.0.1";
             $log["crew_id"] = User::where("email", env("DEFAULT_EMAIL"))->first()->crew->id;
 
