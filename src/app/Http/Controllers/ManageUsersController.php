@@ -7,9 +7,9 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateCrewRequest;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Models\Crew;
+use App\Models\Role;
 use App\Models\RoleRequest;
 use App\Models\User;
-use App\Models\UserRole;
 use App\Rules\NotLastMoreImportantRole;
 use App\Rules\NotLastUser;
 use Illuminate\Contracts\View\View;
@@ -89,7 +89,7 @@ class ManageUsersController extends Controller
      */
     public function show(User $user)
     {
-        $roles = UserRole::all();
+        $roles = Role::all();
         return view("user.show", compact("user", "roles"));
 
     }

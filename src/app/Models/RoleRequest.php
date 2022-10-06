@@ -45,7 +45,7 @@ class RoleRequest extends Model
 
     public function getRoleAttribute($value)
     {
-        return UserRole::find($value)->role;
+        return Role::find($value)->role;
     }
 
     public function getRoleId()

@@ -3,11 +3,11 @@
 namespace Database\Seeders;
 
 
-use App\Models\UserRole;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 
 
-class UserRoleSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,7 +17,7 @@ class UserRoleSeeder extends Seeder
     public function run()
     {
 
-        $obj_json = file_get_contents(config('jsonDataset.path')."/"."user_roles".".json");
+        $obj_json = file_get_contents(config('jsonDataset.path') . "/" . "roles" . ".json");
         // interpret the json format as an array
         $array_json = json_decode($obj_json, true);
 
@@ -28,7 +28,7 @@ class UserRoleSeeder extends Seeder
             foreach ($route as $routeKey => $routeValue) {
                 $to_store[$routeKey] = $routeValue;
             }
-            UserRole::create($to_store);
+            Role::create($to_store);
         }
     }
 }

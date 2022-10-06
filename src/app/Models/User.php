@@ -73,7 +73,7 @@ class User extends Authenticatable
     }
 
     public function role(){
-        return $this->belongsTo(UserRole::class)->withDefault();
+        return $this->belongsTo(Role::class)->withDefault();
     }
 
     /**
@@ -97,11 +97,11 @@ class User extends Authenticatable
     {
         if (empty($this->role->id)) {
             $users = User::all();
-            $userAdmin = User::where("role_id", UserRole::biggestRole())->get();
+            $userAdmin = User::where("role_id", Role::biggestRole())->get();
             if ($users->isEmpty() || $userAdmin->isEmpty()) {
-                $this->role_id = UserRole::biggestRole();
+                $this->role_id = Role::biggestRole();
             } else {
-                $this->role_id = UserRole::smallestRole();
+                $this->role_id = Role::smallestRole();
             }
             $this->save();
         }
