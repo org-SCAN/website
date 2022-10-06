@@ -20,18 +20,6 @@ class RefugeesDatatables extends LivewireDatatable
 
     public function builder()
     {
-        /*return Refugee::query()
-            ->whereNull("refugees.deleted_at")
-            ->leftJoin('countries', 'countries.id', 'refugees.nationality')
-            ->leftJoin('roles', 'roles.id', 'refugees.role')
-            ->leftJoin('genders', 'genders.id', 'refugees.gender');
-        */
-        /*
-                $fields = Refugee::first()->fields;
-                foreach($fields as $field){
-                    var_dump($field->label." : ".$field->pivot->value);
-                }
-                die();*/
         return Refugee::query()
             ->leftJoin("api_logs", "api_logs.id", "refugees.api_log")
             ->leftJoin("crews", "crews.id", "api_logs.crew_id")

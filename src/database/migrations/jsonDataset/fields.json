@@ -17,7 +17,7 @@
         "order": 1,
 		"descriptive_value" : 1,
 		"best_descriptive_value" : 0,
-        "validation_laravel": "nullable|regex:/^[A-Z]{3}-[0-9]{6}$/"
+        "validation_laravel": "regex:/^[A-Z]{3}-[0-9]{6}$/"
     },
     {
         "title": {

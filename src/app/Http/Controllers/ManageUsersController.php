@@ -42,6 +42,7 @@ class ManageUsersController extends Controller
     {
         $users = User::all();
         $request_roles = RoleRequest::where("granted", null)->get();
+        //ddd($request_roles);
         return view("user.index", compact("users", "request_roles"));
     }
 
@@ -168,7 +169,11 @@ class ManageUsersController extends Controller
         if ($user->role->id == $role) {
             return redirect()->back();
         }
-        RoleRequest::create(['user' => $user->id, 'role' => $role]);
+        RoleRequest::create([
+                'user_id' => $user->id,
+                'role_id' => $role
+            ]
+        );
         return redirect()->back();
     }
 
@@ -181,8 +186,8 @@ class ManageUsersController extends Controller
     public function GrantRole($id)
     {
         $request = RoleRequest::find($id);
-        $user = User::find($request->getUserId());
-        $user->update(["role_id" => $request->getRoleId()]);
+        $user = $request->user;
+        $user->update(["role_id" => $request->role->id]);
         $request->update(["granted" => date("Y-m-d H:i:s")]);
 
         return redirect()->back();

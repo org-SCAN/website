@@ -26,7 +26,7 @@ class StoreRequestRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            "role" => ['string', 'required', 'exists:user_roles,id', new NotLastMoreImportantRole(Auth::user())]
+            "role" => ['string', 'required', 'exists:roles,id', new NotLastMoreImportantRole(Auth::user())]
         ];
     }
 }

@@ -31,7 +31,7 @@ class UpdateUsersRequest extends FormRequest
             ],
             'role_id' => [
                 'required',
-                'exists:user_roles,id',
+                'exists:roles,id',
                 new NotLastMoreImportantRole($this->route('user')),
             ],
             'crew_id' => [
