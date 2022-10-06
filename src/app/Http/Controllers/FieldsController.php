@@ -174,7 +174,7 @@ class FieldsController extends Controller
         $log = ApiLog::createFromRequest($request, "Refugee");
         if ($request->user()->tokenCan("read")) {
             $datas = array();
-            foreach (ListControl::all() as $list) {
+            foreach (ListControl::whereRelation('crews', 'crew_id', $request->user()->crew->id)->get() as $list) {
                 $call_class = '\App\Models\\' . $list->name;
                 $datas[$list->name] = $call_class::getAPIContent($request->user());
             }
