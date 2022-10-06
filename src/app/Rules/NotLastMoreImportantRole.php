@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
+use App\Models\Role;
 use App\Models\User;
-use App\Models\UserRole;
 use Illuminate\Contracts\Validation\InvokableRule;
 
 class NotLastMoreImportantRole implements InvokableRule
@@ -27,7 +27,7 @@ class NotLastMoreImportantRole implements InvokableRule
     public function __invoke($attribute, $value, $fail)
     {
 
-        $sup_role = UserRole::where("importance", ">=", $this->user->role->importance)->get()->pluck("id")->all();
+        $sup_role = Role::where("importance", ">=", $this->user->role->importance)->get()->pluck("id")->all();
         $count = User::whereIn("role_id", $sup_role)->get();
 
         if ($count->count() <= 1 && $this->user->role->id != $value) {

@@ -62,7 +62,7 @@
                             <div class="switch-toggle switch-3 switch-candy">
                                 @livewire("select-dropdown", ['label' => 'role_id', 'placeholder' => "-- Select the role
                                 --", 'datas' =>
-                                array_column(\App\Models\UserRole::orderBy("importance")->get()->toArray() , 'role',
+                                array_column(\App\Models\Role::orderBy("importance")->get()->toArray() , 'name',
                                 'id'), "selected_value"=>$user_found->role->id])
                                 @stack('scripts')
                             </div>

@@ -40,20 +40,25 @@
                                 @foreach($users as $user)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("user.show", $user->id)}}" class="text-indigo-600 hover:text-blue-900">{{$user->name}}</a>
+                                            <a href="{{route("user.show", $user->id)}}"
+                                               class="text-indigo-600 hover:text-blue-900">{{$user->name}}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("user.show", $user->id)}}" class="text-indigo-600 hover:text-blue-900">{{$user->email}}</a>
+                                            <a href="{{route("user.show", $user->id)}}"
+                                               class="text-indigo-600 hover:text-blue-900">{{$user->email}}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("user.show", $user->id)}}" class="text-indigo-600 hover:text-blue-900">{{$user->role->role}}</a>
+                                            <a href="{{route("user.show", $user->id)}}"
+                                               class="text-indigo-600 hover:text-blue-900">{{$user->role->name}}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("crew.show", $user->crew->id)}}" class="text-indigo-600 hover:text-blue-900">{{$user->crew->name}}</a>
+                                            <a href="{{route("crew.show", $user->crew->id)}}"
+                                               class="text-indigo-600 hover:text-blue-900">{{$user->crew->name}}</a>
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <a href="{{route("user.edit", $user->id)}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                            <a href="{{route("user.edit", $user->id)}}"
+                                               class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -94,17 +99,19 @@
                                 @foreach($request_roles as $request_role)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("user.show", $request_role->getUserId())}}"
-                                               class="text-indigo-600 hover:text-blue-900">{{$request_role->user}}</a>
+                                            <a href="{{route("user.show", $request_role->user->id)}}"
+                                               class="text-indigo-600 hover:text-blue-900">{{$request_role->user->name}}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <a href="{{route("user.grant_role", $request_role->id)}}"
-                                               class="text-green-600 hover:text-green-900">Grant {{$request_role->role}}
+                                               class="text-green-600 hover:text-green-900">Grant
+                                                <b>{{$request_role->role->name}}</b>
                                                 role</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <a href="{{route("user.reject_role", $request_role->id)}}"
-                                               class="text-red-600 hover:text-red-900">Reject {{$request_role->role}}
+                                               class="text-red-600 hover:text-red-900">Reject
+                                                <b>{{$request_role->role->name}}</b>
                                                 role</a>
                                         </td>
                                     </tr>

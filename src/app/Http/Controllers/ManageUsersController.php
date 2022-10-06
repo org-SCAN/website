@@ -7,9 +7,9 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateCrewRequest;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Models\Crew;
+use App\Models\Role;
 use App\Models\RoleRequest;
 use App\Models\User;
-use App\Models\UserRole;
 use App\Rules\NotLastMoreImportantRole;
 use App\Rules\NotLastUser;
 use Illuminate\Contracts\View\View;
@@ -89,7 +89,7 @@ class ManageUsersController extends Controller
      */
     public function show(User $user)
     {
-        $roles = UserRole::all();
+        $roles = Role::all();
         return view("user.show", compact("user", "roles"));
 
     }
@@ -168,7 +168,11 @@ class ManageUsersController extends Controller
         if ($user->role->id == $role) {
             return redirect()->back();
         }
-        RoleRequest::create(['user' => $user->id, 'role' => $role]);
+        RoleRequest::create([
+                'user_id' => $user->id,
+                'role_id' => $role
+            ]
+        );
         return redirect()->back();
     }
 
@@ -181,8 +185,8 @@ class ManageUsersController extends Controller
     public function GrantRole($id)
     {
         $request = RoleRequest::find($id);
-        $user = User::find($request->getUserId());
-        $user->update(["role_id" => $request->getRoleId()]);
+        $user = $request->user;
+        $user->update(["role_id" => $request->role->id]);
         $request->update(["granted" => date("Y-m-d H:i:s")]);
 
         return redirect()->back();

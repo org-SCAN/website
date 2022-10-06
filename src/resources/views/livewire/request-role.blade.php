@@ -20,7 +20,7 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     @livewire("select-dropdown", ['label' => 'role', 'placeholder' => "-- Select the role --", 'datas'
                     =>
-                    array_column($roles->toArray() , 'role', 'id'), "selected_value"=>$user->role->id])
+                    array_column($roles->toArray() , 'name', 'id'), "selected_value"=>$user->role->id])
                     @stack('scripts')
                     <button
                         class="inline-flex items-center px-4 py-2 mt-4 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
@@ -28,7 +28,7 @@
                     </button>
                 </form>
             @else
-                {{ __('Your request for the '.$request->role.' role has been sent, please wait for admin response.') }}
+                {{ __('Your request for the '.$request->role->name.' role has been sent, please wait for admin response.') }}
 
             @endif
         </div>

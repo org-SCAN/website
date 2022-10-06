@@ -38,7 +38,7 @@ class StoreUserRequest extends FormRequest
             ],
             'role'    => [
                 'required',
-                'exists:user_roles,id',
+                'exists:roles,id',
             ],
         ];
     }

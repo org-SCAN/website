@@ -19,7 +19,7 @@ class DuplicatePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role->role == ("admin")
+        return $user->role->name == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -33,7 +33,7 @@ class DuplicatePolicy
      */
     public function view(User $user, Duplicate $duplicate)
     {
-        return $user->role->role == ("admin")
+        return $user->role->name == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -46,7 +46,7 @@ class DuplicatePolicy
      */
     public function create(User $user)
     {
-        return $user->role->role == ("admin")
+        return $user->role->name == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -60,7 +60,7 @@ class DuplicatePolicy
      */
     public function update(User $user, Duplicate $duplicate)
     {
-        return $user->role->role == ("admin")
+        return $user->role->name == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -74,7 +74,7 @@ class DuplicatePolicy
      */
     public function delete(User $user, Duplicate $duplicate)
     {
-        return $user->role->role == ("admin")
+        return $user->role->name == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -88,7 +88,7 @@ class DuplicatePolicy
      */
     public function restore(User $user, Duplicate $duplicate)
     {
-        return $user->role->role == ("admin")
+        return $user->role->name == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
@@ -102,7 +102,7 @@ class DuplicatePolicy
      */
     public function forceDelete(User $user, Duplicate $duplicate)
     {
-        return $user->role->role == ("admin")
+        return $user->role->name == ("admin")
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }

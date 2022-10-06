@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class Refugee extends Model
 {
@@ -41,6 +42,22 @@ class Refugee extends Model
      * @var string
      */
     const route_base = "person";
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($person) {
+            $person->toRelation()->detach();
+            $person->fromRelation()->detach();
+        });
+
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = Str::uuid()->toString();
+            }
+        });
+    }
 
     /**
      * The fields that describe the user.
@@ -128,7 +145,8 @@ class Refugee extends Model
     }
 
     public function getBestDescriptiveValueAttribute(){
-        return $this->fields->where("best_descriptive_value", 1)->first()->pivot->value;
+        $best_descriptive_value = $this->fields->where("best_descriptive_value", 1)->first();
+        return -empty($best_descriptive_value) ? "" : $best_descriptive_value->pivot->value;
     }
 
     public function getRelationsAttribute(){

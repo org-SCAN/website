@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserRole extends Model
+class Role extends Model
 {
     use HasFactory, Uuids, SoftDeletes;
+
     /**
      * The data type of the auto-incrementing ID.
      *
