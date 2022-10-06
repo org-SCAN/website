@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Relation extends ListControl
+class ListRole extends ListControl
 {
 
 }

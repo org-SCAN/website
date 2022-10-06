@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\ApiLog;
-use App\Models\Country;
 use App\Models\Event;
+use App\Models\ListCountry;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -38,7 +38,7 @@ class EventFactory extends Factory
             "name" => $this->faker->city,
             "event_type_id" => $this->faker->uuid,
             "event_subtype_id" => $this->faker->uuid,
-            "country_id" => Country::inRandomOrder()->first()->id,
+            "country_id" => ListCountry::inRandomOrder()->first()->id,
             "location_details" => $this->faker->streetAddress,
             "start_date" => $this->faker->dateTime,
             "stop_date" => $this->faker->dateTime,

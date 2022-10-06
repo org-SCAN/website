@@ -2,13 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Field;
-use App\Models\FieldRefugee;
-use App\Models\Gender;
-use App\Models\Country;
-use App\Models\ListControl;
+use App\Models\ListCountry;
+use App\Models\ListGender;
+use App\Models\ListRole;
 use App\Models\Refugee;
-use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
@@ -17,6 +14,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class RefugeesDatatables extends LivewireDatatable
 {
     public $model = Refugee::class;
+
     //public $complexQuery = true;
 
 
@@ -79,8 +77,8 @@ class RefugeesDatatables extends LivewireDatatable
                                 ->fields->where("id", $field->id)->first();
                             $person_detail = $reference ? $reference->pivot->value : "";
                             if(!empty($field->linked_list)){//idrandom
-                                $list = ListControl::find($field->linked_list); //role -> Role
-                                $model = "App\Models\\".$list->name; // App\Models\Role
+                                $list = ListControl::find($field->linked_list); //role -> ListRole
+                                $model = "App\Models\\".$list->name; // App\Models\ListRole
                                 $person_detail = $model::find($person_detail)->{$list->displayed_value};
                             }
                             if($field->best_descriptive_value == 1){
@@ -122,7 +120,7 @@ class RefugeesDatatables extends LivewireDatatable
                 ->label('Name'),
 
             Column::callback('id', function ($id) {
-                $displayed = Gender::getDisplayedValue();
+                $displayed = ListGender::getDisplayedValue();
                 $gender = Refugee::with(['crew' => function ($query) {
                     $query->where('crews.id', Auth::user()->crew->id);
                 }])
@@ -131,13 +129,13 @@ class RefugeesDatatables extends LivewireDatatable
                     ->where("label", "gender")
                     ->first();
 
-                return $gender ? Gender::find($gender->pivot->value)->$displayed : "";
+                return $gender ? ListGender::find($gender->pivot->value)->$displayed : "";
             }, "3")
                 ->label("Sex")
-                ->filterable(Gender::pluck(Gender::getDisplayedValue())),
+                ->filterable(ListGender::pluck(ListGender::getDisplayedValue())),
 
             Column::callback('id', function ($id) {
-                $displayed = Country::getDisplayedValue();
+                $displayed = ListCountry::getDisplayedValue();
                 $country = Refugee::with(['crew' => function ($query) {
                     $query->where('crews.id', Auth::user()->crew->id);
                 }])
@@ -145,13 +143,13 @@ class RefugeesDatatables extends LivewireDatatable
                     ->fields
                     ->where("label", "nationality")
                     ->first();
-                return $country ? Country::find($country->pivot->value)->$displayed : "";
+                return $country ? ListCountry::find($country->pivot->value)->$displayed : "";
             }, "4")
-                ->filterable(Country::pluck(Country::getDisplayedValue()))
+                ->filterable(ListCountry::pluck(ListCountry::getDisplayedValue()))
                 ->label('nationality'),
 
             Column::callback('id', function ($id) {
-                $displayed = Role::getDisplayedValue();
+                $displayed = ListRole::getDisplayedValue();
                 $role = Refugee::with(['crew' => function ($query) {
                     $query->where('crews.id', Auth::user()->crew->id);
                 }])
@@ -159,9 +157,9 @@ class RefugeesDatatables extends LivewireDatatable
                     ->fields
                     ->where("label", "role")
                     ->first();
-                return $role ? Role::find($role->pivot->value)->$displayed : "";
+                return $role ? ListRole::find($role->pivot->value)->$displayed : "";
             }, "5")
-                ->filterable(Role::pluck(Role::getDisplayedValue()))
+                ->filterable(ListRole::pluck(ListRole::getDisplayedValue()))
                 ->label('role'),
 
             DateColumn::name('date')
@@ -184,17 +182,17 @@ class RefugeesDatatables extends LivewireDatatable
                 ->filterable()
                 ->label('Name'),
 
-            Column::name('genders.' . Gender::getDisplayedValue())
+            Column::name('genders.' . ListGender::getDisplayedValue())
                 ->label("Sex")
-                ->filterable(Gender::pluck(Gender::getDisplayedValue())),
+                ->filterable(ListGender::pluck(ListGender::getDisplayedValue())),
 
-            Column::name('countries.' . Country::getDisplayedValue())
+            Column::name('countries.' . ListCountry::getDisplayedValue())
                 ->label("Nationality")
                 ->filterable(),
 
-            Column::name('roles.' . Role::getDisplayedValue())
-                ->label("Role")
-                ->filterable(Role::pluck(Role::getDisplayedValue())),
+            Column::name('roles.' . ListRole::getDisplayedValue())
+                ->label("ListRole")
+                ->filterable(ListRole::pluck(ListRole::getDisplayedValue())),
 
             DateColumn::name('date')
                 ->label('Date (from / to)')

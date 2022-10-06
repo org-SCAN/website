@@ -4,9 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGendersTable extends Migration
+class CreateListRoutesTable extends Migration
 {
-        /**
+    /**
      * Run the migrations.
      *
      * @return void
@@ -17,15 +17,15 @@ class CreateGendersTable extends Migration
     {
 
         // read the json file to get the values
-        $this->table_name = "genders";
+        $this->table_name = "list_routes";
     }
 
     public function up()
     {
         Schema::create($this->table_name, function (Blueprint $table) {
             $table->uuid("id")
-                ->unique()
-                ->primary();
+                ->primary()
+                ->unique();
             $table->string("short");
             $table->string("full");
             $table->timestamps();

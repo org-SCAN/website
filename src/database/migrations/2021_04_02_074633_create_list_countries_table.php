@@ -4,9 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRolesTable extends Migration
+class CreateListCountriesTable extends Migration
 {
-      /**
+    /**
      * Run the migrations.
      *
      * @return void
@@ -16,8 +16,7 @@ class CreateRolesTable extends Migration
     public function __construct()
     {
 
-        // read the json file to get the values
-        $this->table_name = "roles";
+        $this->table_name = "list_countries";
     }
 
     public function up()
@@ -26,11 +25,13 @@ class CreateRolesTable extends Migration
             $table->uuid("id")
                 ->unique()
                 ->primary();
+            $table->string("ISO2");
+            $table->string("ISO3");
             $table->string("short");
-            $table->string("descr");
-            $table->string("key");
+            $table->string("full");
             $table->timestamps();
             $table->softDeletes();
+
         });
     }
 

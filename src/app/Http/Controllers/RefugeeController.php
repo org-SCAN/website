@@ -59,8 +59,8 @@ class RefugeeController extends Controller
                 $value = $field->pivot->value ? $field->pivot->value : "";
 
                 if (!empty($field->linked_list)) {//idrandom
-                    $list = ListControl::find($field->linked_list); //role -> Role
-                    $model = "App\Models\\" . $list->name; // App\Models\Role
+                    $list = ListControl::find($field->linked_list); //role -> ListRole
+                    $model = "App\Models\\" . $list->name; // App\Models\ListRole
                     $value = $model::find($value)->{$list->displayed_value};
                 }
                 $formated_refugees[$refugee->id][$field->id] = $value;

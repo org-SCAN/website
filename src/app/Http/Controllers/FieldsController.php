@@ -7,9 +7,9 @@ use App\Http\Requests\UpdateFieldRequest;
 use App\Models\ApiLog;
 use App\Models\Field;
 use App\Models\ListControl;
-use App\Models\Relation;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class FieldsController extends Controller
@@ -27,7 +27,7 @@ class FieldsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
     public function index()
     {
@@ -37,7 +37,7 @@ class FieldsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
     public function create()
     {
@@ -47,26 +47,26 @@ class FieldsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param App\Http\Requests\StoreFieldRequest $request
-     * @return Response
+     * @param StoreFieldRequest $request
+     * @return RedirectResponse
      */
     public function store(StoreFieldRequest $request)
     {
+        $apiLog = ApiLog::createFromRequest($request, 'Field');
         $field = $request->validated();
-        if(empty($field["order"])){
-            $field["order"] = Field::where('crew_id', Auth::user()->crew->id)->get()->sortByDesc('order')->first()->order + 1;
+        $field["api_log"] = $apiLog->id;
+        if (empty($field["order"])) {
+            $last_order = Field::where('crew_id', Auth::user()->crew->id)->get()->sortByDesc('order')->first();
+            $field["order"] = empty($last_order) ? 1 : $last_order->order + 1;
         }
         $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field["database_type"]);
         $field["android_type"] = Field::getUITypeFromForm($field["database_type"]);
         $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
         $field["crew_id"] = Auth::user()->crew->id;
+
         $field = Field::create($field);
-        /*
-        if($field->exists){
-            $field->addFieldtoRefugees();
-        }else{
-            //DROP error ?
-        }*/
+        $apiLog->response = "success";
+        $apiLog->save();
         return redirect()->route("fields.index");
     }
 
@@ -74,7 +74,7 @@ class FieldsController extends Controller
      * Display the specified resource.
      *
      * @param Field $field
-     * @return Response
+     * @return View
      */
     public function show(Field $field)
     {
@@ -101,7 +101,7 @@ class FieldsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Field $field
-     * @return Response
+     * @return View
      */
     public function edit(Field $field)
     {
@@ -129,12 +129,13 @@ class FieldsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param UpdateFieldRequest $request
      * @param Field $field
-     * @return Response
+     * @return RedirectResponse
      */
     public function update(UpdateFieldRequest $request, Field $field)
     {
+        $apiLog = ApiLog::createFromRequest($request, 'Field');
         $to_update = $request->validated();
         if (!$request->has('descriptive_value')) {
             $to_update['descriptive_value'] = 0;
@@ -143,9 +144,11 @@ class FieldsController extends Controller
             $to_update['best_descriptive_value'] = 0;
         }
         $to_update["database_type"] = $field->database_type;
+        $to_update["api_log"] = $apiLog->id;
         $to_update["validation_laravel"] = Field::getValidationLaravelFromForm($to_update);
         $field->update($to_update);
-
+        $apiLog->response = "success";
+        $apiLog->save();
         return redirect()->route("fields.index");
     }
 
@@ -153,7 +156,7 @@ class FieldsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Field $field
-     * @return Response
+     * @return RedirectResponse
      */
     public function destroy(Field $field)
     {
@@ -169,13 +172,11 @@ class FieldsController extends Controller
     public function handleApiRequest(Request $request)
     {
         $log = ApiLog::createFromRequest($request, "Refugee");
-        if($request->user()->tokenCan("read")){
+        if ($request->user()->tokenCan("read")) {
             $datas = array();
-            $datas["fields"] = Field::getAPIContent();
-            $datas["Relations"] = Relation::getAPIContent();
-            foreach (Field::getUsedLinkedList() as $list){
-                $call_class = '\App\Models\\'.$list;
-                $datas[$list] = $call_class::getAPIContent();
+            foreach (ListControl::whereRelation('crews', 'crew_id', $request->user()->crew->id)->get() as $list) {
+                $call_class = '\App\Models\\' . $list->name;
+                $datas[$list->name] = $call_class::getAPIContent($request->user());
             }
             return response(json_encode($datas), 200)->header('Content-Type', 'application/json');
         }

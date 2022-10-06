@@ -4,8 +4,8 @@ namespace Database\Factories;
 
 use App\Models\ApiLog;
 use App\Models\Link;
+use App\Models\ListRelation;
 use App\Models\Refugee;
-use App\Models\Relation;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -37,7 +37,7 @@ class LinkFactory extends Factory
         $log = ApiLog::create($log);
         return [
             'date' => $this->faker->date("Y-m-d", $max = 'now', $min = '- 2 months'),
-            'relation' => Relation::inRandomOrder()->first()->id,
+            'relation' => ListRelation::inRandomOrder()->first()->id,
             'from' => Refugee::inRandomOrder()->first()->id,
             'to' => Refugee::inRandomOrder()->first()->id,
             'api_log' => $log->id,

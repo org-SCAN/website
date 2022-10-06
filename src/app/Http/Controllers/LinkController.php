@@ -9,8 +9,8 @@ use App\Http\Requests\UpdateLinkRequest;
 use App\Models\ApiLog;
 use App\Models\Link;
 use App\Models\ListControl;
+use App\Models\ListRelation;
 use App\Models\Refugee;
-use App\Models\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -45,7 +45,7 @@ class LinkController extends Controller
     public function create()
     {
         $lists["refugees"] = Refugee::getAllBestDescriptiveValues();
-        $lists["relations"] = array_column(Relation::all()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
+        $lists["relations"] = array_column(ListRelation::all()->toArray(), ListControl::where('name', "ListRelation")->first()->displayed_value, "id");
         return view("links.create", compact("lists"));
     }
 
@@ -141,7 +141,7 @@ class LinkController extends Controller
      */
     public function edit(Link $link)
     {
-        $lists["relations"] = [$link->getRelationId() => $link->relation] + array_column(Relation::all()->toArray(), ListControl::where('name', "Relation")->first()->displayed_value, "id");
+        $lists["relations"] = [$link->getRelationId() => $link->relation] + array_column(ListRelation::all()->toArray(), ListControl::where('name', "ListRelation")->first()->displayed_value, "id");
         return view("links.edit", compact("link", "lists"));
     }
 

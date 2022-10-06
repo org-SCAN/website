@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 
 use App\Models\Link;
-use App\Models\Relation;
+use App\Models\ListRelation;
 use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
@@ -50,7 +50,7 @@ class LinksDatatables extends LivewireDatatable
             Column::name('refugeeFrom.id')->label('From'),
             //Column::name('refugeeFrom.bestDescriptiveValue.value'),
             Column::name('relation.name')
-                ->filterable(Relation::pluck(Relation::getDisplayedValue()))->label('Relation'),
+                ->filterable(ListRelation::pluck(ListRelation::getDisplayedValue()))->label('ListRelation'),
             Column::name('refugeeTo.id')->label('To'),
             // Column::name('refugeeTo.bestDescriptiveValue.value'),
 
@@ -73,11 +73,11 @@ class LinksDatatables extends LivewireDatatable
 //            Column::callback('id', function ($id) {
 //                return Link::find($id)->relation;
 //            }, ["2"])
-//                ->filterable(Relation::pluck(Relation::getDisplayedValue()))
-//                ->label('Relation')
+//                ->filterable(ListRelation::pluck(ListRelation::getDisplayedValue()))
+//                ->label('ListRelation')
 //                ->alignCenter(),
             Column::name('relation.name')
-                ->filterable(Relation::pluck(Relation::getDisplayedValue())),
+                ->filterable(ListRelation::pluck(ListRelation::getDisplayedValue())),
 
             Column::callback('id', function ($id) {
                 $ref = Link::find($id)->refugeeTo;

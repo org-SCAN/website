@@ -41,7 +41,7 @@
             <div class="flex flex-col">
                 <h1>Graph</h1>
                 <div class="rounded-lg px-2">
-                    @foreach(\App\Models\Relation::all() as $relation)
+                    @foreach(\App\Models\ListRelation::all() as $relation)
                         <i class="fas fa-circle" style="color: #{{$relation->color}}"> {{$relation->name}}</i>
                     @endforeach
                 </div>
