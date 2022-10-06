@@ -33,7 +33,7 @@ class LinkController extends Controller
      */
     public function index()
     {
-        $links = Link::all();
+        $links = Link::all();//whereRelation('RefugeeFrom', 'deleted_at', null)->whereRelation('RefugeeTo', 'deleted_at', null)->get();
         return view("links.index", compact('links'));
     }
 

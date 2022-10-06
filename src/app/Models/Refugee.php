@@ -42,6 +42,16 @@ class Refugee extends Model
      */
     const route_base = "person";
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($person) {
+            $person->toRelation()->detach();
+            $person->fromRelation()->detach();
+        });
+    }
+
     /**
      * The fields that describe the user.
      */
