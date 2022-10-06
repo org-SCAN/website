@@ -138,7 +138,8 @@ class Refugee extends Model
     }
 
     public function getBestDescriptiveValueAttribute(){
-        return $this->fields->where("best_descriptive_value", 1)->first()->pivot->value;
+        $best_descriptive_value = $this->fields->where("best_descriptive_value", 1)->first();
+        return -empty($best_descriptive_value) ? "" : $best_descriptive_value->pivot->value;
     }
 
     public function getRelationsAttribute(){

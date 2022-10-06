@@ -13,6 +13,7 @@ use App\Models\ListRelation;
 use App\Models\Refugee;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class LinkController extends Controller
 {
@@ -33,7 +34,9 @@ class LinkController extends Controller
      */
     public function index()
     {
-        $links = Link::all();//whereRelation('RefugeeFrom', 'deleted_at', null)->whereRelation('RefugeeTo', 'deleted_at', null)->get();
+        $links = Link::whereRelation('RefugeeFrom.crew', 'crews.id', Auth::user()->crew->id)
+            ->whereRelation('RefugeeTo.crew', 'crews.id', Auth::user()->crew->id)
+            ->get();
         return view("links.index", compact('links'));
     }
 
