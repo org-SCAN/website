@@ -90,7 +90,7 @@ class Refugee extends Model
     */
     public function fromRelation()
     {
-        return $this->belongsToMany(Relation::class, "links", "from", "relation")
+        return $this->belongsToMany(ListRelation::class, "links", "from", "relation")
             ->using(Link::class)
             ->wherePivotNull("deleted_at")
             ->withPivot("to")
@@ -99,7 +99,7 @@ class Refugee extends Model
 
     public function toRelation()
     {
-        return $this->belongsToMany(Relation::class, "links", "to", "relation")
+        return $this->belongsToMany(ListRelation::class, "links", "to", "relation")
             ->using(Link::class)
             ->wherePivotNull("deleted_at")
             ->withPivot("from")

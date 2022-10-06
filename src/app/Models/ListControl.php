@@ -81,7 +81,7 @@ class ListControl extends Model
     public static function getDisplayedValue()
     {
         $call_class_name = get_called_class();
-        $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg Country / Gender / …
+        $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg ListCountry / ListGender / …
 
         return ListControl::where('name', $class_name)->first()->displayed_value;
     }
@@ -96,7 +96,7 @@ class ListControl extends Model
     public static function getDisplayedValueContent($id)
     {
         $call_class_name = get_called_class();
-        $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg Country / Gender / …
+        $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg ListCountry / ListGender / …
 
         $displayed_value = ListControl::where('name', $class_name)->first()->displayed_value;
         $displayed_value_content = $call_class_name::find($id);
@@ -104,19 +104,19 @@ class ListControl extends Model
         return empty($displayed_value_content) ? "" : $displayed_value_content->$displayed_value; //the content of the displayed value
     }
 
-    public static function getIdFromValue($value){
+    public static function getIdFromValue($value)
+    {
         $call_class_name = get_called_class();
-        $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg Country / Gender / …
-        if(Str::isUuid($value)){
+        $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg ListCountry / ListGender / …
+        if (Str::isUuid($value)) {
             $val = $call_class_name::find($value);
-            if(!empty($val)){
+            if (!empty($val)) {
                 return $value;
             }
-        }
-        else{
+        } else {
             $key_value = ListControl::where("name", $class_name)->first()->key_value;
-            $val = $call_class_name::where($key_value ,$value)->first();
-            if(!empty($val)){
+            $val = $call_class_name::where($key_value, $value)->first();
+            if (!empty($val)) {
                 return $val->id;
             }
         }
@@ -132,7 +132,7 @@ class ListControl extends Model
     public static function getAPIContent(User $user)
     {
         $call_class_name = get_called_class();
-        $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg Country / Gender / …
+        $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg ListCountry / ListGender / …
 
         $database_content = $call_class_name::all()->makeHidden("id")->toArray();
         $list_info = ListControl::where('name', $class_name)->first();
@@ -142,7 +142,7 @@ class ListControl extends Model
             $api_res[$key_value] = $database_content[$key_index];
 
             $translations = array_column(Translation::where('list', $list_info->id)->where('field_key', $key_value)->get()->toArray(), "translation", "language");
-            foreach($translations as $language => $translation){
+            foreach ($translations as $language => $translation) {
                 $api_res[$key_value]["displayed_value"][$language] = $translation;
             }
             unset($api_res[$key_value][$list_info->key_value]);

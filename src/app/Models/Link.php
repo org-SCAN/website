@@ -65,7 +65,7 @@ class Link extends Pivot
 
     public function relation()
     {
-        return $this->belongsTo(Relation::class, "relation");
+        return $this->belongsTo(ListRelation::class, "relation");
     }
 
     /**
@@ -77,8 +77,8 @@ class Link extends Pivot
      */
     public function getRelationAttribute($relation)
     {
-        $displayed_value = ListControl::where("name", "Relation")->first()->displayed_value;
-        return Relation::find($relation)->$displayed_value;
+        $displayed_value = ListControl::where("name", "ListRelation")->first()->displayed_value;
+        return ListRelation::find($relation)->$displayed_value;
     }
 
     /**
@@ -118,7 +118,7 @@ class Link extends Pivot
 
     public function getRelationWeight()
     {
-        return Relation::find($this->getRelationId())->importance;
+        return ListRelation::find($this->getRelationId())->importance;
     }
 
 
@@ -129,7 +129,7 @@ class Link extends Pivot
 
     public function setRelationAttribute($value)
     {
-        $this->attributes["relation"] = Relation::getIdFromValue($value);
+        $this->attributes["relation"] = ListRelation::getIdFromValue($value);
     }
 
     public static function relationExists($from, $to, $relation_type, $application_id)
@@ -137,7 +137,7 @@ class Link extends Pivot
         $potential_link = self::where("application_id", $application_id)
             ->where("from", $from)
             ->where("to", $to)
-            ->where("relation", Relation::getIdFromValue($relation_type))
+            ->where("relation", ListRelation::getIdFromValue($relation_type))
             ->first();
 
         return empty($potential_link) ? null : $potential_link;
