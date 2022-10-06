@@ -42,7 +42,6 @@ class ManageUsersController extends Controller
     {
         $users = User::all();
         $request_roles = RoleRequest::where("granted", null)->get();
-        //ddd($request_roles);
         return view("user.index", compact("users", "request_roles"));
     }
 
