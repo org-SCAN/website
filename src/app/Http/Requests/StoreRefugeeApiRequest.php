@@ -13,6 +13,7 @@ class StoreRefugeeApiRequest extends StoreRefugeeRequest
     public function rules()
     {
         $rules = parent::rules();
+        $rules["id"] = "String";
         $rules["date"] = "Required|date";
         $rules["date_update"] = "date";
         $rules = array_combine(

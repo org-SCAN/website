@@ -272,10 +272,18 @@ class RefugeeController extends Controller
                 $refugee["application_id"] = $log->application_id;
 
                 $stored_ref = Refugee::handleApiRequest($refugee);
+
+                if ($stored_ref instanceof Response) {
+                    return $stored_ref;
+                }
+                return response("Found this refugee :" . json_encode($stored_ref), 201);
+
+
                 if ($stored_ref == null) {
-                    $log->update(["response" => "Error while creating a refugee : " . $refugee["unique_id"]]);
+                    $log->update(["response" => "Error while creating a refugee : " . $refugee["id"]]);
                     return response("Error while creating this refugee :" . json_encode($refugee), 500);
                 }
+
             }
            return response("Success !", 201);
         }
