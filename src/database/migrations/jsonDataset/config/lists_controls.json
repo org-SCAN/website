@@ -33,6 +33,6 @@
         "title" : "Field",
         "name" : "Field",
         "displayed_value" : "title",
-        "key_value" : "label"
+        "key_value": "id"
     }
 ]

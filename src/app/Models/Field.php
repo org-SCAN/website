@@ -38,7 +38,7 @@ class Field extends Model
      *
      * @var array
      */
-    protected $hidden = ['deleted_at', "created_at", "updated_at", "status", "html_data_type", "validation_laravel", "attribute", "order"];
+    protected $hidden = ['deleted_at', "created_at", "updated_at", "status", "html_data_type", "validation_laravel", "attribute", "order", "api_log", "crew_id"];
 
 
     /**
@@ -49,6 +49,7 @@ class Field extends Model
     public  function getHiddenValue(){
         return $this->hidden;
     } */
+
 
     public function getStatusAttribute($value){
         switch ($value) {
@@ -245,7 +246,6 @@ class Field extends Model
         $displayed_value = $list_control->displayed_value;
         return array_column($list, $displayed_value, "id");
     }
-
 
     /**
      * Indicate the the UUID stored in DB

@@ -32,10 +32,16 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "placeholder")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's placeholder</label>
-
-                            <input type="text" value="{{ old($field->{$form_elem}, $field->{$form_elem}) }}" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="John Doe" />
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be shown as an example when the field is asked.</small>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
+                                placeholder</label>
+                            @if(!isset($field->{$form_elem}))
+                                @php($field->{$form_elem} = "")
+                            @endif
+                            <input type="text" value="{{ old($field->{$form_elem}, $field->{$form_elem}) }}"
+                                   name="{{$form_elem}}" id="{{$form_elem}}"
+                                   class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="John Doe"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
+                                shown as an example when the field is asked.</small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
