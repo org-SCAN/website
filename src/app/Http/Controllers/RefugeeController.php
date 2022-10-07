@@ -134,9 +134,6 @@ class RefugeeController extends Controller
                 $ref[$key] = ["value" => $value];
             }
         }
-        //$refugee["date"] = ((isset($fields[Field::where("label", "date")->get()->first()->id]) && !empty($fields[Field::where("label", "date")->get()->first()->id])))
-        //    ? $fields[Field::where("label", "date")->get()->first()->id]
-        //    : date('Y-m-d H:i', time());
         $refugee["date"] = date('Y-m-d H:i', time());
         $log = ApiLog::createFromRequest($request, "Refugee");
         $refugee["api_log"] = $log->id;

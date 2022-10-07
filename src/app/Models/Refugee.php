@@ -175,16 +175,34 @@ class Refugee extends Model
         }
         // if a person is found, we should update it
         if ($storedPerson instanceof Refugee) {
+            //delete useless information (in the update case)
+            $keys = ["api_log", "date", "application_id"];
+            foreach ($keys as $key) {
+                unset($person[$key]);
+            }
+
             // update the fields if they were changed
-            foreach ($storedPerson->fields as $field) {
+            $storedFields = $storedPerson->fields;
+            $i = 0;
+            foreach ($storedFields as $field) {
                 //the stored value and request value are different, we update the DB
-                if (array_key_exists($field->id, $person) && $field->pivot->value != $person[$field->id]) {
-                    //update changed fields
-                    $person->fields()->updateExistingPivot($field->id, ["value" => $person[$field->id]]);
+                if (array_key_exists($field->id, $person)) {
+                    $storedFields->forget($i);
+                    if ($field->pivot->value != $person[$field->id]) {
+                        //update changed fields
+                        $storedPerson->fields()->updateExistingPivot($field->id, ["value" => $person[$field->id]]);
+                    }
                 }
                 //delete when it's done
+                $i++;
                 unset($person[$field->id]);
             }
+            //Delete the remains values
+            foreach ($storedFields as $field) {
+                //the stored value and request value are different, we update the DB
+                $storedPerson->fields()->detach($field->id);
+            }
+
         } else { //should create the person
             $keys = ["api_log", "date", "application_id"];
             $personContent = array();
@@ -198,8 +216,8 @@ class Refugee extends Model
         $fields_to_add = array();
         foreach ($person as $fieldKey => $value) {
             //check if the $fieldKey exisits in fields
-            $field = Field::findOr($fieldKey, function ($fieldKey) {
-                return response("The field {$fieldKey} doesn't exist.", 404);
+            $field = Field::findOr($fieldKey, function () {
+                return response("The field doesn't exist.", 404);
             });
             if ($field instanceof Response) { //return error if the field id doesn't exist.
                 return $field;
