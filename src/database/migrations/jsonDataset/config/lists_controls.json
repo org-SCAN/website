@@ -3,36 +3,36 @@
         "title": "Country",
         "name": "ListCountry",
         "displayed_value": "short",
-        "key_value": "ISO3"
+        "key_value": "id"
     },
     {
         "title": "Gender",
         "name": "ListGender",
         "displayed_value": "full",
-        "key_value": "short"
+        "key_value": "id"
     },
     {
         "title": "Route",
         "name": "ListRoute",
         "displayed_value": "full",
-        "key_value": "short"
+        "key_value": "id"
     },
     {
         "title": "Role",
         "name": "ListRole",
         "displayed_value": "short",
-        "key_value": "key"
+        "key_value": "id"
     },
     {
         "title": "Relation",
         "name": "ListRelation",
         "displayed_value": "name",
-        "key_value": "short"
+        "key_value": "id"
     },
     {
         "title" : "Field",
         "name" : "Field",
         "displayed_value" : "title",
-        "key_value" : "label"
+        "key_value": "id"
     }
 ]

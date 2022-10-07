@@ -134,9 +134,6 @@ class RefugeeController extends Controller
                 $ref[$key] = ["value" => $value];
             }
         }
-        //$refugee["date"] = ((isset($fields[Field::where("label", "date")->get()->first()->id]) && !empty($fields[Field::where("label", "date")->get()->first()->id])))
-        //    ? $fields[Field::where("label", "date")->get()->first()->id]
-        //    : date('Y-m-d H:i', time());
         $refugee["date"] = date('Y-m-d H:i', time());
         $log = ApiLog::createFromRequest($request, "Refugee");
         $refugee["api_log"] = $log->id;
@@ -265,19 +262,23 @@ class RefugeeController extends Controller
      */
     public static function handleApiRequest(StoreRefugeeApiRequest $request)
     {
+        $responseArray = array();
         $log = ApiLog::createFromRequest($request, "Refugee");
-        if($request->user()->tokenCan("update")){
-            foreach ($request->validated() as $refugee) {
-                $refugee["api_log"] = $log->id;
-                $refugee["application_id"] = $log->application_id;
+        if($request->user()->tokenCan("update")) {
+            foreach ($request->validated() as $person) {
+                $person["api_log"] = $log->id;
+                $person["application_id"] = $log->application_id;
 
-                $stored_ref = Refugee::handleApiRequest($refugee);
-                if ($stored_ref == null) {
-                    $log->update(["response" => "Error while creating a refugee : " . $refugee["unique_id"]]);
-                    return response("Error while creating this refugee :" . json_encode($refugee), 500);
+                $stored_person = Refugee::handleApiRequest($person);
+
+                if ($stored_person instanceof Response) {
+                    return $stored_person;
+                } elseif ($stored_person instanceof Refugee) {
+                    array_push($responseArray, $stored_person->id);
                 }
+
             }
-           return response("Success !", 201);
+            return response(json_encode($responseArray), 201, ['Content-type' => 'application/json']);
         }
         $log->update(["response"=>"Bad token access"]);
         return response("Your token can't be use to send datas", 403);

@@ -38,9 +38,8 @@ class FieldSeeder extends GlobalListControlSeeder
             foreach ($fields as $keyField => $fieldValue) {
                 //If the key is the displayed value, we have to store it in translation
                 if ($keyField == $this->displayed_value) {
-                    $fieldValue = $this->storeTranslation($fieldValue, $fields[$this->list_field_key]);
+                    $fieldValue = $fieldValue[$this->default_language];
                 }
-
                 // There is a special condition for linked_list
                 if ($keyField == "linked_list" && !empty($fieldValue)) {
                     $fieldValue = ListControl::where("name", ucfirst($fieldValue))->first()->id;
@@ -48,7 +47,10 @@ class FieldSeeder extends GlobalListControlSeeder
                 $to_store[$keyField] = $fieldValue;
             }
             $to_store["crew_id"] = Crew::getDefaultCrewId();
-            Field::create($to_store);
+            $field = Field::create($to_store);
+
+
+            $this->storeTranslation($fields[$this->displayed_value], $field->{$this->list_field_key});
         }
     }
 }

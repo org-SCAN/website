@@ -80,12 +80,14 @@ class GlobalListControlSeeder extends Seeder
             foreach ($json_elem as $key => $value) {
                 //If the key is the displayed value, we have to store it in translation
                 if ($key == $this->displayed_value) {
-                    $value = $this->storeTranslation($value, $json_elem[$this->list_field_key]);
+                    $value = $value[$this->default_language];
                 }
                 $to_store[$key] = $value;
             }
             $model = 'App\Models\\' . $this->class_name;
-            $model::create($to_store);
+            $createdListElem = $model::create($to_store);
+            $this->storeTranslation($json_elem[$this->displayed_value], $createdListElem->{$this->list_field_key});
+
         }
     }
 }

@@ -17,7 +17,7 @@
         "order": 1,
 		"descriptive_value" : 1,
 		"best_descriptive_value" : 0,
-        "validation_laravel": "regex:/^[A-Z]{3}-[0-9]{6}$/"
+        "validation_laravel": "required|regex:/^[A-Z]{3}-[0-9]{6}$/"
     },
     {
         "title": {
@@ -37,7 +37,7 @@
         "order": 2,
         "descriptive_value": 1,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|required"
+        "validation_laravel": "string|required|exists:list_genders,id"
     },
     {
         "title": {
@@ -97,7 +97,7 @@
         "order": 5,
         "descriptive_value": 1,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable"
+        "validation_laravel": "string|nullable|exists:list_countries,id"
     },
     {
         "title": {
@@ -117,7 +117,7 @@
         "order": 6,
         "descriptive_value": 1,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable"
+        "validation_laravel": "string|nullable|exists:list_roles,id"
     },
     {
         "title": {
@@ -217,7 +217,7 @@
         "order": 11,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable"
+        "validation_laravel": "string|nullable|exists:list_routes,id"
     },
     {
         "title": {
@@ -237,7 +237,7 @@
         "order": 12,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|max:250"
+        "validation_laravel": "string|nullable|exists:list_countries,id"
     },
     {
         "title": {
