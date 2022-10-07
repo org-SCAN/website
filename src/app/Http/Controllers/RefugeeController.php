@@ -262,27 +262,23 @@ class RefugeeController extends Controller
      */
     public static function handleApiRequest(StoreRefugeeApiRequest $request)
     {
+        $responseArray = array();
         $log = ApiLog::createFromRequest($request, "Refugee");
-        if($request->user()->tokenCan("update")){
-            foreach ($request->validated() as $refugee) {
-                $refugee["api_log"] = $log->id;
-                $refugee["application_id"] = $log->application_id;
+        if($request->user()->tokenCan("update")) {
+            foreach ($request->validated() as $person) {
+                $person["api_log"] = $log->id;
+                $person["application_id"] = $log->application_id;
 
-                $stored_ref = Refugee::handleApiRequest($refugee);
+                $stored_person = Refugee::handleApiRequest($person);
 
-                if ($stored_ref instanceof Response) {
-                    return $stored_ref;
-                }
-                return response("Found this refugee :" . json_encode($stored_ref), 201);
-
-
-                if ($stored_ref == null) {
-                    $log->update(["response" => "Error while creating a refugee : " . $refugee["id"]]);
-                    return response("Error while creating this refugee :" . json_encode($refugee), 500);
+                if ($stored_person instanceof Response) {
+                    return $stored_person;
+                } elseif ($stored_person instanceof Refugee) {
+                    array_push($responseArray, $stored_person->id);
                 }
 
             }
-           return response("Success !", 201);
+            return response(json_encode($responseArray), 201, ['Content-type' => 'application/json']);
         }
         $log->update(["response"=>"Bad token access"]);
         return response("Your token can't be use to send datas", 403);
