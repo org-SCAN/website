@@ -187,41 +187,28 @@ class LinkController extends Controller
     public static function handleApiRequest(StoreLinkApiRequest $request)
     {
         $log = ApiLog::createFromRequest($request, "Link");
+
         if($request->user()->tokenCan("update")){
+            $responseArray = array();
             foreach ($request->validated() as $link) {
-
-                $relation["api_log"] = $log->id;
-                $relation["application_id"] = $log->application_id;
-
-                $from = Refugee::getRefugeeIdFromReference($link["from_unique_id"], $relation["application_id"]);
-                if ($from != null) {
-                    $relation["from"] = $from;
+                $link['api_log'] = $log->id;
+                $link["application_id"] = $log->application_id;
+                //check
+                if (key_exists("id", $link)) {
+                    $linkUpdate = Link::find($link["id"]);
+                    $linkUpdate->update($link);
+                    $link = $linkUpdate;
                 } else {
-                    $log->update(["response" => "Error : " . $link["from_unique_id"] . " not found with application id : " . $relation["application_id"]]);
-                    return response("Error : " . $link["to_unique_id"] . " not found with application id : " . $relation["application_id"], 500);
+                    $potentialLink = Link::where('from', $link["from"])->where('to', $link["to"])->where('relation', $link["relation"])->first();
+                    if ($potentialLink != null) {
+                        $link = $potentialLink;
+                    } else {
+                        $link = Link::create($link);
+                    }
                 }
-
-                $to = Refugee::getRefugeeIdFromReference($link["to_unique_id"], $relation["application_id"]);
-
-                if ($to != null) {
-                    $relation["to"] = $to;
-                } else {
-                    $log->update(["response" => "Error : " . $link["to_unique_id"] . " not found with application id : " . $relation["application_id"]]);
-                    return response("Error : " . $link["to_unique_id"] . " not found with application id : " . $relation["application_id"], 500);
-                }
-
-                $relation["relation"] = $link["relation"];
-                if (isset($link["detail"])) {
-                    $relation["detail"] = $link["detail"];
-                }
-                //from there handle API request relation
-                $stored_link = Link::handleApiRequest($relation);
-                if ($stored_link == null) {
-                    $log->update(["response" => "Error while creating a relation"]);
-                    return response("Error while creating this refugee :" . json_encode($link), 500);
-                }
+                array_push($responseArray, $link->id);
             }
-            return response("Success !", 201);
+            return response(json_encode($responseArray), 201, ['Content-Type' => "application/json"]);
         }
         $log->update(["response"=>"Bad token access"]);
         return response("Your token can't be use to send datas", 403);
