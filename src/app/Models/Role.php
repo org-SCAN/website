@@ -55,6 +55,14 @@ class Role extends Model
 
     public static function smallestRole()
     {
-        return self::orderBy("importance")->first()->id;;
+        return self::orderBy("importance")->first()->id;
+    }
+
+    /**
+     * The permissions that belong to the user.
+     */
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class)->using(PermissionRole::class)->withTimestamps()->withPivot("id");
     }
 }

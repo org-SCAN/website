@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
-
 
 class RoleSeeder extends Seeder
 {
@@ -22,13 +22,17 @@ class RoleSeeder extends Seeder
         $array_json = json_decode($obj_json, true);
 
         // make the inserts
-        foreach($array_json as $route)
-        {
-            $to_store = array();
-            foreach ($route as $routeKey => $routeValue) {
-                $to_store[$routeKey] = $routeValue;
+        foreach ($array_json as $role) {
+            $created_role = Role::create($role["role"]);
+            if ($role["permissions"] == "*") {
+                $role["permissions"] = Permission::all();
             }
-            Role::create($to_store);
+            foreach ($role["permissions"] as $permission) {
+                if (!($permission instanceof Permission)) {
+                    $permission = Permission::firstWhere("name", $permission);
+                }
+                $created_role->permissions()->attach($permission->id);
+            }
         }
     }
 }
