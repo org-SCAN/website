@@ -1,8 +1,8 @@
-@section('title',"Add an element to ".$lists_control->title." list")
+@section('title',"Add an element to ".$list_control->title." list")
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Add to <b>{{ $lists_control->title }}</b> list
+            Add to <b>{{ $list_control->title }}</b> list
         </h2>
     </x-slot>
 
@@ -21,18 +21,21 @@
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <form method="post" action="{{ route('user.store') }}">
+                <form method="post" action="{{ route('lists_control.update_list', $list_control) }}">
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
-                        <div class="px-4 py-5 bg-white sm:p-6">
-                            <label for="name" class="block font-medium text-sm text-gray-700">Name</label>
-                            <input type="text" name="name" id="name"
-                                   class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                   value="{{ old('name', '') }}"/>
-                            @error('name')
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
+                        @foreach($list_fields as $listField)
+                            <div class="px-4 py-5 bg-white sm:p-6">
+                                <label for="{{ $listField }}"
+                                       class="block font-medium text-sm text-gray-700">{{ $listField }}</label>
+                                <input type="text" name="{{ $listField }}" id="{{ $listField }}"
+                                       class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                       value="{{ old($listField, '') }}"/>
+                                @error($listField)
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        @endforeach
                     </div>
                     <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                         <button

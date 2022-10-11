@@ -72,9 +72,14 @@ Route::get('user/reject_role/{id}', [
     'uses' => '\App\Http\Controllers\ManageUsersController@RejectRole'
 ])->middleware('auth');
 
-Route::get('lists_control/add_to_list/{lists_control}', [
+Route::get('lists_control/add_to_list/{list_control}', [
     'as' => 'lists_control.add_to_list',
     'uses' => '\App\Http\Controllers\ListControlController@AddToList'
+])->middleware('auth');
+
+Route::post('lists_control/update_list/{listControl}', [
+    'as' => 'lists_control.update_list',
+    'uses' => '\App\Http\Controllers\ListControlController@UpdateList'
 ])->middleware('auth');
 
 Route::put('person/fix_duplicated_reference/{id} ', [

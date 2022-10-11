@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreListControlRequest;
+use App\Http\Requests\StoreUpdateListRequest;
 use App\Http\Requests\UpdateListControlRequest;
 use App\Models\ListControl;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class ListControlController extends Controller
 {
@@ -25,7 +24,7 @@ class ListControlController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
@@ -36,7 +35,7 @@ class ListControlController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
@@ -46,21 +45,42 @@ class ListControlController extends Controller
     /**
      * This function is used to add an element to an existing list
      *
-     * @param ListControl $lists_control
-     * @return \Illuminate\Http\Response
+     * @param ListControl $list_control
+     * @return View
      *
      */
-    public function addToList(ListControl $lists_control)
+    public function addToList(ListControl $list_control)
     {
 
-        return view("lists_control.add_to_list", compact("lists_control"));
+        $list_fields = $list_control->getListFields();
+
+        if ($list_control->key_value == "id") {
+            unset($list_fields[array_keys($list_fields, "key")[0]]);
+        }
+
+        return view("lists_control.add_to_list", compact("list_control", 'list_fields'));
+    }
+
+
+    /**
+     * This function is used to add an element to a list
+     *
+     * @param StoreUpdateListRequest $request
+     * @param ListControl $listControl
+     * @return View
+     */
+    public function updateList(StoreUpdateListRequest $request, ListControl $listControl)
+    {
+        $model = 'App\Models\\' . $listControl->name;
+        ddd($request->validated());
+        $model::create($request->validated());
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \App\Http\Requests\StoreListControlRequest $request
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function store(StoreListControlRequest $request)
     {
@@ -74,7 +94,7 @@ class ListControlController extends Controller
      * Display the specified resource.
      *
      * @param ListControl $lists_control
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function show(ListControl $lists_control)
     {
@@ -86,7 +106,7 @@ class ListControlController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param ListControl $lists_control
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function edit(ListControl $lists_control)
     {
@@ -97,9 +117,9 @@ class ListControlController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateListControlRequest  $request
-     * @param  \App\Models\ListControl  $listControl
-     * @return \Illuminate\Http\Response
+     * @param UpdateListControlRequest $request
+     * @param \App\Models\ListControl $listControl
+     * @return RedirectResponse
      */
     public function update(UpdateListControlRequest $request, ListControl $listControl)
     {
@@ -111,7 +131,7 @@ class ListControlController extends Controller
      * Remove the specified resource from storage.
      *
      * @param ListControl $lists_control
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function destroy(ListControl $lists_control)
     {

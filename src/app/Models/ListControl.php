@@ -122,6 +122,18 @@ class ListControl extends Model
         }
     }
 
+    /**
+     * This function returns the fields that describes the list (± the table columns)
+     * e.g : Country is described by ISO2, ISO3, full_name
+     */
+    public function getListFields()
+    {
+        $model = 'App\Models\\' . $this->name;
+        $list = $model::first();
+
+        return array_keys($list->makeHidden('id')->toArray());
+    }
+
 
     /**
      * It returns the list control dataset for API calls
