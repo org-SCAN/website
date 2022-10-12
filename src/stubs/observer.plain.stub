@@ -1,8 +1,8 @@
 <?php
 
-class {{ class };
+namespace {{ namespace }};
 
-namespace {{ namespace }}}
+class {{ class }}
 {
     //
 }

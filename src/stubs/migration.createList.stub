@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('{{ table }}', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid("id");
             $table->timestamps();
-            $table->softDelete();
+            $table->softDeletes();
             {{ listFields }}
         });
     }

@@ -1,8 +1,10 @@
 <?php
 
-class {{ class };
+namespace {{ namespace }};
 
-namespace {{ namespace }}} extends ServiceProvider
+use Illuminate\Support\ServiceProvider;
+
+class {{ class }} extends ServiceProvider
 {
     /**
      * Register services.

@@ -1,8 +1,10 @@
 <?php
 
-class {{ class };
+namespace {{ namespace }};
 
-namespace {{ namespace }}} extends Component
+use Illuminate\View\Component;
+
+class {{ class }} extends Component
 {
     /**
      * Create a new component instance.

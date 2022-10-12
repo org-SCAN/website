@@ -1,10 +1,10 @@
 <?php
 
-class {{ class };
+namespace {{ namespace }};
 
 use Illuminate\Console\Command;
 
-namespace {{ namespace }}} extends Command
+class {{ class }} extends Command
 {
     /**
      * The name and signature of the console command.

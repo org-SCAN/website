@@ -1,12 +1,10 @@
 <?php
 
-class {{ class };
+namespace {{ namespace }};
 
-use;
+use {{ namespacedModel }};
 
-{ namespacedModel }};
-
-namespace {{ namespace }}}
+class {{ class }}
 {
     /**
      * Handle the {{ model }} "created" event.

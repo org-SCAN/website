@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+class StoreListControlAddDisplayedValue;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class StoreListControlFieldsRequest extends FormRequest
+namespace App\Http\Requests extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +11,7 @@ class StoreListControlFieldsRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,7 +22,7 @@ class StoreListControlFieldsRequest extends FormRequest
     public function rules()
     {
         return [
-            "fields.*" => 'string'
+            //
         ];
     }
 }

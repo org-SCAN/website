@@ -85,9 +85,6 @@ class ListControlController extends Controller
      */
     public function store(StoreListControlRequest $request)
     {
-        // TODO : créer la migration
-        // TODO : créer le modèle
-
         $list_control = $request->validated();
         $list_control["name"] = "List".Str::camel($list_control["title"]);
 
@@ -105,17 +102,27 @@ class ListControlController extends Controller
     public function storeFields(StoreListControlFieldsRequest $request, ListControl $listControl)
     {
 
+        //store the fields onto the ListStructure table
         foreach($request->validated() as $field){
             $listControl->structure()->create([
                 "field" => $field
-            ]); // todo verif qu'il me prend bien le $listControl->id
+            ]);
         }
 
         Artisan::call("make:list", ["id"=>$listControl->id]);
-        //store the fields onto the ListStructure table
+        Artisan::call("migrate");
 
 
-        return redirect()->route("lists_control.index");
+        return redirect()->route("lists_control.define_displayed_value");
+
+    }
+
+
+    /**
+     * Store the displayed value
+     *
+     */
+    public function storeDisplayedValue(Request $request, ListControl $listControl){
 
     }
 

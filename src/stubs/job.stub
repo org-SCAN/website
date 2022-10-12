@@ -1,8 +1,10 @@
 <?php
 
-class {{ class };
+namespace {{ namespace }};
 
-namespace {{ namespace }}}
+use Illuminate\Foundation\Bus\Dispatchable;
+
+class {{ class }}
 {
     use Dispatchable;
 

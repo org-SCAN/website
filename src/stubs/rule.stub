@@ -1,10 +1,10 @@
 <?php
 
-class {{ class };
+namespace {{ namespace }};
 
-{ ruleType }};
+use Illuminate\Contracts\Validation\{{ ruleType }};
 
-namespace {{ namespace }}} implements {{ ruleType }}
+class {{ class }} implements {{ ruleType }}
 {
     /**
      * Create a new rule instance.

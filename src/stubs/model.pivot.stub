@@ -1,8 +1,11 @@
 <?php
 
-class {{ class };
+namespace {{ namespace }};
 
-namespace {{ namespace }}} extends Pivot
+use Illuminate\Database\Eloquent\Relations\Pivot;
+use App\Traits\Uuids;
+
+class {{ class }} extends Pivot
 {
-    //
+    use Uuids;
 }

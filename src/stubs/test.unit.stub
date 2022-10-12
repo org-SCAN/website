@@ -1,8 +1,10 @@
 <?php
 
-class {{ class };
+namespace {{ namespace }};
 
-namespace {{ namespace }}} extends TestCase
+use PHPUnit\Framework\TestCase;
+
+class {{ class }} extends TestCase
 {
     /**
      * A basic unit test example.

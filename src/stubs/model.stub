@@ -1,8 +1,13 @@
 <?php
 
-class {{ class };
+namespace {{ namespace }};
 
-namespace {{ namespace }}} extends Model
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Traits\Uuids;
+Use Illuminate\Database\Eloquent\SoftDeletes;
+
+class {{ class }} extends Model
 {
-    use HasFactory, Uuids, softDeletes;
+    use HasFactory, Uuids, SoftDeletes;
 }

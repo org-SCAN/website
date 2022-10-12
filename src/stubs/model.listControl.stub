@@ -1,8 +1,8 @@
 <?php
 
-class {{ class };
+namespace {{ namespace }};
 
-namespace {{ namespace }}} extends ListControl
+class {{ class }} extends ListControl
 {
-    //
+
 }
