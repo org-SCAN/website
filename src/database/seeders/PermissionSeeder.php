@@ -15,7 +15,7 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $routesWithPermissions = ["user", "person", "links", "cytoscape", "fields", "lists_control", "duplicate", "api_logs", "crew"];
+        $routesWithPermissions = Permission::getRoutesWithPermission();
         $routesList = Route::getRoutes()->get();
         $routes = array();
         foreach ($routesList as $route) {
@@ -31,7 +31,8 @@ class PermissionSeeder extends Seeder
         foreach ($routes as $value) {
             Permission::create(
                 [
-                    'name' => $value
+                    'controller_route' => $value,
+                    'policy_route' => Permission::getPolicyRouteNameFromRouteName($value)
                 ]
             );
         }

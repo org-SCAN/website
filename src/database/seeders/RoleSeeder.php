@@ -29,7 +29,7 @@ class RoleSeeder extends Seeder
             }
             foreach ($role["permissions"] as $permission) {
                 if (!($permission instanceof Permission)) {
-                    $permission = Permission::firstWhere("name", $permission);
+                    $permission = Permission::firstWhere("controller_route", $permission);
                 }
                 $created_role->permissions()->attach($permission->id);
             }

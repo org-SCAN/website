@@ -6,6 +6,7 @@ use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Permission extends Model
 {
@@ -45,15 +46,27 @@ class Permission extends Model
         return $this->belongsToMany(Role::class)->using(PermissionRole::class)->withTimestamps()->withPivot("id");
     }
 
-    public function getPolicyRouteNameFromRouteName($route_name)
+    public static function getPolicyRouteNameFromRouteName($route_name)
     {
         $route = explode(".", $route_name);
         $policyRouteName = [
-            "create" => "store",
-            "store" => "store",
-            "index" => "view_any",
+            "index" => "viewAny",
+            "show" => "view",
+            "create" => "create",
+            "store" => "create",
+            "edit" => "update",
+            "update" => "update",
+            "destroy" => "delete"
         ];
+        $method = array_key_exists($route[1], $policyRouteName)
+            ? $policyRouteName[$route[1]]
+            : Str::camel($route[1]);
 
-        return $route[0] . "." . $policyRouteName[$route[1]];
+        return $route[0] . "." . $method;
+    }
+
+    public static function getRoutesWithPermission()
+    {
+        return ["user", "person", "links", "cytoscape", "fields", "lists_control", "duplicate", "api_logs", "crew", "role", "permission"];
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\FieldsController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\ListControlController;
 use App\Http\Controllers\ManageUsersController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RefugeeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -40,19 +41,19 @@ Route::get('cytoscape', [
 ])->middleware('auth');
 
 Route::get('person/json/create', [
-    'as' => 'person.json.create',
+    'as' => 'person.create_from_json',
     'uses' => '\App\Http\Controllers\RefugeeController@createFromJson'
 ])->middleware('auth');
 Route::get('links/json/create', [
-    'as' => 'links.json.create',
+    'as' => 'links.create_from_json',
     'uses' => '\App\Http\Controllers\LinkController@createFromJson'
 ])->middleware('auth');
 Route::post('person/json/store', [
-    'as' => 'person.json.store',
+    'as' => 'person.store_from_json',
     'uses' => '\App\Http\Controllers\RefugeeController@storeFromJson'
 ])->middleware('auth');
 Route::post('links/json/store', [
-    'as' => 'links.json.store',
+    'as' => 'links.store_from_json',
     'uses' => '\App\Http\Controllers\LinkController@storeFromJson'
 ])->middleware('auth');
 Route::post('user/request_role/{id}', [
@@ -91,3 +92,5 @@ Route::resource("user", ManageUsersController::class)->middleware('auth');
 Route::resource("duplicate", DuplicateController::class)->middleware('auth');
 Route::resource("api_logs", ApiLogController::class)->middleware('auth');
 Route::resource("crew", CrewController::class)->middleware('auth');
+//Route::resource("roles", RoleController::class)->middleware('auth');
+Route::resource("permissions", PermissionController::class)->middleware('auth');
