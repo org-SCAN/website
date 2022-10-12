@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreListControlRequest;
 use App\Http\Requests\StoreUpdateListRequest;
 use App\Http\Requests\UpdateListControlRequest;
+use App\Http\Requests\StoreListControlFieldsRequest;
+use App\Http\Requests\StoreListControlAddDisplayedValue;
 use App\Models\ListControl;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 class ListControlController extends Controller
 {
@@ -86,34 +90,42 @@ class ListControlController extends Controller
     public function store(StoreListControlRequest $request)
     {
         $list_control = $request->validated();
-        $list_control["name"] = "List".Str::camel($list_control["title"]);
+        $list_control["name"] = Str::ucfirst(Str::camel("list_".Str::singular($list_control["title"])));
+        // can't add the name to the request before, so validation should be done there.
 
+        $v = Validator::make($list_control, ["name" => "required|unique:list_controls,name"]);
+        if ($v->fails()) {
+            return redirect()->back()->withErrors(['name' => $v->errors()]);
+        }
 
-        ListControl::create($request->validated());
-        return redirect()->route("lists_control.create_fields");
+        $listControl = ListControl::create($list_control);
+        return view("lists_control.create_fields", compact("listControl"));
     }
 
     /**
      * After creating the list, this controller method is called to store the fields which describes the list
      *
-     * @param \App\Http\Requests\StoreListControlRequest $request
+     * @param \App\Http\Requests\StoreListControlFieldsRequest $request
      * @return RedirectResponse
      */
     public function storeFields(StoreListControlFieldsRequest $request, ListControl $listControl)
     {
 
         //store the fields onto the ListStructure table
-        foreach($request->validated() as $field){
-            $listControl->structure()->create([
-                "field" => $field
-            ]);
+        foreach($request->validated()['fields'] as $field){
+            if(!empty($field) && ($listControl->structure->first() == null || !$listControl->structure()->firstWhere('field', $field)->exists())){
+                $listControl->structure()->create([
+                    "field" => $field
+                ]);
+            }
         }
 
         Artisan::call("make:list", ["id"=>$listControl->id]);
         Artisan::call("migrate");
 
-
-        return redirect()->route("lists_control.define_displayed_value");
+        $listControl->refresh();
+        $fields = $listControl->structure;
+        return view("lists_control.define_displayed_value", compact("listControl", "fields"));
 
     }
 
@@ -121,9 +133,12 @@ class ListControlController extends Controller
     /**
      * Store the displayed value
      *
+     * @param \App\Http\Requests\StoreListControlAddDisplayedValue $request
+     * @return RedirectResponse
      */
-    public function storeDisplayedValue(Request $request, ListControl $listControl){
-
+    public function storeDisplayedValue(StoreListControlAddDisplayedValue $request, ListControl $listControl){
+        $listControl->update($request->validated());
+        return redirect()->route("lists_control.index");
     }
 
     /**

@@ -24,7 +24,7 @@ class StoreListControlFieldsRequest extends FormRequest
     public function rules()
     {
         return [
-            "fields.*" => 'string'
+            "fields.*" => 'nullable|string'
         ];
     }
 }

@@ -1,8 +1,10 @@
 <?php
 
-class StoreListControlAddDisplayedValue;
+namespace App\Http\Requests;
 
-namespace App\Http\Requests extends FormRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreListControlAddDisplayedValue extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -11,7 +13,7 @@ namespace App\Http\Requests extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,7 @@ namespace App\Http\Requests extends FormRequest
     public function rules()
     {
         return [
-            //
+            "displayed_value" => "exists:list_structures,id"
         ];
     }
 }

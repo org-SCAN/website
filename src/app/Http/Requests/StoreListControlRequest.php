@@ -4,9 +4,16 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class StoreListControlRequest extends FormRequest
 {
+
+    /*public function __construct(){
+        parent::__construct();
+        ddd($this);
+
+    }*/
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,10 +32,7 @@ class StoreListControlRequest extends FormRequest
     public function rules()
     {
         $rules =[
-            "title" => "string|required",
-            "displayed_value" => "string|required",
-            "name" => "string|required|unique:list_controls,name",
-            "key_value" => "string|required"
+            "title" => "string|required"//unique where id = id
         ];
         return $rules;
     }

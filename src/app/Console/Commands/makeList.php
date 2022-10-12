@@ -81,19 +81,19 @@ class makeList extends Command
         $model_elem = new $model;
 
         $stubMigrationVariable = [
-            "table_name" => $model_elem->getTable(),
+            "table" => $model_elem->getTable(),
             "listFields" => ""
         ];
 
-        $migration_name = Carbon::now()->format('Y_m_d_His')."_create_".$stubMigrationVariable["table_name"]."_table";
+        $migration_name = Carbon::now()->format('Y_m_d_His')."_create_".$stubMigrationVariable["table"]."_table";
         $path = $this->getSourceFilePath('database/migrations', $migration_name); //get the path to witch the model has to be created
 
 
         foreach($list->structure as $field){
-            $stubMigrationVariable["listFields"].= '$table->string('.$field.")\n";
+            $stubMigrationVariable["listFields"].= '$table->string("'.$field->field.'"'.");\n\t\t\t";
         }
 
-        $content = $this->getStubContents($this->getStubPath('model.listControl'),$stubModelVariables); //replace the variable onto the stub
+        $content = $this->getStubContents($this->getStubPath('migration.createList'),$stubMigrationVariable); //replace the variable onto the stub
 
         if (!$this->files->exists($path)) {
             $this->files->put($path, $content);
