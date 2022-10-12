@@ -13,7 +13,10 @@ class <?=$classname?> extends Migration
     public function up()
     {
         Schema::table('<?=$table_name?>', function (Blueprint $table) {
-            $table-><?=$schema?>;
+            $table->uuid("id");
+            $table->timestamps();
+            $table->softDelete();
+            <?=$schema?>;
         });
     }
 
@@ -25,7 +28,7 @@ class <?=$classname?> extends Migration
     public function down()
     {
         Schema::table('<?=$table_name?>', function (Blueprint $table) {
-            $table->dropColumn('<?=$column_name?>');
+            $table->dropTable('<?=$table_name?>');
         });
     }
 }

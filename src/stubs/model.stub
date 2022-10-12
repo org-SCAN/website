@@ -1,0 +1,8 @@
+<?php
+
+class {{ class };
+
+namespace {{ namespace }}} extends Model
+{
+    use HasFactory, Uuids, softDeletes;
+}

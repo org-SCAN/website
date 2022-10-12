@@ -1,9 +1,10 @@
+<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class <?=$classname?> extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +13,12 @@ class <?=$classname?> extends Migration
      */
     public function up()
     {
-        Schema::table('<?=$table_name?>', function (Blueprint $table) {
-            $table-><?=$schema?>;
+        Schema::create('list_structures', function (Blueprint $table) {
+            $table->uuid('id');
+            $table->foreignUuid('list_control_id');
+            $table->string("field");
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -24,9 +29,7 @@ class <?=$classname?> extends Migration
      */
     public function down()
     {
-        Schema::table('<?=$table_name?>', function (Blueprint $table) {
-            $table->dropColumn('<?=$column_name?>');
-        });
+        Schema::dropIfExists('list_structures');
     }
-}
+};
 

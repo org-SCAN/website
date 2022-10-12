@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUpdateListRequest;
 use App\Http\Requests\UpdateListControlRequest;
 use App\Models\ListControl;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\View\View;
 
 class ListControlController extends Controller
@@ -80,14 +81,42 @@ class ListControlController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \App\Http\Requests\StoreListControlRequest $request
-     * @return RedirectResponse
+     * @return View
      */
     public function store(StoreListControlRequest $request)
     {
         // TODO : créer la migration
         // TODO : créer le modèle
+
+        $list_control = $request->validated();
+        $list_control["name"] = "List".Str::camel($list_control["title"]);
+
+
         ListControl::create($request->validated());
+        return redirect()->route("lists_control.create_fields");
+    }
+
+    /**
+     * After creating the list, this controller method is called to store the fields which describes the list
+     *
+     * @param \App\Http\Requests\StoreListControlRequest $request
+     * @return RedirectResponse
+     */
+    public function storeFields(StoreListControlFieldsRequest $request, ListControl $listControl)
+    {
+
+        foreach($request->validated() as $field){
+            $listControl->structure()->create([
+                "field" => $field
+            ]); // todo verif qu'il me prend bien le $listControl->id
+        }
+
+        Artisan::call("make:list", ["id"=>$listControl->id]);
+        //store the fields onto the ListStructure table
+
+
         return redirect()->route("lists_control.index");
+
     }
 
     /**

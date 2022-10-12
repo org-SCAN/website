@@ -1,0 +1,16 @@
+<?php
+
+class {{ class };
+
+use;
+
+{ namespacedUserModel }};
+
+namespace {{ namespace }}} extends GlobalPolicy
+{
+    use HandlesAuthorization;
+
+    public function __construct($route_name = "route_name"){
+        parent::__construct($route_name);
+    }
+}

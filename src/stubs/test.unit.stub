@@ -1,0 +1,16 @@
+<?php
+
+class {{ class };
+
+namespace {{ namespace }}} extends TestCase
+{
+    /**
+     * A basic unit test example.
+     *
+     * @return void
+     */
+    public function test_example()
+    {
+        $this->assertTrue(true);
+    }
+}
