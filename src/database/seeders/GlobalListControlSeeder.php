@@ -18,6 +18,7 @@ class GlobalListControlSeeder extends Seeder
     protected $languages;
     protected $default_language;
     protected $list_field_key;
+    protected $list;
 
     /**
      * GlobalListControlSeeder constructor.
@@ -49,6 +50,7 @@ class GlobalListControlSeeder extends Seeder
         $this->displayed_value = $list->displayed_value;
         $this->list_field_key = $list->key_value;
         $this->list_id = $list->id;
+        $this->list = $list;
     }
     protected function storeTranslation($displayed_value, $field_key){
         foreach ($displayed_value as $language => $value) {
@@ -68,12 +70,27 @@ class GlobalListControlSeeder extends Seeder
     }
 
     /**
+     * Store the structure of the list
+     *
+     */
+
+    protected function storeStructure()
+    {
+        foreach ($this->array_json[0] as $field => $field_content) {
+            $this->list->structure()->create([
+                "field" => $field
+            ]);
+        }
+    }
+
+    /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
+        $this->storeStructure();
         foreach ($this->array_json as $json_elem) {
             $to_store = array();
             // get all the content from the json and store it in the correct DB
