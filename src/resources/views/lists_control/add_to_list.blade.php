@@ -26,12 +26,12 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         @foreach($list_fields as $listField)
                             <div class="px-4 py-5 bg-white sm:p-6">
-                                <label for="{{ $listField }}"
-                                       class="block font-medium text-sm text-gray-700">{{ $listField }}</label>
-                                <input type="text" name="{{ $listField }}" id="{{ $listField }}"
+                                <label for="{{ $listField->field }}"
+                                       class="block font-medium text-sm text-gray-700">{{ $listField->field }}</label>
+                                <input type="text" name="{{ $listField->field }}" id="{{ $listField->field }}"
                                        class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                       value="{{ old($listField, '') }}"/>
-                                @error($listField)
+                                       value="{{ old($listField->field, '') }}"/>
+                                @error($listField->field)
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>

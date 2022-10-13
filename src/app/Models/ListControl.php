@@ -40,11 +40,6 @@ class ListControl extends Model
      */
     protected $hidden = ['deleted_at',"created_at","updated_at"];
 
-    public function addNewList(){
-        // 1. Create a new table -> for the list
-
-        // 2. Create a new table -> for the list column name
-    }
 
     public function structure(){
         return $this->hasMAny(ListStructure::class);
@@ -165,5 +160,9 @@ class ListControl extends Model
             unset($api_res[$key_value][$list_info->displayed_value]);
         }
         return $api_res;
+    }
+
+    public function getDisplayedValueAttribute(){
+        return $this->structure()->find($this->attributes['displayed_value'])->field ?? $this->attributes['displayed_value'];
     }
 }

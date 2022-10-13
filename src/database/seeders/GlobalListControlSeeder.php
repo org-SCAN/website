@@ -34,6 +34,7 @@ class GlobalListControlSeeder extends Seeder
         $this->getListInfo();
     }
 
+
     /**
      * Initialize the json_array from json file
      *
@@ -46,7 +47,7 @@ class GlobalListControlSeeder extends Seeder
     }
 
     protected function getListInfo(){
-        $list = ListControl::where('name', $this->list_name)->first();
+        $list = ListControl::firstWhere('name', $this->list_name);
         $this->displayed_value = $list->displayed_value;
         $this->list_field_key = $list->key_value;
         $this->list_id = $list->id;
@@ -77,9 +78,12 @@ class GlobalListControlSeeder extends Seeder
     protected function storeStructure()
     {
         foreach ($this->array_json[0] as $field => $field_content) {
-            $this->list->structure()->create([
+            $struct = $this->list->structure()->create([
                 "field" => $field
             ]);
+            if($field == $this->displayed_value){
+                $this->list->update(["displayed_value" => $struct->id]);
+            }
         }
     }
 

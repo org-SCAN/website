@@ -25,10 +25,7 @@ class UpdateListControlRequest extends FormRequest
     public function rules()
     {
         $rules =[
-            "title" => "string|required",
-            "displayed_value" => "string|required",
-            "name" => "string|required",
-            "key_value" => "string|required"
+            "title" => "string|required|unique:list_controls,title",
         ];
         return $rules;
     }

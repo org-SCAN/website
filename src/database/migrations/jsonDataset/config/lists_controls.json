@@ -3,36 +3,42 @@
         "title": "Country",
         "name": "ListCountry",
         "displayed_value": "short",
-        "key_value": "id"
+        "key_value": "id",
+        "show":  1
     },
     {
         "title": "Gender",
         "name": "ListGender",
         "displayed_value": "full",
-        "key_value": "id"
+        "key_value": "id",
+        "show":  1
     },
     {
         "title": "Route",
         "name": "ListRoute",
         "displayed_value": "full",
-        "key_value": "id"
+        "key_value": "id",
+        "show":  1
     },
     {
         "title": "Role",
         "name": "ListRole",
         "displayed_value": "short",
-        "key_value": "id"
+        "key_value": "id",
+        "show":  1
     },
     {
         "title": "Relation",
         "name": "ListRelation",
         "displayed_value": "name",
-        "key_value": "id"
+        "key_value": "id",
+        "show":  1
     },
     {
         "title" : "Field",
         "name" : "Field",
         "displayed_value" : "title",
-        "key_value": "id"
+        "key_value": "id",
+        "show":  0
     }
 ]

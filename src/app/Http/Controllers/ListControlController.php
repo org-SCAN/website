@@ -33,7 +33,7 @@ class ListControlController extends Controller
      */
     public function index()
     {
-        $lists = ListControl::all();
+        $lists = ListControl::whereNotNull("displayed_value")->get();
         return view("lists_control.index", compact("lists"));
     }
 
@@ -57,11 +57,7 @@ class ListControlController extends Controller
     public function addToList(ListControl $list_control)
     {
 
-        $list_fields = $list_control->getListFields();
-
-        if ($list_control->key_value == "id") {
-            unset($list_fields[array_keys($list_fields, "key")[0]]);
-        }
+        $list_fields = $list_control->structure;
 
         return view("lists_control.add_to_list", compact("list_control", 'list_fields'));
     }
@@ -77,8 +73,11 @@ class ListControlController extends Controller
     public function updateList(StoreUpdateListRequest $request, ListControl $listControl)
     {
         $model = 'App\Models\\' . $listControl->name;
-        ddd($request->validated());
         $model::create($request->validated());
+
+        // I have to translate and add to default langage
+
+        return redirect()->route('lists_control.show', $listControl);
     }
 
     /**
@@ -149,8 +148,9 @@ class ListControlController extends Controller
      */
     public function show(ListControl $lists_control)
     {
-        $list_content = $lists_control->getListContent()->toArray();
-        return view("lists_control.show", compact("lists_control", "list_content"));
+        $list_content = $lists_control->getListContent()->makeHidden('id')->toArray();
+        $list_structure = $lists_control->structure;
+        return view("lists_control.show", compact("lists_control", "list_structure","list_content"));
     }
 
     /**
@@ -169,12 +169,12 @@ class ListControlController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateListControlRequest $request
-     * @param \App\Models\ListControl $listControl
+     * @param \App\Models\ListControl $lists_control
      * @return RedirectResponse
      */
-    public function update(UpdateListControlRequest $request, ListControl $listControl)
+    public function update(UpdateListControlRequest $request, ListControl $lists_control)
     {
-        $listControl->update($request->validated());
+        $lists_control->update($request->validated());
         return redirect()->route("lists_control.index");
     }
 

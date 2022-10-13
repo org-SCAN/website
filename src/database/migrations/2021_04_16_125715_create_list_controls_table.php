@@ -23,6 +23,7 @@ class CreateListControlsTable extends Migration
             $table->string("key_value")->default('id');
             $table->string("name") //refers to the model
                 ->unique();
+            $table->boolean("show")->default(1);
 
             $table->softDeletes();
         });

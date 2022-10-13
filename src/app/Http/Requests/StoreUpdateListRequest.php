@@ -24,14 +24,11 @@ class StoreUpdateListRequest extends FormRequest
     public function rules()
     {
         $list = $this->route('listControl');
-        $list_fields = $list->getListFields();
-        if ($list->key_value == "id") {
-            unset($list_fields[array_keys($list_fields, "key")[0]]);
-        }
+        $list_fields = $list->structure;
         // I wanna check if the displayed field is set so as the key value, if the key isn't the id
         $rules = [];
         foreach ($list_fields as $field) {
-            $rules[$field] = 'Required';
+            $rules[$field->field] = 'Required';
         }
         return $rules;
     }

@@ -32,22 +32,23 @@
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200 w-full">
                                 <thead>
-                                @foreach(array_keys($list_content[0]) as $list_key)
-                                    @if(!in_array($list_key, ["id", "created_at", "updated_at", "deleted"]))
-                                        @if($list_key == $lists_control->displayed_value)
-                                            <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-800 uppercase tracking-wider"><b>{{$list_key}}*</b></th>
-                                        @else
-                                            <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$list_key}}</th>
-                                        @endif
+                                @foreach($list_structure as $field)
+                                    @if($lists_control->displayed_value == $field->field)
+
+                                    <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"><b>{{$field->field}}*</b></th>
+                                    @else
+                                    <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$field->field}}</th>
                                     @endif
                                 @endforeach
                                 </thead>
                                 <tbody>
                                 @foreach($list_content as $list_elem)
                                     <tr class="border-b">
-                                        @foreach($list_elem as $elem_key => $elem)
-                                            @if(!in_array($elem_key, ["id", "created_at", "updated_at", "deleted"]))
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">{{$elem}}</td>
+                                        @foreach($list_structure as $field)
+                                            @if($lists_control->displayed_value == $field->field)
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200"><b>{{ $list_elem[$field->field] }}</b></td>
+                                            @else
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">{{ $list_elem[$field->field] }}</td>
                                             @endif
                                         @endforeach
                                     </tr>
