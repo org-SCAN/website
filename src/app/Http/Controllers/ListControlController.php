@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUpdateListRequest;
 use App\Http\Requests\UpdateListControlRequest;
 use App\Http\Requests\StoreListControlFieldsRequest;
 use App\Http\Requests\StoreListControlAddDisplayedValue;
+use App\Http\Requests\UpdateListElemRequest;
 use App\Models\ListControl;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Artisan;
@@ -74,6 +75,37 @@ class ListControlController extends Controller
     {
         $model = 'App\Models\\' . $listControl->name;
         $model::create($request->validated());
+        // I have to translate and add to default langage
+        return redirect()->route('lists_control.show', $listControl);
+    }
+
+    /**
+     * This function is used to add an element to a list
+     *
+     * @param ListControl $listControl
+     * @param $element
+     * @return View
+     */
+    public function editListElem(ListControl $listControl, $element)
+    {
+        $model = 'App\Models\\' . $listControl->name;
+        $list_fields = $listControl->structure;
+        $content = $model::find($element);
+        return view("lists_control.update_list_element", compact("listControl","list_fields", 'content'));
+    }
+
+    /**
+     * This function is used to add an element to a list
+     *
+     * @param UpdateListElemRequest $request
+     * @param ListControl $listControl
+     * @param $element
+     * @return View
+     */
+    public function updateListElem(UpdateListElemRequest $request, ListControl $listControl, $element)
+    {
+        $model = 'App\Models\\' . $listControl->name;
+        $model::find($element)->update($request->validated());
 
         // I have to translate and add to default langage
 
@@ -148,7 +180,7 @@ class ListControlController extends Controller
      */
     public function show(ListControl $lists_control)
     {
-        $list_content = $lists_control->getListContent()->makeHidden('id')->toArray();
+        $list_content = $lists_control->getListContent();
         $list_structure = $lists_control->structure;
         return view("lists_control.show", compact("lists_control", "list_structure","list_content"));
     }
@@ -161,7 +193,6 @@ class ListControlController extends Controller
      */
     public function edit(ListControl $lists_control)
     {
-        //$fields = $lists_control
         return view("lists_control.edit", compact("lists_control"));
     }
 
@@ -188,5 +219,18 @@ class ListControlController extends Controller
     {
         $lists_control->delete();
         return redirect()->route("lists_control.index");
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param ListControl $lists_control
+     * @param $element
+     * @return RedirectResponse
+     */
+    public function destroyListElem(ListControl $listControl, $element){
+        $model = 'App\Models\\' . $listControl->name;
+        $model::find($element)->delete();
+        return redirect()->route("lists_control.show", $listControl);
     }
 }

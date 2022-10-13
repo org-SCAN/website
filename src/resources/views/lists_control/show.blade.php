@@ -40,6 +40,8 @@
                                     <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$field->field}}</th>
                                     @endif
                                 @endforeach
+
+                                <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"></th>
                                 </thead>
                                 <tbody>
                                 @foreach($list_content as $list_elem)
@@ -51,6 +53,21 @@
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">{{ $list_elem[$field->field] }}</td>
                                             @endif
                                         @endforeach
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+
+
+                                            <form action="{{route("lists_control.deleteListElem", [$lists_control, $list_elem->id])}}" method="POST">
+                                                <a href="{{route("lists_control.editListElem", [$lists_control, $list_elem->id])}}">
+                                                    <i class="fa fa-pen text-blue-500 hover:text-blue-700" aria-hidden="true"></i>
+                                                </a>
+                                                &nbsp; &nbsp;
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="border-0">
+                                                    <i class='fa fa-trash text-red-500 hover:text-red-700' aria-hidden='true'></i>
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
