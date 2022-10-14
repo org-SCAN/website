@@ -9,6 +9,8 @@ use App\Http\Requests\StoreListControlFieldsRequest;
 use App\Http\Requests\StoreListControlAddDisplayedValue;
 use App\Http\Requests\UpdateListElemRequest;
 use App\Models\ListControl;
+use App\Models\Translation;
+use App\Models\Language;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Validator;
@@ -74,7 +76,14 @@ class ListControlController extends Controller
     public function updateList(StoreUpdateListRequest $request, ListControl $listControl)
     {
         $model = 'App\Models\\' . $listControl->name;
-        $model::create($request->validated());
+        $listElem = $model::create($request->validated());
+        Translation::create([
+            "language" => Language::where('default', 1)->first()->id,
+            "list" => $listControl->id,
+            'field_key' => $listElem->{$listControl->key_value},
+            'translation' => $listElem->{$listControl->displayed_value},
+
+        ]);
         // I have to translate and add to default langage
         return redirect()->route('lists_control.show', $listControl);
     }
@@ -91,6 +100,7 @@ class ListControlController extends Controller
         $model = 'App\Models\\' . $listControl->name;
         $list_fields = $listControl->structure;
         $content = $model::find($element);
+
         return view("lists_control.update_list_element", compact("listControl","list_fields", 'content'));
     }
 
@@ -105,7 +115,12 @@ class ListControlController extends Controller
     public function updateListElem(UpdateListElemRequest $request, ListControl $listControl, $element)
     {
         $model = 'App\Models\\' . $listControl->name;
-        $model::find($element)->update($request->validated());
+        $listElem = $model::find($element);
+        $listElem->update($request->validated());
+        Translation::whereLanguage(Language::firstWhere('default', 1)->id)
+            ->whereList($listControl->id)
+            ->firstWhere('field_key',$listElem->{$listControl->key_value})
+            ->update(['translation' => $listElem->{$listControl->displayed_value}]);
 
         // I have to translate and add to default langage
 
