@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
+use http\Env\Response;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -141,48 +142,87 @@ class Refugee extends Model
         return $this->fields->where("representative_value", 1);
     }
 
-    public function getBestDescriptiveValueAttribute(){
+    public function getBestDescriptiveValueAttribute()
+    {
         $best_descriptive_value = $this->fields->where("best_descriptive_value", 1)->first();
         return -empty($best_descriptive_value) ? "" : $best_descriptive_value->pivot->value;
     }
 
-    public function getRelationsAttribute(){
-        return [$this->fromRelation,$this->toRelation];
-    }
-    public static function handleApiRequest($refugee)
+    public function getRelationsAttribute()
     {
-        $potential_refugee = Refugee::getRefugeeIdFromReference($refugee["unique_id"], $refugee["application_id"]);
-        $ref = null;
-        if ($potential_refugee != null) {
-            $potential_refugee = self::find($potential_refugee);
+        return [$this->fromRelation, $this->toRelation];
+    }
 
-            if (isset($refugee["date_update"])) {
-                if ($refugee["date_update"] > $potential_refugee->updated_at) {
-                    if ($potential_refugee->application_id != $refugee["application_id"]) {
-                        foreach ($refugee as $field => $refugee_field) {
-                            if ($potential_refugee->$refugee_field != null) {
-                                unset($refugee[$refugee_field]);
-                            }
-                        }
-                    }
-                } else {
-                    foreach ($refugee as $field => $refugee_field) {
-                        if ($potential_refugee->$refugee_field != null) {
-                            unset($refugee[$refugee_field]);
-                        }
+    /**
+     * This function is used to handle the API request. If a person exists (id is in the request) update all changed fields, else create the person and return his/her ID.
+     *
+     *
+     * @param $person
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|null
+     */
+    public static function handleApiRequest($person)
+    {
+        // Check if the person is already stored. If so, the application should send an id.
+        $storedPerson = null;
+        if (array_key_exists('id', $person) && isset($person["id"]) and !empty($person["id"])) {
+            $storedPerson = self::findOr($person["id"], function () {
+                return response("The given ID doesn't exist in our records", 404);
+            });
+            unset($person["id"]);
+        }
+        // if a person is found, we should update it
+        if ($storedPerson instanceof Refugee) {
+            //delete useless information (in the update case)
+            $keys = ["api_log", "date", "application_id"];
+            foreach ($keys as $key) {
+                unset($person[$key]);
+            }
+
+            // update the fields if they were changed
+            $storedFields = $storedPerson->fields;
+            $i = 0;
+            foreach ($storedFields as $field) {
+                //the stored value and request value are different, we update the DB
+                if (array_key_exists($field->id, $person)) {
+                    $storedFields->forget($i);
+                    if ($field->pivot->value != $person[$field->id]) {
+                        //update changed fields
+                        $storedPerson->fields()->updateExistingPivot($field->id, ["value" => $person[$field->id]]);
                     }
                 }
-                unset($refugee["date_update"]);
-                $potential_refugee->update($refugee);
-                $ref = true;
-            } else {
-                $ref = true;
+                //delete when it's done
+                $i++;
+                unset($person[$field->id]);
             }
-        } else {
-            unset($refugee["date_update"]);
-            Refugee::create($refugee);
-            $ref = true;
+            //Delete the remains values
+            foreach ($storedFields as $field) {
+                //the stored value and request value are different, we update the DB
+                $storedPerson->fields()->detach($field->id);
+            }
+
+        } else { //should create the person
+            $keys = ["api_log", "date", "application_id"];
+            $personContent = array();
+            foreach ($keys as $key) {
+                $personContent[$key] = $person[$key];
+                unset($person[$key]);
+            }
+            $storedPerson = Refugee::create($personContent);
         }
-        return $ref;
+
+        $fields_to_add = array();
+        foreach ($person as $fieldKey => $value) {
+            //check if the $fieldKey exisits in fields
+            $field = Field::findOr($fieldKey, function () {
+                return response("The field doesn't exist.", 404);
+            });
+            if ($field instanceof Response) { //return error if the field id doesn't exist.
+                return $field;
+            }
+            $fields_to_add[$fieldKey] = ["value" => $value];
+        }
+        $storedPerson->fields()->attach($fields_to_add);
+
+        return $storedPerson;
     }
 }

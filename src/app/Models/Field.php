@@ -5,8 +5,6 @@ namespace App\Models;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Str;
 
 class Field extends Model
 {
@@ -38,7 +36,7 @@ class Field extends Model
      *
      * @var array
      */
-    protected $hidden = ['deleted_at', "created_at", "updated_at", "status", "html_data_type", "validation_laravel", "attribute", "order"];
+    protected $hidden = ['deleted_at', "created_at", "updated_at", "status", "html_data_type", "validation_laravel", "attribute", "order", "api_log", "crew_id"];
 
 
     /**
@@ -49,6 +47,7 @@ class Field extends Model
     public  function getHiddenValue(){
         return $this->hidden;
     } */
+
 
     public function getStatusAttribute($value){
         switch ($value) {
@@ -246,7 +245,6 @@ class Field extends Model
         return array_column($list, $displayed_value, "id");
     }
 
-
     /**
      * Indicate the the UUID stored in DB
      *
@@ -254,29 +252,6 @@ class Field extends Model
      */
     public function getLinkedListId(){
         return $this->attributes['linked_list'];
-    }
-
-    public function addFieldtoRefugees(){
-        $table_name = "refugees";
-
-        $database_type = $this->attributes['database_type'];
-        $column_name = $this->attributes['label'];
-        $migration_name = "add_".$column_name."_to_refugees";
-        $migration_dir=config('database.migration_path');
-
-        $classname = Str::camel($migration_name); // used in the ob_get_content
-        $schema = $database_type."('".$column_name."')"."->nullable()"; // used in the ob_get_content
-
-        ob_start();
-        include($migration_dir."/default/default_update_structure.php");
-        $new_file_content = ob_get_contents();
-        ob_get_clean();
-        $date = date("Y_m_d_His");
-        $file_name = $date."_".$migration_name.".php";
-        $new_file_content = "<?php
-        ".$new_file_content;
-        file_put_contents($migration_dir."/".$file_name, $new_file_content);
-        Artisan::call("migrate");
     }
 
     public static function getUsedLinkedList(){

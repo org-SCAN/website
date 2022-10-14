@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateFieldRequest;
 use App\Models\ApiLog;
 use App\Models\Field;
 use App\Models\ListControl;
+use App\Models\ListRelation;
+use App\Models\Translation;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -65,6 +67,13 @@ class FieldsController extends Controller
         $field["crew_id"] = Auth::user()->crew->id;
 
         $field = Field::create($field);
+
+
+        $listField = ListControl::firstWhere('name', 'Field');
+
+        Translation::handleTranslation($listField, $field->{$listField->key_value}, $field->{$listField->displayed_value});
+
+
         $apiLog->response = "success";
         $apiLog->save();
         return redirect()->route("fields.index");
@@ -147,6 +156,10 @@ class FieldsController extends Controller
         $to_update["api_log"] = $apiLog->id;
         $to_update["validation_laravel"] = Field::getValidationLaravelFromForm($to_update);
         $field->update($to_update);
+
+        $listField = ListControl::firstWhere('name', 'Field');
+        Translation::handleTranslation($listField, $field->{$listField->key_value}, $field->{$listField->displayed_value});
+
         $apiLog->response = "success";
         $apiLog->save();
         return redirect()->route("fields.index");
@@ -178,6 +191,8 @@ class FieldsController extends Controller
                 $call_class = '\App\Models\\' . $list->name;
                 $datas[$list->name] = $call_class::getAPIContent($request->user());
             }
+            $datas['fields'] = Field::getAPIContent($request->user());
+            $datas['ListRelations'] = ListRelation::getAPIContent($request->user());
             return response(json_encode($datas), 200)->header('Content-Type', 'application/json');
         }
         $log->update(["response"=>"Bad token access"]);

@@ -32,4 +32,14 @@ class Language extends Model
      * @var array
      */
     protected $hidden = ['deleted_at', "created_at", "updated_at"];
+
+    public static function defaultLanguage()
+    {
+        return self::firstWhere('default', 1);
+    }
+
+    public static function otherLanguages()
+    {
+        return self::whereDefault(0)->get();
+    }
 }

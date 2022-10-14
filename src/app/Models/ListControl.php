@@ -40,10 +40,9 @@ class ListControl extends Model
      */
     protected $hidden = ['deleted_at',"created_at","updated_at"];
 
-    public function addNewList(){
-        // 1. Create a new table -> for the list
 
-        // 2. Create a new table -> for the list column name
+    public function structure(){
+        return $this->hasMAny(ListStructure::class);
     }
 
     public function fields()
@@ -122,6 +121,18 @@ class ListControl extends Model
         }
     }
 
+    /**
+     * This function returns the fields that describes the list (± the table columns)
+     * e.g : Country is described by ISO2, ISO3, full_name
+     */
+    public function getListFields()
+    {
+        $model = 'App\Models\\' . $this->name;
+        $list = $model::first();
+
+        return array_keys($list->makeHidden('id')->toArray());
+    }
+
 
     /**
      * It returns the list control dataset for API calls
@@ -134,7 +145,7 @@ class ListControl extends Model
         $call_class_name = get_called_class();
         $class_name = substr(strrchr($call_class_name, "\\"), 1); //get the name of the class : eg ListCountry / ListGender / …
 
-        $database_content = $call_class_name::all()->makeHidden("id")->toArray();
+        $database_content = $call_class_name::all()->toArray();
         $list_info = ListControl::where('name', $class_name)->first();
         $keys = array_column($database_content, $list_info->key_value); // all keys name
         $api_res = array();
@@ -149,5 +160,9 @@ class ListControl extends Model
             unset($api_res[$key_value][$list_info->displayed_value]);
         }
         return $api_res;
+    }
+
+    public function getDisplayedValueAttribute(){
+        return $this->structure()->find($this->attributes['displayed_value'])->field ?? $this->attributes['displayed_value'];
     }
 }
