@@ -54,34 +54,34 @@ associate them correctly in the docker compose*)
 #### Here is the apache configuration file required by `/etc/apache2/sites-available/docker_config.conf`
 
 ```apacheconf
-      # conf/vhost.conf
-      <VirtualHost *:80>
-          DocumentRoot /var/www/html/public
+# conf/vhost.conf
+<VirtualHost *:80>
+    DocumentRoot /var/www/html/public
 
-          <Directory "/var/www/html">
-              AllowOverride all
-              Require all granted
-          </Directory>
+    <Directory "/var/www/html">
+        AllowOverride all
+        Require all granted
+    </Directory>
 
-          ErrorLog ${APACHE_LOG_DIR}/error.log
-          CustomLog ${APACHE_LOG_DIR}/access.log combined
-      </VirtualHost>
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
 
-      # Delete the lines below if you don't use ssl 
-      <IfModule mod_ssl.c>
-      <VirtualHost *:443>
-          DocumentRoot /var/www/html/public
+# Delete the lines below if you don't use ssl 
+<IfModule mod_ssl.c>
+<VirtualHost *:443>
+    DocumentRoot /var/www/html/public
 
-          <Directory "/var/www/html">
-              AllowOverride all
-              Require all granted
-          </Directory>
+    <Directory "/var/www/html">
+        AllowOverride all
+        Require all granted
+    </Directory>
 
-          SSLCertificateFile /var/imported/ssl/fullchain.pem
-          SSLCertificateKeyFile /var/imported/ssl/privkey.pem
-          SSLEngine on
-      </VirtualHost>
-      </IfModule>
+    SSLCertificateFile /var/imported/ssl/fullchain.pem
+    SSLCertificateKeyFile /var/imported/ssl/privkey.pem
+    SSLEngine on
+</VirtualHost>
+</IfModule>
 ``` 
 
 3. Deploy the stack
@@ -142,6 +142,9 @@ MAIL_FROM_NAME="${APP_NAME}"
 DEFAULT_EMAIL="default user email"
 DEFAULT_PASSWORD="default user password"
 DEFAULT_TEAM="default user team"
+
+TRANSLATION_API_URL="ENTER THE URL"
+TRANSLATION_API_TOKEN="YOUR API TOKEN"
 ```
 
 5. Run the following commands :

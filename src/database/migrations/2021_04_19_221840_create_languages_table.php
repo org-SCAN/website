@@ -18,6 +18,7 @@ class CreateLanguagesTable extends Migration
             $table->timestamps();
             $table->string("language");
             $table->string("language_name");
+            $table->string("API_language_key");
             $table->boolean("default")->default(0);
             $table->softDeletes();
         });

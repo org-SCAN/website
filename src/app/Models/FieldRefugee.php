@@ -26,6 +26,7 @@ class FieldRefugee extends Pivot
      *
      * @var bool
      */
+    public $incrementing = false;
 
     /**
      * The attributes that aren't mass assignable.
@@ -33,8 +34,6 @@ class FieldRefugee extends Pivot
      * @var array
      */
     protected $guarded = [];
-
-    public $incrementing = false;
 
 
     public static function random_fields(){

@@ -1,22 +1,26 @@
 [
     {
-        "language" : "eng",
-        "language_name" : "English",
-        "default" : 1
+        "language": "eng",
+        "language_name": "English",
+        "API_language_key": "EN",
+        "default": 1
     },
     {
         "language": "fra",
         "language_name": "Français",
+        "API_language_key": "FR",
         "default": 0
     },
     {
         "language": "spa",
         "language_name": "Español",
+        "API_language_key": "ES",
         "default": 0
     },
     {
         "language": "ita",
         "language_name": "Italian",
+        "API_language_key": "IT",
         "default": 0
     }
 ]

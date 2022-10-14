@@ -72,9 +72,14 @@ Route::get('user/reject_role/{id}', [
     'uses' => '\App\Http\Controllers\ManageUsersController@RejectRole'
 ])->middleware('auth');
 
-Route::get('lists_control/add_to_list/{lists_control}', [
+Route::get('lists_control/add_to_list/{list_control}', [
     'as' => 'lists_control.add_to_list',
     'uses' => '\App\Http\Controllers\ListControlController@AddToList'
+])->middleware('auth');
+
+Route::post('lists_control/update_list/{listControl}', [
+    'as' => 'lists_control.update_list',
+    'uses' => '\App\Http\Controllers\ListControlController@UpdateList'
 ])->middleware('auth');
 
 Route::put('person/fix_duplicated_reference/{id} ', [
@@ -82,6 +87,30 @@ Route::put('person/fix_duplicated_reference/{id} ', [
     'uses' => '\App\Http\Controllers\RefugeeController@fixDuplicatedReference'
 ])->middleware('auth');
 
+Route::post('lists_control/store_fields/{listControl}',[
+    'as' => 'lists_control.store_fields',
+    'uses' => '\App\Http\Controllers\ListControlController@storeFields'
+])->middleware('auth');
+
+Route::post('lists_control/store_displayed_value/{listControl}',[
+    'as' => 'lists_control.store_displayed_value',
+    'uses' => '\App\Http\Controllers\ListControlController@storeDisplayedValue'
+])->middleware('auth');
+
+Route::delete('lists_control/{listControl}/delete_list_elem/{element}',[
+    'as' => 'lists_control.deleteListElem',
+    'uses' => '\App\Http\Controllers\ListControlController@destroyListElem'
+])->middleware('auth');
+
+Route::get('lists_control/{listControl}/edit/{element}',[
+    'as' => 'lists_control.editListElem',
+    'uses' => '\App\Http\Controllers\ListControlController@editListElem'
+])->middleware('auth');
+
+Route::post('lists_control/{listControl}/edit/{element}',[
+    'as' => 'lists_control.updateListElem',
+    'uses' => '\App\Http\Controllers\ListControlController@updateListElem'
+])->middleware('auth');
 
 Route::resource("person", RefugeeController::class)->middleware('auth');
 Route::resource("fields", FieldsController::class)->middleware('auth');

@@ -25,7 +25,7 @@ class UpdateFieldRequest extends FormRequest
     {
         $rules = [
             "title" => "required|string",
-            "placeholder" => "string|max:80",
+            "placeholder" => "string|max:80|nullable",
             "required" => "integer|required",
             "status" => "integer|required",
             "order" => "integer",

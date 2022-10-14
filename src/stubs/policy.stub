@@ -1,0 +1,17 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Auth\Access\HandlesAuthorization;
+use {{ namespacedModel }};
+use {{ namespacedUserModel }};
+
+namespace {{ namespace }}} extends GlobalPolicy
+{
+    use HandlesAuthorization;
+
+    public function __construct($route_name = "route_name"){
+    parent::__construct($route_name);
+}
+}
+

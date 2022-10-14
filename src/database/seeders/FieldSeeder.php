@@ -22,6 +22,10 @@ class FieldSeeder extends GlobalListControlSeeder
      */
     public function run()
     {
+        // I have to fake the structure, by adding at least the displayed value to the list control,
+        $struc = $this->list->structure()->create(["field" => $this->displayed_value]);
+        $this->list->update(['displayed_value' => $struc->id]);
+
         foreach ($this->array_json as $fields) {
             $log = array();
             $log["user_id"] = User::where("email", env("DEFAULT_EMAIL"))->first()->id;
@@ -37,12 +41,12 @@ class FieldSeeder extends GlobalListControlSeeder
             $to_store["api_log"] = $log->id;
             foreach ($fields as $keyField => $fieldValue) {
                 //If the key is the displayed value, we have to store it in translation
-                if ($keyField == $this->displayed_value) {
+                if ($keyField == $this->list->displayed_value) {
                     $fieldValue = $fieldValue[$this->default_language];
                 }
                 // There is a special condition for linked_list
                 if ($keyField == "linked_list" && !empty($fieldValue)) {
-                    $fieldValue = ListControl::where("name", ucfirst($fieldValue))->first()->id;
+                    $fieldValue = ListControl::firstWhere("name", ucfirst($fieldValue))->id;
                 }
                 $to_store[$keyField] = $fieldValue;
             }
