@@ -29,6 +29,9 @@
                                     <th scope="col" class="relative px-6 py-3">
                                         <span class="sr-only">Action</span>
                                     </th>
+                                    <th scope="col" class="relative px-6 py-3">
+                                        <span class="sr-only">Add element to list</span>
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -39,6 +42,9 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <a href="{{route("lists_control.edit", $list->id)}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <a href="{{route("lists_control.add_to_list", $list->id)}}" class="text-indigo-600 hover:text-indigo-900">Add element</a>
                                         </td>
                                     </tr>
                                 @endforeach

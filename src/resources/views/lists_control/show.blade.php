@@ -5,14 +5,13 @@
             <b>{{ $lists_control->title }}</b> details
         </h2>
     </x-slot>
-
     <div>
         <div class="max-w-6xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
                 <form action="{{route('lists_control.destroy', $lists_control->id)}}" method="POST"
                       class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                    <a href="{{ URL::previous()}}"
-                       class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
+                    <a href="{{ route('lists_control.index')}}"
+                       class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Lists</a>
                     <a href="{{ route('lists_control.edit', $lists_control->id) }}"
                        class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">Edit</a>
                     <a href="{{ route('lists_control.add_to_list', $lists_control->id) }}"
@@ -24,6 +23,9 @@
                             class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
                         Delete
                     </button>
+                    @error("deleteList")
+                    <p class="text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </form>
             </div>
             <div class="flex flex-col">
@@ -66,6 +68,9 @@
                                                 <button type="submit" class="border-0">
                                                     <i class='fa fa-trash text-red-500 hover:text-red-700' aria-hidden='true'></i>
                                                 </button>
+                                                @error("delete.".$list_elem->id)
+                                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                                @enderror
                                             </form>
                                         </td>
                                     </tr>

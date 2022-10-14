@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateListControlRequest;
 use App\Http\Requests\StoreListControlFieldsRequest;
 use App\Http\Requests\StoreListControlAddDisplayedValue;
 use App\Http\Requests\UpdateListElemRequest;
+use App\Models\FieldRefugee;
 use App\Models\ListControl;
 use App\Models\Translation;
 use App\Models\Language;
@@ -16,7 +17,8 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Redirect;
+use App\Models\Field;
 class ListControlController extends Controller
 {
     /**
@@ -232,6 +234,9 @@ class ListControlController extends Controller
      */
     public function destroy(ListControl $lists_control)
     {
+        if(Field::whereLinkedList($lists_control->id)->exists()){
+            return Redirect::back()->withErrors(["deleteList" => "You can't delete this element since it's used in at least one field."]);
+        }
         $lists_control->delete();
         return redirect()->route("lists_control.index");
     }
@@ -244,6 +249,10 @@ class ListControlController extends Controller
      * @return RedirectResponse
      */
     public function destroyListElem(ListControl $listControl, $element){
+        //cheks if the element is used in any field
+        if(FieldRefugee::whereValue($element)->exists()){
+            return Redirect::back()->withErrors(["delete.".$element => "You can't delete this element since it's used in at least one person."]);
+        }
         $model = 'App\Models\\' . $listControl->name;
         $model::find($element)->delete();
         return redirect()->route("lists_control.show", $listControl);
