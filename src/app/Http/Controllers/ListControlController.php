@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreListControlAddDisplayedValue;
+use App\Http\Requests\StoreListControlFieldsRequest;
 use App\Http\Requests\StoreListControlRequest;
 use App\Http\Requests\StoreUpdateListRequest;
 use App\Http\Requests\UpdateListControlRequest;
-use App\Http\Requests\StoreListControlFieldsRequest;
-use App\Http\Requests\StoreListControlAddDisplayedValue;
 use App\Http\Requests\UpdateListElemRequest;
+use App\Models\Field;
 use App\Models\FieldRefugee;
 use App\Models\ListControl;
 use App\Models\Translation;
-use App\Models\Language;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\View\View;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
-use App\Models\Field;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Illuminate\View\View;
+
 class ListControlController extends Controller
 {
     /**
@@ -79,13 +79,8 @@ class ListControlController extends Controller
     {
         $model = 'App\Models\\' . $listControl->name;
         $listElem = $model::create($request->validated());
-        Translation::create([
-            "language" => Language::where('default', 1)->first()->id,
-            "list" => $listControl->id,
-            'field_key' => $listElem->{$listControl->key_value},
-            'translation' => $listElem->{$listControl->displayed_value},
 
-        ]);
+        Translation::handleTranslation($listControl, $listElem->{$listControl->key_value}, $listElem->{$listControl->displayed_value});
         // I have to translate and add to default langage
         return redirect()->route('lists_control.show', $listControl);
     }
@@ -119,10 +114,8 @@ class ListControlController extends Controller
         $model = 'App\Models\\' . $listControl->name;
         $listElem = $model::find($element);
         $listElem->update($request->validated());
-        Translation::whereLanguage(Language::firstWhere('default', 1)->id)
-            ->whereList($listControl->id)
-            ->firstWhere('field_key',$listElem->{$listControl->key_value})
-            ->update(['translation' => $listElem->{$listControl->displayed_value}]);
+        Translation::handleTranslation($listControl, $listElem->{$listControl->key_value}, $listElem->{$listControl->displayed_value});
+
 
         // I have to translate and add to default langage
 
