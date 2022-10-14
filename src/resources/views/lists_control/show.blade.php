@@ -8,24 +8,35 @@
     <div>
         <div class="max-w-6xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <form action="{{route('lists_control.destroy', $lists_control->id)}}" method="POST"
-                      class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                    <a href="{{ route('lists_control.index')}}"
-                       class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Lists</a>
-                    <a href="{{ route('lists_control.edit', $lists_control->id) }}"
-                       class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">Edit</a>
-                    <a href="{{ route('lists_control.add_to_list', $lists_control->id) }}"
-                       class="bg-green-200 hover:bg-green-300 text-black font-bold py-2 px-4 rounded">Add an element to
-                        the list</a>
-                    @method('DELETE')
-                    @csrf
-                    <button type="submit"
-                            class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
-                        Delete
-                    </button>
-                    @error("deleteList")
-                    <p class="text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                @can("delete", $lists_control)
+                    <form action="{{route('lists_control.destroy', $lists_control->id)}}" method="POST"
+                          class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        @endcan
+                        @can('viewAny', $lists_control)
+                            <a href="{{ route('lists_control.index')}}"
+                               class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Lists</a>
+                        @endcan
+                        @can("update", $lists_control)
+                            <a href="{{ route('lists_control.edit', $lists_control->id) }}"
+                               class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">Edit</a>
+                        @endcan
+                        @can('addToList', $lists_control)
+                            <a href="{{ route('lists_control.add_to_list', $lists_control->id) }}"
+                               class="bg-green-200 hover:bg-green-300 text-black font-bold py-2 px-4 rounded">Add an
+                                element to
+                                the list</a>
+                        @endcan
+                        @can("delete", $lists_control)
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit"
+                                    class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
+                                Delete
+                            </button>
+                        @endcan
+                        @error("deleteList")
+                        <p class="text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                 </form>
             </div>
             <div class="flex flex-col">
@@ -42,37 +53,52 @@
                                     <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$field->field}}</th>
                                     @endif
                                 @endforeach
-
+                                @canany(['updateListElem', 'deleteListElem'], \App\Models\ListControl::class)
                                 <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"></th>
+                                @endcanany
                                 </thead>
                                 <tbody>
                                 @foreach($list_content as $list_elem)
                                     <tr class="border-b">
                                         @foreach($list_structure as $field)
                                             @if($lists_control->displayed_value == $field->field)
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200"><b>{{ $list_elem[$field->field] }}</b></td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                    <b>{{ $list_elem[$field->field] }}</b></td>
                                             @else
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">{{ $list_elem[$field->field] }}</td>
                                             @endif
                                         @endforeach
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                        @canany(['updateListElem', 'deleteListElem'], \App\Models\ListControl::class)
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                @endcanany
+                                                @can("deleteListElem",\App\Models\ListControl::class)
 
-
-                                            <form action="{{route("lists_control.deleteListElem", [$lists_control, $list_elem->id])}}" method="POST">
-                                                <a href="{{route("lists_control.editListElem", [$lists_control, $list_elem->id])}}">
-                                                    <i class="fa fa-pen text-blue-500 hover:text-blue-700" aria-hidden="true"></i>
-                                                </a>
-                                                &nbsp; &nbsp;
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="border-0">
-                                                    <i class='fa fa-trash text-red-500 hover:text-red-700' aria-hidden='true'></i>
-                                                </button>
-                                                @error("delete.".$list_elem->id)
-                                                <p class="text-sm text-red-600">{{ $message }}</p>
-                                                @enderror
-                                            </form>
-                                        </td>
+                                                    <form
+                                                        action="{{route("lists_control.deleteListElem", [$lists_control, $list_elem->id])}}"
+                                                        method="POST">
+                                                        @endcan
+                                                        @can('updateListElem',\App\Models\ListControl::class)
+                                                            <a href="{{route("lists_control.editListElem", [$lists_control, $list_elem->id])}}">
+                                                                <i class="fa fa-pen text-blue-500 hover:text-blue-700"
+                                                                   aria-hidden="true"></i>
+                                                            </a>
+                                                        @endcan
+                                                        @can("deleteListElem",\App\Models\ListControl::class)
+                                                            &nbsp; &nbsp;
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="border-0">
+                                                                <i class='fa fa-trash text-red-500 hover:text-red-700'
+                                                                   aria-hidden='true'></i>
+                                                            </button>
+                                                            @error("delete.".$list_elem->id)
+                                                            <p class="text-sm text-red-600">{{ $message }}</p>
+                                                            @enderror
+                                                    </form>
+                                                @endcan
+                                                @canany(['updateListElem', 'deleteListElem'], \App\Models\ListControl::class)
+                                            </td>
+                                        @endcanany
                                     </tr>
                                 @endforeach
                                 </tbody>

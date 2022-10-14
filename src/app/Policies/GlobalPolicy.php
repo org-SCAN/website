@@ -34,6 +34,14 @@ class GlobalPolicy
             : Response::deny('You do not have the right to do this.');
     }
 
+    /**
+     * This function is user to check if a user has access to a route
+     *
+     * @param $user
+     * @param $function
+     * @param $route_name
+     * @return boolean
+     */
     public function hasPermission($user, $function, $route_name = null)
     {
         $route_name = ($route_name == null)

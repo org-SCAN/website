@@ -21,23 +21,14 @@
                           onsubmit="return confirm('Are you sure you want to delete this role?');">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        @can("delete", $role)
                         <button type="submit"
                                 class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
                             Delete
                         </button>
+                        @endcan
                     </form>
                 </form>
-            </div>
-            <div class="flex flex-col">
-                <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                            <table class="min-w-full divide-y divide-gray-200 w-full">
-
-                            </table>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="block mt-8 flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
