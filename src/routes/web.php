@@ -9,6 +9,7 @@ use App\Http\Controllers\ListControlController;
 use App\Http\Controllers\ManageUsersController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RefugeeController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -92,5 +93,5 @@ Route::resource("user", ManageUsersController::class)->middleware('auth');
 Route::resource("duplicate", DuplicateController::class)->middleware('auth');
 Route::resource("api_logs", ApiLogController::class)->middleware('auth');
 Route::resource("crew", CrewController::class)->middleware('auth');
-//Route::resource("roles", RoleController::class)->middleware('auth');
+Route::resource("roles", RoleController::class)->middleware('auth');
 Route::resource("permissions", PermissionController::class)->middleware('auth');

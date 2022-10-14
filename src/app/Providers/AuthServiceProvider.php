@@ -9,6 +9,7 @@ use App\Models\Field;
 use App\Models\ListControl;
 use App\Models\Permission;
 use App\Models\Refugee;
+use App\Models\Role;
 use App\Models\User;
 use App\Policies\ApiLogPolicy;
 use App\Policies\CrewPolicy;
@@ -17,6 +18,7 @@ use App\Policies\FieldPolicy;
 use App\Policies\ListControlPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\RefugeePolicy;
+use App\Policies\RolePolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -35,7 +37,8 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         ListControl::class => ListControlPolicy::class,
         Cytoscape::class => CytoscapePolicy::class,
-        Permission::class => PermissionPolicy::class
+        Permission::class => PermissionPolicy::class,
+        Role::class => RolePolicy::class
     ];
 
     /**

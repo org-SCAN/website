@@ -25,7 +25,7 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::all();
-        return view("permission.index", compact("permissions"));
+        return view("permissions.index", compact("permissions"));
     }
 
     /**
@@ -36,6 +36,6 @@ class PermissionController extends Controller
      */
     public function show(Permission $permission)
     {
-        return view("permission.show", compact("permission"));
+        return view("permissions.show", compact("permission"));
     }
 }

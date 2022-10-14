@@ -67,6 +67,6 @@ class Permission extends Model
 
     public static function getRoutesWithPermission()
     {
-        return ["user", "person", "links", "cytoscape", "fields", "lists_control", "duplicate", "api_logs", "crew", "role", "permission"];
+        return ["user", "person", "links", "cytoscape", "fields", "lists_control", "duplicate", "api_logs", "crew", "roles", "permissions"];
     }
 }

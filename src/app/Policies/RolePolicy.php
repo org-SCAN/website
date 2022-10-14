@@ -4,11 +4,11 @@ namespace App\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class RefugeePolicy extends GlobalPolicy
+class RolePolicy extends GlobalPolicy
 {
     use HandlesAuthorization;
 
-    public function __construct($route_name = "person")
+    public function __construct($route_name = "roles")
     {
         parent::__construct($route_name);
     }
