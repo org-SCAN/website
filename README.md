@@ -142,6 +142,9 @@ MAIL_FROM_NAME="${APP_NAME}"
 DEFAULT_EMAIL="default user email"
 DEFAULT_PASSWORD="default user password"
 DEFAULT_TEAM="default user team"
+
+TRANSLATION_API_URL="ENTER THE URL"
+TRANSLATION_API_TOKEN="YOUR API TOKEN"
 ```
 
 5. Run the following commands :
