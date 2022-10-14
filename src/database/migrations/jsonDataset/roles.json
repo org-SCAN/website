@@ -1,15 +1,13 @@
 [
     {
         "role": {
-            "name": "admin",
-            "importance": 3
+            "name": "admin"
         },
         "permissions": "*"
     },
     {
         "role": {
-            "name": "editor",
-            "importance": 2
+            "name": "editor"
         },
         "permissions": [
             "cytoscape.index",
@@ -63,8 +61,7 @@
     },
     {
         "role": {
-            "name": "viewer",
-            "importance": 1
+            "name": "viewer"
         },
         "permissions": [
             "cytoscape.index",

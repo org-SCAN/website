@@ -39,7 +39,6 @@ class RoleController extends Controller
     public function store(StoreRoleRequest $request)
     {
         $role = $request->validated();
-        $role["role"]["importance"] = 1;
         $created_role = Role::create($role["role"]);
         $created_role->permissions()->attach($role["permissions"]);
         return redirect()->route("roles.index");

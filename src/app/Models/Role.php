@@ -48,12 +48,20 @@ class Role extends Model
 
     public static function biggestRole()
     {
-        return self::orderBy("importance", "desc")->first()->id;
+        return self::has("permissions", Permission::count())->first()->id;
     }
 
     public static function smallestRole()
     {
-        return self::orderBy("importance")->first()->id;
+        $nbPerm = Permission::count();
+        $smallest_role = new Role;
+        foreach (Role::all() as $role) {
+            if ($role->permissions->count() < $nbPerm) {
+                $smallest_role = $role;
+            }
+        }
+
+        return $smallest_role->id;
     }
 
     /**
