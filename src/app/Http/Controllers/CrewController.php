@@ -28,7 +28,7 @@ class CrewController extends Controller
      */
     public function index()
     {
-        $crews = Crew::all();
+        $crews = Crew::orderBy('name')->get();
         return view("crew.index", compact("crews"));
     }
 

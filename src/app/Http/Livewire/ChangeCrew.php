@@ -11,7 +11,7 @@ class ChangeCrew extends Component
     public function render()
     {
         $user = Auth::user();
-        $crews = Crew::all();
+        $crews = Crew::orderBy('name')->get();
         return view('livewire.change_crew', compact('crews', 'user'));
     }
 }

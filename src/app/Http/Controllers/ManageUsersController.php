@@ -89,7 +89,7 @@ class ManageUsersController extends Controller
      */
     public function show(User $user)
     {
-        $roles = Role::all();
+        $roles = Role::orderBy("name")->get();
         return view("user.show", compact("user", "roles"));
 
     }

@@ -66,7 +66,7 @@
                             <div class="switch-toggle switch-3 switch-candy">
                                 @livewire("select-dropdown", ['label' => 'role_id', 'placeholder' => "-- Select the role
                                 --", 'datas' =>
-                                array_column(\App\Models\Role::all()->toArray() , 'name',
+                                array_column(\App\Models\Role::orderBy('name')->get()->toArray() , 'name',
                                 'id'), "selected_value"=>$user_found->role->id])
                                 @stack('scripts')
                             </div>
@@ -81,7 +81,7 @@
                             <div class="switch-toggle switch-3 switch-candy">
                                 @livewire("select-dropdown", ['label' => 'crew_id', 'placeholder' => "-- Select the team
                                 --", 'datas' =>
-                                array_column(\App\Models\Crew::all()->toArray() , 'name', 'id'),
+                                array_column(\App\Models\Crew::orderBy('name')->get()->toArray() , 'name', 'id'),
                                 "selected_value"=>$user_found->crew->id])
                                 @stack('scripts')
                             </div>
