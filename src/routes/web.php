@@ -100,17 +100,17 @@ Route::post('lists_control/store_displayed_value/{listControl}',[
 ])->middleware('auth');
 
 Route::delete('lists_control/{listControl}/delete_list_elem/{element}',[
-    'as' => 'lists_control.deleteListElem',
+    'as' => 'lists_control.delete_list_elem',
     'uses' => '\App\Http\Controllers\ListControlController@destroyListElem'
 ])->middleware('auth');
 
-Route::get('lists_control/{listControl}/edit/{element}',[
-    'as' => 'lists_control.editListElem',
+Route::get('lists_control/{listControl}/edit/{element}', [
+    'as' => 'lists_control.edit_list_elem',
     'uses' => '\App\Http\Controllers\ListControlController@editListElem'
 ])->middleware('auth');
 
-Route::post('lists_control/{listControl}/edit/{element}',[
-    'as' => 'lists_control.updateListElem',
+Route::post('lists_control/{listControl}/edit/{element}', [
+    'as' => 'lists_control.update_list_elem',
     'uses' => '\App\Http\Controllers\ListControlController@updateListElem'
 ])->middleware('auth');
 

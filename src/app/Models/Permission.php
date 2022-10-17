@@ -56,7 +56,13 @@ class Permission extends Model
             "store" => "create",
             "edit" => "update",
             "update" => "update",
-            "destroy" => "delete"
+            "destroy" => "delete",
+            "store_from_json" => "createFromJson",
+            "reject_role" => "grantRole",
+            "edit_list_elem" => "updateListElem",
+            "store_displayed_value" => "create",
+            "store_fields" => "create",
+            "update_list" => "addToList"
         ];
         $method = array_key_exists($route[1], $policyRouteName)
             ? $policyRouteName[$route[1]]

@@ -74,11 +74,11 @@
                                                 @can("deleteListElem",\App\Models\ListControl::class)
 
                                                     <form
-                                                        action="{{route("lists_control.deleteListElem", [$lists_control, $list_elem->id])}}"
+                                                        action="{{route("lists_control.delete_list_elem", [$lists_control, $list_elem->id])}}"
                                                         method="POST">
                                                         @endcan
                                                         @can('updateListElem',\App\Models\ListControl::class)
-                                                            <a href="{{route("lists_control.editListElem", [$lists_control, $list_elem->id])}}">
+                                                            <a href="{{route("lists_control.edit_list_elem", [$lists_control, $list_elem->id])}}">
                                                                 <i class="fa fa-pen text-blue-500 hover:text-blue-700"
                                                                    aria-hidden="true"></i>
                                                             </a>

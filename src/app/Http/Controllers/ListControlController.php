@@ -157,7 +157,7 @@ class ListControlController extends Controller
      */
     public function storeFields(StoreListControlFieldsRequest $request, ListControl $listControl)
     {
-
+        $this->authorize('create', $listControl);
         //store the fields onto the ListStructure table
         foreach($request->validated()['fields'] as $field){
             if(!empty($field) && ($listControl->structure->first() == null || !$listControl->structure()->firstWhere('field', $field)->exists())){
@@ -183,7 +183,10 @@ class ListControlController extends Controller
      * @param \App\Http\Requests\StoreListControlAddDisplayedValue $request
      * @return RedirectResponse
      */
-    public function storeDisplayedValue(StoreListControlAddDisplayedValue $request, ListControl $listControl){
+    public function storeDisplayedValue(StoreListControlAddDisplayedValue $request, ListControl $listControl)
+    {
+        $this->authorize('create', $listControl);
+
         $listControl->update($request->validated());
         return redirect()->route("lists_control.index");
     }
