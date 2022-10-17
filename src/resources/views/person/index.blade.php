@@ -38,7 +38,12 @@
                                         @foreach($fields ?? '' as $field)
                                             <td>
                                                 @if($field->best_descriptive_value == 1)
-                                                    <a href="{{route('person.show',$refugee_id)}}">{{$refugee[$field->id]}}</a>
+                                                    @can('view', \App\Models\Refugee::find($refugee_id))
+                                                        <a href="{{route('person.show',$refugee_id)}}">{{ $refugee[$field->id] }}</a>
+                                                    @endcan()
+                                                    @cannot('view', \App\Models\Refugee::find($refugee_id))
+                                                        {{ $refugee[$field->id] }}
+                                                    @endcannot()
                                                 @else
                                                     {{$refugee[$field->id]?? ''}}
                                                 @endif

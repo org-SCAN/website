@@ -34,8 +34,14 @@
                                         User
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                        <a href="{{route("user.show", $api_log->user->id)}}"
-                                           class="text-indigo-600 hover:text-blue-900">{{$api_log->user->email}}</a>
+                                        @can('view', $api_log->user->id)
+                                            <a href="{{ route("user.show", $api_log->user->id) }}"
+                                               class="text-indigo-600 hover:text-blue-900">{{ $api_log->user->email }}
+                                            </a>
+                                        @endcan
+                                        @cannot('view', $api_log->user->id)
+                                            {{ $api_log->user->email }}
+                                        @endcannot
                                     </td>
                                 </tr>
                                 <tr class="border-b">

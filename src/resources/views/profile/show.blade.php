@@ -19,15 +19,19 @@
                 @livewire('view-token')
             </div>
 
+            @can("requestRole", $user)
             <x-jet-section-border/>
             <div class="mt-10 sm:mt-0">
                 @livewire('request-role')
             </div>
+                @endcan
 
+                @can("changeTeam", $user)
             <x-jet-section-border/>
             <div class="mt-10 sm:mt-0">
                 @livewire('change-crew')
             </div>
+                @endcan
 
             <x-jet-section-border/>
             @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))

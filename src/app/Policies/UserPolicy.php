@@ -31,7 +31,15 @@ class UserPolicy extends GlobalPolicy
 
     public function changeTeam(User $user)
     {
-        return $this->hasPermission($user, __FUNCTION__)
+        return $this->hasPermission($user, __FUNCTION__, 'user.changeTeam')
+            ? Response::allow()
+            : Response::deny('You do not have the right to do this.');
+    }
+
+    public function requestRole(User $user)
+    {
+
+        return $this->hasPermission($user, __FUNCTION__, 'user.requestRole')
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }

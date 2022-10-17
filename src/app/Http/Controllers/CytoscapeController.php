@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cytoscape;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class CytoscapeController extends Controller
@@ -18,7 +19,9 @@ class CytoscapeController extends Controller
 
     public function index()
     {
-        $relations = \App\Models\Link::all();
+        $relations = \App\Models\Link::whereRelation('RefugeeFrom.crew', 'crews.id', Auth::user()->crew->id)
+            ->whereRelation('RefugeeTo.crew', 'crews.id', Auth::user()->crew->id)
+            ->get();
         /*
             $nodes = array();
             foreach ($refugees as $refugee){

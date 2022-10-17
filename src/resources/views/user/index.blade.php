@@ -48,15 +48,20 @@
                                 @foreach($users as $user)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("user.show", $user->id)}}"
-                                               class="text-indigo-600 hover:text-blue-900">{{$user->name}}</a>
+                                            @can('view', $user)
+                                                <a href="{{route("user.show", $user->id)}}"
+                                                   class="text-indigo-600 hover:text-blue-900">{{ $user->name }}</a>
+                                            @endcan
+                                            @cannot('view', $user)
+                                                {{ $user->name }}
+                                            @endcannot
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <a href="{{route("user.show", $user->id)}}"
                                                class="text-indigo-600 hover:text-blue-900">{{$user->email}}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("user.show", $user->id)}}"
+                                            <a href="{{route("roles.show", $user->role)}}"
                                                class="text-indigo-600 hover:text-blue-900">{{$user->role->name}}</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -65,8 +70,10 @@
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <a href="{{route("user.edit", $user->id)}}"
+                                            @can('update', $user)
+                                                <a href="{{route("user.edit", $user->id)}}"
                                                class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
@@ -78,6 +85,7 @@
                 </div>
             </div>
         </div>
+        @can('grantRole', \App\Models\User::class)
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mt-4 mb-8">
                 <h4>Grant user permissions</h4>
@@ -132,5 +140,6 @@
                 </div>
             </div>
         </div>
+        @endcan
     </div>
 </x-app-layout>
