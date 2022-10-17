@@ -1,12 +1,74 @@
-[{
-    "name": "admin",
-    "importance": 3
-},
+[
     {
-        "name": "editor",
-        "importance": 2
+        "role": {
+            "name": "admin"
+        },
+        "permissions": "*"
     },
     {
-        "name": "viewer",
-        "importance": 1
-    }]
+        "role": {
+            "name": "editor"
+        },
+        "permissions": [
+            "cytoscape.index",
+            "person.create_from_json",
+            "links.create_from_json",
+            "person.store_from_json",
+            "links.store_from_json",
+            "user.request_role",
+            "lists_control.add_to_list",
+            "person.fix_duplicated_reference",
+            "person.index",
+            "person.create",
+            "person.store",
+            "person.show",
+            "person.edit",
+            "person.update",
+            "person.destroy",
+            "fields.index",
+            "fields.create",
+            "fields.store",
+            "fields.show",
+            "fields.edit",
+            "fields.update",
+            "fields.destroy",
+            "lists_control.index",
+            "lists_control.create",
+            "lists_control.store",
+            "lists_control.show",
+            "lists_control.edit",
+            "lists_control.update",
+            "lists_control.destroy",
+            "links.index",
+            "links.create",
+            "links.store",
+            "links.show",
+            "links.edit",
+            "links.update",
+            "links.destroy",
+            "user.index",
+            "user.show",
+            "duplicate.index",
+            "duplicate.create",
+            "duplicate.store",
+            "duplicate.show",
+            "duplicate.edit",
+            "duplicate.update",
+            "duplicate.destroy",
+            "crew.index",
+            "crew.show"
+        ]
+    },
+    {
+        "role": {
+            "name": "viewer"
+        },
+        "permissions": [
+            "cytoscape.index",
+            "person.index",
+            "person.show",
+            "links.index",
+            "links.show"
+        ]
+    }
+]

@@ -89,7 +89,7 @@ class ManageUsersController extends Controller
      */
     public function show(User $user)
     {
-        $roles = Role::all();
+        $roles = Role::orderBy("name")->get();
         return view("user.show", compact("user", "roles"));
 
     }
@@ -184,6 +184,8 @@ class ManageUsersController extends Controller
      */
     public function GrantRole($id)
     {
+        $this->authorize('grantRole', User::class);
+
         $request = RoleRequest::find($id);
         $user = $request->user;
         $user->update(["role_id" => $request->role->id]);
@@ -200,6 +202,9 @@ class ManageUsersController extends Controller
      */
     public function RejectRole($id)
     {
+
+        $this->authorize('rejectRole', User::class);
+
         $request = RoleRequest::find($id);
         $request->update(["granted" => date("Y-m-d H:i:s")]);
 

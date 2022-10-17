@@ -15,7 +15,7 @@
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add relation</a>
                 @endcan
                 @can('createFromJson', \App\Models\Link::class)
-                    <a href="{{ route("links.json.create") }}"
+                    <a href="{{ route("links.create_from_json") }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add relation from
                         json</a>
                 @endcan
@@ -23,12 +23,6 @@
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                        {{--<div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg p-2">
-                            <livewire:links-datatables
-                                per-page="25"
-                                exportable
-                            />
-                        </div>--}}
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg p-2">
                             <table id="person" class="display">
                                 <thead>
@@ -49,8 +43,7 @@
                                         </td>
                                         <td>{{ $link->relation }}</td>
                                         <td>
-                                            <a href="{{route('person.show',  $link->refugeeTo->id)}}">{{ $link->refugeeTo->best_descriptive_value }}</a>
-                                        </td>
+                                            <a href="{{route('person.show',  $link->refugeeTo->id)}}"> {{ $link->refugeeTo->best_descriptive_value }}</a>
                                         @can('update', $link)
                                             <td><a href="{{route('links.edit',  $link->id)}}">Edit</a></td>
                                         @endcan

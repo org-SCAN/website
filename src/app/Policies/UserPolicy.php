@@ -6,124 +6,40 @@ use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class UserPolicy
+class UserPolicy extends GlobalPolicy
 {
     use HandlesAuthorization;
 
-
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param \App\Models\User $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function viewAny(User $user)
+    public function __construct($route_name = "user")
     {
-        return $user->role->name == ("admin")
+        parent::__construct($route_name);
+    }
+
+    public function grantRole(User $user)
+    {
+        return $this->hasPermission($user, __FUNCTION__)
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
 
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\User $model
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function view(User $user)
+    public function rejectRole(User $user)
     {
-        return $user->role->name == ("admin")
+        return $this->hasPermission($user, __FUNCTION__)
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
 
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param \App\Models\User $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function create(User $user)
+    public function changeTeam(User $user)
     {
-        return $user->role->name == ("admin")
+        return $this->hasPermission($user, __FUNCTION__, 'user.changeTeam')
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
 
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\User $model
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function update(User $user)
+    public function requestRole(User $user)
     {
-        return $user->role->name == ("admin")
-            ? Response::allow()
-            : Response::deny('You do not have the right to do this.');
-    }
 
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\User $model
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function delete(User $user)
-    {
-        return $user->role->name == ("admin")
-            ? Response::allow()
-            : Response::deny('You do not have the right to do this.');
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\User $model
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user)
-    {
-        return $user->role->name == ("admin")
-            ? Response::allow()
-            : Response::deny('You do not have the right to do this.');
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\User $model
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user)
-    {
-        return $user->role->name == ("admin")
-            ? Response::allow()
-            : Response::deny('You do not have the right to do this.');
-    }
-
-    public function GrantRole(User $user)
-    {
-        return $user->role->name == ("admin")
-            ? Response::allow()
-            : Response::deny('You do not have the right to do this.');
-    }
-
-    public function RejectRole(User $user)
-    {
-        return $user->role->name == ("admin")
-            ? Response::allow()
-            : Response::deny('You do not have the right to do this.');
-    }
-
-    public function ChangeTeam(User $user)
-    {
-        return $user->role->name == ("user")
+        return $this->hasPermission($user, __FUNCTION__, 'user.requestRole')
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }

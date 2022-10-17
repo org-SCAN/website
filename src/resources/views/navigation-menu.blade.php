@@ -11,7 +11,7 @@
                 </div>
 
                 <!-- Navigation Links -->
-                @can('viewAny', App\Models\Cytoscape::class)
+                @can('viewMenu', \App\Models\Cytoscape::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('cytoscape.index') }}"
                                         :active="request()->routeIs('cytoscape.*')">
@@ -19,7 +19,7 @@
                         </x-jet-nav-link>
                     </div>
                 @endcan
-                @can('viewAny', App\Models\Refugee::class)
+                @can('viewMenu', \App\Models\Refugee::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('person.index') }}"
                                         :active="request()->routeIs('person.*')">
@@ -27,14 +27,14 @@
                         </x-jet-nav-link>
                     </div>
                 @endcan
-                @can('viewAny', App\Models\Link::class)
+                @can('viewMenu', \App\Models\Link::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.*')">
                             {{ __('Relations') }}
                         </x-jet-nav-link>
                     </div>
                 @endcan
-                @can('viewAny', App\Models\Duplicate::class)
+                @can('viewMenu', \App\Models\Duplicate::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('duplicate.index') }}"
                                         :active="request()->routeIs('duplicate.*')">
@@ -42,14 +42,14 @@
                         </x-jet-nav-link>
                     </div>
                 @endcan
-                @can('viewAny', App\Models\Field::class)
+                @can('viewMenu', \App\Models\Field::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('fields.index') }}" :active="request()->routeIs('fields.*')">
                             {{ __('Manage fields') }}
                         </x-jet-nav-link>
                     </div>
                 @endcan
-                @can('viewAny', App\Models\ApiLog::class)
+                @can('viewMenu', \App\Models\ApiLog::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('api_logs.index') }}"
                                         :active="request()->routeIs('api_logs.*')">
@@ -57,14 +57,14 @@
                         </x-jet-nav-link>
                     </div>
                 @endcan
-                @can('viewAny', App\Models\Crew::class)
+                @can('viewMenu', \App\Models\Crew::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('crew.index') }}" :active="request()->routeIs('crew.*')">
                             {{ __('Crews') }}
                         </x-jet-nav-link>
                     </div>
                 @endcan
-                @can('viewAny', App\Models\User::class)
+                @can('viewMenu', \App\Models\User::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.*')">
                             {{ __('Users') }}
@@ -205,41 +205,41 @@
                                        :active="request()->routeIs('cytoscape.*')">
                 {{ __('Network graph') }}
             </x-jet-responsive-nav-link>
-            @can('viewAny',App\Models\Refugee::class)
+            @can('viewMenu',\App\Models\Refugee::class)
                 <x-jet-responsive-nav-link href="{{ route('person.index') }}"
                                            :active="request()->routeIs('person.*')">
                     {{ __('Persons') }}
                 </x-jet-responsive-nav-link>
             @endcan
-            @can('viewAny',App\Models\Link::class)
+            @can('viewMenu',\App\Models\Link::class)
                 <x-jet-responsive-nav-link href="{{ route('links.index') }}"
                                            :active="request()->routeIs('links.*')">
                     {{ __('Relations') }}
                 </x-jet-responsive-nav-link>
             @endcan
-            @can('viewAny',App\Models\Duplicate::class)
+            @can('viewMenu',\App\Models\Duplicate::class)
                 <x-jet-responsive-nav-link href="{{ route('duplicate.index') }}"
                                            :active="request()->routeIs('duplicate.*')">
                     {{ __('Duplicates') }}
                 </x-jet-responsive-nav-link>
             @endcan
-            @can('viewAny',App\Models\Field::class)
+            @can('viewMenu',\App\Models\Field::class)
                 <x-jet-responsive-nav-link href="{{ route('fields.index') }}" :active="request()->routeIs('fields.*')">
                     {{ __('Manage fields') }}
                 </x-jet-responsive-nav-link>
             @endcan
-            @can('viewAny',App\Models\ApiLog::class)
+            @can('viewMenu',\App\Models\ApiLog::class)
                 <x-jet-responsive-nav-link href="{{ route('api_logs.index') }}"
                                            :active="request()->routeIs('api_logs.*')">
                     {{ __('Api logs') }}
                 </x-jet-responsive-nav-link>
             @endif
-            @can('viewAny',App\Models\Crew::class)
+            @can('viewMenu',\App\Models\Crew::class)
                 <x-jet-responsive-nav-link href="{{ route('crew.index') }}" :active="request()->routeIs('crew.*')">
                     {{ __('Crews') }}
                 </x-jet-responsive-nav-link>
             @endcan
-            @can('viewAny',App\Models\User::class)
+            @can('viewMenu',\App\Models\User::class)
                 <x-jet-responsive-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.*')">
                     {{ __('Users') }}
                 </x-jet-responsive-nav-link>

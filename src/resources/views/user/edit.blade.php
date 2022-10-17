@@ -12,19 +12,23 @@
     <div>
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <a href="{{ route('user.index') }}"
-                   class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded">Back to list</a>
+                @can("viewAny", $user_found)
+                    <a href="{{ route('user.index') }}"
+                       class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded">Back to list</a>
+                @endcan
                 <a href="{{URL::previous() }}"
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
-                <form class="inline-block" action="{{ route('user.destroy', $user_found->id) }}" method="POST"
-                      onsubmit="return confirm('Are you sure you want to delete this user?');">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <button type="submit"
-                            class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
-                        Delete
-                    </button>
-                </form>
+                @can("delete", $user_found)
+                    <form class="inline-block" action="{{ route('user.destroy', $user_found->id) }}" method="POST"
+                          onsubmit="return confirm('Are you sure you want to delete this user?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <button type="submit"
+                                class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
+                            Delete
+                        </button>
+                    </form>
+                @endcan
             </div>
 
             @error('cantDeleteUser')
@@ -62,7 +66,7 @@
                             <div class="switch-toggle switch-3 switch-candy">
                                 @livewire("select-dropdown", ['label' => 'role_id', 'placeholder' => "-- Select the role
                                 --", 'datas' =>
-                                array_column(\App\Models\Role::orderBy("importance")->get()->toArray() , 'name',
+                                array_column(\App\Models\Role::orderBy('name')->get()->toArray() , 'name',
                                 'id'), "selected_value"=>$user_found->role->id])
                                 @stack('scripts')
                             </div>
@@ -77,7 +81,7 @@
                             <div class="switch-toggle switch-3 switch-candy">
                                 @livewire("select-dropdown", ['label' => 'crew_id', 'placeholder' => "-- Select the team
                                 --", 'datas' =>
-                                array_column(\App\Models\Crew::all()->toArray() , 'name', 'id'),
+                                array_column(\App\Models\Crew::orderBy('name')->get()->toArray() , 'name', 'id'),
                                 "selected_value"=>$user_found->crew->id])
                                 @stack('scripts')
                             </div>

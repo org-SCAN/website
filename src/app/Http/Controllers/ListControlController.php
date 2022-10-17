@@ -61,7 +61,7 @@ class ListControlController extends Controller
      */
     public function addToList(ListControl $list_control)
     {
-
+        $this->authorize('addToList', $list_control);
         $list_fields = $list_control->structure;
 
         return view("lists_control.add_to_list", compact("list_control", 'list_fields'));
@@ -77,6 +77,8 @@ class ListControlController extends Controller
      */
     public function updateList(StoreUpdateListRequest $request, ListControl $listControl)
     {
+        $this->authorize('addToList', $listControl);
+
         $model = 'App\Models\\' . $listControl->name;
         $listElem = $model::create($request->validated());
 
@@ -94,11 +96,13 @@ class ListControlController extends Controller
      */
     public function editListElem(ListControl $listControl, $element)
     {
+        $this->authorize('updateListElem', $listControl);
+
         $model = 'App\Models\\' . $listControl->name;
         $list_fields = $listControl->structure;
         $content = $model::find($element);
 
-        return view("lists_control.update_list_element", compact("listControl","list_fields", 'content'));
+        return view("lists_control.update_list_element", compact("listControl", "list_fields", 'content'));
     }
 
     /**
@@ -111,6 +115,8 @@ class ListControlController extends Controller
      */
     public function updateListElem(UpdateListElemRequest $request, ListControl $listControl, $element)
     {
+        $this->authorize('updateListElem', $listControl);
+
         $model = 'App\Models\\' . $listControl->name;
         $listElem = $model::find($element);
         $listElem->update($request->validated());
@@ -151,7 +157,7 @@ class ListControlController extends Controller
      */
     public function storeFields(StoreListControlFieldsRequest $request, ListControl $listControl)
     {
-
+        $this->authorize('create', $listControl);
         //store the fields onto the ListStructure table
         foreach($request->validated()['fields'] as $field){
             if(!empty($field) && ($listControl->structure->first() == null || !$listControl->structure()->firstWhere('field', $field)->exists())){
@@ -177,7 +183,10 @@ class ListControlController extends Controller
      * @param \App\Http\Requests\StoreListControlAddDisplayedValue $request
      * @return RedirectResponse
      */
-    public function storeDisplayedValue(StoreListControlAddDisplayedValue $request, ListControl $listControl){
+    public function storeDisplayedValue(StoreListControlAddDisplayedValue $request, ListControl $listControl)
+    {
+        $this->authorize('create', $listControl);
+
         $listControl->update($request->validated());
         return redirect()->route("lists_control.index");
     }
@@ -241,10 +250,13 @@ class ListControlController extends Controller
      * @param $element
      * @return RedirectResponse
      */
-    public function destroyListElem(ListControl $listControl, $element){
+    public function destroyListElem(ListControl $listControl, $element)
+    {
+        $this->authorize('deleteListElem', $listControl);
+
         //cheks if the element is used in any field
-        if(FieldRefugee::whereValue($element)->exists()){
-            return Redirect::back()->withErrors(["delete.".$element => "You can't delete this element since it's used in at least one person."]);
+        if (FieldRefugee::whereValue($element)->exists()) {
+            return Redirect::back()->withErrors(["delete." . $element => "You can't delete this element since it's used in at least one person."]);
         }
         $model = 'App\Models\\' . $listControl->name;
         $model::find($element)->delete();

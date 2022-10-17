@@ -21,7 +21,8 @@
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <form method="post" action="{{ route('lists_control.updateListElem', [$listControl, $content->id]) }}">
+                <form method="post"
+                      action="{{ route('lists_control.update_list_elem', [$listControl, $content->id]) }}">
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
                         @foreach($list_fields as $listField)

@@ -15,7 +15,7 @@
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add person</a>
                 @endcan
                 @can('createFromJson', \App\Models\Refugee::class)
-                    <a href="{{ route("person.json.create") }}"
+                    <a href="{{ route("person.create_from_json") }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add persons from
                         json</a>
                 @endcan
@@ -38,7 +38,12 @@
                                         @foreach($fields ?? '' as $field)
                                             <td>
                                                 @if($field->best_descriptive_value == 1)
-                                                    <a href="{{route('person.show',$refugee_id)}}">{{$refugee[$field->id]}}</a>
+                                                    @can('view', \App\Models\Refugee::find($refugee_id))
+                                                        <a href="{{route('person.show',$refugee_id)}}">{{ $refugee[$field->id] }}</a>
+                                                    @endcan()
+                                                    @cannot('view', \App\Models\Refugee::find($refugee_id))
+                                                        {{ $refugee[$field->id] }}
+                                                    @endcannot()
                                                 @else
                                                     {{$refugee[$field->id]?? ''}}
                                                 @endif

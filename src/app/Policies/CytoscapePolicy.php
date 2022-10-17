@@ -2,24 +2,14 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Auth\Access\Response;
 
-class CytoscapePolicy
+class CytoscapePolicy extends GlobalPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can access the cytoscape view
-     *
-     * @param \App\Models\User $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function viewAny(User $user)
+    public function __construct($route_name = "cytoscape")
     {
-        return $user->role->name == ("viewer") || $user->role->name == ("editor") || $user->role->name == ("admin")
-            ? Response::allow()
-            : Response::deny('You do not have the right to do this.');
+        parent::__construct($route_name);
     }
 }

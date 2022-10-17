@@ -9,10 +9,14 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <a href="{{ route("lists_control.create") }}"
-                   class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add list</a>
-                <a href="{{ route("fields.index") }}"
-                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Manage field</a>
+                @can("create", \App\Models\ListControl::class)
+                    <a href="{{ route("lists_control.create") }}"
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add list</a>
+                @endcan
+                @can("viewAny", \App\Models\Field::class)
+                    <a href="{{ route("fields.index") }}"
+                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Manage field</a>
+                @endcan
 
             </div>
             <div class="flex flex-col">
@@ -26,26 +30,44 @@
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         List
                                     </th>
-                                    <th scope="col" class="relative px-6 py-3">
-                                        <span class="sr-only">Action</span>
-                                    </th>
-                                    <th scope="col" class="relative px-6 py-3">
-                                        <span class="sr-only">Add element to list</span>
-                                    </th>
+                                    @can("update", $lists[0])
+                                        <th scope="col" class="relative px-6 py-3">
+                                            <span class="sr-only">Action</span>
+                                        </th>
+                                    @endcan
+                                    @can('addToList',$lists[0])
+                                        <th scope="col" class="relative px-6 py-3">
+                                            <span class="sr-only">Add element to list</span>
+                                        </th>
+                                    @endcan
                                 </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach($lists as $list)
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("lists_control.show", $list->id)}}" class="text-indigo-600 hover:text-blue-900">{{$list->title}}</a>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <a href="{{route("lists_control.edit", $list->id)}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <a href="{{route("lists_control.add_to_list", $list->id)}}" class="text-indigo-600 hover:text-indigo-900">Add element</a>
-                                        </td>
+                                        @can("view", $list)
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <a href="{{route("lists_control.show", $list->id)}}"
+                                                   class="text-indigo-600 hover:text-blue-900">{{ $list->title }}</a>
+                                            </td>
+                                        @endcan
+                                        @cannot("view", $list)
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                {{ $list->title }}
+                                            </td>
+                                        @endcannot
+                                        @can("update", $list)
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <a href="{{route("lists_control.edit", $list->id)}}"
+                                                   class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                            </td>
+                                        @endcan
+                                        @can('addToList',$list)
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <a href="{{route("lists_control.add_to_list", $list->id)}}"
+                                                   class="text-indigo-600 hover:text-indigo-900">Add element</a>
+                                            </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                                 <!-- More items... -->

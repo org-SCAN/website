@@ -12,7 +12,7 @@ class RequestRole extends Component
     public function render()
     {
         $user = Auth::user();
-        $roles = Role::orderBy("importance")->get();
+        $roles = Role::orderBy("name")->get();
         $request = RoleRequest::orderBy('created_at', "desc")->where("user_id", $user->id)->where("granted", null)->first();
         return view('livewire.request-role', compact('user', 'roles', 'request'));
     }

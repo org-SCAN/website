@@ -9,21 +9,26 @@
     <div>
         <div class="max-w-6xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <form action="{{route('crew.destroy', $crew->id)}}" method="POST"
-                      class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+
+                @can('viewAny', \App\Models\Crew::class)
                     <a href="{{ route('crew.index') }}"
                        class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to list</a>
+                @endcan
+                @can('update', $crew)
                     <a href="{{ route('crew.edit', $crew->id) }}"
                        class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">Edit</a>
-                    <form class="inline-block" action="{{ route('crew.destroy', $crew->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this crew?');">
+                @endcan
+                @can("delete", $crew)
+                    <form class="inline-block" action="{{ route('crew.destroy', $crew->id) }}" method="POST"
+                          onsubmit="return confirm('Are you sure you want to delete this crew?');">
                         <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        @csrf
                         <button type="submit"
                                 class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
                             Delete
                         </button>
                     </form>
-                </form>
+                @endcan
             </div>
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

@@ -34,9 +34,6 @@ class Refugee extends Model
      * @var array
      */
     protected $guarded = [];
-    /**
-     * @var mixed
-     */
 
     /**
      * Give the route pattern, used in api log
