@@ -48,7 +48,10 @@ class GlobalPolicy
             ? Route::getCurrentRoute()->action["as"]
             : $route_name;
         $route_base = explode(".", $route_name)[0];
-        return $user->role->permissions()->where('permissions.id', Permission::firstWhere("policy_route", $route_base . "." . $function)->id)->exists();
+        if (in_array($route_base, Permission::$alwaysAuthorizedRoute)) {
+            return true;
+        }
+        return $user->role->permissions()->where('permissions.id', Permission::firstWhere("policy_route", $route_base . "." . $function)->id ?? "")->exists();
     }
 
     /**

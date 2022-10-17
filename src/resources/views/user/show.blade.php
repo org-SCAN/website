@@ -95,6 +95,7 @@
                     </div>
                 </div>
             </div>
+            @livewire("api.api-token-manager", ["user" => $user])
         </div>
     </div>
 </x-app-layout>
