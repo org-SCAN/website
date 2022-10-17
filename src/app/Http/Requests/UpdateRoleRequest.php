@@ -24,7 +24,7 @@ class UpdateRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            "role.name" => "string|required",
+            "role.name" => "string|required|unique:roles,name," . $this->route('role')->id,
             "permissions.*" => "exists:permissions,id|string"
         ];
     }
