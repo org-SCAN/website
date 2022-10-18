@@ -73,9 +73,7 @@
                                     <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                         To
                                     </th>
-                                    @can("update")
                                         <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-800 uppercase tracking-wider"></th>
-                                    @endcan
                                     </thead>
                                     @foreach($person->relations as $sided_relations)
                                         @foreach($sided_relations as $link)
@@ -90,14 +88,39 @@
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
                                                     <a href="{{route("person.show", $link->pivot->to)}}">{{$link->pivot->refugeeTo->best_descriptive_value}}</a>
                                                 </td>
-                                                @can("update")
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                                        <a href="{{route("links.edit", $link->pivot->id)}}">Edit</a>
-                                                    </td>
-                                                @endcan
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                    <a href="{{route("links.edit", $link->pivot->id)}}">Edit</a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @endforeach
+                                    @if(\App\Models\Link::$quickAdd)
+                                        @can('create', \App\Models\Link::class)
+                                            <tr class="border-b">
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                    <a href="{{ route("person.show", $person->id) }}">{{ $person->best_descriptive_value }}</a>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200"></td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                    <a href="{{ route("links.create", ["origin" => 'from', 'refugee' => $person]) }}"
+                                                       class="bg-green-200 hover:bg-green-300 text-black font-bold py-2 px-4 rounded">
+                                                        Add To</a>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200"></td>
+                                            </tr>
+                                            <tr class="border-b">
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                    <a href="{{ route("links.create", ["origin" => 'to', 'refugee' => $person]) }}"
+                                                       class="bg-green-200 hover:bg-green-300 text-black font-bold py-2 px-4 rounded">
+                                                        Add from
+                                                    </a>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200"></td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                    <a href="{{ route("person.show", $person->id) }}">{{ $person->best_descriptive_value }}</a>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200"></td>
+                                            </tr>
+                                        @endcan
+                                    @endif
                                 </table>
                             </div>
                         </div>

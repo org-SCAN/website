@@ -117,7 +117,14 @@ Route::post('lists_control/{listControl}/edit/{element}', [
 Route::resource("person", RefugeeController::class)->middleware('auth');
 Route::resource("fields", FieldsController::class)->middleware('auth');
 Route::resource("lists_control", ListControlController::class)->middleware('auth');
+
+
 Route::resource("links", LinkController::class)->middleware('auth');
+Route::get("links/create/{origin?}/{refugee?}", [
+    "as" => 'links.create',
+    "uses" => '\App\Http\Controllers\LinkController@create'
+]);
+
 Route::resource("user", ManageUsersController::class)->middleware('auth');
 Route::resource("duplicate", DuplicateController::class)->middleware('auth');
 Route::resource("api_logs", ApiLogController::class)->middleware('auth');

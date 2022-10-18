@@ -22,8 +22,9 @@
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Refugee 1</label>
 
                             @php( $list = $lists["refugees"])
+                            @php($selected_value = (!empty($refugee) && !empty($origin) && $origin == "from") ? $refugee->id : $form_elem )
                             @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the
-                            first person --', 'datas' => $list, 'selected_value' => old($form_elem, $form_elem)])
+                            first person --', 'datas' => $list, 'selected_value' => old($form_elem, $selected_value)])
                             @stack('scripts')
 
                             @error($form_elem)
@@ -51,11 +52,14 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "to")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Refugee 2</label>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Refugee
+                                2</label>
 
                             @php( $list = $lists["refugees"])
+                            @php($selected_value = (!empty($refugee) && !empty($origin) && $origin == "to") ? $refugee->id : $form_elem )
+
                             @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the
-                            second person --', 'datas' => $list, 'selected_value' => old($form_elem, $form_elem)])
+                            second person --', 'datas' => $list, 'selected_value' => old($form_elem, $selected_value)])
                             @stack('scripts')
 
                             @error($form_elem)

@@ -43,6 +43,14 @@ class Link extends Pivot
      */
     const route_base = "links";
 
+
+    /**
+     *
+     * This parameter allows to display the Add from and Add to section in Person.show (relation part)
+     * @var bool
+     */
+    public static bool $quickAdd = true;
+
     /**
      * It returns a representative value, witch could be shown to discribe the element
      *
