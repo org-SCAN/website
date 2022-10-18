@@ -95,7 +95,9 @@
                     </div>
                 </div>
             </div>
-            @livewire("api.api-token-manager", ["user" => $user])
+            @can('update', $user)
+                @livewire("api.api-token-manager", ["user" => $user])
+            @endcan
         </div>
     </div>
 </x-app-layout>
