@@ -9,6 +9,42 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Field extends Model
 {
     use Uuids, SoftDeletes;
+
+    /**
+     * The attributes that defines all dataTypes for a field.
+     *
+     * @var array
+     */
+    public static $databaseTypes = [
+        "string" => "Small text",
+        "text" => "Long text",
+        "integer" => "Number",
+        "date" => "Date",
+        "boolean" => "Yes / No "
+    ];
+
+    /**
+     * The requirement of the field.
+     *
+     * @var array
+     */
+    public static $requiredTypes = [
+        2 => "Strongly advised",
+        3 => "Advised",
+        4 => "If possible",
+        100 => "Undefined"
+    ];
+
+    /**
+     * The platform where the attribute is available.
+     *
+     * @var array
+     */
+    public static $statusTypes = [
+        0 => "Disabled",
+        1 => "Website",
+        2 => "Website & App"
+    ];
     /**
      * The data type of the auto-incrementing ID.
      *
