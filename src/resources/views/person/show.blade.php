@@ -96,28 +96,34 @@
                                     @endforeach
                                     @if(\App\Models\Link::$quickAdd)
                                         @can('create', \App\Models\Link::class)
-                                            <tr class="border-b">
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                            <tr class="border-b mb-4">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr class="border-b mt-4">
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-gray-100 divide-y divide-gray-300">
                                                     <a href="{{ route("person.show", $person->id) }}">{{ $person->best_descriptive_value }}</a>
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200"></td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900   bg-gray-100 divide-y divide-gray-300"></td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900   bg-gray-100 divide-y divide-gray-300">
                                                     <a href="{{ route("links.create", ["origin" => 'from', 'refugee' => $person]) }}"
                                                        class="bg-green-200 hover:bg-green-300 text-black font-bold py-2 px-4 rounded">
                                                         Add To</a>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200"></td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900   bg-gray-100 divide-y divide-gray-300"></td>
                                             </tr>
                                             <tr class="border-b">
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900   bg-gray-100 divide-y divide-gray-300">
                                                     <a href="{{ route("links.create", ["origin" => 'to', 'refugee' => $person]) }}"
                                                        class="bg-green-200 hover:bg-green-300 text-black font-bold py-2 px-4 rounded">
                                                         Add from
                                                     </a>
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200"></td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900   bg-gray-100 divide-y divide-gray-300"></td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900   bg-gray-100 divide-y divide-gray-300">
                                                     <a href="{{ route("person.show", $person->id) }}">{{ $person->best_descriptive_value }}</a>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200"></td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900   bg-gray-100 divide-y divide-gray-300"></td>
                                             </tr>
                                         @endcan
                                     @endif
