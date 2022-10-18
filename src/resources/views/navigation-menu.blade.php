@@ -46,13 +46,13 @@
 
                 <!-- Fields Management Dropdown -->
                 @canany(['viewMenu', 'viewMenu'],[\App\Models\Field::class, \App\Models\ListControl::class])
-                    <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-dropdown align="right" width="48"
                                         :active="request()->routeIs('fields.*')||request()->routeIs('lists_control.*')">
                             <x-slot name="trigger">
-                                <span class="inline-flex rounded-md">
+                                <span class="inline-flex rounded-md pt-4">
                                     <button type="button"
-                                            class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                            class="inline-flex items-center text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
                                         {{ __('Field Management')}}
 
                                     </button>
@@ -85,12 +85,13 @@
 
                 <!-- User Management Dropdown -->
                 @canany(['viewMenu', 'viewMenu', 'viewMenu'],[\App\Models\User::class, \App\Models\Crew::class, \App\Models\Role::class])
-                    <div class="hidden sm:flex sm:items-center sm:ml-6">
-                        <x-jet-dropdown align="right" width="48">
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-dropdown align="right" width="48"
+                                        :active="request()->routeIs('user.*')||request()->routeIs('crew.*')||request()->routeIs('roles.*')">
                             <x-slot name="trigger">
-                                <span class="inline-flex rounded-md">
-                                    <button type="button"
-                                            class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                <span class="inline-flex rounded-md pt-4">
+                                    <button
+                                        class="inline-flex items-center text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
                                         {{ __('User Management')}}
 
                                     </button>

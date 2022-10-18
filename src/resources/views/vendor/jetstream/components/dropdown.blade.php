@@ -1,9 +1,9 @@
-@props(['align' => 'right', 'width' => '48', 'contentClasses' => 'py-1 bg-white', 'dropdownClasses' => '', 'active' => false])
+@props(['align' => 'right', 'width' => '48', 'contentClasses' => 'bg-white', 'dropdownClasses' => '', 'active' => false])
 
 @php
     $classes = ($active ?? false)
-                ? 'border-b-2 border-red-400'
-                : 'border-b-2 border-transparent';
+                ? 'border-b-2 border-red-400 '
+                : 'border-b-2 border-transparent focus:outline-none focus:border-indigo-700';
 
 switch ($align) {
     case 'left':

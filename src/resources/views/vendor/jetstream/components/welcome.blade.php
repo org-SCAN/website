@@ -4,7 +4,7 @@
     </div>
 
     <div class="mt-8 text-2xl">
-        Welcome to SCAN : Share Compile ANalise
+        Welcome to <b>SCAN</b> : <b>S</b>hare <b>C</b>ompile <b>AN</b>alise
     </div>
 
     <div class="mt-6 text-gray-500">
