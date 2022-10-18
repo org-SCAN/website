@@ -58,7 +58,7 @@
                             @php($form_elem = "database_type")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's Data type</label>
 
-                            @php( $list = array("string" => "Small text","text" => "Long text","integer" => "Number","date" => "Date","boolean" => "Yes / No "))
+                            @php( $list = \App\Models\Field::$databaseTypes )
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" />
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used to store the datas. <i class="text-sm text-red-600"> Be careful : you couldn't change this value later</i></small>
 
@@ -74,7 +74,7 @@
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
                                 requirement state</label>
 
-                            @php( $list = array(2 => "Strongly advised",3 => "Advised",4 => "If possible",100 => "Undefined"))
+                            @php( $list = \App\Models\Field::$requiredTypes)
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define
@@ -92,7 +92,7 @@
                             @php($form_elem = "status")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's activation status </label>
 
-                            @php( $list = array(0 => "Disabled",1 => "Website",2 => "Website & App"))
+                            @php( $list = \App\Models\Field::$statusTypes)
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define where the field will be deployed.</small>
 
@@ -171,7 +171,7 @@
                                     </a>-->
                             </label>
 
-                            @php( $list = [" " => "Choose an associate list"]+array_column(\App\Models\ListControl::all()->toArray(), "title", "id"))
+                            @php( $list = [" " => "Choose an associate list"]+array_column(\App\Models\ListControl::whereNotNull('displayed_value')->get()->toArray(), "title", "id"))
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define a
