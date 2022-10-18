@@ -189,7 +189,7 @@ class FieldsController extends Controller
             $datas = array();
             foreach (ListControl::whereRelation('crews', 'crew_id', $request->user()->crew->id)->get() as $list) {
                 $call_class = '\App\Models\\' . $list->name;
-                $datas[$list->name] = $call_class::getAPIContent($request->user());
+                $datas[$list->id] = $call_class::getAPIContent($request->user());
             }
             $datas['fields'] = Field::getAPIContent($request->user());
             $datas['ListRelations'] = ListRelation::getAPIContent($request->user());

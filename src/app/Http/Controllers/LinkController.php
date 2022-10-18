@@ -45,11 +45,11 @@ class LinkController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create($origin = null, Refugee $refugee = null)
     {
         $lists["refugees"] = Refugee::getAllBestDescriptiveValues();
         $lists["relations"] = array_column(ListRelation::all()->toArray(), ListControl::where('name', "ListRelation")->first()->displayed_value, "id");
-        return view("links.create", compact("lists"));
+        return view("links.create", compact("lists", 'origin', 'refugee'));
     }
 
 
