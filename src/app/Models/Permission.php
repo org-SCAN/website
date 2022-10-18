@@ -12,6 +12,8 @@ class Permission extends Model
 {
     use HasFactory, Uuids, SoftDeletes;
 
+    public static $alwaysAuthorizedRoute = ["livewire"];
+
     public $incrementing = false;
 
     /**
