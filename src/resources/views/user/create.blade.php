@@ -47,7 +47,7 @@
                                 password</label>
                             <input type="password" name="password_confirmation" id="password_confirmation"
                                    class="form-input rounded-md shadow-sm mt-1 block w-full"/>
-                            <small id="Help_password" class="block font-medium text-sm text-gray-500 ">
+                            <small id="Help_password" class="block font-medium text-sm text-red-500 font-bold ">
                                 The password must contain at least 8 characters in length, one lowercase letter, one
                                 uppercase letter, one digit </small>
                             @error('password_confirmation')
@@ -55,15 +55,35 @@
                             @enderror
                         </div>
 
-                        <!--    -->
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            @php($form_elem = "team")
+                            <label for="team" class="block font-medium text-sm text-gray-700">Team</label>
+
+                            <div class="switch-toggle switch-3 switch-candy">
+                                @php($list = array_column(\App\Models\Crew::orderBy('name')->get()->toArray() , 'name', 'id'))
+                                @livewire("select-dropdown", ['label' => 'team', 'placeholder' => "-- Select the team
+                                --", 'datas' => $list, "selected_value"=>old('team','team')])
+                                @stack('scripts')
+                            </div>
+                            @error($form_elem)
+                            <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">The role can
+                                be changed later on by an admin</small>
+                        </div>
+
 
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "role")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Role</label>
 
                             @php( $list = array_column(\App\Models\Role::orderBy('name')->get()->toArray(), 'name', 'id'))
-                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
-                                           class="form-input rounded-md shadow-sm mt-1 block w-full"/>
+                            <div class="switch-toggle switch-3 switch-candy">
+                                @livewire("select-dropdown", ['label' => 'role', 'placeholder' => "-- Select the role
+                                --", 'datas' => $list, "selected_value"=>old('role','role')])
+                                @stack('scripts')
+                            </div>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">The role can
                                 be changed later on by an admin</small>
 

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\addUserToCrewRequest;
 use App\Http\Requests\StoreCrewRequest;
 use App\Http\Requests\UpdateCrewRequest;
 use App\Models\Crew;
+use App\Models\User;
 
 
 class CrewController extends Controller
@@ -63,6 +65,7 @@ class CrewController extends Controller
      */
     public function show(Crew $crew)
     {
+        $users = $crew->users;
         return view("crew.show", compact("crew"));
     }
 
@@ -92,6 +95,14 @@ class CrewController extends Controller
         return redirect()->route("crew.index");
     }
 
+    public function addUser(addUserToCrewRequest $request, Crew $crew)
+    {
+        $user = User::find($request->validated()['user']);
+        $user->crew_id = $crew->id;
+        $user->save();
+        return view("crew.show", compact("crew"));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -100,8 +111,10 @@ class CrewController extends Controller
      */
     public function destroy(Crew $crew)
     {
-        //TODO : moove attached user to the default team
-        // $this->authorize("delete", Auth::user());
+        foreach ($crew->users as $user) {
+            $user->crew_id = Crew::getDefaultCrewId();
+            $user->save();
+        }
         $crew->delete();
         return redirect()->route("crew.index");
     }

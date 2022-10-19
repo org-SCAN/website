@@ -36,10 +36,14 @@ class StoreUserRequest extends FormRequest
                 'regex:/[A-Z]/',      // must contain at least one uppercase letter
                 'regex:/[0-9]/',      // must contain at least one digit
             ],
-            'role'    => [
+            'role' => [
                 'required',
                 'exists:roles,id',
             ],
+            'team' => [
+                'required',
+                "exists:crews,id"
+            ]
         ];
     }
 }
