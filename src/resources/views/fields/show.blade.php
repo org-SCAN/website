@@ -57,10 +57,10 @@
                                         Associate list
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-900 bg-white divide-y divide-gray-200">
-                                        @if(!empty($field->linked_list))
-                                            <a href="{{route("lists_control.show", $field->listControl->id)}}">{{ $field->listControl->title }}</a>
+                                        @if(!empty($field->listControl))
+                                            <a href="{{route("lists_control.show", $field->listControl->id)}}">{{ $field->listControl->title ?? "" }}</a>
                                         @else
-                                            {{ $field->listControl->title }}
+                                            {{ $field->listControl->title ?? ""}}
                                         @endif
                                     </td>
                                 </tr>

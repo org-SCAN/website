@@ -50,22 +50,22 @@ class makeList extends Command
     public function handle()
     {
         // Check if the id exists
-        $list = ListControl::findOr($this->argument('id'), function(){
+        $list = ListControl::findOr($this->argument('id'), function () {
             return "The given id doesn't match our records ";
         });
 
-        if (!($list instanceof ListControl)){
-             $this->error($list);
-             return Command::INVALID;
+        if (!($list instanceof ListControl)) {
+            $this->error($list);
+            return Command::INVALID;
         }
 
         //create the model
-        $path = $this->getSourceFilePath('app/models', $list->name); //get the path to witch the model has to be created
+        $path = $this->getSourceFilePath('app/Models', $list->name); //get the path to witch the model has to be created
         $stubModelVariables = [
             'namespace' => 'App\\Models',
             'class' => $list->name,
         ];
-        $content = $this->getStubContents($this->getStubPath('model.listControl'),$stubModelVariables); //replace the variable onto the stub
+        $content = $this->getStubContents($this->getStubPath('model.listControl'), $stubModelVariables); //replace the variable onto the stub
 
         if (!$this->files->exists($path)) {
             $this->files->put($path, $content);
