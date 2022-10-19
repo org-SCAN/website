@@ -27,7 +27,6 @@ class StoreFieldRequest extends FormRequest
     {
         $rules = [
             "title" => "required|string",
-            "label" => "required|string",
             "placeholder" => "string|max:80|nullable",
             "database_type" => "string|required",
             "required" => "integer|required",

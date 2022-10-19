@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class FieldsController extends Controller
 {
@@ -61,6 +62,7 @@ class FieldsController extends Controller
             $last_order = Field::where('crew_id', Auth::user()->crew->id)->get()->sortByDesc('order')->first();
             $field["order"] = empty($last_order) ? 1 : $last_order->order + 1;
         }
+        $field["label"] = Str::snake($field["title"]);
         $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field["database_type"]);
         $field["android_type"] = Field::getUITypeFromForm($field["database_type"]);
         $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
