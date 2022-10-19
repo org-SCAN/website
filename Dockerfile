@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
         libcurl4-openssl-dev \
         pkg-config \
         libssl-dev \
+        npm \
     && docker-php-ext-configure gd \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install zip \
@@ -25,13 +26,20 @@ RUN apt-get update && apt-get install -y \
 # Install extensions
 RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl gd
 
+RUN echo "Mutex posixsem" >> /etc/apache2/apache2.conf
+
 COPY conf/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 
 RUN chown -R www-data:www-data /var/www/html \
-    && a2enmod rewrite
+    && a2enmod rewrite \
+    && a2enmod ssl
 
+#RUN composer update
+#RUN npm update
+#RUN chmod -R 775 /var/www/html/storage
+#RUN cd /var/www/html && php artisan cache:clear && composer dump-autoload && php artisan key:generate
 
 
 # RUN chmod -R 775 /var/www/html/storage # Run cette commande si une erreur sur laravel
