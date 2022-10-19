@@ -26,9 +26,9 @@ class CreateFieldsTable extends Migration
             $table->uuid( "id")
                 ->unique()
                 ->primary();
-            $table->string( "title");
-            $table->string( "label")->unique();
-            $table->string( "placeholder")
+            $table->string("title");
+            $table->string("label");
+            $table->string("placeholder")
                 ->nullable();
             $table->string( "html_data_type");
             $table->string( "database_type");
