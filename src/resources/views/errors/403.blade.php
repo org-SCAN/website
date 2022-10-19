@@ -518,7 +518,7 @@
             </div>
 
             <div class="ml-4 text-lg text-gray-500 uppercase tracking-wider">
-                {{ $exception->getMessage() }} <a href="{{ route('person.index') }}"
+                {{ $exception->getMessage() }} <a href="{{ route('/') }}"
                                                   style="text-decoration: underline"> Home Page</a></div>
         </div>
     </div>

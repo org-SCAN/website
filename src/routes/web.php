@@ -26,7 +26,8 @@ use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function () {
     return view('dashboard');
-})->middleware('auth');
+})->name("/")->middleware('auth');
+
 Route::get('/content.json', function () {
     return Storage::disk('public')->get('content.json');
 })->middleware('auth');
