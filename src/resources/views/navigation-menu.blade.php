@@ -45,7 +45,7 @@
                 @endcan
 
                 <!-- Fields Management Dropdown -->
-                @canany(['viewMenu', 'viewMenu'],[\App\Models\Field::class, \App\Models\ListControl::class])
+                @if ( Auth::user()->can('viewMenu', \App\Models\Field::class) || Auth::user()->can('viewMenu',  \App\Models\ListControl::class))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-dropdown align="right" width="48"
                                         :active="request()->routeIs('fields.*')||request()->routeIs('lists_control.*')">
@@ -72,7 +72,7 @@
                                 @endcan
                                 @can("viewMenu", \App\Models\ListControl::class)
                                     <x-jet-dropdown-link href="{{ route('lists_control.index') }}"
-                                                         :active="request()->routeIs('fields.*')">
+                                                         :active="request()->routeIs('lists_control.*')">
                                         {{ __('Lists') }}
                                     </x-jet-dropdown-link>
                                 @endcan
@@ -80,11 +80,11 @@
                             </x-slot>
                         </x-jet-dropdown>
                     </div>
-                @endcanany
+                @endif
 
 
                 <!-- User Management Dropdown -->
-                @canany(['viewMenu', 'viewMenu', 'viewMenu'],[\App\Models\User::class, \App\Models\Crew::class, \App\Models\Role::class])
+                @if ( Auth::user()->can('viewMenu', \App\Models\User::class) || Auth::user()->can('viewMenu',  \App\Models\Crew::class)|| Auth::user()->can('viewMenu',  \App\Models\Role::class) )
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-dropdown align="right" width="48"
                                         :active="request()->routeIs('user.*')||request()->routeIs('crew.*')||request()->routeIs('roles.*')">
@@ -125,7 +125,7 @@
                             </x-slot>
                         </x-jet-dropdown>
                     </div>
-                @endcanany
+                @endif
 
                 @can('viewMenu', \App\Models\ApiLog::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
