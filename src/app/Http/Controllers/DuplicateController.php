@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Duplicate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class DuplicateController extends Controller
 {
@@ -15,7 +16,9 @@ class DuplicateController extends Controller
      */
     public function index()
     {
-        $duplicates = Duplicate::getDuplicates();
+        $this->authorize("viewAny", Auth::user());
+        //$duplicates = Duplicate::getDuplicates();
+        $duplicates = [];
         return view("duplicate.index", compact("duplicates"));
     }
 

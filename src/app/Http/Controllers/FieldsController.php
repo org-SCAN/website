@@ -7,68 +7,86 @@ use App\Http\Requests\UpdateFieldRequest;
 use App\Models\ApiLog;
 use App\Models\Field;
 use App\Models\ListControl;
-use App\Models\Relation;
+use App\Models\ListRelation;
+use App\Models\Translation;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class FieldsController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Field::class, 'field');
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
     public function index()
     {
-
         return view("fields.index");
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
     public function create()
     {
-
         return view("fields.create");
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param App\Http\Requests\StoreFieldRequest $request
-     * @return Response
+     * @param StoreFieldRequest $request
+     * @return RedirectResponse
      */
     public function store(StoreFieldRequest $request)
     {
+        $apiLog = ApiLog::createFromRequest($request, 'Field');
         $field = $request->validated();
-        if(empty($field["order"])){
-            $field["order"]=100;
+        $field["api_log"] = $apiLog->id;
+        if (empty($field["order"])) {
+            $last_order = Field::where('crew_id', Auth::user()->crew->id)->get()->sortByDesc('order')->first();
+            $field["order"] = empty($last_order) ? 1 : $last_order->order + 1;
         }
         $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field["database_type"]);
         $field["android_type"] = Field::getUITypeFromForm($field["database_type"]);
         $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
+        $field["crew_id"] = Auth::user()->crew->id;
+
         $field = Field::create($field);
-        if($field->exists){
-            $field->addFieldtoRefugees();
-        }else{
-            //DROP error ?
-        }
+
+
+        $listField = ListControl::firstWhere('name', 'Field');
+
+        Translation::handleTranslation($listField, $field->{$listField->key_value}, $field->{$listField->displayed_value});
+
+
+        $apiLog->response = "success";
+        $apiLog->save();
         return redirect()->route("fields.index");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param String $id
-     * @return Response
+     * @param Field $field
+     * @return View
      */
-    public function show(String $id)
+    public function show(Field $field)
     {
-        $field = Field::find($id);
-        //die(var_dump($field));
         $display_elements = [
             "title" => "Title",
             "label" => "Label",
@@ -81,19 +99,21 @@ class FieldsController extends Controller
             "attribute" => "Attribute",
             "database_type" => "Database type",
             "order" => "Order",
-            "validation_laravel" => "Validations attributes"];
+            "validation_laravel" => "Validations attributes",
+            "descriptive_value" => "Descriptive value",
+            "best_descriptive_value" => "Best descriptive value"
+        ];
         return view("fields.show",compact('field', 'display_elements'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return Response
+     * @param Field $field
+     * @return View
      */
-    public function edit($id)
+    public function edit(Field $field)
     {
-        $field = Field::find($id);
         $linked_list_id = $field->getLinkedListId();
         $lists["database_type"] = array("string" => "Small text", "text" => "Long text", "integer" => "Number", "date" => "Date", "boolean" => "Yes / No ");
         $lists["database_type"] = [$field->database_type => $lists["database_type"][$field->database_type]] + $lists["database_type"];
@@ -111,38 +131,49 @@ class FieldsController extends Controller
         } else {
             $lists["linked_list"] = array_column(ListControl::where('id', $linked_list_id)->get()->toArray(), "title", "id");
         }
-        $lists["linked_list"] += array_column(ListControl::where("deleted", 0)->where("id", "!=", $linked_list_id)->get()->toArray(), "title", "id");
+        $lists["linked_list"] += array_column(ListControl::where("id", "!=", $linked_list_id)->get()->toArray(), "title", "id");
         return view("fields.edit", compact('field', "lists"));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param string $id
-     * @return Response
+     * @param UpdateFieldRequest $request
+     * @param Field $field
+     * @return RedirectResponse
      */
-    public function update(UpdateFieldRequest $request, $id)
+    public function update(UpdateFieldRequest $request, Field $field)
     {
-
-        $field = Field::find($id);
+        $apiLog = ApiLog::createFromRequest($request, 'Field');
         $to_update = $request->validated();
-        $to_update["database_type"] = $field->database_type; $to_update["validation_laravel"] = Field::getValidationLaravelFromForm($to_update);
+        if (!$request->has('descriptive_value')) {
+            $to_update['descriptive_value'] = 0;
+        }
+        if (!$request->has('best_descriptive_value')) {
+            $to_update['best_descriptive_value'] = 0;
+        }
+        $to_update["database_type"] = $field->database_type;
+        $to_update["api_log"] = $apiLog->id;
+        $to_update["validation_laravel"] = Field::getValidationLaravelFromForm($to_update);
         $field->update($to_update);
 
+        $listField = ListControl::firstWhere('name', 'Field');
+        Translation::handleTranslation($listField, $field->{$listField->key_value}, $field->{$listField->displayed_value});
+
+        $apiLog->response = "success";
+        $apiLog->save();
         return redirect()->route("fields.index");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param String $id
-     * @return Response
+     * @param Field $field
+     * @return RedirectResponse
      */
-    public function destroy(String $id)
+    public function destroy(Field $field)
     {
-        Field::find($id)
-        ->update(["deleted"=>1]);
+        $field->delete();
         return redirect()->route("fields.index");
     }
 
@@ -154,14 +185,14 @@ class FieldsController extends Controller
     public function handleApiRequest(Request $request)
     {
         $log = ApiLog::createFromRequest($request, "Refugee");
-        if($request->user()->tokenCan("read")){
+        if ($request->user()->tokenCan("read")) {
             $datas = array();
-            $datas["fields"] = Field::getAPIContent();
-            $datas["Relations"] = Relation::getAPIContent();
-            foreach (Field::getUsedLinkedList() as $list){
-                $call_class = '\App\Models\\'.$list;
-                $datas[$list] = $call_class::getAPIContent();
+            foreach (ListControl::whereRelation('crews', 'crew_id', $request->user()->crew->id)->get() as $list) {
+                $call_class = '\App\Models\\' . $list->name;
+                $datas[$list->id] = $call_class::getAPIContent($request->user());
             }
+            $datas['fields'] = Field::getAPIContent($request->user());
+            $datas['ListRelations'] = ListRelation::getAPIContent($request->user());
             return response(json_encode($datas), 200)->header('Content-Type', 'application/json');
         }
         $log->update(["response"=>"Bad token access"]);

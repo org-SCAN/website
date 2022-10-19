@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreFieldRequest extends FormRequest
 {
@@ -26,13 +27,15 @@ class StoreFieldRequest extends FormRequest
     {
         $rules = [
             "title" => "required|string",
-            "label" => "required|string|unique:fields,label,0,deleted",
+            "label" => "required|string",
             "placeholder" => "string|max:80|nullable",
             "database_type" => "string|required",
             "required" => "integer|required",
             "status" => "integer|required",
             "linked_list" => "nullable|uuid|exists:list_controls,id",
-            "order" => "integer|nullable"
+            "order" => "integer|nullable",
+            "descriptive_value" => "integer|nullable",
+            "best_descriptive_value" => "integer|nullable|unique:fields,best_descriptive_value,NULL,id,crew_id," . Auth::user()->crew->id
 
         ];
         return $rules;

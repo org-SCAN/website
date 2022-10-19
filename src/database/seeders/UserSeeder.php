@@ -15,6 +15,10 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::createDefaultUser();
+
+        if(User::where("email", env("DEFAULT_EMAIL"))->get()->isEmpty()){
+            User::createDefaultUser();
+        }
+
     }
 }

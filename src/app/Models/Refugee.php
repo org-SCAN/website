@@ -3,12 +3,16 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
+use http\Env\Response;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class Refugee extends Model
 {
-    use HasFactory, Uuids;
+    use HasFactory, Uuids, SoftDeletes;
     /**
      * The data type of the auto-incrementing ID.
      *
@@ -30,159 +34,100 @@ class Refugee extends Model
      * @var array
      */
     protected $guarded = [];
-    /**
-     * @var mixed
-     */
 
     /**
      * Give the route pattern, used in api log
      * @var string
      */
-    const route_base = "manage_refugees";
+    const route_base = "person";
 
-    /**
-     * It returns a representative value, witch could be shown to discribe the element
-     *
-     * @return mixed
-     */
-    public function getRepresentativeValue()
+    protected static function boot()
     {
-        return $this->full_name;
+        parent::boot();
+
+        static::deleting(function ($person) {
+            $person->toRelation()->detach();
+            $person->fromRelation()->detach();
+        });
+
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = Str::uuid()->toString();
+            }
+        });
     }
 
     /**
-     * Indicate the nationality according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
+     * The fields that describe the user.
      */
-    public function getNationalityAttribute($value){
-        return Country::getDisplayedValueContent($value);
-    }
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getNationalityId(){
-        return $this->attributes['nationality'];
-    }
-
-    /**
-     * Store the country id accorting its key or its ISO3 contry code
-     * @param $value
-     */
-
-    public function setNationalityAttribute($value){
-        $this->attributes["nationality"] = Country::getIdFromValue($value);
-    }
-
-    /**
-     * Store the sex id accorting its key or its code
-     * @param $value
-     */
-
-    public function setGenderAttribute($value){
-        $this->attributes["gender"] = Gender::getIdFromValue($value);
-    }
-
-    /**
-     * Store the role id accorting its key or its code
-     * @param $value
-     */
-
-    public function setRoleAttribute($value){
-        $this->attributes["role"] = Role::getIdFromValue($value);
-    }
-
-    /**
-     * Store the route id accorting its key or its code
-     * @param $value
-     */
-
-    public function setRouteAttribute($value){
-        $this->attributes["route"] = Route::getIdFromValue($value);
-    }
-
-    /**
-     * Store the residence id accorting its key or its code
-     * @param $value
-     */
-
-    public function setResidenceAttribute($value){
-        $this->attributes["residence"] = Country::getIdFromValue($value);
-    }
-
-    /**
-     * Indicate the role according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRoleAttribute($value){
-        return Role::getDisplayedValueContent($value);
-    }
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRoleId(){
-        return $this->attributes['role'];
-    }
-    /**
-     * Indicate the gender according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getGenderAttribute($value){
-        return Gender::getDisplayedValueContent($value);
-    }
-
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getGenderId(){
-        return $this->attributes['gender'];
-    }
-    /**
-     * Indicate the route according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRouteAttribute($value){
-        return Route::getDisplayedValueContent($value);
-    }
-
-    /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getRouteId()
-    {
-        return $this->attributes['route'];
-    }
-
-    /**
-     * Indicate the residence according the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
-     */
-    public function getResidenceAttribute($value)
+    public function fields()
     {
 
-        return Country::getDisplayedValueContent($value);
+        $crew_id = empty(Auth::user()->crew->id) ? User::where("email", env("DEFAULT_EMAIL"))->get()->first()->crew->id : Auth::user()->crew->id;
+        return $this->belongsToMany(Field::class)
+            ->where("crew_id", $crew_id)
+            ->withPivot("id")
+            ->withPivot("value")
+            ->withTimestamps()
+            ->using(FieldRefugee::class)
+            ->orderBy("required")
+            ->orderBy("order");
     }
 
     /**
-     * Indicate the the UUID stored in DB
-     * @param $value Is the id of the element
-     * @return String
+     * The Api log to which the refugee is associated.
+     **/
+    /* public function api_log()
+     {
+         return $this->belongsTo(ApiLog::class, "api_log");
+     }
+ */
+    /**
+     * The crew to which the refugee is associated.
      */
-    public function getResidenceId()
+    public function crew()
     {
-        return $this->attributes['residence'];
+        return $this->hasOneThrough(Crew::class, ApiLog::class, "id", "id", "api_log", "crew_id");
+    }
+
+    /**
+     * The user to which the refugee is associated.
+     */
+    public function user()
+    {
+        return $this->hasOneThrough(User::class, ApiLog::class, "id", "id", "api_log", "user_id");
+    }
+
+    /*
+    public function relations(){
+        return $this->fromRelation() + $this->toRelation();
+    }
+    */
+    public function fromRelation()
+    {
+        return $this->belongsToMany(ListRelation::class, "links", "from", "relation")
+            ->using(Link::class)
+            ->wherePivotNull("deleted_at")
+            ->withPivot("to")
+            ->withPivot("id");
+    }
+
+    public function toRelation()
+    {
+        return $this->belongsToMany(ListRelation::class, "links", "to", "relation")
+            ->using(Link::class)
+            ->wherePivotNull("deleted_at")
+            ->withPivot("from")
+            ->withPivot("id");
+    }
+
+    public static function getAllBestDescriptiveValues()
+    {
+        $best_descriptive_values = [];
+        foreach (self::all() as $elem) {
+            $best_descriptive_values[$elem->id] = $elem->best_descriptive_value;
+        }
+        return $best_descriptive_values;
     }
 
     public static function getRefugeeIdFromReference($reference, $application_id)
@@ -192,40 +137,92 @@ class Refugee extends Model
         return !empty($refugee) ? $refugee->id : null;
     }
 
-    public static function handleApiRequest($refugee)
+    public function getRepresentativeValuesAttribute()
     {
-        $potential_refugee = Refugee::getRefugeeIdFromReference($refugee["unique_id"], $refugee["application_id"]);
-        $ref = null;
-        if ($potential_refugee != null) {
-            $potential_refugee = self::find($potential_refugee);
+        return $this->fields->where("representative_value", 1);
+    }
 
-            if (isset($refugee["date_update"])) {
-                if ($refugee["date_update"] > $potential_refugee->updated_at) {
-                    if ($potential_refugee->application_id != $refugee["application_id"]) {
-                        foreach ($refugee as $field => $refugee_field) {
-                            if ($potential_refugee->$refugee_field != null) {
-                                unset($refugee[$refugee_field]);
-                            }
-                        }
-                    }
-                } else {
-                    foreach ($refugee as $field => $refugee_field) {
-                        if ($potential_refugee->$refugee_field != null) {
-                            unset($refugee[$refugee_field]);
-                        }
+    public function getBestDescriptiveValueAttribute()
+    {
+        $best_descriptive_value = $this->fields->where("best_descriptive_value", 1)->first();
+        return -empty($best_descriptive_value) ? "" : $best_descriptive_value->pivot->value;
+    }
+
+    public function getRelationsAttribute()
+    {
+        return [$this->fromRelation, $this->toRelation];
+    }
+
+    /**
+     * This function is used to handle the API request. If a person exists (id is in the request) update all changed fields, else create the person and return his/her ID.
+     *
+     *
+     * @param $person
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|null
+     */
+    public static function handleApiRequest($person)
+    {
+        // Check if the person is already stored. If so, the application should send an id.
+        $storedPerson = null;
+        if (array_key_exists('id', $person) && isset($person["id"]) and !empty($person["id"])) {
+            $storedPerson = self::findOr($person["id"], function () {
+                return response("The given ID doesn't exist in our records", 404);
+            });
+            unset($person["id"]);
+        }
+        // if a person is found, we should update it
+        if ($storedPerson instanceof Refugee) {
+            //delete useless information (in the update case)
+            $keys = ["api_log", "date", "application_id"];
+            foreach ($keys as $key) {
+                unset($person[$key]);
+            }
+
+            // update the fields if they were changed
+            $storedFields = $storedPerson->fields;
+            $i = 0;
+            foreach ($storedFields as $field) {
+                //the stored value and request value are different, we update the DB
+                if (array_key_exists($field->id, $person)) {
+                    $storedFields->forget($i);
+                    if ($field->pivot->value != $person[$field->id]) {
+                        //update changed fields
+                        $storedPerson->fields()->updateExistingPivot($field->id, ["value" => $person[$field->id]]);
                     }
                 }
-                unset($refugee["date_update"]);
-                $potential_refugee->update($refugee);
-                $ref = true;
-            } else {
-                $ref = true;
+                //delete when it's done
+                $i++;
+                unset($person[$field->id]);
             }
-        } else {
-            unset($refugee["date_update"]);
-            Refugee::create($refugee);
-            $ref = true;
+            //Delete the remains values
+            foreach ($storedFields as $field) {
+                //the stored value and request value are different, we update the DB
+                $storedPerson->fields()->detach($field->id);
+            }
+
+        } else { //should create the person
+            $keys = ["api_log", "date", "application_id"];
+            $personContent = array();
+            foreach ($keys as $key) {
+                $personContent[$key] = $person[$key];
+                unset($person[$key]);
+            }
+            $storedPerson = Refugee::create($personContent);
         }
-        return $ref;
+
+        $fields_to_add = array();
+        foreach ($person as $fieldKey => $value) {
+            //check if the $fieldKey exisits in fields
+            $field = Field::findOr($fieldKey, function () {
+                return response("The field doesn't exist.", 404);
+            });
+            if ($field instanceof Response) { //return error if the field id doesn't exist.
+                return $field;
+            }
+            $fields_to_add[$fieldKey] = ["value" => $value];
+        }
+        $storedPerson->fields()->attach($fields_to_add);
+
+        return $storedPerson;
     }
 }

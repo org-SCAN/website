@@ -390,7 +390,7 @@ function drawGraph(){
                 {
                     content: 'View information',
                     select: function(ele){
-                        window.location.replace("/manage_refugees/"+ele.id());
+                        window.location.replace("/person/" + ele.id());
                     }
                 },
 

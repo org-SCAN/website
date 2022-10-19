@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Field;
+use App\Models\FieldRefugee;
 use App\Models\Refugee;
 use Illuminate\Database\Seeder;
 
@@ -14,8 +16,13 @@ class RefugeeSeeder extends Seeder
      */
     public function run()
     {
-        Refugee::factory()
+        $refugees = Refugee::factory()
             ->count(200)
             ->create();
+
+        foreach($refugees as $refugee){
+            $refugee->fields()->attach(FieldRefugee::random_fields());
+        }
+
     }
 }

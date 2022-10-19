@@ -15,7 +15,9 @@
         "attribute": "",
         "database_type": "string",
         "order": 1,
-        "validation_laravel": "regex:/^[A-Z]{3}-[0-9]{6}$/|nullable"
+		"descriptive_value" : 1,
+		"best_descriptive_value" : 0,
+        "validation_laravel": "required|regex:/^[A-Z]{3}-[0-9]{6}$/"
     },
     {
         "title": {
@@ -27,13 +29,15 @@
         "placeholder": "F",
         "html_data_type": "text",
         "android_type": "Spinner",
-        "linked_list": "Gender",
+        "linked_list": "ListGender",
         "required": 1,
         "status": 2,
         "attribute": "",
         "database_type": "string",
         "order": 2,
-        "validation_laravel": "string|required"
+        "descriptive_value": 1,
+        "best_descriptive_value": 0,
+        "validation_laravel": "string|required|exists:list_genders,id"
     },
     {
         "title": {
@@ -51,6 +55,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 3,
+		"descriptive_value" : 1,
+		"best_descriptive_value" : 1,
         "validation_laravel": "string|required|max:250"
     },
     {
@@ -69,6 +75,8 @@
         "attribute": "",
         "database_type": "integer",
         "order": 4,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "required|integer"
     },
     {
@@ -81,13 +89,15 @@
         "placeholder": "Switzerland",
         "html_data_type": "text",
         "android_type": "AutoCompleteTextView",
-        "linked_list": "Country",
+        "linked_list": "ListCountry",
         "required": 2,
         "status": 2,
         "attribute": "",
         "database_type": "string",
         "order": 5,
-        "validation_laravel": "string|nullable"
+        "descriptive_value": 1,
+        "best_descriptive_value": 0,
+        "validation_laravel": "string|nullable|exists:list_countries,id"
     },
     {
         "title": {
@@ -99,13 +109,15 @@
         "placeholder": "",
         "html_data_type": "text",
         "android_type": "Spinner",
-        "linked_list": "Role",
+        "linked_list": "ListRole",
         "required": 2,
         "status": 2,
         "attribute": "",
         "database_type": "string",
         "order": 6,
-        "validation_laravel": "string|nullable"
+        "descriptive_value": 1,
+        "best_descriptive_value": 0,
+        "validation_laravel": "string|nullable|exists:list_roles,id"
     },
     {
         "title": {
@@ -123,6 +135,8 @@
         "attribute": "",
         "database_type": "date",
         "order": 7,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "date|nullable"
     },
     {
@@ -141,6 +155,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 8,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -159,6 +175,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 9,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -177,6 +195,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 10,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -189,13 +209,15 @@
         "placeholder": "",
         "html_data_type": "",
         "android_type": "Spinner",
-        "linked_list": "Route",
+        "linked_list": "ListRoute",
         "required": 2,
         "status": 2,
         "attribute": "",
         "database_type": "string",
         "order": 11,
-        "validation_laravel": "string|nullable"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "string|nullable|exists:list_routes,id"
     },
     {
         "title": {
@@ -207,13 +229,15 @@
         "placeholder": "Syria",
         "html_data_type": "",
         "android_type": "AutoCompleteTextView",
-        "linked_list": "Country",
+        "linked_list": "ListCountry",
         "required": 2,
         "status": 2,
         "attribute": "",
         "database_type": "string",
         "order": 12,
-        "validation_laravel": "string|nullable|max:250"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "string|nullable|exists:list_countries,id"
     },
     {
         "title": {
@@ -231,6 +255,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 13,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -249,6 +275,8 @@
         "attribute": "",
         "database_type": "date",
         "order": 14,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "date|nullable"
     },
     {
@@ -267,6 +295,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 15,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable"
     },
     {
@@ -285,6 +315,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 16,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable"
     },
     {
@@ -303,6 +335,8 @@
         "attribute": "",
         "database_type": "date",
         "order": 17,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "date|nullable"
     },
     {
@@ -321,6 +355,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 18,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -339,6 +375,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 19,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -357,6 +395,8 @@
         "attribute": "",
         "database_type": "text",
         "order": 20,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "nullable|String"
     },
     {
@@ -375,6 +415,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 21,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     },
     {
@@ -393,6 +435,8 @@
         "attribute": "",
         "database_type": "string",
         "order": 22,
+		"descriptive_value" : 0,
+		"best_descriptive_value" : 0,
         "validation_laravel": "string|nullable|max:250"
     }
 ]

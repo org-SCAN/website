@@ -4,11 +4,18 @@ namespace App\Models;
 
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Link extends Model
+class Link extends Pivot
 {
-    use HasFactory, Uuids;
+    use HasFactory, Uuids, SoftDeletes;
+
+    /**
+     * Table
+     */
+
+    protected $table = "links";
     /**
      * The data type of the auto-incrementing ID.
      *
@@ -36,14 +43,37 @@ class Link extends Model
      */
     const route_base = "links";
 
+
+    /**
+     *
+     * This parameter allows to display the Add from and Add to section in Person.show (relation part)
+     * @var bool
+     */
+    public static bool $quickAdd = true;
+
     /**
      * It returns a representative value, witch could be shown to discribe the element
      *
      * @return mixed
      */
-    public function getRepresentativeValue()
+    public function getBestDescriptiveValueAttribute()
     {
-        return $this->from . " <-> " . $this->to;
+        return $this->refugeeFrom->bestDescriptiveValue . " <-> " . $this->refugeeTo->bestDescriptiveValue;
+    }
+
+    public function refugeeFrom()
+    {
+        return $this->belongsTo(Refugee::class, "from");
+    }
+
+    public function refugeeTo()
+    {
+        return $this->belongsTo(Refugee::class, "to");
+    }
+
+    public function relation()
+    {
+        return $this->belongsTo(ListRelation::class, "relation");
     }
 
     /**
@@ -55,8 +85,8 @@ class Link extends Model
      */
     public function getRelationAttribute($relation)
     {
-        $displayed_value = ListControl::where("name", "Relation")->first()->displayed_value;
-        return Relation::find($relation)->$displayed_value;
+        $displayed_value = ListControl::where("name", "ListRelation")->first()->displayed_value;
+        return ListRelation::find($relation)->$displayed_value;
     }
 
     /**
@@ -71,15 +101,7 @@ class Link extends Model
         return $this->attributes["relation"];
     }
 
-    /**
-     * Get refugee1 fullname
-     * @param $refugee1
-     * @return mixed
-     */
-    public function getFromAttribute($from)
-    {
-        return Refugee::find($from)->full_name;
-    }
+
 
 
     /**
@@ -91,15 +113,6 @@ class Link extends Model
         return $this->attributes["from"];
     }
 
-    /**
-     * Get to fullname
-     * @param $to
-     * @return mixed
-     */
-    public function getToAttribute($to)
-    {
-        return Refugee::find($to)->full_name;
-    }
 
     /**
      * Get to Id
@@ -113,7 +126,7 @@ class Link extends Model
 
     public function getRelationWeight()
     {
-        return Relation::find($this->getRelationId())->importance;
+        return ListRelation::find($this->getRelationId())->importance;
     }
 
 
@@ -124,7 +137,7 @@ class Link extends Model
 
     public function setRelationAttribute($value)
     {
-        $this->attributes["relation"] = Relation::getIdFromValue($value);
+        $this->attributes["relation"] = ListRelation::getIdFromValue($value);
     }
 
     public static function relationExists($from, $to, $relation_type, $application_id)
@@ -132,7 +145,7 @@ class Link extends Model
         $potential_link = self::where("application_id", $application_id)
             ->where("from", $from)
             ->where("to", $to)
-            ->where("relation", Relation::getIdFromValue($relation_type))
+            ->where("relation", ListRelation::getIdFromValue($relation_type))
             ->first();
 
         return empty($potential_link) ? null : $potential_link;

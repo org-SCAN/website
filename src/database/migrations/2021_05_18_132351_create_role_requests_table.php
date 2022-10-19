@@ -15,10 +15,11 @@ class CreateRoleRequestsTable extends Migration
     {
         Schema::create('role_requests', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user')->references('id')->on('users');
-            $table->string('role');
+            $table->foreignUuid('user_id');
+            $table->foreignUuid('role_id');
             $table->date('granted')->nullable()->default(null);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

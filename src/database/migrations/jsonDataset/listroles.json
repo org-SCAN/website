@@ -1,0 +1,65 @@
+[
+    {
+        "short": {
+            "eng": "sought",
+            "fra": "recherché",
+            "spa": "buscado"
+        },
+        "descr": "the police is looking for this person",
+        "key" : "sought"
+    },
+    {
+        "short": {
+            "eng": "possibly sought",
+            "fra": "possiblement recherché",
+            "spa": "posiblemente buscado"
+        },
+        "descr": "the police might be looking for this person",
+        "key" : "possibly_sought"
+    },
+    {
+        "short": {
+            "eng": "witness",
+            "fra": "témoin",
+            "spa": "testigo"
+        },
+        "descr": "",
+        "key" : "witness"
+    },
+    {
+        "short": {
+            "eng": "survivor",
+            "fra": "survivant",
+            "spa": "sobreviviente"
+        },
+        "descr": "",
+        "key": "survivor"
+    },
+    {
+        "short": {
+            "eng": "deceased",
+            "fra": "décédé",
+            "spa": "fallecido"
+        },
+        "descr": "",
+        "key": "deceased"
+    },
+    {
+        "short": {
+            "eng": "informant",
+            "fra": "informateur",
+            "spa": "informante"
+        },
+        "descr": "",
+        "key": "informant"
+    },
+    {
+        "short": {
+            "eng": "relative",
+            "fra": "proche",
+            "spa": "familiar"
+        },
+        "descr": "",
+        "key" : "relative"
+    }
+]

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\NotLastMoreImportantRole;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUsersRequest extends FormRequest
@@ -23,22 +24,21 @@ class UpdateUsersRequest extends FormRequest
      */
     public function rules()
     {
-
         $rules = [
             'name'    => [
                 'string',
                 'required',
             ],
-            'email'   => [
+            'role_id' => [
                 'required',
-                "unique:users,email,{$this->user}",
+                'exists:roles,id',
+                new NotLastMoreImportantRole($this->route('user')),
             ],
-            'role'   => [
+            'crew_id' => [
                 'required',
-                'exists:user_roles,id',
-            ],
+                'exists:crews,id',
+            ]
         ];
-
         return $rules;
     }
 }

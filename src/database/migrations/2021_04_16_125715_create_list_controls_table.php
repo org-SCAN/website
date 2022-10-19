@@ -19,11 +19,12 @@ class CreateListControlsTable extends Migration
                 ->primary();
             $table->timestamps();
             $table->string("title");
-            $table->string("displayed_value");
-            $table->string("name")
+            $table->string("displayed_value")->nullable()->default(null);
+            $table->string("key_value")->default('id');
+            $table->string("name") //refers to the model
                 ->unique();
-            $table->boolean("deleted")
-                ->default(0);
+
+            $table->softDeletes();
         });
     }
 

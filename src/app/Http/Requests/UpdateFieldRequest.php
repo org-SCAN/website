@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateFieldRequest extends FormRequest
 {
@@ -25,11 +26,13 @@ class UpdateFieldRequest extends FormRequest
     {
         $rules = [
             "title" => "required|string",
-            "placeholder" => "string|max:80",
+            "placeholder" => "string|max:80|nullable",
             "required" => "integer|required",
             "status" => "integer|required",
             "order" => "integer",
-            "linked_list" => "uuid|exists:list_controls,id|nullable"
+            "linked_list" => "uuid|exists:list_controls,id|nullable",
+            "descriptive_value" => "integer|nullable",
+            "best_descriptive_value" => "integer|nullable|unique:fields,best_descriptive_value,NULL,id,crew_id," . Auth::user()->crew->id
 
         ];
         return $rules;

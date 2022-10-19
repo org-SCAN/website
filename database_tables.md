@@ -109,7 +109,6 @@ classDiagram
 	class user_roles {
 		id
 		role
-		importance
 		created_at
 		updated_at
 		deleted_at

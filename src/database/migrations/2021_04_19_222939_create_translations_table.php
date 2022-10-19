@@ -20,7 +20,7 @@ class CreateTranslationsTable extends Migration
             $table->foreignUuid("list");
             $table->String("field_key");
             $table->String("translation");
-            $table->boolean("deleted")->default(0);
+            $table->softDeletes();
         });
     }
 

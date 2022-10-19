@@ -18,6 +18,7 @@ class GlobalListControlSeeder extends Seeder
     protected $languages;
     protected $default_language;
     protected $list_field_key;
+    protected $list;
 
     /**
      * GlobalListControlSeeder constructor.
@@ -33,6 +34,7 @@ class GlobalListControlSeeder extends Seeder
         $this->getListInfo();
     }
 
+
     /**
      * Initialize the json_array from json file
      *
@@ -45,10 +47,11 @@ class GlobalListControlSeeder extends Seeder
     }
 
     protected function getListInfo(){
-        $list = ListControl::where('name', $this->list_name)->first();
+        $list = ListControl::firstWhere('name', $this->list_name);
         $this->displayed_value = $list->displayed_value;
         $this->list_field_key = $list->key_value;
         $this->list_id = $list->id;
+        $this->list = $list;
     }
     protected function storeTranslation($displayed_value, $field_key){
         foreach ($displayed_value as $language => $value) {
@@ -68,24 +71,44 @@ class GlobalListControlSeeder extends Seeder
     }
 
     /**
+     * Store the structure of the list
+     *
+     */
+
+    protected function storeStructure()
+    {
+        foreach ($this->array_json[0] as $field => $field_content) {
+            $struct = $this->list->structure()->create([
+                "field" => $field
+            ]);
+            if($field == $this->displayed_value){
+                $this->list->update(["displayed_value" => $struct->id]);
+            }
+        }
+    }
+
+    /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
+        $this->storeStructure();
         foreach ($this->array_json as $json_elem) {
             $to_store = array();
             // get all the content from the json and store it in the correct DB
             foreach ($json_elem as $key => $value) {
                 //If the key is the displayed value, we have to store it in translation
                 if ($key == $this->displayed_value) {
-                    $value = $this->storeTranslation($value, $json_elem[$this->list_field_key]);
+                    $value = $value[$this->default_language];
                 }
                 $to_store[$key] = $value;
             }
             $model = 'App\Models\\' . $this->class_name;
-            $model::create($to_store);
+            $createdListElem = $model::create($to_store);
+            $this->storeTranslation($json_elem[$this->displayed_value], $createdListElem->{$this->list_field_key});
+
         }
     }
 }

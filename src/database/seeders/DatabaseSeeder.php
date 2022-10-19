@@ -13,18 +13,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
-        $this->call(UserRoleSeeder::class);
+        $this->call(PermissionSeeder::class);
+        $this->call(RoleSeeder::class);
+        $this->call(CrewSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(ListControlSeeder::class);
         $this->call(LanguageSeeder::class);
         $this->call(FieldSeeder::class);
-        $this->call(CountrySeeder::class);
-        $this->call(RoleSeeder::class);
-        $this->call(RouteSeeder::class);
-        $this->call(GenderSeeder::class);
-        $this->call(RelationSeeder::class);
+        $this->call(ListCountrySeeder::class);
+        $this->call(ListRoleSeeder::class);
+        $this->call(ListRouteSeeder::class);
+        $this->call(ListGenderSeeder::class);
+        $this->call(ListRelationSeeder::class);
         if (env('APP_DEBUG')) {
+            $this->call(EventSeeder::class);
             $this->call(RefugeeSeeder::class);
             $this->call(LinkSeeder::class);
         }

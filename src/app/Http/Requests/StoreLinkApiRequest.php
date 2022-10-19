@@ -18,9 +18,10 @@ class StoreLinkApiRequest extends StoreLinkRequest
     public function rules()
     {
         return [
-            "*.from_unique_id" => "Required|string|exists:refugees,unique_id",
-            "*.to_unique_id" => "Required|string|exists:refugees,unique_id|different:from_unique_id",
-            "*.relation" => "Required|exists:relations,short",
+            "*.id" => "uuid|exists:links,id",
+            "*.from" => "Required|uuid|exists:refugees,id",
+            "*.to" => "Required|uuid|exists:refugees,id",
+            "*.relation" => "Required|exists:list_relations,id",
             "*.detail" => "String|nullable",
             "*.date" => "Required|date",
         ];

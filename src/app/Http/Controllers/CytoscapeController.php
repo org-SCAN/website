@@ -1,12 +1,27 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Cytoscape;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class CytoscapeController extends Controller
 {
-    public function index(){
-        $relations = \App\Models\Link::where('deleted',0)->get();
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Cytoscape::class, 'cytoscape');
+    }
+
+    public function index()
+    {
+        $relations = \App\Models\Link::whereRelation('RefugeeFrom.crew', 'crews.id', Auth::user()->crew->id)
+            ->whereRelation('RefugeeTo.crew', 'crews.id', Auth::user()->crew->id)
+            ->get();
         /*
             $nodes = array();
             foreach ($refugees as $refugee){
@@ -23,16 +38,16 @@ class CytoscapeController extends Controller
 
             $node["data"] = array();
             $node["data"]["id"] = $relation->getFromId();
-            $node["data"]["name"] = $relation->from;
+            $node["data"]["name"] = $relation->refugeeFrom->best_descriptive_value;
             array_push($nodes, $node);
 
             $node["data"] = array();
             $node["data"]["id"] = $relation->getToId();
-            $node["data"]["name"] = $relation->to;
+            $node["data"]["name"] = $relation->refugeeTo->best_descriptive_value;
             array_push($nodes, $node);
 
-            $refugees[$relation->getToId()]=$relation->to;
-            $refugees[$relation->getFromId()]=$relation->from;
+            $refugees[$relation->getToId()] = $relation->refugeeTo->best_descriptive_value;
+            $refugees[$relation->getFromId()] = $relation->refugeeFrom->best_descriptive_value;
 
             $link["data"] = array();
             $link["data"]["id"] = $relation->id;
