@@ -137,7 +137,7 @@ class ListControlController extends Controller
     public function store(StoreListControlRequest $request)
     {
         $list_control = $request->validated();
-        $list_control["name"] = Str::ucfirst(Str::camel("list_".Str::singular($list_control["title"])));
+        $list_control["name"] = Str::ucfirst(Str::camel("list_" . Str::singular($list_control["title"])));
         // can't add the name to the request before, so validation should be done there.
 
         $v = Validator::make($list_control, ["name" => "required|unique:list_controls,name"]);
@@ -146,6 +146,12 @@ class ListControlController extends Controller
         }
 
         $listControl = ListControl::create($list_control);
+        return redirect()->route("lists_control.create_fields", $listControl);//view("lists_control.create_fields", compact("listControl"));
+    }
+
+    public function createFields(ListControl $listControl)
+    {
+        $this->authorize('create', $listControl);
         return view("lists_control.create_fields", compact("listControl"));
     }
 
@@ -162,7 +168,7 @@ class ListControlController extends Controller
         foreach($request->validated()['fields'] as $field){
             if(!empty($field) && ($listControl->structure->first() == null || !$listControl->structure()->firstWhere('field', $field)->exists())){
                 $listControl->structure()->create([
-                    "field" => $field
+                    "field" => Str::snake($field)
                 ]);
             }
         }

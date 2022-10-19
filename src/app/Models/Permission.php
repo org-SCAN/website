@@ -63,6 +63,7 @@ class Permission extends Model
             "reject_role" => "grantRole",
             "edit_list_elem" => "updateListElem",
             "store_displayed_value" => "create",
+            "create_fields" => "create",
             "store_fields" => "create",
             "update_list" => "addToList"
         ];

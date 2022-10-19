@@ -13,6 +13,15 @@
                     As an example you can create 'name', 'inhabitants' if you want to create a list related to Cities.
                 </p>
             </div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <form method="post" action="{{ route('lists_control.store_fields', $listControl) }}">
@@ -22,9 +31,15 @@
                         <!--  Field 0 SECTION  -->
                         <div class="px-4 py-4 bg-white sm:p-6">
                             @php($form_elem = "fields[0]")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's title</label>
-                            <input type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="e.g. name" />
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500">The name of the field</small>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
+                                title</label>
+                            <input type="text" name="{{$form_elem}}" id="{{$form_elem}}"
+                                   class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="e.g. name"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500">The name of
+                                the field</small>
+                            @error('fields')
+                            <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror

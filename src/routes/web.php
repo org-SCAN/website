@@ -88,12 +88,17 @@ Route::put('person/fix_duplicated_reference/{id} ', [
     'uses' => '\App\Http\Controllers\RefugeeController@fixDuplicatedReference'
 ])->middleware('auth');
 
-Route::post('lists_control/store_fields/{listControl}',[
+Route::get('lists_control/create_fields/{listControl}', [
+    'as' => 'lists_control.create_fields',
+    'uses' => '\App\Http\Controllers\ListControlController@createFields'
+])->middleware('auth');
+
+Route::post('lists_control/store_fields/{listControl}', [
     'as' => 'lists_control.store_fields',
     'uses' => '\App\Http\Controllers\ListControlController@storeFields'
 ])->middleware('auth');
 
-Route::post('lists_control/store_displayed_value/{listControl}',[
+Route::post('lists_control/store_displayed_value/{listControl}', [
     'as' => 'lists_control.store_displayed_value',
     'uses' => '\App\Http\Controllers\ListControlController@storeDisplayedValue'
 ])->middleware('auth');

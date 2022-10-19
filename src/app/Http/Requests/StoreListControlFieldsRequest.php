@@ -25,7 +25,8 @@ class StoreListControlFieldsRequest extends FormRequest
     {
         return [
             "fields" => 'required|array|min:1',
-            "fields.*" => 'required|string'
+            "fields.0" => 'required|string',
+            "fields.*" => 'nullable|string'
         ];
     }
 }
