@@ -119,6 +119,11 @@ Route::post('lists_control/{listControl}/edit/{element}', [
     'uses' => '\App\Http\Controllers\ListControlController@updateListElem'
 ])->middleware('auth');
 
+Route::put('crew/{crew}/addUser', [
+    'as' => 'crew.addUser',
+    'uses' => '\App\Http\Controllers\CrewController@addUser'
+])->middleware('auth');
+
 Route::resource("person", RefugeeController::class)->middleware('auth');
 Route::resource("fields", FieldsController::class)->middleware('auth');
 Route::resource("lists_control", ListControlController::class)->middleware('auth');

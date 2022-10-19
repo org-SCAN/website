@@ -51,7 +51,7 @@
                                     <label for="{{ $permission_id }}">
                                         <input name="permissions[{{ $permission_id }}]" type="checkbox"
                                                id="{{ $permission_id }}" value="{{ $permission_id }}"
-                                               @checked($role->permissions->contains(old("permissions." . $permission_id,$permission_id))) class="{{ $route_base }} m-1 ml-5">
+                                               @checked($role->permissions->contains(old("permissions." . $permission_id,$permission_id)) || old("permissions." . $permission_id)) class="{{ $route_base }} m-1 ml-5">
                                         <span class="font-medium text-sm text-gray-700">{{ $permission_name }}</span>
                                     </label>
                                     <br>

@@ -6,7 +6,6 @@ use App\Http\Requests\StoreRequestRoleRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateCrewRequest;
 use App\Http\Requests\UpdateUsersRequest;
-use App\Models\Crew;
 use App\Models\Role;
 use App\Models\RoleRequest;
 use App\Models\User;
@@ -71,7 +70,7 @@ class ManageUsersController extends Controller
                 'email' => $user['email'],
                 'password' => Hash::make($user['password']),
                 'role_id' => $user['role'],
-                "crew_id" => Crew::getDefaultCrewId()
+                "crew_id" => $user['team']
             ]), function (User $created_user) {
                 $created_user->genToken();
                 $created_user->genRole();
