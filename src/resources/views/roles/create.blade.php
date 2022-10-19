@@ -38,7 +38,9 @@
                                     <label for="{{ $permission_id }}">
                                         <input name="permissions[{{ $permission_id }}]" type="checkbox"
                                                id="{{ $permission_id }}" value="{{ $permission_id }}"
-                                               class="{{ $route_base }} m-1 ml-5">
+                                               class="{{ $route_base }} m-1 ml-5"
+                                            @checked(old("permissions.$permission_id", ''))
+                                        >
                                         <span class="font-medium text-sm text-gray-700">{{ $permission_name }}</span>
                                     </label>
                                     <br>
