@@ -112,7 +112,7 @@
                                 @can('viewMenu', \App\Models\Crew::class)
                                     <x-jet-dropdown-link href="{{ route('crew.index') }}"
                                                          :active="request()->routeIs('crew.*')">
-                                        {{ __('Crews') }}
+                                        {{ __('Teams') }}
                                     </x-jet-dropdown-link>
                                 @endcan
                                 @can('viewMenu', \App\Models\Role::class)
@@ -302,7 +302,7 @@
             @endif
             @can('viewMenu',\App\Models\Crew::class)
                 <x-jet-responsive-nav-link href="{{ route('crew.index') }}" :active="request()->routeIs('crew.*')">
-                    {{ __('Crews') }}
+                    {{ __('Teams') }}
                 </x-jet-responsive-nav-link>
             @endcan
             @can('viewMenu',\App\Models\User::class)
