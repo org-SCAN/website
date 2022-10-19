@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('person.index') }}">
+                    <a href="{{ route('dashboard') }}">
                         <x-jet-application-mark class="block h-9 w-auto"/>
                     </a>
                 </div>
@@ -34,6 +34,7 @@
                         </x-jet-nav-link>
                     </div>
                 @endcan
+
                 @can('viewMenu', \App\Models\Duplicate::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('duplicate.index') }}"
@@ -42,13 +43,90 @@
                         </x-jet-nav-link>
                     </div>
                 @endcan
-                @can('viewMenu', \App\Models\Field::class)
+
+                <!-- Fields Management Dropdown -->
+                @canany(['viewMenu', 'viewMenu'],[\App\Models\Field::class, \App\Models\ListControl::class])
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('fields.index') }}" :active="request()->routeIs('fields.*')">
-                            {{ __('Manage fields') }}
-                        </x-jet-nav-link>
+                        <x-jet-dropdown align="right" width="48"
+                                        :active="request()->routeIs('fields.*')||request()->routeIs('lists_control.*')">
+                            <x-slot name="trigger">
+                                <span class="inline-flex rounded-md pt-4">
+                                    <button type="button"
+                                            class="inline-flex items-center text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                        {{ __('Field Management')}}
+
+                                    </button>
+                                </span>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <!-- Fields Management -->
+                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                    {{ __('Field Management') }}
+                                </div>
+                                @can('viewMenu', \App\Models\Field::class)
+                                    <x-jet-dropdown-link href="{{ route('fields.index') }}"
+                                                         :active="request()->routeIs('fields.*')">
+                                        {{ __('Fields') }}
+                                    </x-jet-dropdown-link>
+                                @endcan
+                                @can("viewMenu", \App\Models\ListControl::class)
+                                    <x-jet-dropdown-link href="{{ route('lists_control.index') }}"
+                                                         :active="request()->routeIs('fields.*')">
+                                        {{ __('Lists') }}
+                                    </x-jet-dropdown-link>
+                                @endcan
+
+                            </x-slot>
+                        </x-jet-dropdown>
                     </div>
-                @endcan
+                @endcanany
+
+
+                <!-- User Management Dropdown -->
+                @canany(['viewMenu', 'viewMenu', 'viewMenu'],[\App\Models\User::class, \App\Models\Crew::class, \App\Models\Role::class])
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-dropdown align="right" width="48"
+                                        :active="request()->routeIs('user.*')||request()->routeIs('crew.*')||request()->routeIs('roles.*')">
+                            <x-slot name="trigger">
+                                <span class="inline-flex rounded-md pt-4">
+                                    <button
+                                        class="inline-flex items-center text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                        {{ __('User Management')}}
+
+                                    </button>
+                                </span>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <!-- Account Management -->
+                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                    {{ __('User Management') }}
+                                </div>
+                                @can('viewMenu', \App\Models\User::class)
+                                    <x-jet-dropdown-link href="{{ route('user.index') }}"
+                                                         :active="request()->routeIs('user.*')">
+                                        {{ __('Users') }}
+                                    </x-jet-dropdown-link>
+                                @endcan
+                                @can('viewMenu', \App\Models\Crew::class)
+                                    <x-jet-dropdown-link href="{{ route('crew.index') }}"
+                                                         :active="request()->routeIs('crew.*')">
+                                        {{ __('Crews') }}
+                                    </x-jet-dropdown-link>
+                                @endcan
+                                @can('viewMenu', \App\Models\Role::class)
+                                    <x-jet-dropdown-link href="{{ route('roles.index') }}"
+                                                         :active="request()->routeIs('roles.*')">
+                                        {{ __('Roles') }}
+                                    </x-jet-dropdown-link>
+                                @endcan
+
+                            </x-slot>
+                        </x-jet-dropdown>
+                    </div>
+                @endcanany
+
                 @can('viewMenu', \App\Models\ApiLog::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('api_logs.index') }}"
@@ -57,20 +135,8 @@
                         </x-jet-nav-link>
                     </div>
                 @endcan
-                @can('viewMenu', \App\Models\Crew::class)
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('crew.index') }}" :active="request()->routeIs('crew.*')">
-                            {{ __('Crews') }}
-                        </x-jet-nav-link>
-                    </div>
-                @endcan
-                @can('viewMenu', \App\Models\User::class)
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.*')">
-                            {{ __('Users') }}
-                        </x-jet-nav-link>
-                    </div>
-                @endcan
+
+
                 <!--
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('lists_control.index') }}" :active="request()->routeIs('lists_control.index')">

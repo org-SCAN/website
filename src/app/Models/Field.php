@@ -286,13 +286,20 @@ class Field extends Model
      *
      * @return String
      */
-    public function getLinkedListId(){
+    public function getLinkedListId()
+    {
         return $this->attributes['linked_list'];
     }
 
-    public static function getUsedLinkedList(){
+    public static function getUsedLinkedList()
+    {
         $used_linked_list = self::where("linked_list", "!=", "")->get()->toArray();
         return array_column($used_linked_list, "linked_list");
+    }
+
+    public function listControl()
+    {
+        return $this->BelongsTo(ListControl::class, "linked_list", "id");
     }
 
     /**
