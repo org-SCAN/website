@@ -123,12 +123,12 @@ Route::resource("person", RefugeeController::class)->middleware('auth');
 Route::resource("fields", FieldsController::class)->middleware('auth');
 Route::resource("lists_control", ListControlController::class)->middleware('auth');
 
-
-Route::resource("links", LinkController::class)->middleware('auth');
 Route::get("links/create/{origin?}/{refugee?}", [
     "as" => 'links.create',
     "uses" => '\App\Http\Controllers\LinkController@create'
 ]);
+Route::resource("links", LinkController::class)->middleware('auth')->except(['create']);
+
 
 Route::resource("user", ManageUsersController::class)->middleware('auth');
 Route::resource("duplicate", DuplicateController::class)->middleware('auth');
