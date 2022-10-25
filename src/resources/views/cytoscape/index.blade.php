@@ -41,9 +41,18 @@
             <div class="flex flex-col">
                 <h1>Graph</h1>
                 <div class="rounded-lg px-2">
-                    @foreach(\App\Models\Relation::all() as $relation)
+                    @foreach(\App\Models\ListRelation::all() as $relation)
                         <i class="fas fa-circle" style="color: #{{$relation->color}}"> {{$relation->name}}</i>
                     @endforeach
+                </div>
+                <div class="rounded-lg px-2">
+                    <i class="fas fa-circle" style="color: #000000">deceased</i>
+                    <i class="fas fa-circle" style="color: #f89f9f">informant</i>
+                    <i class="fas fa-circle" style="color: #d995e5">possibly sought</i>
+                    <i class="fas fa-circle" style="color: #7773fc">relative</i>
+                    <i class="fas fa-circle" style="color: #ff0000">sought</i>
+                    <i class="fas fa-circle" style="color: #1dfc00">survivor</i>
+                    <i class="fas fa-circle" style="color: #9f9d9d">witness</i>
                 </div>
 
                 <div class="block mb-8 mt-8">

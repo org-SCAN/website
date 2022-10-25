@@ -1,0 +1,133 @@
+@section('title','View persons')
+
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Persons') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="block mb-8">
+                @can('create', \App\Models\Refugee::class)
+                    <a href="{{ route("person.create") }}"
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add person</a>
+                @endcan
+                @can('createFromJson', \App\Models\Refugee::class)
+                    <a href="{{ route("person.create_from_json") }}"
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add persons from
+                        json</a>
+                @endcan
+            </div>
+            <div class="flex flex-col">
+                <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg p-2">
+                            <table id="person" class="display">
+                                <thead>
+                                <tr>
+                                    @foreach($fields as $field)
+                                        <th>{{ $field->title }}</th>
+                                    @endforeach
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($refugees as $refugee_id => $refugee)
+                                    <tr>
+                                        @foreach($fields ?? '' as $field)
+                                            <td>
+                                                @if($field->best_descriptive_value == 1)
+                                                    @can('view', \App\Models\Refugee::find($refugee_id))
+                                                        <a href="{{route('person.show',$refugee_id)}}">{{ $refugee[$field->id] }}</a>
+                                                    @endcan()
+                                                    @cannot('view', \App\Models\Refugee::find($refugee_id))
+                                                        {{ $refugee[$field->id] }}
+                                                    @endcannot()
+                                                @else
+                                                    {{$refugee[$field->id]?? ''}}
+                                                @endif
+                                            </td>
+                                        @endforeach
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</x-app-layout>
+<link rel="stylesheet" type="text/css"
+      href="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/sc-2.0.5/sb-1.3.1/sp-1.4.0/datatables.min.css"/>
+
+<script type="text/javascript"
+        src="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/sc-2.0.5/sb-1.3.1/sp-1.4.0/datatables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#person thead tr')
+            .clone(true)
+            .addClass('filters')
+            .appendTo('#person thead');
+
+        $('#person').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true,
+            initComplete: function () {
+                var api = this.api();
+
+                // For each column
+                api
+                    .columns()
+                    .eq(0)
+                    .each(function (colIdx) {
+                        // Set the header cell to contain the input element
+                        var cell = $('.filters th').eq(
+                            $(api.column(colIdx).header()).index()
+                        );
+                        var title = $(cell).text();
+                        $(cell).html('<input type="text" placeholder="' + title + '" />');
+
+                        // On every keypress in this input
+                        $(
+                            'input',
+                            $('.filters th').eq($(api.column(colIdx).header()).index())
+                        )
+                            .off('keyup change')
+                            .on('change', function (e) {
+                                // Get the search value
+                                $(this).attr('title', $(this).val());
+                                var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                var cursorPosition = this.selectionStart;
+                                // Search the column for that value
+                                api
+                                    .column(colIdx)
+                                    .search(
+                                        this.value != ''
+                                            ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                            : '',
+                                        this.value != '',
+                                        this.value == ''
+                                    )
+                                    .draw();
+                            })
+                            .on('keyup', function (e) {
+                                e.stopPropagation();
+
+                                $(this).trigger('change');
+                                $(this)
+                                    .focus()[0]
+                                    .setSelectionRange(cursorPosition, cursorPosition);
+                            });
+                    });
+            },
+        });
+    });
+</script>
+

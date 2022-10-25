@@ -135,8 +135,15 @@
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/markbaker/complex" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/markbaker/matrix" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/myclabs/php-enum" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/nette/utils" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/nette/schema" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/league/config" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/dflydev/dot-access-data" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/laravel/serializable-closure" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/polyfill-php81" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="jquery" level="application" />
   </component>
 </module>

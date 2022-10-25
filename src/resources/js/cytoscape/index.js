@@ -61,7 +61,7 @@ function insertParam(key, value) {
 function drawGraph(){
     $.getJSON('/content.json', function(data){
         const urlParams = new URLSearchParams(window.location.search);
-
+        console.log(data);
         var cy = cytoscape({
 
             container: document.getElementById('cy'), // container to render in
@@ -74,6 +74,72 @@ function drawGraph(){
                         'background-color': '#666',
                         'label': 'data(name)',
                         'font-size': 25
+                    }
+                },
+                {
+                    selector: 'node[role = "deceased"]',
+                    style: {
+                        'background-color': '#000000',
+                        'label': 'data(name)',
+                        'role': 'data(role)',
+                        'font-size': 25,
+                        'shape': 'diamond'
+                    }
+                },
+                {
+                    selector: 'node[role = "informant"]',
+                    style: {
+                        'background-color': '#f89f9f',
+                        'label': 'data(name)',
+                        'role': 'data(role)',
+                        'font-size': 25
+                    }
+                },
+                {
+                    selector: 'node[role = "possibly sought"]',
+                    style: {
+                        'background-color': '#d995e5',
+                        'label': 'data(name)',
+                        'role': 'data(role)',
+                        'font-size': 25
+                    }
+                },
+                {
+                    selector: 'node[role = "relative"]',
+                    style: {
+                        'background-color': '#7773fc',
+                        'label': 'data(name)',
+                        'role': 'data(role)',
+                        'font-size': 25
+                    }
+                },
+                {
+                    selector: 'node[role = "survivor"]',
+                    style: {
+                        'background-color': '#1dfc00',
+                        'label': 'data(name)',
+                        'role': 'data(role)',
+                        'font-size': 25,
+                        'shape': 'star'
+                    }
+                },
+                {
+                    selector: 'node[role = "witness"]',
+                    style: {
+                        'background-color': '#9f9d9d',
+                        'label': 'data(name)',
+                        'role': 'data(role)',
+                        'font-size': 25
+                    }
+                },
+                {
+                    selector: 'node[role = "sought"]',
+                    style: {
+                        'background-color': '#ff0000',
+                        'label': 'data(name)',
+                        'role': 'data(role)',
+                        'font-size': 25,
+                        'shape': 'triangle'
                     }
                 },
 
@@ -390,7 +456,7 @@ function drawGraph(){
                 {
                     content: 'View information',
                     select: function(ele){
-                        window.location.replace("/manage_refugees/"+ele.id());
+                        window.location.replace("/person/" + ele.id());
                     }
                 },
 

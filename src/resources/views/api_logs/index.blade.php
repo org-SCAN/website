@@ -46,13 +46,25 @@
                                             {{$log->created_at}}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("user.show", $log->getUserId())}}" class="text-indigo-600 hover:text-blue-900">{{$log->user}}</a>
+                                            @can('view', $log->user, \App\Models\User::class)
+                                                <a href="{{ route("user.show", $log->user->id) }}"
+                                                   class="text-indigo-600 hover:text-blue-900">{{ $log->user->email }}
+                                                </a>
+                                            @endcan()
+                                            @cannot('view', $log->user,\App\Models\User::class)
+                                                {{ $log->user->email }}
+                                            @endcannot
+
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             {{$log->api_type}}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("api_logs.show", $log->id)}}" class="text-indigo-600 hover:text-blue-900">View detail</a>
+                                            @can('view', $log)
+                                                <a href="{{ route("api_logs.show", $log->id) }}"
+                                                   class="text-indigo-600 hover:text-blue-900">View detail
+                                                </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

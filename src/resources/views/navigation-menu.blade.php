@@ -5,66 +5,139 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('manage_refugees.index') }}">
+                    <a href="{{ route('dashboard') }}">
                         <x-jet-application-mark class="block h-9 w-auto"/>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                @if(Auth::user()->hasPermission("cytoscape.index"))
+                @can('viewMenu', \App\Models\Cytoscape::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('cytoscape.index') }}"
-                                        :active="request()->routeIs('cytoscape.index')">
+                                        :active="request()->routeIs('cytoscape.*')">
                             {{ __('Network graph') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
-                @if(Auth::user()->hasPermission("manage_refugees.index"))
+                @endcan
+                @can('viewMenu', \App\Models\Refugee::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('manage_refugees.index') }}"
-                                        :active="request()->routeIs('manage_refugees.index')">
-                            {{ __('Manage Persons') }}
+                        <x-jet-nav-link href="{{ route('person.index') }}"
+                                        :active="request()->routeIs('person.*')">
+                            {{ __('Persons') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
-                @if(Auth::user()->hasPermission("links.index"))
+                @endcan
+                @can('viewMenu', \App\Models\Link::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.index')">
-                            {{ __('Manage relations') }}
+                        <x-jet-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.*')">
+                            {{ __('Relations') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
-                @if(Auth::user()->hasPermission("duplicate.index"))
+                @endcan
+
+                @can('viewMenu', \App\Models\Duplicate::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('duplicate.index') }}"
-                                        :active="request()->routeIs('duplicate.index')">
+                                        :active="request()->routeIs('duplicate.*')">
                             {{ __('Duplicates') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
-                @if(Auth::user()->hasPermission("fields.index"))
+                @endcan
+
+                <!-- Fields Management Dropdown -->
+                @if ( Auth::user()->can('viewMenu', \App\Models\Field::class) || Auth::user()->can('viewMenu',  \App\Models\ListControl::class))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('fields.index') }}" :active="request()->routeIs('fields.index')">
-                            {{ __('Manage fields') }}
-                        </x-jet-nav-link>
+                        <x-jet-dropdown align="right" width="48"
+                                        :active="request()->routeIs('fields.*')||request()->routeIs('lists_control.*')">
+                            <x-slot name="trigger">
+                                <span class="inline-flex rounded-md pt-4">
+                                    <button type="button"
+                                            class="inline-flex items-center text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                        {{ __('Field Management')}}
+
+                                    </button>
+                                </span>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <!-- Fields Management -->
+                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                    {{ __('Field Management') }}
+                                </div>
+                                @can('viewMenu', \App\Models\Field::class)
+                                    <x-jet-dropdown-link href="{{ route('fields.index') }}"
+                                                         :active="request()->routeIs('fields.*')">
+                                        {{ __('Fields') }}
+                                    </x-jet-dropdown-link>
+                                @endcan
+                                @can("viewMenu", \App\Models\ListControl::class)
+                                    <x-jet-dropdown-link href="{{ route('lists_control.index') }}"
+                                                         :active="request()->routeIs('lists_control.*')">
+                                        {{ __('Lists') }}
+                                    </x-jet-dropdown-link>
+                                @endcan
+
+                            </x-slot>
+                        </x-jet-dropdown>
                     </div>
                 @endif
-                @if(Auth::user()->hasPermission("api_logs.index"))
+
+
+                <!-- User Management Dropdown -->
+                @if ( Auth::user()->can('viewMenu', \App\Models\User::class) || Auth::user()->can('viewMenu',  \App\Models\Crew::class)|| Auth::user()->can('viewMenu',  \App\Models\Role::class) )
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-dropdown align="right" width="48"
+                                        :active="request()->routeIs('user.*')||request()->routeIs('crew.*')||request()->routeIs('roles.*')">
+                            <x-slot name="trigger">
+                                <span class="inline-flex rounded-md pt-4">
+                                    <button
+                                        class="inline-flex items-center text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                        {{ __('User Management')}}
+
+                                    </button>
+                                </span>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <!-- Account Management -->
+                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                    {{ __('User Management') }}
+                                </div>
+                                @can('viewMenu', \App\Models\User::class)
+                                    <x-jet-dropdown-link href="{{ route('user.index') }}"
+                                                         :active="request()->routeIs('user.*')">
+                                        {{ __('Users') }}
+                                    </x-jet-dropdown-link>
+                                @endcan
+                                @can('viewMenu', \App\Models\Crew::class)
+                                    <x-jet-dropdown-link href="{{ route('crew.index') }}"
+                                                         :active="request()->routeIs('crew.*')">
+                                        {{ __('Teams') }}
+                                    </x-jet-dropdown-link>
+                                @endcan
+                                @can('viewMenu', \App\Models\Role::class)
+                                    <x-jet-dropdown-link href="{{ route('roles.index') }}"
+                                                         :active="request()->routeIs('roles.*')">
+                                        {{ __('Roles') }}
+                                    </x-jet-dropdown-link>
+                                @endcan
+
+                            </x-slot>
+                        </x-jet-dropdown>
+                    </div>
+                @endif
+
+                @can('viewMenu', \App\Models\ApiLog::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('api_logs.index') }}"
-                                        :active="request()->routeIs('api_logs.index')">
+                                        :active="request()->routeIs('api_logs.*')">
                             {{ __('Api logs') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
-                @if(Auth::user()->hasPermission("user.index"))
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.index')">
-                            {{ __('Users') }}
-                        </x-jet-nav-link>
-                    </div>
-            @endif
-            <!--
+                @endcan
+
+
+                <!--
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('lists_control.index') }}" :active="request()->routeIs('lists_control.index')">
                         {{ __('Manage lists') }}
@@ -194,31 +267,49 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            @if(Auth::user()->hasPermission("manage_refugees.index"))
-                <x-jet-responsive-nav-link href="{{ route('manage_refugees.index') }}"
-                                           :active="request()->routeIs('manage_refugees.index')">
-                    {{ __('Manage Persons') }}
+            <x-jet-responsive-nav-link href="{{ route('cytoscape.index') }}"
+                                       :active="request()->routeIs('cytoscape.*')">
+                {{ __('Network graph') }}
+            </x-jet-responsive-nav-link>
+            @can('viewMenu',\App\Models\Refugee::class)
+                <x-jet-responsive-nav-link href="{{ route('person.index') }}"
+                                           :active="request()->routeIs('person.*')">
+                    {{ __('Persons') }}
                 </x-jet-responsive-nav-link>
-            @endif
-            @if(Auth::user()->hasPermission("links.index"))
-
+            @endcan
+            @can('viewMenu',\App\Models\Link::class)
                 <x-jet-responsive-nav-link href="{{ route('links.index') }}"
-                                           :active="request()->routeIs('links.index')">
-                    {{ __('Manage relations') }}
+                                           :active="request()->routeIs('links.*')">
+                    {{ __('Relations') }}
                 </x-jet-responsive-nav-link>
-            @endif
-            @if(Auth::user()->hasPermission("duplicate.index"))
+            @endcan
+            @can('viewMenu',\App\Models\Duplicate::class)
                 <x-jet-responsive-nav-link href="{{ route('duplicate.index') }}"
-                                           :active="request()->routeIs('duplicate.index')">
+                                           :active="request()->routeIs('duplicate.*')">
                     {{ __('Duplicates') }}
                 </x-jet-responsive-nav-link>
-            @endif
-            @if(Auth::user()->hasPermission("api_logs.index"))
+            @endcan
+            @can('viewMenu',\App\Models\Field::class)
+                <x-jet-responsive-nav-link href="{{ route('fields.index') }}" :active="request()->routeIs('fields.*')">
+                    {{ __('Manage fields') }}
+                </x-jet-responsive-nav-link>
+            @endcan
+            @can('viewMenu',\App\Models\ApiLog::class)
                 <x-jet-responsive-nav-link href="{{ route('api_logs.index') }}"
-                                           :active="request()->routeIs('api_logs.index')">
+                                           :active="request()->routeIs('api_logs.*')">
                     {{ __('Api logs') }}
                 </x-jet-responsive-nav-link>
             @endif
+            @can('viewMenu',\App\Models\Crew::class)
+                <x-jet-responsive-nav-link href="{{ route('crew.index') }}" :active="request()->routeIs('crew.*')">
+                    {{ __('Teams') }}
+                </x-jet-responsive-nav-link>
+            @endcan
+            @can('viewMenu',\App\Models\User::class)
+                <x-jet-responsive-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.*')">
+                    {{ __('Users') }}
+                </x-jet-responsive-nav-link>
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->
@@ -288,3 +379,4 @@
         </div>
     </div>
 </nav>
+

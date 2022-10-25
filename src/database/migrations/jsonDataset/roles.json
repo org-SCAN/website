@@ -1,65 +1,58 @@
 [
     {
-        "short": {
-            "eng": "sought",
-            "fra": "recherché",
-            "spa": "buscado"
+        "role": {
+            "name": "admin"
         },
-        "descr": "the police is looking for this person",
-        "key" : "sought"
+        "permissions": "*"
     },
     {
-        "short": {
-            "eng": "possibly sought",
-            "fra": "possiblement recherché",
-            "spa": "posiblemente buscado"
+        "role": {
+            "name": "editor"
         },
-        "descr": "the police might be looking for this person",
-        "key" : "possibly_sought"
+        "permissions": [
+            "cytoscape.index",
+            "person.create_from_json",
+            "links.create_from_json",
+            "person.store_from_json",
+            "links.store_from_json",
+            "user.request_role",
+            "lists_control.add_to_list",
+            "person.fix_duplicated_reference",
+            "person.index",
+            "person.create",
+            "person.store",
+            "person.show",
+            "person.edit",
+            "person.update",
+            "person.destroy",
+            "links.index",
+            "links.create",
+            "links.store",
+            "links.show",
+            "links.edit",
+            "links.update",
+            "links.destroy",
+            "user.change_team",
+            "user.request_role",
+            "duplicate.index",
+            "duplicate.create",
+            "duplicate.store",
+            "duplicate.show",
+            "duplicate.edit",
+            "duplicate.update",
+            "duplicate.destroy"
+        ]
     },
     {
-        "short": {
-            "eng": "witness",
-            "fra": "témoin",
-            "spa": "testigo"
+        "role": {
+            "name": "viewer"
         },
-        "descr": "",
-        "key" : "witness"
-    },
-    {
-        "short": {
-            "eng": "survivor",
-            "fra": "survivant",
-            "spa": "sobreviviente"
-        },
-        "descr": "",
-        "key": "survivor"
-    },
-    {
-        "short": {
-            "eng": "deceased",
-            "fra": "décédé",
-            "spa": "fallecido"
-        },
-        "descr": "",
-        "key": "deceased"
-    },
-    {
-        "short": {
-            "eng": "informant",
-            "fra": "informateur",
-            "spa": "informante"
-        },
-        "descr": "",
-        "key": "informant"
-    },
-    {
-        "short": {
-            "eng": "relative",
-            "fra": "proche",
-            "spa": "familiar"
-        },
-        "descr": "",
-        "key" : "relative"
+        "permissions": [
+            "cytoscape.index",
+            "person.index",
+            "person.show",
+            "links.index",
+            "links.show"
+        ]
     }
 ]

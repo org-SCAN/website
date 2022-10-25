@@ -32,10 +32,16 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "placeholder")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's placeholder</label>
-
-                            <input type="text" value="{{ old($field->{$form_elem}, $field->{$form_elem}) }}" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="John Doe" />
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be shown as an example when the field is asked.</small>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
+                                placeholder</label>
+                            @if(!isset($field->{$form_elem}))
+                                @php($field->{$form_elem} = "")
+                            @endif
+                            <input type="text" value="{{ old($field->{$form_elem}, $field->{$form_elem}) }}"
+                                   name="{{$form_elem}}" id="{{$form_elem}}"
+                                   class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="John Doe"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
+                                shown as an example when the field is asked.</small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -82,10 +88,55 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "order")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's order</label>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
+                                order</label>
 
-                            <input type="number" value="{{ old($field->{$form_elem}, $field->{$form_elem}) }}" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="3" />
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used to order the field. Fields are first order by requirement state, then by order</small>
+                            <input type="number" value="{{ old($field->{$form_elem}, $field->{$form_elem}) }}"
+                                   name="{{$form_elem}}" id="{{$form_elem}}"
+                                   class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="3"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
+                                used to order the field. Fields are first order by requirement state, then by
+                                order</small>
+
+                            @error($form_elem)
+                            <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!--  DESCRIPTIVE_VALUE SECTION  -->
+
+                        <div class="px-4 py-5 bg-white sm:p-6">
+
+                            @php($form_elem = "descriptive_value")
+                            @php($old = old($field->{$form_elem}, $field->{$form_elem}))
+
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Is that a
+                                descriptive value ?</label>
+
+                            <input value="1" type="checkbox" name="{{$form_elem}}" id="{{$form_elem}}"
+                                   class="form-input rounded-md shadow-sm mt-1 block" @checked($old == 1)/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">If checked,
+                                it will be displayed in the Manage Persons section</small>
+
+                            @error($form_elem)
+                            <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+
+                        <!--  BEST_DESCRIPTIVE_VALUE SECTION  -->
+
+                        <div class="px-4 py-5 bg-white sm:p-6">
+
+                            @php($form_elem = "best_descriptive_value")
+                            @php($old = old($field->{$form_elem}, $field->{$form_elem}))
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Is that the best
+                                descriptive value ?</label>
+
+                            <input value="1" type="checkbox" name="{{$form_elem}}" id="{{$form_elem}}"
+                                   class="form-input rounded-md shadow-sm mt-1 block" @checked($old == 1)/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">If checked,
+                                it will be displayed in the Manage Persons section as the main field.</small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>

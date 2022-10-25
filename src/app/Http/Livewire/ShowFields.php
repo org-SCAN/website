@@ -3,13 +3,15 @@
 namespace App\Http\Livewire;
 
 use App\Models\Field;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class ShowFields extends Component
 {
     public function render()
     {
-        $fields = Field::where("deleted", 0)
+        $user_crew = Auth::user()->crew->id;
+        $fields = Field::where("crew_id", $user_crew)
             ->orderBy("required")
             ->orderBy("order")
             ->get();

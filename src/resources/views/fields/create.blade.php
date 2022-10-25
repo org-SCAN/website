@@ -18,20 +18,13 @@
                         <!--  TITLE SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "title")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's title</label>
-                            <input value="{{ old($form_elem)}}" type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="Full Name" />
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500">It'll be shown as title when the field is used.</small>
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <!--  LABEL SECTION  -->
-                        <div class="px-4 py-5 bg-white sm:p-6">
-                            @php($form_elem = "label")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's label</label>
-                            <input value="{{ old($form_elem) }}" type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="full_name" />
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used as field identifier in database. <i class="text-sm text-red-600"> Be careful : you couldn't change this value later</i></small>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
+                                title</label>
+                            <input value="{{ old($form_elem)}}" type="text" name="{{$form_elem}}" id="{{$form_elem}}"
+                                   class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   placeholder="Example : Full Name"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500">It'll be
+                                shown as title when the field is used.</small>
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -42,10 +35,14 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "placeholder")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's placeholder</label>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
+                                placeholder</label>
 
-                            <input value="{{ old($form_elem)}}" type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="John Doe" />
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be shown as an example when the field is asked.</small>
+                            <input value="{{ old($form_elem)}}" type="text" name="{{$form_elem}}" id="{{$form_elem}}"
+                                   class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   placeholder="The placehold is shown as an example when the field is asked (just like this)"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
+                                shown as an example when the field is asked.</small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -58,7 +55,7 @@
                             @php($form_elem = "database_type")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's Data type</label>
 
-                            @php( $list = array("string" => "Small text","text" => "Long text","integer" => "Number","date" => "Date","boolean" => "Yes / No "))
+                            @php( $list = \App\Models\Field::$databaseTypes )
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" />
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used to store the datas. <i class="text-sm text-red-600"> Be careful : you couldn't change this value later</i></small>
 
@@ -74,7 +71,7 @@
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
                                 requirement state</label>
 
-                            @php( $list = array(2 => "Strongly advised",3 => "Advised",4 => "If possible",100 => "Undefined"))
+                            @php( $list = \App\Models\Field::$requiredTypes)
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define
@@ -90,11 +87,15 @@
 
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "status")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's activation status </label>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
+                                activation status </label>
 
-                            @php( $list = array(0 => "Disabled",1 => "Website",2 => "Website & App"))
-                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define where the field will be deployed.</small>
+                            @php( $list = \App\Models\Field::$statusTypes)
+                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
+                                           class="form-input rounded-md shadow-sm mt-1 block w-full"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define where
+                                the field will be deployed. <i class="text-sm text-red-600"> Be careful, if the status
+                                    is set to 'Disabled', the field won't be shown.</i></small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -106,10 +107,52 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "order")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's order</label>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
+                                order</label>
 
-                            <input value="{{ old($form_elem) }}" type="number" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="3" />
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used to order the field. Fields are first order by requirement state, then by order</small>
+                            <input value="{{ old($form_elem) }}" type="number" name="{{$form_elem}}" id="{{$form_elem}}"
+                                   class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="Example : 3"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
+                                used to order the field. Fields are first order by requirement state, then by
+                                order. If you don't know the order, leave it blank.</small>
+
+                            @error($form_elem)
+                            <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+
+                        <!--  DESCRIPTIVE_VALUE SECTION  -->
+
+                        <div class="px-4 py-5 bg-white sm:p-6">
+
+                            @php($form_elem = "descriptive_value")
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Is that a
+                                descriptive value ?</label>
+                            <input value="1" type="checkbox" name="{{$form_elem}}" id="{{$form_elem}}"
+                                   class="form-input rounded-md shadow-sm mt-1 block" @checked(old($form_elem) == 1)/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">If checked,
+                                it will be displayed in the Persons section. </small>
+                            @error($form_elem)
+                            <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+
+                        <!--  BEST_DESCRIPTIVE_VALUE SECTION  -->
+
+                        <div class="px-4 py-5 bg-white sm:p-6">
+
+                            @php($form_elem = "best_descriptive_value")
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Is that the best
+                                descriptive value ?</label>
+
+                            <input value="1" type="checkbox" name="{{$form_elem}}" id="{{$form_elem}}"
+                                   class="form-input rounded-md shadow-sm mt-1 block" @checked(old($form_elem) == 1)/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">If checked,
+                                it will be displayed in the Manage Persons section as the main field. <i
+                                    class="text-sm text-red-600"> Be careful, there is only one best descriptive value
+                                    per team.</i></small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -123,13 +166,13 @@
                             @php($form_elem = "linked_list")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
                                 associated list
-                            <!--
-                                    <a href="{{route("lists_control.create")}}" class="inline-flex items-center text-blue-800">
-                                       ~ Create a new list
-                                    </a>-->
+                                    <a href="{{route("lists_control.create")}}"
+                                       class="inline-flex items-center text-blue-800">
+                                        ~ Create a new list
+                                    </a>
                             </label>
 
-                            @php( $list = [" " => "Choose an associate list"]+array_column(\App\Models\ListControl::where("deleted",0)->get()->toArray(), "title", "id"))
+                            @php( $list = [" " => "Choose an associate list"]+array_column(\App\Models\ListControl::whereNotNull('displayed_value')->get()->toArray(), "title", "id"))
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define a

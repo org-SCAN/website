@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\RoleRequest;
 use App\Models\User;
-use App\Models\UserRole;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class RequestRole extends Controller
     public function request(Request $request)
     {
         $role_id = $request->input('role');
-        $role = UserRole::find($role_id);
+        $role = Role::find($role_id);
         $user_id = $request->input('user_id');
         $user = User::find($user_id);
         if ($user->role == $role->role) {
@@ -37,7 +37,7 @@ class RequestRole extends Controller
     public function grant(Request $request)
     {
         $role_id = $request->input('role');
-        $role = UserRole::find($role_id);
+        $role = Role::find($role_id);
         $user_id = $request->input('user_id');
         $user = User::find($user_id);
         if ($user->role == $role->role) {

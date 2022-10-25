@@ -16,13 +16,15 @@ class CreateApiLogsTable extends Migration
         Schema::create('api_logs', function (Blueprint $table) {
             $table->uuid("id")->primary()->unique();
             $table->timestamps();
-            $table->foreignUuid("user");
+            $table->foreignUuid("user_id");
+            $table->foreignUuid("crew_id");
             $table->string("application_id");
             $table->string("api_type");
             $table->ipAddress("ip")->nullable();
             $table->string("response")->default("success");
             $table->string("model")->nullable();
             $table->string("http_method");
+            $table->softDeletes();
         });
     }
 

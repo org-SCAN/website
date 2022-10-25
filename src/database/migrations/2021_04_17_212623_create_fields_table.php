@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\ListControl;
 
 class CreateFieldsTable extends Migration
 {
@@ -27,9 +26,9 @@ class CreateFieldsTable extends Migration
             $table->uuid( "id")
                 ->unique()
                 ->primary();
-            $table->string( "title");
-            $table->string( "label");
-            $table->string( "placeholder")
+            $table->string("title");
+            $table->string("label");
+            $table->string("placeholder")
                 ->nullable();
             $table->string( "html_data_type");
             $table->string( "database_type");
@@ -44,8 +43,15 @@ class CreateFieldsTable extends Migration
                 ->default(100);
             $table->string("validation_laravel")
                 ->nullable();
-            $table->boolean("deleted")
-                ->default(0);
+            $table->foreignUuid("crew_id");
+            $table->boolean("best_descriptive_value")
+                ->default(0)
+                ->nullable();
+            $table->boolean("descriptive_value")
+                ->default(0)
+                ->nullable();
+            $table->foreignUuid('api_log');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
