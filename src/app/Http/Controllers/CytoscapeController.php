@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cytoscape;
+use App\Models\Field;
+use App\Models\ListControl;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,6 +24,10 @@ class CytoscapeController extends Controller
         $relations = \App\Models\Link::whereRelation('RefugeeFrom.crew', 'crews.id', Auth::user()->crew->id)
             ->whereRelation('RefugeeTo.crew', 'crews.id', Auth::user()->crew->id)
             ->get();
+
+        //get the role field
+        $role_list = ListControl::firstWhere('name', 'ListRole');
+        $role_field = Field::whereCrewId(Auth::user()->crew->id)->firstWhere('linked_list', $role_list->id);
         /*
             $nodes = array();
             foreach ($refugees as $refugee){
@@ -34,16 +40,26 @@ class CytoscapeController extends Controller
         $links = array();
         $nodes = array();
         $refugees = array();
-        foreach ($relations as $relation){
+        foreach ($relations as $relation) {
 
             $node["data"] = array();
             $node["data"]["id"] = $relation->getFromId();
             $node["data"]["name"] = $relation->refugeeFrom->best_descriptive_value;
+            if ($role_field->exists()) {
+                $model = "App\Models\\" . $role_list->name; // App\Models\ListRole
+                $value = $model::find($relation->refugeeFrom->fields->firstWhere('id', $role_field->id)->pivot->value)->{$role_list->displayed_value};
+                $node["data"]["role"] = $value;
+            }
             array_push($nodes, $node);
 
             $node["data"] = array();
             $node["data"]["id"] = $relation->getToId();
             $node["data"]["name"] = $relation->refugeeTo->best_descriptive_value;
+            if ($role_field->exists()) {
+                $model = "App\Models\\" . $role_list->name; // App\Models\ListRole
+                $value = $model::find($relation->refugeeTo->fields->firstWhere('id', $role_field->id)->pivot->value)->{$role_list->displayed_value};
+                $node["data"]["role"] = $value;
+            }
             array_push($nodes, $node);
 
             $refugees[$relation->getToId()] = $relation->refugeeTo->best_descriptive_value;

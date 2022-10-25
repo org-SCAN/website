@@ -5,7 +5,7 @@
     </div>
 
     <div class="mt-8 text-2xl">
-        Welcome to <b>SCAN</b> : <b>S</b>hare <b>C</b>ompile <b>AN</b>alise
+        Welcome to <b>SCAN</b> : <b>S</b>hare <b>C</b>ompile <b>AN</b>alyse
     </div>
 
     <div class="mt-6 text-gray-500">
