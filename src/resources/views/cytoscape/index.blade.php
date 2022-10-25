@@ -45,6 +45,15 @@
                         <i class="fas fa-circle" style="color: #{{$relation->color}}"> {{$relation->name}}</i>
                     @endforeach
                 </div>
+                <div class="rounded-lg px-2">
+                    <i class="fas fa-circle" style="color: #000000">deceased</i>
+                    <i class="fas fa-circle" style="color: #f89f9f">informant</i>
+                    <i class="fas fa-circle" style="color: #d995e5">possibly sought</i>
+                    <i class="fas fa-circle" style="color: #7773fc">relative</i>
+                    <i class="fas fa-circle" style="color: #ff0000">sought</i>
+                    <i class="fas fa-circle" style="color: #1dfc00">survivor</i>
+                    <i class="fas fa-circle" style="color: #9f9d9d">witness</i>
+                </div>
 
                 <div class="block mb-8 mt-8">
                     <a class="bg-red-200 hover:bg-red-300 text-black hover:text-black font-bold py-2 px-4 rounded"
