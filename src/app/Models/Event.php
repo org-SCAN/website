@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Model
@@ -24,4 +24,14 @@ class Event extends Model
      * @var bool
      */
     public $incrementing = false;
+
+    public function country()
+    {
+        return $this->hasOne(ListCountry::class, 'id', 'country_id');
+    }
+
+    public function api_log()
+    {
+        return $this->hasOne(ApiLog::class, 'id', 'api_log_id');
+    }
 }

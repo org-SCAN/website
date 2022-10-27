@@ -27,6 +27,14 @@
                         </x-jet-nav-link>
                     </div>
                 @endcan
+                @can('viewMenu', \App\Models\Event::class)
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('event.index') }}"
+                                        :active="request()->routeIs('event.*')">
+                            {{ __('Events') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endcan
                 @can('viewMenu', \App\Models\Link::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.*')">

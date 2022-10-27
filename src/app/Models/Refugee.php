@@ -125,7 +125,9 @@ class Refugee extends Model
     {
         $best_descriptive_values = [];
         foreach (self::all() as $elem) {
-            $best_descriptive_values[$elem->id] = $elem->best_descriptive_value;
+            if ($elem->crew->id == Auth::user()->crew->id) {
+                $best_descriptive_values[$elem->id] = $elem->best_descriptive_value;
+            }
         }
         return $best_descriptive_values;
     }
