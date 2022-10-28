@@ -162,7 +162,23 @@ class ListControl extends Model
         return $api_res;
     }
 
-    public function getDisplayedValueAttribute(){
+    public function getDisplayedValueAttribute()
+    {
         return $this->structure()->find($this->attributes['displayed_value'])->field ?? $this->attributes['displayed_value'];
+    }
+
+    public static function list()
+    {
+        return self::orderBy('short')->pluck('short', 'id');
+    }
+
+    public static function getDisplayedValueFromListName()
+    {
+        return ListControl::firstWhere('name', substr(strrchr(get_called_class(), "\\"), 1))->displayed_value;
+    }
+
+    public function getDisplayedValueContentAttribute()
+    {
+        return $this->{self::getDisplayedValueFromListName()}; //returns the name
     }
 }

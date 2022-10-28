@@ -25,13 +25,25 @@ class Event extends Model
      */
     public $incrementing = false;
 
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
     public function country()
     {
         return $this->hasOne(ListCountry::class, 'id', 'country_id');
     }
 
+    public function type()
+    {
+        return $this->hasOne(ListEventType::class, 'id', 'event_type_id');
+    }
+
     public function api_log()
     {
-        return $this->hasOne(ApiLog::class, 'id', 'api_log_id');
+        return $this->hasOne(ApiLog::class, 'id', 'apiLog_id');
     }
 }

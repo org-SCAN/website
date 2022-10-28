@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\ListControl;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
 class ListControlSeeder extends Seeder
@@ -24,7 +24,9 @@ class ListControlSeeder extends Seeder
             $to_store = array();
             $to_store["id"] = (string)Str::uuid();
             foreach ($fields as $keyField => $fieldValue) {
-                $to_store[$keyField] = $fieldValue;
+                if ($keyField != 'structure') {
+                    $to_store[$keyField] = $fieldValue;
+                }
             }
             ListControl::create($to_store);
         }

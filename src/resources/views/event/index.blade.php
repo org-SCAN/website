@@ -39,9 +39,9 @@
                                         <td>
                                             <a href="{{route('event.show',  $event->id)}}"> {{ $event->name }}</a>
                                         </td>
-                                        <td>{{ $event->type }}</td>
+                                        <td>{{ $event->type->displayed_value_content ?? "" }}</td>
                                         <td>{{ $event->subtype }}</td>
-                                        <td>{{ $event->country->{\App\Models\ListControl::firstWhere("name","ListCountry")->displayed_value} }}</td>
+                                        <td>{{ $event->country->displayed_value_content ?? "" }}</td>
                                         <td>{{ $event->start_date }}</td>
                                         <td>{{ $event->stop_date }}</td>
                                         @can('update', $event)
