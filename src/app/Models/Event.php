@@ -46,4 +46,9 @@ class Event extends Model
     {
         return $this->hasOne(ApiLog::class, 'id', 'apiLog_id');
     }
+
+    public function persons()
+    {
+        return $this->hasManyThrough(Refugee::class, FieldRefugee::class, 'value', 'id', 'id', 'refugee_id');
+    }
 }

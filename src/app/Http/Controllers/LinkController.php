@@ -74,8 +74,33 @@ class LinkController extends Controller
     {
         $link = $request->validated();
         $link["date"] = ((isset($link["date"]) && !empty($link["date"])) ? $link["date"] : date('Y-m-d H:i', time()));
-        $log = ApiLog::createFromRequest($request, "Link");
-        $link["api_log"] = $log->id;
+        $link["api_log"] = ApiLog::createFromRequest($request, "Link")->id;
+
+        if (isset($link["everyoneFrom"]) || isset($link["everyoneTo"])) {
+
+            if (isset($link["everyoneTo"])) {
+                $orgin = "from";
+                $direction = "to";
+            } else {
+                $orgin = 'to';
+                $direction = 'from';
+            }
+            $person = Refugee::find($link[$orgin]);
+            if ($person->hasEvent()) {
+                $associatedPersonsThroughEvent = $person->event->persons->where("id", '!=', $person->id);
+            }
+            unset($link["everyoneFrom"]);
+            unset($link["everyoneTo"]);
+        }
+
+        if (isset($associatedPersonsThroughEvent) && !empty($associatedPersonsThroughEvent) && isset($direction)) {
+            foreach ($associatedPersonsThroughEvent as $associatedPerson) {
+                $link[$direction] = $associatedPerson->id;
+                Link::create($link);
+            }
+            return redirect()->route("links.index");
+        }
+
         Link::create($link);
         return redirect()->route("links.index");
     }

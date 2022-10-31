@@ -155,6 +155,17 @@ class Refugee extends Model
         return [$this->fromRelation, $this->toRelation];
     }
 
+    public function hasEvent()
+    {
+        return $this->fields()->where('linked_list', ListControl::whereName('Event')->first()->id)->exists();
+    }
+
+    public function getEventAttribute()
+    {
+        return Event::find($this->fields()->where('linked_list', ListControl::whereName('Event')->first()->id)->first()->pivot->value);
+    }
+
+
     /**
      * This function is used to handle the API request. If a person exists (id is in the request) update all changed fields, else create the person and return his/her ID.
      *
