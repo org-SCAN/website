@@ -26,11 +26,14 @@
                             @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the
                             first person --', 'datas' => $list, 'selected_value' => old($form_elem, $selected_value)])
                             @stack('scripts')
-                            <input type="checkbox" name="everyoneFrom" @checked(old("everyoneFrom")) value="1"> From all
-                            person registered in the same event
-                            @error("everyoneFrom")
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @if(auth()->user()->crew->hasEvent())
+                                <input type="checkbox" name="everyoneFrom" @checked(old("everyoneFrom")) value="1"> From
+                                all
+                                person registered in the same event
+                                @error("everyoneFrom")
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            @endif
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -64,12 +67,13 @@
                             @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the
                             second person --', 'datas' => $list, 'selected_value' => old($form_elem, $selected_value)])
                             @stack('scripts')
-
-                            <input type="checkbox" name="everyoneTo" @checked(old("everyoneTo")) value="1"> To all
-                            person registered in the same event
-                            @error("everyoneTo")
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @if(auth()->user()->crew->hasEvent())
+                                <input type="checkbox" name="everyoneTo" @checked(old("everyoneTo")) value="1"> To all
+                                person registered in the same event
+                                @error("everyoneTo")
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            @endif
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
