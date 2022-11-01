@@ -155,7 +155,6 @@
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-
                         <!--
 
                         <div class="px-4 py-5 bg-white sm:p-6">
@@ -183,6 +182,9 @@
                         </div>
                     </div>
                 </form>
+                <div class="px-4 py-5 bg-white sm:p-6">
+                    @livewire("form-dropdown")
+                </div>
             </div>
         </div>
     </div>
