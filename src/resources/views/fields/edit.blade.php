@@ -19,12 +19,12 @@
                         <!--  TITLE SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "title")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's title</label>
-                            <input type="text" value="{{ old($field->{$form_elem}, $field->{$form_elem}) }}" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="Full Name" />
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500">It'll be shown as title when the field is used.</small>
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @livewire("form-text", [
+                                'form_elem' => $form_elem,
+                                'title' => "Field's title",
+                                'placeHolder' => "Example : Full Name",
+                                'hint' => "It'll be shown as title when the field is used.",
+                                'previous' => $field->{$form_elem}])
                         </div>
 
                         <!--  PLACEHOLDER SECTION  -->
@@ -32,20 +32,12 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "placeholder")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
-                                placeholder</label>
-                            @if(!isset($field->{$form_elem}))
-                                @php($field->{$form_elem} = "")
-                            @endif
-                            <input type="text" value="{{ old($field->{$form_elem}, $field->{$form_elem}) }}"
-                                   name="{{$form_elem}}" id="{{$form_elem}}"
-                                   class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="John Doe"/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
-                                shown as an example when the field is asked.</small>
-
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @livewire("form-text", [
+                                'form_elem' => $form_elem,
+                                'title' => "Field's placeholder",
+                                'placeHolder' => "The placehold is shown as an example when the field is asked (just like this)",
+                                'hint' => "It'll be shown as an example when the field is asked.",
+                                'previous' => $field->{$form_elem}])
                         </div>
 
                         <!--  REQUIRED SECTION  -->

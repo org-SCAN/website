@@ -11,6 +11,7 @@ class FormText extends Component
     public $title;
     public $placeHolder;
     public $hint;
+    public $previous;
 
     public function render()
     {
@@ -18,6 +19,7 @@ class FormText extends Component
         $title = $this->title;
         $placeHolder = $this->placeHolder;
         $hint = $this->hint;
-        return view('livewire.form-text', compact('form_elem','title', "placeHolder", "hint"))->extends('layouts.app');
+        $previous = $this->previous;
+        return view('livewire.form-text', compact('form_elem','title', "placeHolder", "hint", "previous"))->extends('layouts.app');
     }
 }
