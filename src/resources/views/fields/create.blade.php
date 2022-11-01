@@ -25,22 +25,12 @@
                         </div>
 
                         <!--  PLACEHOLDER SECTION  -->
-
                         <div class="px-4 py-5 bg-white sm:p-6">
-
-                            @php($form_elem = "placeholder")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
-                                placeholder</label>
-
-                            <input value="{{ old($form_elem)}}" type="text" name="{{$form_elem}}" id="{{$form_elem}}"
-                                   class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                   placeholder="The placehold is shown as an example when the field is asked (just like this)"/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
-                                shown as an example when the field is asked.</small>
-
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @livewire("form-text", [
+                                'form_elem' => "placeholder",
+                                'title' => "Field's placeholder",
+                                'placeHolder' => "The placehold is shown as an example when the field is asked (just like this)",
+                                'hint' => "It'll be shown as an example when the field is asked."])
                         </div>
 
                         <!--  DATABASE TYPE SECTION  -->
