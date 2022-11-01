@@ -65,7 +65,7 @@
                             @enderror
                         </div>
 
-                        <!--  Country SECTION  -->
+                        <!--  Location details SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "location_details")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Event's
@@ -93,7 +93,7 @@
                             @enderror
                         </div>
 
-                        <!--  start date SECTION  -->
+                        <!--  stop date SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "stop_date")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Event's
@@ -107,7 +107,7 @@
                             @enderror
                         </div>
 
-                        <!--  start date SECTION  -->
+                        <!--  latitude SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "latitude")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Event's
@@ -121,7 +121,7 @@
                             @enderror
                         </div>
 
-                        <!--  start date SECTION  -->
+                        <!--  longitude SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "longitude")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Event's
