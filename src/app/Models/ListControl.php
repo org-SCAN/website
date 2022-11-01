@@ -52,7 +52,7 @@ class ListControl extends Model
 
     public function list_content()
     {
-        $model = 'App\Models\\' . $this->name;
+        $model = 'App\Models\\' . $this->name . '::class';
         return $this->hasMany($model);
     }
 
@@ -169,7 +169,10 @@ class ListControl extends Model
 
     public static function list()
     {
-        return self::orderBy('short')->pluck('short', 'id');
+        // order by displayed value and pluck it
+        $displayed_value = self::getDisplayedValue();
+
+        return self::orderBy($displayed_value)->pluck($displayed_value, 'id');
     }
 
     public static function getDisplayedValueFromListName()

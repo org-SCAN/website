@@ -33,7 +33,7 @@
                         <!--  Event Type SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "event_type_id")
-                            @php($list = \App\Models\ListEventType::all()->pluck('name', 'id'))
+                            @php($list = \App\Models\ListEventType::list())
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Event's
                                 Type</label>
                             @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => "--
