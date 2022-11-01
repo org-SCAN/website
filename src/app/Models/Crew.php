@@ -46,4 +46,14 @@ class Crew extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function fields()
+    {
+        return $this->hasMany(Field::class);
+    }
+
+    public function hasEvent()
+    {
+        return $this->fields()->where('linked_list', ListControl::whereName('Event')->first()->id)->exists();
+    }
 }

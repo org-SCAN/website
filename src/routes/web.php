@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApiLogController;
 use App\Http\Controllers\CrewController;
 use App\Http\Controllers\DuplicateController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\FieldsController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\ListControlController;
@@ -141,3 +142,4 @@ Route::resource("api_logs", ApiLogController::class)->middleware('auth');
 Route::resource("crew", CrewController::class)->middleware('auth');
 Route::resource("roles", RoleController::class)->middleware('auth');
 Route::resource("permissions", PermissionController::class)->middleware('auth');
+Route::resource("event", EventController::class)->middleware('auth');

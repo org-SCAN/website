@@ -30,9 +30,34 @@
         "key_value": "id"
     },
     {
-        "title" : "Field",
-        "name" : "Field",
-        "displayed_value" : "title",
+        "title": "Field",
+        "name": "Field",
+        "displayed_value": "title",
         "key_value": "id"
+    },
+    {
+        "title": "Event Type",
+        "name": "ListEventType",
+        "displayed_value": "name",
+        "key_value": "id"
+    },
+    {
+        "title": "Event",
+        "name": "Event",
+        "displayed_value": "name",
+        "key_value": "id",
+        "structure": [
+            "name",
+            "event_type_id",
+            "event_subtype_id",
+            "country_id",
+            "location_details",
+            "start_date",
+            "stop_date",
+            "stop_date",
+            "latitude",
+            "longitude",
+            "description"
+        ]
     }
 ]

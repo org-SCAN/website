@@ -52,7 +52,7 @@ class ListControl extends Model
 
     public function list_content()
     {
-        $model = 'App\Models\\' . $this->name;
+        $model = 'App\Models\\' . $this->name . '::class';
         return $this->hasMany($model);
     }
 
@@ -162,7 +162,26 @@ class ListControl extends Model
         return $api_res;
     }
 
-    public function getDisplayedValueAttribute(){
+    public function getDisplayedValueAttribute()
+    {
         return $this->structure()->find($this->attributes['displayed_value'])->field ?? $this->attributes['displayed_value'];
+    }
+
+    public static function list()
+    {
+        // order by displayed value and pluck it
+        $displayed_value = self::getDisplayedValue();
+
+        return self::orderBy($displayed_value)->pluck($displayed_value, 'id');
+    }
+
+    public static function getDisplayedValueFromListName()
+    {
+        return ListControl::firstWhere('name', substr(strrchr(get_called_class(), "\\"), 1))->displayed_value;
+    }
+
+    public function getDisplayedValueContentAttribute()
+    {
+        return $this->{self::getDisplayedValueFromListName()}; //returns the name
     }
 }

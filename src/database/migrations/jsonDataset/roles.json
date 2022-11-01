@@ -1,13 +1,13 @@
 [
     {
         "role": {
-            "name": "admin"
+            "name": "Default Admin"
         },
         "permissions": "*"
     },
     {
         "role": {
-            "name": "editor"
+            "name": "Default Editor"
         },
         "permissions": [
             "cytoscape.index",
@@ -40,19 +40,28 @@
             "duplicate.show",
             "duplicate.edit",
             "duplicate.update",
-            "duplicate.destroy"
+            "duplicate.destroy",
+            "event.index",
+            "event.show",
+            "event.create",
+            "event.store",
+            "event.edit",
+            "event.update",
+            "event.destroy"
         ]
     },
     {
         "role": {
-            "name": "viewer"
+            "name": "Default Viewer"
         },
         "permissions": [
             "cytoscape.index",
             "person.index",
             "person.show",
             "links.index",
-            "links.show"
+            "links.show",
+            "event.index",
+            "event.show"
         ]
     }
 ]

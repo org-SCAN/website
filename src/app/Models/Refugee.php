@@ -125,7 +125,9 @@ class Refugee extends Model
     {
         $best_descriptive_values = [];
         foreach (self::all() as $elem) {
-            $best_descriptive_values[$elem->id] = $elem->best_descriptive_value;
+            if ($elem->crew->id == Auth::user()->crew->id) {
+                $best_descriptive_values[$elem->id] = $elem->best_descriptive_value;
+            }
         }
         return $best_descriptive_values;
     }
@@ -152,6 +154,17 @@ class Refugee extends Model
     {
         return [$this->fromRelation, $this->toRelation];
     }
+
+    public function hasEvent()
+    {
+        return $this->fields()->where('linked_list', ListControl::whereName('Event')->first()->id)->exists();
+    }
+
+    public function getEventAttribute()
+    {
+        return Event::find($this->fields()->where('linked_list', ListControl::whereName('Event')->first()->id)->first()->pivot->value);
+    }
+
 
     /**
      * This function is used to handle the API request. If a person exists (id is in the request) update all changed fields, else create the person and return his/her ID.

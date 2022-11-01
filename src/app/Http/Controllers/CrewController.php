@@ -8,6 +8,7 @@ use App\Http\Requests\StoreCrewRequest;
 use App\Http\Requests\UpdateCrewRequest;
 use App\Models\Crew;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 
 class CrewController extends Controller
@@ -53,7 +54,10 @@ class CrewController extends Controller
     public function store(StoreCrewRequest $request)
     {
         $crew = $request->validated();
-        Crew::create($crew);
+        $crew = Crew::create($crew);
+        $user = Auth::user();
+        $user->crew_id = $crew->id;
+        $user->save();
         return redirect()->route("crew.index");
     }
 

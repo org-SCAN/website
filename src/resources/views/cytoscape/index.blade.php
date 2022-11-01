@@ -51,7 +51,7 @@
                     <i class="fas fa-circle" style="color: #d995e5">possibly sought</i>
                     <i class="fas fa-circle" style="color: #7773fc">relative</i>
                     <i class="fas fa-circle" style="color: #ff0000">sought</i>
-                    <i class="fas fa-circle" style="color: #1dfc00">survivor</i>
+                    <i class="fas fa-circle" style="color: #ff00fa">survivor</i>
                     <i class="fas fa-circle" style="color: #9f9d9d">witness</i>
                 </div>
 

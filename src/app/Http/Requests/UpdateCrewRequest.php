@@ -24,7 +24,7 @@ class UpdateCrewRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "string|required"
+            "name" => "string|required|unique:crews,name"
         ];
     }
 }

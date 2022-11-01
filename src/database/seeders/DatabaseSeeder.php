@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ListRouteSeeder::class);
         $this->call(ListGenderSeeder::class);
         $this->call(ListRelationSeeder::class);
+        $this->call(ListEventTypeSeeder::class);
         if (env('APP_DEBUG')) {
             $this->call(EventSeeder::class);
             $this->call(RefugeeSeeder::class);

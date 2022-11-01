@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\PersonHasEvent;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreLinkRequest extends FormRequest
@@ -24,8 +25,18 @@ class StoreLinkRequest extends FormRequest
     public function rules()
     {
         return [
-            "from" => "Required|uuid|exists:refugees,id",
-            "to" => "Required|uuid|exists:refugees,id|different:from",
+            "from" => [
+                "required_without:everyoneFrom",
+                new PersonHasEvent($this)
+            ],
+            "everyoneFrom" => "boolean|prohibits:everyoneTo|required_without:from|nullable",
+
+            "to" => [
+                "required_without:everyoneTo",
+                new PersonHasEvent($this)
+            ],
+            "everyoneTo" => "boolean|prohibits:everyoneFrom|required_without:to|nullable",
+
             "relation" => "Required|uuid|exists:list_relations,id",
             "detail" => "string|nullable",
         ];
