@@ -43,8 +43,6 @@
             "duplicate.destroy",
             "event.index",
             "event.show",
-            "event.index",
-            "event.show",
             "event.create",
             "event.store",
             "event.edit",
