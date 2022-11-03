@@ -16,11 +16,13 @@ use App\Models\User;
 use App\Policies\ApiLogPolicy;
 use App\Policies\CrewPolicy;
 use App\Policies\CytoscapePolicy;
+use App\Policies\EventPolicy;
 use App\Policies\FieldPolicy;
 use App\Policies\ListControlPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\RefugeePolicy;
 use App\Policies\RolePolicy;
+use App\Policies\SourcePolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
