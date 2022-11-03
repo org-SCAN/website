@@ -9,11 +9,6 @@ class FormCheckbox extends Form
 
     public function render()
     {
-        $form_elem = $this->form_elem;
-        $title = $this->title;
-        $hint = $this->hint;
-        $warning = $this->warning;
-        $previous = $this->previous;
-        return view('livewire.form-checkbox', compact('form_elem', 'title', 'hint', 'warning', 'previous'))->extends('layouts.app');
+        return view('livewire.form-checkbox')->extends('layouts.app');
     }
 }
