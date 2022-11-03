@@ -142,10 +142,10 @@
                             @enderror
                         </div>
 
-                        <!--  reference SECTION  -->
+                        <!--  description SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "description")
-                            Event's reference
+                            Event's description
                             <textarea name="{{ $form_elem }}" id="{{ $form_elem }}"
                                       class="form-input rounded-md shadow-sm mt-1 block w-full"
                                       placeholder="{{ $form_elem ?? '' }}">{{ old($form_elem, $event->{$form_elem}) }}</textarea>
