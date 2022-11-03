@@ -18,7 +18,7 @@
                         <!--  TITLE SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "title")
-                            @livewire("form-text", [
+                            @livewire("forms.form-text", [
                                 'form_elem' => $form_elem,
                                 'title' => "Field's title",
                                 'placeHolder' => "Example : Full Name",
@@ -28,7 +28,7 @@
                         <!--  PLACEHOLDER SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "placeholder")
-                            @livewire("form-text", [
+                            @livewire("forms.form-text", [
                                 'form_elem' => $form_elem,
                                 'title' => "Field's placeholder",
                                 'placeHolder' => "The placehold is shown as an example when the field is asked (just like this)",
@@ -113,7 +113,7 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "descriptive_value")
-                            @livewire("form-checkbox", [
+                            @livewire("forms.form-checkbox", [
                                 'form_elem' => $form_elem,
                                 'title' => "Is that a descriptive value ?",
                                 'hint' => "If checked, it will be displayed in the Persons section."])
@@ -125,7 +125,7 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "best_descriptive_value")
-                            @livewire("form-checkbox", [
+                            @livewire("forms.form-checkbox", [
                                 'form_elem' => $form_elem,
                                 'title' => "Is that the best descriptive value ?",
                                 'hint' => "If checked, it will be displayed in the Manage Persons section as the main field.",
