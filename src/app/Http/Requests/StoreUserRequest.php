@@ -28,8 +28,10 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'invite' => ["required_without:password|boolean|nullable"],
             'password' => [
-                'required',
+                'required_without:invite',
+                'nullable',
                 'string',
                 'min:8',             // must be at least 8 characters in length
                 'regex:/[a-z]/',      // must contain at least one lowercase letter

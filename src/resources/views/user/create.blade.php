@@ -35,15 +35,31 @@
                             @enderror
                         </div>
 
+                        @php($form_elem = "invite")
                         <div class="px-4 py-5 bg-white sm:p-6">
-                            <label for="password" class="block font-medium text-sm text-gray-700">Password</label>
+                            <label for="{{ $form_elem }}" class="block font-medium text-sm text-gray-700">Send
+                                invitation email ?</label>
+                            <input type="checkbox" name="{{ $form_elem }}" id="{{ $form_elem }}"
+                                   class="form-input rounded-md shadow-sm mt-1 block"
+                                   value=1 @checked(old($form_elem, ''))/>
+                            <small id="Help_{{ $form_elem }}" class="block font-medium text-sm text-gray-700 ">
+                                If checked, you won't have to create the password. The application will send an
+                                invitation to the given email. The user will have to choose his own password.</small>
+                            @error($form_elem)
+                            <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="px-4 py-5 bg-white sm:p-6" id="password_section">
+                            <label for="password" class="block font-medium text-sm text-gray-700" id="password_label">Password</label>
                             <input type="password" name="password" id="password"
                                    class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             @error('password')
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
 
-                            <label for="password" class="block font-medium text-sm text-gray-700">Confirm
+                            <label for="password" class="block font-medium text-sm text-gray-700"
+                                   id="confirm_password_label">Confirm
                                 password</label>
                             <input type="password" name="password_confirmation" id="password_confirmation"
                                    class="form-input rounded-md shadow-sm mt-1 block w-full"/>
@@ -103,4 +119,14 @@
             </div>
         </div>
     </div>
+    <script>
+        // hide the password fields if the invitation checkbox is checked
+        document.getElementById('invite').addEventListener('change', function () {
+            if (this.checked) {
+                $('#password_section').hide();
+            } else {
+                $('#password_section').show();
+            }
+        });
+    </script>
 </x-app-layout>

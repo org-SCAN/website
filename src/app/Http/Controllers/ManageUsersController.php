@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 
 class ManageUsersController extends Controller
@@ -64,6 +65,13 @@ class ManageUsersController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = $request->validated();
+
+        // if the user is invited, we don't need to set a password, but we do need to send an ivitation email
+        if (isset($user["invite"])) {
+            // create a random password
+            $user["password"] = Str::uuid();
+        }
+
         DB::transaction(function () use ($user) {
             return tap(User::create([
                 'name' => $user['name'],
@@ -74,10 +82,16 @@ class ManageUsersController extends Controller
             ]), function (User $created_user) {
                 $created_user->genToken();
                 $created_user->genRole();
+                // send the invitation email
+                if (isset($user["invite"])) {
+                    //send a resert password email
+                    $created_user->sendPasswordResetNotification($user["email"]);
+                }
             });
         });
 
-        return redirect()->route('user.index');
+
+        return redirect()->route('user.index')->with('success', 'User created successfully.');
     }
 
     /**
