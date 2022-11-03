@@ -42,6 +42,12 @@
         "key_value": "id"
     },
     {
+        "title": "Source Type",
+        "name": "ListSourceType",
+        "displayed_value": "name",
+        "key_value": "id"
+    },
+    {
         "title": "Event",
         "name": "Event",
         "displayed_value": "name",
@@ -58,6 +64,18 @@
             "latitude",
             "longitude",
             "description"
+        ]
+    },
+    {
+        "title": "Source",
+        "name": "Source",
+        "displayed_value": "name",
+        "key_value": "id",
+        "structure": [
+            "name",
+            "source_type_id",
+            "trust",
+            "reference"
         ]
     }
 ]
