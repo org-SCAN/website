@@ -9,6 +9,6 @@ class FormText extends Form
 
     public function render()
     {
-        return view('livewire.form-text')->extends('layouts.app');
+        return view('livewire.forms.form-text')->extends('layouts.app');
     }
 }

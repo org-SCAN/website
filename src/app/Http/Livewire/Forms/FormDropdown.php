@@ -41,6 +41,6 @@ class FormDropdown extends Component
             $this->childs = $this->child_data[$this->selected_parent_id];
         }
 
-        return view('livewire.form-dropdown')->extends('layouts.app');
+        return view('livewire.forms.form-dropdown')->extends('layouts.app');
     }
 }

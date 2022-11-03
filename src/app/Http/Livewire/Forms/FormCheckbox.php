@@ -9,6 +9,6 @@ class FormCheckbox extends Form
 
     public function render()
     {
-        return view('livewire.form-checkbox')->extends('layouts.app');
+        return view('livewire.forms.form-checkbox')->extends('layouts.app');
     }
 }
