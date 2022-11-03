@@ -2,15 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
+use App\Http\Livewire\Form;
 
-class FormCheckbox extends Component
+class FormCheckbox extends Form
 {
-
-    public $form_elem;
-    public $title;
-    public $hint;
-    public $warning;
 
     public function render()
     {
@@ -18,6 +13,7 @@ class FormCheckbox extends Component
         $title = $this->title;
         $hint = $this->hint;
         $warning = $this->warning;
-        return view('livewire.form-checkbox', compact('form_elem', 'title', 'hint', 'warning'))->extends('layouts.app');
+        $previous = $this->previous;
+        return view('livewire.form-checkbox', compact('form_elem', 'title', 'hint', 'warning', 'previous'))->extends('layouts.app');
     }
 }

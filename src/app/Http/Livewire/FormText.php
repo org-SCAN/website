@@ -2,16 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
+use App\Http\Livewire\Form;
 
-class FormText extends Component
+class FormText extends Form
 {
-
-    public $form_elem;
-    public $title;
-    public $placeHolder;
-    public $hint;
-    public $previous;
 
     public function render()
     {
