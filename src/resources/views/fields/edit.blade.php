@@ -98,21 +98,12 @@
                         <!--  DESCRIPTIVE_VALUE SECTION  -->
 
                         <div class="px-4 py-5 bg-white sm:p-6">
-
                             @php($form_elem = "descriptive_value")
-                            @php($old = old($field->{$form_elem}, $field->{$form_elem}))
-
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Is that a
-                                descriptive value ?</label>
-
-                            <input value="1" type="checkbox" name="{{$form_elem}}" id="{{$form_elem}}"
-                                   class="form-input rounded-md shadow-sm mt-1 block" @checked($old == 1)/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">If checked,
-                                it will be displayed in the Manage Persons section</small>
-
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @livewire("form-checkbox", [
+                                'form_elem' => $form_elem,
+                                'title' => "Is that a descriptive value ?",
+                                'hint' => "If checked, it will be displayed in the Persons section.",
+                                'previous' => $field->{$form_elem}])
                         </div>
 
 
