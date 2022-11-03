@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ListEventTypeSeeder::class);
         if (env('APP_DEBUG')) {
             $this->call(EventSeeder::class);
+            $this->call(SourceSeeder::class);
             $this->call(RefugeeSeeder::class);
             $this->call(LinkSeeder::class);
         }

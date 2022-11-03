@@ -1,8 +1,8 @@
-@section('title',"Add a new relation")
+@section('title',"Edit ".$event->name)")
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Add an Event
+            Edit an {{ $event->name }}
         </h2>
     </x-slot>
     <div>
@@ -142,10 +142,10 @@
                             @enderror
                         </div>
 
-                        <!--  description SECTION  -->
+                        <!--  reference SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "description")
-                            Event's description
+                            Event's reference
                             <textarea name="{{ $form_elem }}" id="{{ $form_elem }}"
                                       class="form-input rounded-md shadow-sm mt-1 block w-full"
                                       placeholder="{{ $form_elem ?? '' }}">{{ old($form_elem, $event->{$form_elem}) }}</textarea>
@@ -157,7 +157,7 @@
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button
                                 class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
-                                Add
+                                Edit
                             </button>
                         </div>
                     </div>

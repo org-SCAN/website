@@ -11,6 +11,7 @@ use App\Http\Controllers\ManageUsersController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RefugeeController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SourceController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -143,3 +144,4 @@ Route::resource("crew", CrewController::class)->middleware('auth');
 Route::resource("roles", RoleController::class)->middleware('auth');
 Route::resource("permissions", PermissionController::class)->middleware('auth');
 Route::resource("event", EventController::class)->middleware('auth');
+Route::resource("source", SourceController::class)->middleware('auth');
