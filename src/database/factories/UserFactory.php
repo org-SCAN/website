@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Crew;
+use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -31,6 +33,8 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
+            'crew_id' => Crew::getDefaultCrewId(),
+            'role_id' => Role::whereName('Default Null')->first()->id,
         ];
     }
 
@@ -67,4 +71,5 @@ class UserFactory extends Factory
             'ownedTeams'
         );
     }
+
 }
