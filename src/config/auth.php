@@ -94,6 +94,12 @@ return [
             'expire' => 180,
             'throttle' => 60,
         ],
+        'invites' => [
+            'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 1440,
+            'throttle' => 60,
+        ],
     ],
 
     /*

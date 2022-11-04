@@ -241,4 +241,17 @@ class ManageUsersController extends Controller
         $user->save();
         return redirect()->back();
     }
+
+    /**
+     * Send an invitation email to the user
+     * Redirect to the user show page
+     *
+     * @param User $user
+     * @return RedirectResponse
+     **/
+    public function invite(User $user)
+    {
+        $user->notify(new InviteUserNotification(Auth::user()));
+        return redirect()->back()->with('inviteSuccess', 'Invitation sent successfully.');
+    }
 }
