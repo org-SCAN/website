@@ -48,7 +48,6 @@ class InviteUserNotification extends Notification
         //app('auth.password.broker')->createToken($notifiable);
         $token = Password::broker('invites')->createToken($notifiable);
 
-//        ddd($notifiable->getRememberToken());
 
         return (new MailMessage)
             ->subject('Invitation to join ' . config('app.name'))
