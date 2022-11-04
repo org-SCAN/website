@@ -45,7 +45,6 @@ class InviteUserNotification extends Notification
     {
 
 
-        //app('auth.password.broker')->createToken($notifiable);
         $token = Password::broker('invites')->createToken($notifiable);
 
 
