@@ -128,5 +128,10 @@
                 $('#password_section').show();
             }
         });
+
+        // if the invitation checkbox is checked, hide the password fields (on page load)
+        if (document.getElementById('invite').checked) {
+            $('#password_section').hide();
+        }
     </script>
 </x-app-layout>
