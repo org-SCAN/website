@@ -2,7 +2,7 @@
 
 namespace {{ namespace }};
 
-use \App\Models\{{ model }};
+use App\Models\{{ model }};
 
 class {{ class }} extends PermissionsTest
 {
