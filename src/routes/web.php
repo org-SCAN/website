@@ -138,6 +138,11 @@ Route::resource("links", LinkController::class)->middleware('auth')->except(['cr
 
 
 Route::resource("user", ManageUsersController::class)->middleware('auth');
+Route::post("user/invite/{user}", [
+    "as" => 'user.invite',
+    "uses" => '\App\Http\Controllers\ManageUsersController@invite'
+]);
+
 Route::resource("duplicate", DuplicateController::class)->middleware('auth');
 Route::resource("api_logs", ApiLogController::class)->middleware('auth');
 Route::resource("crew", CrewController::class)->middleware('auth');

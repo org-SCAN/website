@@ -9,14 +9,16 @@ use App\Http\Requests\UpdateUsersRequest;
 use App\Models\Role;
 use App\Models\RoleRequest;
 use App\Models\User;
+use App\Notifications\InviteUserNotification;
 use App\Rules\NotLastMoreImportantRole;
 use App\Rules\NotLastUser;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 
 class ManageUsersController extends Controller
@@ -39,7 +41,10 @@ class ManageUsersController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        //get all users and group them by crew_id
+        $users = User::orderBy('crew_id')->orderBy('name')->get();
+
+
         $request_roles = RoleRequest::where("granted", null)->get();
         return view("user.index", compact("users", "request_roles"));
     }
@@ -64,20 +69,31 @@ class ManageUsersController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = $request->validated();
-        DB::transaction(function () use ($user) {
-            return tap(User::create([
-                'name' => $user['name'],
-                'email' => $user['email'],
-                'password' => Hash::make($user['password']),
-                'role_id' => $user['role'],
-                "crew_id" => $user['team']
-            ]), function (User $created_user) {
-                $created_user->genToken();
-                $created_user->genRole();
-            });
-        });
 
-        return redirect()->route('user.index');
+        // if the user is invited, we don't need to set a password, but we do need to send an ivitation email
+        if (isset($user["invite"])) {
+            // create a random password
+            $user["password"] = Str::random(25);
+        }
+
+        $created_user = User::create([
+            'name' => $user['name'],
+            'email' => $user['email'],
+            'password' => Hash::make($user['password']),
+            'role_id' => $user['role'],
+            "crew_id" => $user['team']
+        ]);
+
+        $created_user->genToken();
+        $created_user->genRole();
+        // send the invitation email
+        if (isset($user["invite"])) {
+            //send a resert password email
+            //ddd($created_user);
+            $created_user->notify(new InviteUserNotification(Auth::user()));
+        }
+
+        return redirect()->route('user.index')->with('success', 'User created successfully.');
     }
 
     /**
@@ -224,5 +240,18 @@ class ManageUsersController extends Controller
         $user->crew_id = $crew;
         $user->save();
         return redirect()->back();
+    }
+
+    /**
+     * Send an invitation email to the user
+     * Redirect to the user show page
+     *
+     * @param User $user
+     * @return RedirectResponse
+     **/
+    public function invite(User $user)
+    {
+        $user->notify(new InviteUserNotification(Auth::user()));
+        return redirect()->back()->with('inviteSuccess', 'Invitation sent successfully.');
     }
 }

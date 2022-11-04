@@ -5,20 +5,24 @@ namespace App\Providers;
 use App\Models\ApiLog;
 use App\Models\Crew;
 use App\Models\Cytoscape;
+use App\Models\Event;
 use App\Models\Field;
 use App\Models\ListControl;
 use App\Models\Permission;
 use App\Models\Refugee;
 use App\Models\Role;
+use App\Models\Source;
 use App\Models\User;
 use App\Policies\ApiLogPolicy;
 use App\Policies\CrewPolicy;
 use App\Policies\CytoscapePolicy;
+use App\Policies\EventPolicy;
 use App\Policies\FieldPolicy;
 use App\Policies\ListControlPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\RefugeePolicy;
 use App\Policies\RolePolicy;
+use App\Policies\SourcePolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -38,7 +42,9 @@ class AuthServiceProvider extends ServiceProvider
         ListControl::class => ListControlPolicy::class,
         Cytoscape::class => CytoscapePolicy::class,
         Permission::class => PermissionPolicy::class,
-        Role::class => RolePolicy::class
+        Role::class => RolePolicy::class,
+        Event::class => EventPolicy::class,
+        Source::class => SourcePolicy::class,
     ];
 
     /**
