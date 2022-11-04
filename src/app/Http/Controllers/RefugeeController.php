@@ -204,7 +204,6 @@ class RefugeeController extends Controller
         $old = array_combine($ids, $values);
 
         foreach (array_diff($request->validated(), $old) as $key => $value) {
-            //ddd(array_diff($request->validated()));
             if (!empty($value)) {
                 if ($person->fields()->wherePivot('field_id', $key)->exists()) {
                     $person->fields()->updateExistingPivot($key, ["value" => $value]);
@@ -212,6 +211,10 @@ class RefugeeController extends Controller
                     $person->fields()->attach([$key => ['value' => $value]]);
                 }
             }
+        }
+        //detach fields that are not in the request
+        foreach (array_diff($old, $request->validated()) as $key => $value) {
+            $person->fields()->detach($key);
         }
         //$refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i', time()));
 
