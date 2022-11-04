@@ -28,6 +28,19 @@
                         </button>
                     @endcan
                 </form>
+                @can('create', \App\Models\Source::class)
+                    <form action="{{route('source.store')}}" method="POST"
+                          class="w-full md:w-1/2 px-3 mb-6 md:mb-0 mt-2">
+                        @csrf
+                        <input type="hidden" name="reference" value="{{$person->id}}">
+                        <input type="hidden" name="name" value="{{$person->best_descriptive_value}}">
+                        <input type="hidden" name="source_type_id"
+                               value="{{ \App\Models\ListSourceType::firstWhere('name', 'Person')->id }}">
+                        <button type="submit"
+                                class="flex-shrink-0 bg-green-200 hover:bg-green-300 text-black font-bold py-2 px-4 rounded">
+                            Add as a source
+                        </button>
+                @endcan
             </div>
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -36,7 +49,8 @@
                             <table class="min-w-full divide-y divide-gray-200 w-full">
                                 @foreach($person->fields as $field)
                                     <tr class="border-b">
-                                        <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th scope="col"
+                                            class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             {{$field->title}}
                                         </th>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
