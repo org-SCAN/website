@@ -36,7 +36,7 @@ class EventFactory extends Factory
         $log = ApiLog::create($log);
 
         return [
-            "name" => $this->faker->city,
+            "name" => $this->faker->name,
             "event_type_id" => ListEventType::inRandomOrder()->first()->id,
             "event_subtype_id" => $this->faker->uuid,
             "country_id" => ListCountry::inRandomOrder()->first()->id,

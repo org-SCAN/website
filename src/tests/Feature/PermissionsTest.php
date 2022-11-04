@@ -29,6 +29,13 @@ class PermissionsTest extends TestCase
     protected User $admin;
     protected User $null;
 
+    /**
+     * Indicates whether the default seeder should run before each test.
+     *
+     * @var bool
+     */
+    protected $seed = true;
+
     // set up the $admin and $null users
     public function setUp(): void
     {
@@ -45,6 +52,9 @@ class PermissionsTest extends TestCase
      */
     public function test_unauthenticated_user_cant_see_index_page()
     {
+        if (__CLASS__ == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
         $response = $this->get($this->route);
         $response->assertRedirect('/login');
     }
@@ -57,6 +67,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_without_permission_cant_see_index_page()
     {
+        if (__CLASS__ == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
         $this->actingAs($this->null);
         $response = $this->get($this->route);
         $response->assertStatus(403);
@@ -68,6 +81,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_with_permission_can_see_index_page()
     {
+        if (__CLASS__ == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
         $this->actingAs($this->admin);
         $response = $this->get($this->route);
         $response->assertStatus(200);
@@ -81,6 +97,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_without_permission_cant_see_show_page()
     {
+        if (__CLASS__ == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
         $this->actingAs($this->null);
         $response = $this->get($this->route . '/' . $this->resource->id);
         $response->assertStatus(403);
@@ -92,6 +111,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_with_permission_can_see_show_page()
     {
+        if (__CLASS__ == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
         $this->actingAs($this->admin);
         $response = $this->get($this->route . '/' . $this->resource->id);
         $response->assertStatus(200);
@@ -105,6 +127,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_without_permission_cant_see_create_page()
     {
+        if (__CLASS__ == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
         $this->actingAs($this->null);
         $response = $this->get($this->route . '/create');
         $response->assertStatus(403);
@@ -116,6 +141,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_with_permission_can_see_create_page()
     {
+        if (__CLASS__ == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
         $this->actingAs($this->admin);
         $response = $this->get($this->route . '/create');
         $response->assertStatus(200);
@@ -129,6 +157,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_without_permission_cant_see_edit_page()
     {
+        if (__CLASS__ == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
         $this->actingAs($this->null);
         $response = $this->get($this->route . '/' . $this->resource->id . '/edit');
         $response->assertStatus(403);
@@ -140,6 +171,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_with_permission_can_see_edit_page()
     {
+        if (__CLASS__ == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
         $this->actingAs($this->admin);
         $response = $this->get($this->route . '/' . $this->resource->id . '/edit');
         $response->assertStatus(200);
@@ -153,6 +187,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_without_permission_cant_delete_resource()
     {
+        if (__CLASS__ == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
         $this->actingAs($this->null);
         $response = $this->delete($this->route . '/' . $this->resource->id);
         $response->assertStatus(403);
@@ -164,6 +201,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_with_permission_can_delete_resource()
     {
+        if (__CLASS__ == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
         $this->actingAs($this->admin);
         $response = $this->delete($this->route . '/' . $this->resource->id);
 
