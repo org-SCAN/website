@@ -23,7 +23,7 @@ class ApiTokenPermissionsTest extends TestCase
         if (Features::hasTeamFeatures()) {
             $this->actingAs($user = User::factory()->withPersonalTeam()->create());
         } else {
-            $this->actingAs($user = User::where('email', env('DEFAULT_EMAIL'))->first());
+            $this->actingAs($user = User::factory()->create());
         }
 
         $token = $user->tokens()->create([
@@ -31,6 +31,7 @@ class ApiTokenPermissionsTest extends TestCase
             'token' => Str::random(40),
             'abilities' => ['create', 'read'],
         ]);
+
 
         Livewire::test(ApiTokenManager::class)
                     ->set(['managingPermissionsFor' => $token])
@@ -41,7 +42,6 @@ class ApiTokenPermissionsTest extends TestCase
                         ],
                     ]])
                     ->call('updateApiToken');
-
         $this->assertTrue($user->fresh()->tokens->first()->can('delete'));
         $this->assertFalse($user->fresh()->tokens->first()->can('read'));
         $this->assertFalse($user->fresh()->tokens->first()->can('missing-permission'));
