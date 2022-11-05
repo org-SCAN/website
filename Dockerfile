@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-source delete
 
 # Install extensions
-RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl gd
+RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl gd xdebug
 
 RUN echo "Mutex posixsem" >> /etc/apache2/apache2.conf
 
