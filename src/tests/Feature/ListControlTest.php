@@ -15,7 +15,7 @@ class ListControlTest extends PermissionsTest
         parent::setUp();
         $this->route = "lists_control";
         // Use a pre-existing list control
-        $this->resource = ListControl::inRandomOrder()->first();
+        $this->resource = ListControl::whereName("ListCountry")->first();
     }
 
 
