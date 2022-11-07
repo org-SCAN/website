@@ -77,10 +77,11 @@ class Refugee extends Model
     /**
      * The Api log to which the refugee is associated.
      **/
+    /*
      public function api_log()
      {
          return $this->belongsTo(ApiLog::class, "api_log");
-     }
+     }*/
 
     /**
      * The crew to which the refugee is associated.
