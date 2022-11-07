@@ -28,6 +28,13 @@ class PermissionsTest extends TestCase
     protected Model $resource;
     protected User $admin;
     protected User $null;
+    protected array $run = [
+        "index" => true,
+        "show" => true,
+        "create" => true,
+        "edit" => true,
+        "destroy" => true,
+    ];
 
     /**
      * Indicates whether the default seeder should run before each test.
@@ -52,6 +59,9 @@ class PermissionsTest extends TestCase
      */
     public function test_unauthenticated_user_cant_see_index_page()
     {
+        if (!$this->run["index"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
         if (get_called_class() == 'Tests\Feature\PermissionsTest') {
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
@@ -67,6 +77,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_without_permission_cant_see_index_page()
     {
+        if (!$this->run["index"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
         if (get_called_class() == 'Tests\Feature\PermissionsTest') {
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
@@ -81,6 +94,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_with_permission_can_see_index_page()
     {
+        if (!$this->run["index"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
         if (get_called_class() == 'Tests\Feature\PermissionsTest') {
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
@@ -97,6 +113,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_without_permission_cant_see_show_page()
     {
+        if (!$this->run["show"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
         if (get_called_class() == 'Tests\Feature\PermissionsTest') {
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
@@ -111,6 +130,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_with_permission_can_see_show_page()
     {
+        if (!$this->run["show"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
         if (get_called_class() == 'Tests\Feature\PermissionsTest') {
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
@@ -127,6 +149,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_without_permission_cant_see_create_page()
     {
+        if (!$this->run["create"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
         if (get_called_class() == 'Tests\Feature\PermissionsTest') {
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
@@ -141,6 +166,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_with_permission_can_see_create_page()
     {
+        if (!$this->run["create"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
         if (get_called_class() == 'Tests\Feature\PermissionsTest') {
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
@@ -157,6 +185,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_without_permission_cant_see_edit_page()
     {
+        if (!$this->run["edit"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
         if (get_called_class() == 'Tests\Feature\PermissionsTest') {
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
@@ -171,6 +202,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_with_permission_can_see_edit_page()
     {
+        if (!$this->run["edit"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
         if (get_called_class() == 'Tests\Feature\PermissionsTest') {
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
@@ -187,6 +221,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_without_permission_cant_delete_resource()
     {
+        if (!$this->run["destroy"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
         if (get_called_class() == 'Tests\Feature\PermissionsTest') {
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
@@ -201,6 +238,9 @@ class PermissionsTest extends TestCase
 
     public function test_authenticated_user_with_permission_can_delete_resource()
     {
+        if (!$this->run["destroy"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
         if (get_called_class() == 'Tests\Feature\PermissionsTest') {
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
