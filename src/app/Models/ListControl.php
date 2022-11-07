@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
+
 class ListControl extends Model
 {
-    use Uuids, SoftDeletes;
+    use Uuids, SoftDeletes, hasFactory;
 
     /**
      * The data type of the auto-incrementing ID.
