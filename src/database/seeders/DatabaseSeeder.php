@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ListRelationSeeder::class);
         $this->call(ListEventTypeSeeder::class);
         $this->call(ListSourceTypeSeeder::class);
-        if (env('APP_DEBUG')) {
+        if (env('APP_DEBUG') && env('APP_ENV') == 'local') {
             $this->call(EventSeeder::class);
             $this->call(SourceSeeder::class);
             $this->call(RefugeeSeeder::class);

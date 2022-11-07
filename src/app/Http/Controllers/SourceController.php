@@ -13,6 +13,12 @@ class SourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->authorizeResource(Source::class, 'source');
+    }
+
+
     public function index()
     {
         $sources = Source::all();

@@ -63,5 +63,12 @@
             "event.index",
             "event.show"
         ]
+    },
+    {
+        "role": {
+            "name": "Default Null"
+        },
+        "permissions": [
+        ]
     }
 ]
