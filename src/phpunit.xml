@@ -17,9 +17,14 @@
             <directory suffix=".php">./app</directory>
         </include>
         <report>
-            <clover outputFile="coverage.xml"/>
+            <clover outputFile="test_results/coverage.xml"/>
+            <html outputDirectory="test_results/coverage"/>
         </report>
     </coverage>
+    <logging>
+        <junit outputFile="test_results/tests-report.xml"/>
+
+    </logging>
     <php>
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
