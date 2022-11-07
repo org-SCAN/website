@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Field extends Model
 {
-    use Uuids, SoftDeletes;
+    use Uuids, SoftDeletes, hasFactory;
 
     /**
      * The attributes that defines all dataTypes for a field.
