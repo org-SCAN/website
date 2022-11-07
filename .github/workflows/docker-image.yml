@@ -26,4 +26,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: user/website:latest
+          tags: netw4ppl/website:latest
