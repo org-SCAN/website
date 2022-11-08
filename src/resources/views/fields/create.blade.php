@@ -18,8 +18,9 @@
                         <!--  TITLE SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "title")
-                            @livewire("forms.form-text", [
+                            @livewire("forms.form", [
                                 'form_elem' => $form_elem,
+                                'type' => "text",
                                 'title' => "Field's title",
                                 'placeHolder' => "Example : Full Name",
                                 'hint' => "It'll be shown as title when the field is used."])
@@ -28,8 +29,9 @@
                         <!--  PLACEHOLDER SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "placeholder")
-                            @livewire("forms.form-text", [
+                            @livewire("forms.form", [
                                 'form_elem' => $form_elem,
+                                'type' => "text",
                                 'title' => "Field's placeholder",
                                 'placeHolder' => "The placehold is shown as an example when the field is asked (just like this)",
                                 'hint' => "It'll be shown as an example when the field is asked."])
@@ -93,8 +95,9 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "order")
-                            @livewire("forms.form-number", [
+                            @livewire("forms.form", [
                                 'form_elem' => $form_elem,
+                                'type' => "number",
                                 'title' => "Field's order",
                                 'placeHolder' => "Example : 3",
                                 'hint' => "It'll be used to order the field. Fields are first order by requirement state, then by order"])
@@ -106,8 +109,9 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "descriptive_value")
-                            @livewire("forms.form-checkbox", [
+                            @livewire("forms.form", [
                                 'form_elem' => $form_elem,
+                                'type' => "checkbox",
                                 'title' => "Is that a descriptive value ?",
                                 'hint' => "If checked, it will be displayed in the Persons section."])
                         </div>
@@ -118,8 +122,9 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "best_descriptive_value")
-                            @livewire("forms.form-checkbox", [
+                            @livewire("forms.form", [
                                 'form_elem' => $form_elem,
+                                'type' => "checkbox",
                                 'title' => "Is that the best descriptive value ?",
                                 'hint' => "If checked, it will be displayed in the Manage Persons section as the main field.",
                                 'warning' => "Be careful, there is only one best descriptive value per team."])

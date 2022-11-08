@@ -13,5 +13,20 @@ class Form extends Component
     public $hint;
     public $previous;
     public $warning;
+    public $type;
+
+    public function render()
+    {
+        $returnView = "";
+        if($this->type == 'text'){
+            $returnView = 'livewire.forms.form-text';
+        }elseif($this->type == 'checkbox'){
+            $returnView = 'livewire.forms.form-checkbox';
+        }elseif($this->type == 'number'){
+            $returnView = 'livewire.forms.form-number';
+        }
+        $returnView = view($returnView)->extends('layouts.app');
+        return $returnView;
+    }
 
 }
