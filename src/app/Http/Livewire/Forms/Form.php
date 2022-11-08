@@ -24,6 +24,8 @@ class Form extends Component
             $returnView = 'livewire.forms.form-checkbox';
         }elseif($this->type == 'number'){
             $returnView = 'livewire.forms.form-number';
+        }elseif($this->type == 'date'){
+            $returnView = 'livewire.forms.form-date';
         }
         $returnView = view($returnView)->extends('layouts.app');
         return $returnView;
