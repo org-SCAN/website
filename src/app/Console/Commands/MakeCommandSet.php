@@ -11,7 +11,7 @@ class MakeCommandSet
      *
      * @return string
      */
-    static function getSourceFilePath(
+    public static function getSourceFilePath(
         $path,
         $name
     ) {
@@ -25,7 +25,7 @@ class MakeCommandSet
      * @param  array  $stubVariables
      * @return bool|mixed|string
      */
-    static function getStubContents(
+    public static function getStubContents(
         $stub,
         $stubVariables = []
     ) {
@@ -44,7 +44,7 @@ class MakeCommandSet
      * @return string
      *
      */
-    static function getStubPath(
+    public static function getStubPath(
         $name
     ) {
         return __DIR__."/../../../stubs/$name.stub";
