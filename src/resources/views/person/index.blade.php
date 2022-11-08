@@ -1,3 +1,4 @@
+@php use App\Models\Refugee; @endphp
 @section('title','View persons')
 
 <x-app-layout>
@@ -10,11 +11,11 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mb-8">
-                @can('create', \App\Models\Refugee::class)
+                @can('create', Refugee::class)
                     <a href="{{ route("person.create") }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add person</a>
                 @endcan
-                @can('createFromJson', \App\Models\Refugee::class)
+                @can('createFromJson', Refugee::class)
                     <a href="{{ route("person.create_from_json") }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add persons from
                         json</a>
@@ -25,6 +26,7 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg p-2">
                             <table id="person" class="display">
+                                <caption class="sr-only">Persons</caption>
                                 <thead>
                                 <tr>
                                     @foreach($fields as $field)
@@ -38,10 +40,12 @@
                                         @foreach($fields ?? '' as $field)
                                             <td>
                                                 @if($field->best_descriptive_value == 1)
-                                                    @can('view', \App\Models\Refugee::find($refugee_id))
-                                                        <a href="{{route('person.show',$refugee_id)}}">{{ $refugee[$field->id] }}</a>
+                                                    @can('view', Refugee::find($refugee_id))
+                                                        <a href="{{route('person.show',$refugee_id)}}">
+                                                            {{ $refugee[$field->id] }}
+                                                        </a>
                                                     @endcan()
-                                                    @cannot('view', \App\Models\Refugee::find($refugee_id))
+                                                    @cannot('view', Refugee::find($refugee_id))
                                                         {{ $refugee[$field->id] }}
                                                     @endcannot()
                                                 @else
@@ -62,12 +66,14 @@
         </div>
     </div>
 </x-app-layout>
-<link rel="stylesheet" type="text/css"
-      href="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/sc-2.0.5/sb-1.3.1/sp-1.4.0/datatables.min.css"/>
+<link rel="stylesheet"
+      href="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/sc-2.0.5/sb-1.3.1/sp-1.4.0/datatables.min.css"
+      integrity="sha384-Zt18T5BCHWpEjWpkZH11WEAug/T7djz4tR5qA4Gtohb1nnpaNztkYYViNsVcUkEd" crossorigin="anonymous">
 
-<script type="text/javascript"
-        src="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/sc-2.0.5/sb-1.3.1/sp-1.4.0/datatables.min.js"></script>
-
+<script
+    src="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/sc-2.0.5/sb-1.3.1/sp-1.4.0/datatables.min.js"
+    integrity="sha384-33Dh7Paf7BKMZ84cYXJONPZfgFUgZqvR6KYZGWtvU1u4QQRTy0nZCrGlo7qNZ3f0"
+    crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
         $('#person thead tr')
