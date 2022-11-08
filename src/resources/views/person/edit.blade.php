@@ -39,6 +39,11 @@
                                     <textarea name="{{$field->id}}" id="{{$field->id}}"
                                               class="form-input rounded-md shadow-sm mt-1 block w-full"
                                               placeholder="{{$field->placeholder ?? ''}}">{{ old($field->label, $refugee_detail[$field->label]) }}</textarea>
+                                @elseif($field->html_data_type == "checkbox")
+                                    <input type="checkbox" name="{{$field->id}}" id="{{$field->id}}"
+                                           class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                           placeholder="{{$field->placeholder ?? ''}}"
+                                           value=1 @checked(old($field->label, $refugee_detail[$field->label]))>
                                 @else
                                     <input type="{{$field->html_data_type}}" name="{{$field->id}}"
                                            id="{{$field->id}}"

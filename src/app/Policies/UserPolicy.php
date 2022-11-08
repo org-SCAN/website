@@ -43,4 +43,12 @@ class UserPolicy extends GlobalPolicy
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
+
+    public function invite(User $user)
+    {
+
+        return $this->hasPermission($user, __FUNCTION__, 'user.invite')
+            ? Response::allow()
+            : Response::deny('You do not have the right to do this.');
+    }
 }

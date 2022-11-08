@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 class GlobalPolicy
@@ -44,9 +43,11 @@ class GlobalPolicy
      */
     public function hasPermission($user, $function, $route_name = null)
     {
-        $route_name = ($route_name == null)
+        /*$route_name = ($route_name == null)
             ? Route::getCurrentRoute()->action["as"]
             : $route_name;
+        */
+        $route_name = $this->route_name;
         $route_base = explode(".", $route_name)[0];
         if (in_array($route_base, Permission::$alwaysAuthorizedRoute)) {
             return true;

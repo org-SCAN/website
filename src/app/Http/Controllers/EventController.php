@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
+use App\Models\ApiLog;
 use App\Models\Event;
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class EventController extends Controller
 {
@@ -31,7 +34,7 @@ class EventController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
@@ -41,12 +44,14 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\StoreEventRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreEventRequest $request)
     {
+        $log = ApiLog::createFromRequest($request, 'Event');
         $event = $request->validated();
+        $event["api_log"] = $log->id;
         Event::create($event);
         return redirect()->route("event.index");
     }
@@ -55,7 +60,7 @@ class EventController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Event $event
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function show(Event $event)
     {
@@ -66,7 +71,7 @@ class EventController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Event $event
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function edit(Event $event)
     {
@@ -76,13 +81,14 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\UpdateEventRequest $request
      * @param \App\Models\Event $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(UpdateEventRequest $request, Event $event)
     {
-        //
+        $event->update($request->validated());
+        return redirect()->route('event.index');
     }
 
     /**
@@ -93,6 +99,7 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        $event->delete();
+        return redirect()->route("event.index");
     }
 }

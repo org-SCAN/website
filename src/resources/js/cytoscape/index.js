@@ -116,7 +116,7 @@ function drawGraph(){
                 {
                     selector: 'node[role = "survivor"]',
                     style: {
-                        'background-color': '#1dfc00',
+                        'background-color': '#ff00fa',
                         'label': 'data(name)',
                         'role': 'data(role)',
                         'font-size': 25,

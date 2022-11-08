@@ -9,6 +9,12 @@
     <div>
         <div class="max-w-6xl mx-auto py-10 sm:px-6 lg:px-8">
 
+            @if (session()->has('inviteSuccess'))
+                <div class="alert alert-success" role="alert">
+                    {{ session()->get('inviteSuccess') }}
+                </div>
+            @endif
+
             <div class="block mb-8">
                 <form action="{{route('user.destroy', $user->id)}}" method="POST"
                       class="w-full md:w-1/2 px-3 mb-6 md:mb-0"
@@ -32,6 +38,18 @@
                     @enderror
 
                 </form>
+                {{--Add a re-invitation option here--}}
+                @can('invite', \App\Models\User::class)
+                    <form action="{{route('user.invite', $user->id)}}" method="POST"
+                          class="w-full md:w-1/2 px-3 mb-6 md:mb-0 mt-2"
+                          onsubmit="return confirm('Are you sure you want to re-invite this user?');">
+                        @csrf
+                        <button type="submit"
+                                class="flex-shrink-0 bg-green-200 hover:bg-green-300 text-black font-bold py-2 px-4 rounded">
+                            Re-invite
+                        </button>
+                    </form>
+                @endcan
             </div>
             <div class="block mt-8 flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

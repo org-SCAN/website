@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApiLogController;
 use App\Http\Controllers\CrewController;
 use App\Http\Controllers\DuplicateController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\FieldsController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\ListControlController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\ManageUsersController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RefugeeController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SourceController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -136,8 +138,15 @@ Route::resource("links", LinkController::class)->middleware('auth')->except(['cr
 
 
 Route::resource("user", ManageUsersController::class)->middleware('auth');
+Route::post("user/invite/{user}", [
+    "as" => 'user.invite',
+    "uses" => '\App\Http\Controllers\ManageUsersController@invite'
+]);
+
 Route::resource("duplicate", DuplicateController::class)->middleware('auth');
 Route::resource("api_logs", ApiLogController::class)->middleware('auth');
 Route::resource("crew", CrewController::class)->middleware('auth');
 Route::resource("roles", RoleController::class)->middleware('auth');
 Route::resource("permissions", PermissionController::class)->middleware('auth');
+Route::resource("event", EventController::class)->middleware('auth');
+Route::resource("source", SourceController::class)->middleware('auth');
