@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Carbon;
 
+
 class MakeList extends Command
 {
     /**
@@ -29,7 +30,6 @@ class MakeList extends Command
      *
      * @return int
      */
-
     /**
      * Filesystem instance
      * @var Filesystem
@@ -48,6 +48,7 @@ class MakeList extends Command
         $this->files = $files;
     }
 
+
     public function handle()
     {
         // Check if the id exists
@@ -62,13 +63,13 @@ class MakeList extends Command
         }
 
         //create the model
-        $path = $this->getSourceFilePath('app/Models',
+        $path = MakeCommandSet::getSourceFilePath('app/Models',
             $list->name); //get the path to witch the model has to be created
         $stubModelVariables = [
             'namespace' => 'App\\Models',
             'class' => $list->name,
         ];
-        $content = $this->getStubContents($this->getStubPath('model.listControl'),
+        $content = MakeCommandSet::getStubContents($this->getStubPath('model.listControl'),
             $stubModelVariables); //replace the variable onto the stub
 
         if (!$this->files->exists($path)) {
@@ -91,7 +92,7 @@ class MakeList extends Command
         ];
 
         $migration_name = Carbon::now()->format('Y_m_d_His')."_create_".$stubMigrationVariable["table"]."_table";
-        $path = $this->getSourceFilePath('database/migrations',
+        $path = MakeCommandSet::getSourceFilePath('database/migrations',
             $migration_name); //get the path to witch the model has to be created
 
 
@@ -99,7 +100,7 @@ class MakeList extends Command
             $stubMigrationVariable["listFields"] .= '$table->string("'.$field->field.'"'.");\n\t\t\t";
         }
 
-        $content = $this->getStubContents($this->getStubPath('migration.createList'),
+        $content = MakeCommandSet::getStubContents(MakeCommandSet::getStubPath('migration.createList'),
             $stubMigrationVariable); //replace the variable onto the stub
 
         if (!$this->files->exists($path)) {
@@ -114,47 +115,4 @@ class MakeList extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * Get the full path of generate class
-     *
-     * @return string
-     */
-    public function getSourceFilePath(
-        $path,
-        $name
-    ) {
-        return base_path($path).'/'.$name.'.php';
-    }
-
-    /**
-     * Replace the stub variables(key) with the desire value
-     *
-     * @param $stub
-     * @param  array  $stubVariables
-     * @return bool|mixed|string
-     */
-    public function getStubContents(
-        $stub,
-        $stubVariables = []
-    ) {
-        $contents = file_get_contents($stub);
-
-        foreach ($stubVariables as $search => $replace) {
-            $contents = str_replace('{{ '.$search.' }}',
-                $replace,
-                $contents);
-        }
-        return $contents;
-    }
-
-    /**
-     * Return the stub file path
-     * @return string
-     *
-     */
-    public function getStubPath(
-        $name
-    ) {
-        return __DIR__."/../../../stubs/$name.stub";
-    }
 }

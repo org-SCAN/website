@@ -7,13 +7,13 @@ use Illuminate\Filesystem\Filesystem;
 
 class MakeResourceTest extends Command
 {
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
     protected $signature = 'make:resourceTest {route} {model}';
-
     /**
      * The console command description.
      *
@@ -40,7 +40,6 @@ class MakeResourceTest extends Command
         Filesystem $files
     ) {
         parent::__construct();
-
         $this->files = $files;
     }
 
@@ -69,15 +68,19 @@ class MakeResourceTest extends Command
 
 
         //create the test file
-        $path = $this->getSourceFilePath("tests/Feature",
+        //call function defined in parent class
+
+
+        $path = MakeCommandSet::getSourceFilePath("tests/Feature",
             "{$model}Test"); //get the path to witch the model has to be created
+
         $stubModelVariables = [
             'namespace' => 'Tests\Feature',
             'class' => $model.'Test',
             'route' => $route,
             'model' => $model,
         ];
-        $content = $this->getStubContents($this->getStubPath('test.resource'),
+        $content = MakeCommandSet::getStubContents(MakeCommandSet::getStubPath('test.resource'),
             $stubModelVariables); //replace the variable onto the stub
 
         if (!$this->files->exists($path)) {
@@ -92,47 +95,4 @@ class MakeResourceTest extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * Get the full path of generate class
-     *
-     * @return string
-     */
-    public function getSourceFilePath(
-        $path,
-        $name
-    ) {
-        return base_path($path).'/'.$name.'.php';
-    }
-
-    /**
-     * Replace the stub variables(key) with the desire value
-     *
-     * @param $stub
-     * @param  array  $stubVariables
-     * @return bool|mixed|string
-     */
-    public function getStubContents(
-        $stub,
-        $stubVariables = []
-    ) {
-        $contents = file_get_contents($stub);
-
-        foreach ($stubVariables as $search => $replace) {
-            $contents = str_replace('{{ '.$search.' }}',
-                $replace,
-                $contents);
-        }
-        return $contents;
-    }
-
-    /**
-     * Return the stub file path
-     * @return string
-     *
-     */
-    public function getStubPath(
-        $name
-    ) {
-        return __DIR__."/../../../stubs/$name.stub";
-    }
 }
