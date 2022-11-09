@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <b>{{ $event->name }}</b> details
+            <strong>{{ $event->name }}</strong> details
         </h2>
     </x-slot>
 
@@ -30,7 +30,8 @@
                             @method('DELETE')
                             @csrf
                             <button type="submit"
-                                    class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
+                                    class="flex-shrink-0 bg-red-200 hover:bg-red-300
+                                    text-black font-bold py-2 px-4 rounded">
                                 Delete
                             </button>
                     </form>
@@ -41,84 +42,103 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200 w-full">
+                                <caption class="sr-only">Event detail</caption>
                                 <tr class="border-b">
                                     <th scope="col"
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         Name
                                     </th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
                                         {{ $event->name }}
                                     </td>
                                 </tr>
                                 <tr class="border-b">
                                     <th scope="col"
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         Event Type
                                     </th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
                                         {{ $event->type->displayed_value_content }}
                                     </td>
                                 </tr>
                                 <tr class="border-b">
                                     <th scope="col"
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         Country
                                     </th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
                                         {{ $event->country->displayed_value_content }}
                                     </td>
                                 </tr>
                                 <tr class="border-b">
                                     <th scope="col"
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         Location details
                                     </th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
                                         {{ $event->location_details }}
                                     </td>
                                 </tr>
                                 <tr class="border-b">
                                     <th scope="col"
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         Start date
                                     </th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
                                         {{ $event->start_date }}
                                     </td>
                                 </tr>
                                 <tr class="border-b">
                                     <th scope="col"
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         Stop date
                                     </th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
                                         {{ $event->stop_date }}
                                     </td>
                                 </tr>
                                 <tr class="border-b">
                                     <th scope="col"
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         Latitude
                                     </th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
                                         {{ $event->latitude }}
                                     </td>
                                 </tr>
                                 <tr class="border-b">
                                     <th scope="col"
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         Longitude
                                     </th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
                                         {{ $event->longitude }}
                                     </td>
                                 </tr>
                                 <tr class="border-b">
                                     <th scope="col"
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         Description
                                     </th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
                                         {{ $event->description }}
                                     </td>
                                 </tr>
@@ -129,7 +149,9 @@
             </div>
             <div class="block mt-8">
                 <a href="{{ route('event.index') }}"
-                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to events</a>
+                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
+                    Back to events
+                </a>
             </div>
         </div>
     </div>

@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit : <b>{{$person->full_name}}</b>
+            Edit : <strong>{{$person->full_name}}</strong>
         </h2>
     </x-slot>
 
@@ -19,7 +19,9 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         @foreach($fields as $field)
                             @php
-                                $refugee_detail[$field->label] = isset($refugee_detail[$field->label]) ? $refugee_detail[$field->label] : "";
+                                $refugee_detail[$field->label] = isset($refugee_detail[$field->label])
+                                ? $refugee_detail[$field->label]
+                                : "";
 
                             @endphp
                             <div class="px-4 py-5 bg-white sm:p-6">
@@ -38,7 +40,9 @@
                                 @elseif($field->html_data_type == "textarea")
                                     <textarea name="{{$field->id}}" id="{{$field->id}}"
                                               class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                              placeholder="{{$field->placeholder ?? ''}}">{{ old($field->label, $refugee_detail[$field->label]) }}</textarea>
+                                              placeholder="{{$field->placeholder ?? ''}}">
+                                        {{ old($field->label, $refugee_detail[$field->label]) }}
+                                    </textarea>
                                 @elseif($field->html_data_type == "checkbox")
                                     <input type="checkbox" name="{{$field->id}}" id="{{$field->id}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"
@@ -57,7 +61,10 @@
                         @endforeach
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent
+                                rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700
+                                active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray
+                                disabled:opacity-25 transition ease-in-out duration-150">
                                 Edit
                             </button>
                         </div>

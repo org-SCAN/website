@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
-class updateList extends Command
+class UpdateList extends Command
 {
     /**
      * The name and signature of the console command.
@@ -34,13 +34,16 @@ class updateList extends Command
         // Step 1 : get all stored lists
         $lists = ListControl::all()->pluck('name')->toArray();
         // Step 2 : Compare with json
-        $json_content = json_decode(file_get_contents(config('jsonDataset.path') . "/" . 'config/lists_controls.json'), true);
+        $json_content = json_decode(file_get_contents(config('jsonDataset.path')."/".'config/lists_controls.json'),
+            true);
 
         foreach ($json_content as $new_list) {
-            if (!in_array($new_list['name'], $lists)) {
-                $new_list["id"] = (string)Str::uuid();
+            if (!in_array($new_list['name'],
+                $lists)) {
+                $new_list["id"] = (string) Str::uuid();
                 $structure = null;
-                if (key_exists('structure', $new_list)) {
+                if (key_exists('structure',
+                    $new_list)) {
                     $structure = $new_list["structure"];
                     unset($new_list["structure"]);
                 }
@@ -50,7 +53,7 @@ class updateList extends Command
                 if ($structure != null) {
                     foreach ($structure as $field) {
                         $struct = $list->structure()->create([
-                            "field" => $field
+                            "field" => $field,
                         ]);
                         if ($field == $list->displayed_value) {
                             $list->update(["displayed_value" => $struct->id]);
@@ -62,7 +65,8 @@ class updateList extends Command
                 // Step 3 : Add and seed the DB if needed
                 if ($this->option("seed")) {
                     //call the seeder
-                    Artisan::call('db:seed', ['--class' => $new_list["name"] . 'Seeder']);
+                    Artisan::call('db:seed',
+                        ['--class' => $new_list["name"].'Seeder']);
                 }
             }
         }

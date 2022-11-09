@@ -1,8 +1,8 @@
 @section('title',"Edit ".$user_found->name."'s details")
-<x-app-layout >
+<x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit : <b>{{$user_found->name}}</b>
+            Edit : <strong>{{$user_found->name}}</strong>
         </h2>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
               integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
@@ -24,7 +24,8 @@
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <button type="submit"
-                                class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
+                                class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black
+                                font-bold py-2 px-4 rounded">
                             Delete
                         </button>
                     </form>
@@ -89,7 +90,10 @@
 
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent
+                                rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700
+                                active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray
+                                disabled:opacity-25 transition ease-in-out duration-150">
                                 Edit
                             </button>
                         </div>
