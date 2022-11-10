@@ -40,7 +40,7 @@
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"
                                            placeholder="{{$field->placeholder ?? ''}}"
                                            @checked(old($field->id)) value=1>
-                                @else
+                                @elseif($field->html_data_type != "list")
                                     <input type="{{$field->html_data_type}}" name="{{$field->id}}"
                                            id="{{$field->id}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"

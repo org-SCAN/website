@@ -3,6 +3,7 @@ save.txt
 .env
 mongo-volume/*
 .idea/*
+vcs.xml
 
 
 # Default ignored files
