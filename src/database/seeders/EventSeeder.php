@@ -14,8 +14,13 @@ class EventSeeder extends Seeder
      */
     public function run()
     {
-        Event::factory()
+        $results = Event::factory()
             ->count(5)
             ->create();
+        // Foreach results, create a translation
+        $listControl = \App\Models\ListControl::where("name", "Event")->first();
+        foreach ($results as $result) {
+            \App\Models\Translation::handleTranslation($listControl, $result->{$listControl->key_value}, $result->{$listControl->displayed_value}, \App\Models\Language::defaultLanguage()->id);
+        }
     }
 }

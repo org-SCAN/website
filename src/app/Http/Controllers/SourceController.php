@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSourceRequest;
 use App\Http\Requests\UpdateSourceRequest;
+use App\Models\Language;
+use App\Models\ListControl;
 use App\Models\Source;
+use App\Models\Translation;
+use Illuminate\View\View;
 
 class SourceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function __construct()
     {
@@ -29,18 +33,20 @@ class SourceController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \App\Http\Requests\StoreSourceRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreSourceRequest $request)
     {
         $source = Source::create($request->validated());
+        $listControl = ListControl::where("name", "Source")->first();
+        Translation::handleTranslation($listControl, $source->{$listControl->key_value}, $source->{$listControl->displayed_value}, Language::defaultLanguage()->id);
         return redirect()->route('source.show', $source);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
@@ -51,7 +57,7 @@ class SourceController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Source $source
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function show(Source $source)
     {
@@ -62,7 +68,7 @@ class SourceController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Source $source
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function edit(Source $source)
     {
@@ -86,7 +92,7 @@ class SourceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Source $source
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Source $source)
     {

@@ -6,6 +6,9 @@ use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\ApiLog;
 use App\Models\Event;
+use App\Models\Language;
+use App\Models\ListControl;
+use App\Models\Translation;
 use Illuminate\View\View;
 
 class EventController extends Controller
@@ -52,7 +55,9 @@ class EventController extends Controller
         $log = ApiLog::createFromRequest($request, 'Event');
         $event = $request->validated();
         $event["api_log"] = $log->id;
-        Event::create($event);
+        $event = Event::create($event);
+        $listControl = ListControl::where("name", "Event")->first();
+        Translation::handleTranslation($listControl, $event->{$listControl->key_value}, $event->{$listControl->displayed_value}, Language::defaultLanguage()->id);
         return redirect()->route("event.index");
     }
 
@@ -95,7 +100,7 @@ class EventController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Event $event
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Event $event)
     {
