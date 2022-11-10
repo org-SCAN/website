@@ -76,18 +76,22 @@ class Field extends Model
      */
     protected $hidden = ['deleted_at', "created_at", "updated_at", "status", "html_data_type", "validation_laravel", "attribute", "order", "api_log", "crew_id"];
 
-
     /**
      * Return all hidden fields
      *
      * @return string
+     *
+     * public  function getHiddenValue(){
+     * return $this->hidden;
+     * } */
 
-    public  function getHiddenValue(){
-        return $this->hidden;
-    } */
+    public static function getDatabaseTypeList(): array
+    {
+        return self::$databaseTypes;
+    }
 
-
-    public function getStatusAttribute($value){
+    public function getStatusAttribute($value)
+    {
         switch ($value) {
             case 0:
                 $text_status = "Disabled";
