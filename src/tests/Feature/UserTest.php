@@ -91,21 +91,7 @@ class UserTest extends PermissionsTest
 
 
         $user = $this->admin;
-        $this->actingAs($user);
-        $response = $this->get($this->route.'/profile');
-
-        $response->assertStatus(200);
-        $response->assertSee('Request role');
-
-        $requested_role = Role::whereName("Default Editor")->first();
-
-        $response = $this->post(route($this->route.'.request_role',
-            $user->id), [
-            'role' => $requested_role->id,
-        ]);
-
-        $response->assertStatus(302);
-        $response->assertRedirect($this->route.'/profile');
+        $response = $this->accessProfile($user);
 
         // checks that the session has no error
         $response->assertSessionHasNoErrors();
@@ -119,13 +105,7 @@ class UserTest extends PermissionsTest
 
     }
 
-    /**
-     * @brief An admin can't request a new role IF : he isn't the only admin
-     */
-
-    public function test_user_with_permission_and_the_only_admin_cant_request_role_from_the_profile_section() {
-
-        $user = $this->admin;
+    protected function accessProfile($user) {
         $this->actingAs($user);
         $response = $this->get($this->route.'/profile');
 
@@ -141,6 +121,19 @@ class UserTest extends PermissionsTest
 
         $response->assertStatus(302);
         $response->assertRedirect($this->route.'/profile');
+        return $response;
+    }
+
+    /**
+     * @brief An admin can't request a new role IF : he isn't the only admin
+     */
+
+    public function test_user_with_permission_and_the_only_admin_cant_request_role_from_the_profile_section() {
+
+        $user = $this->admin;
+        $this->actingAs($user);
+
+        $response = $this->accessProfile($user);
 
         // checks that the session has no error
         $response->assertSessionHasErrors(["role"]);
@@ -222,20 +215,11 @@ class UserTest extends PermissionsTest
 
     public function test_user_with_permission_can_grant_role_request() {
         // create a new user with a role request
+
         $user = User::factory()->create();
-
-
         $requested_role = Role::whereName("Default Editor")->first();
-        $user->roleRequest()->create([
-            'role_id' => $requested_role->id,
-        ]);
-
-        $this->actingAs($this->admin);
-        $response = $this->get(route($this->route.'.index'));
-
-        $response->assertStatus(200);
-        $response->assertSee('Grant user permissions');
-
+        $this->requestRole($user,
+            $requested_role);
 
         $response = $this->get(route($this->route.'.grant_role',
             $user->roleRequest->first()->id));
@@ -244,7 +228,6 @@ class UserTest extends PermissionsTest
 
         // checks that the session has no error
         $response->assertSessionHasNoErrors();
-
 
         // check that the role request has been created in the database
 
@@ -257,22 +240,9 @@ class UserTest extends PermissionsTest
 
     }
 
-    /**
-     * @brief An admin can grant a role request
-     */
+    protected function requestRole($user,
+        $requested_role) {
 
-    public function test_user_with_permission_can_reject_role_request() {
-        // create a new user with a role request
-        $user = User::factory()->create();
-
-        $base_role = Role::where('name',
-            'Default Viewer')->first();
-
-        $user->role_id = $base_role->id;
-        $user->save();
-
-
-        $requested_role = Role::whereName("Default Editor")->first();
         $user->roleRequest()->create([
             'role_id' => $requested_role->id,
         ]);
@@ -283,6 +253,21 @@ class UserTest extends PermissionsTest
         $response->assertStatus(200);
         $response->assertSee('Grant user permissions');
 
+        return $response;
+    }
+
+    /**
+     * @brief An admin can grant a role request
+     */
+
+    public function test_user_with_permission_can_reject_role_request() {
+        // create a new user with a role request
+        $user = User::factory()->create();
+        $base_role = $user->role;
+        $requested_role = Role::whereName("Default Editor")->first();
+
+        $this->requestRole($user,
+            $requested_role);
 
         $response = $this->get(route($this->route.'.reject_role',
             $user->roleRequest->first()->id));
@@ -292,16 +277,14 @@ class UserTest extends PermissionsTest
         // checks that the session has no error
         $response->assertSessionHasNoErrors();
 
-
         // check that the role request has been created in the database
 
         $user->refresh();
         //the role request 'granted' field should be not null
         $this->assertNotNull($user->roleRequest->first()->granted);
 
-        $this->assertEquals($user->role_id,
+        $this->assertEquals($user->role->id,
             $base_role->id);
-
 
     }
 
