@@ -21,7 +21,8 @@ class Field extends Model
         "text" => "Long text",
         "integer" => "Number",
         "date" => "Date",
-        "boolean" => "Yes / No "
+        "boolean" => "Yes / No ",
+        "list" => "List"
     ];
 
     /**
@@ -75,18 +76,22 @@ class Field extends Model
      */
     protected $hidden = ['deleted_at', "created_at", "updated_at", "status", "html_data_type", "validation_laravel", "attribute", "order", "api_log", "crew_id"];
 
-
     /**
      * Return all hidden fields
      *
      * @return string
+     *
+     * public  function getHiddenValue(){
+     * return $this->hidden;
+     * } */
 
-    public  function getHiddenValue(){
-        return $this->hidden;
-    } */
+    public static function getDatabaseTypeList(): array
+    {
+        return self::$databaseTypes;
+    }
 
-
-    public function getStatusAttribute($value){
+    public function getStatusAttribute($value)
+    {
         switch ($value) {
             case 0:
                 $text_status = "Disabled";
@@ -185,7 +190,8 @@ class Field extends Model
             "text" => "textarea",
             "integer" => "number",
             "date" => "date",
-            "boolean" => "checkbox"
+            "boolean" => "checkbox",
+            "list" => "list"
         ];
         return $type_convert[$database_type];
     }
@@ -203,7 +209,8 @@ class Field extends Model
             "text" => "EditText",
             "integer" => "number",
             "date" => "date",
-            "boolean" => "Radio Button"
+            "boolean" => "Radio Button",
+            "list" => "Spinner"
         ];
         return $type_convert[$database_type];
     }
@@ -223,7 +230,9 @@ class Field extends Model
             "text" => "String",
             "integer" => "Integer",
             "date" => "Date",
-            "boolean" => "Boolean"
+            "boolean" => "Boolean",
+            "list" => "uuid"
+
         ];
 
         if($field["required"] == 1){
