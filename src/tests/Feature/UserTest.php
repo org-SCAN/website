@@ -541,7 +541,7 @@ class UserTest extends PermissionsTest
 
 
     /**
-     * @brief Test that an admin can can change his role if he is not the only admin
+     * @brief Test that an admin can change his role if he is not the only admin
      * @return void
      */
 
