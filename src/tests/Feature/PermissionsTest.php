@@ -44,11 +44,11 @@ class PermissionsTest extends TestCase
     protected $seed = true;
 
     // set up the $admin and $null users
-    public function setUp(): void
-    {
+    public function setUp(): void {
         parent::setUp();
         $this->admin = User::whereEmail(env('DEFAULT_EMAIL'))->first();
         $this->null = User::factory()->create();
+        $this->null->genToken();
     }
 
 
@@ -57,8 +57,7 @@ class PermissionsTest extends TestCase
     /**
      * @brief An unauthenticated user can't see the index page
      */
-    public function test_unauthenticated_user_cant_see_index_page()
-    {
+    public function test_unauthenticated_user_cant_see_index_page() {
         if (!$this->run["index"]) {
             return $this->markTestSkipped('This test is not relevant for the given route.');
         }
@@ -75,8 +74,7 @@ class PermissionsTest extends TestCase
      * @brief An authenticated user, without '*.index' permission can't see the index page
      */
 
-    public function test_authenticated_user_without_permission_cant_see_index_page()
-    {
+    public function test_authenticated_user_without_permission_cant_see_index_page() {
         if (!$this->run["index"]) {
             return $this->markTestSkipped('This test is not relevant for the given route.');
         }
@@ -92,8 +90,7 @@ class PermissionsTest extends TestCase
      * @brief An authenticated user, with '*.index' permission can see the index page
      */
 
-    public function test_authenticated_user_with_permission_can_see_index_page()
-    {
+    public function test_authenticated_user_with_permission_can_see_index_page() {
         if (!$this->run["index"]) {
             return $this->markTestSkipped('This test is not relevant for the given route.');
         }
@@ -111,8 +108,7 @@ class PermissionsTest extends TestCase
      * @brief An authenticated user, without '*.show' permission can't see a show page
      */
 
-    public function test_authenticated_user_without_permission_cant_see_show_page()
-    {
+    public function test_authenticated_user_without_permission_cant_see_show_page() {
         if (!$this->run["show"]) {
             return $this->markTestSkipped('This test is not relevant for the given route.');
         }
@@ -120,7 +116,7 @@ class PermissionsTest extends TestCase
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
         $this->actingAs($this->null);
-        $response = $this->get($this->route . '/' . $this->resource->id);
+        $response = $this->get($this->route.'/'.$this->resource->id);
         $response->assertStatus(403);
     }
 
@@ -128,8 +124,7 @@ class PermissionsTest extends TestCase
      * @brief An authenticated user, with '*.show' permission can see a show page
      */
 
-    public function test_authenticated_user_with_permission_can_see_show_page()
-    {
+    public function test_authenticated_user_with_permission_can_see_show_page() {
         if (!$this->run["show"]) {
             return $this->markTestSkipped('This test is not relevant for the given route.');
         }
@@ -137,7 +132,7 @@ class PermissionsTest extends TestCase
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
         $this->actingAs($this->admin);
-        $response = $this->get($this->route . '/' . $this->resource->id);
+        $response = $this->get($this->route.'/'.$this->resource->id);
         $response->assertStatus(200);
     }
 
@@ -147,8 +142,7 @@ class PermissionsTest extends TestCase
      * @brief An authenticated user, without '*.create' permission can't see a create page
      */
 
-    public function test_authenticated_user_without_permission_cant_see_create_page()
-    {
+    public function test_authenticated_user_without_permission_cant_see_create_page() {
         if (!$this->run["create"]) {
             return $this->markTestSkipped('This test is not relevant for the given route.');
         }
@@ -156,7 +150,7 @@ class PermissionsTest extends TestCase
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
         $this->actingAs($this->null);
-        $response = $this->get($this->route . '/create');
+        $response = $this->get($this->route.'/create');
         $response->assertStatus(403);
     }
 
@@ -164,8 +158,7 @@ class PermissionsTest extends TestCase
      * @brief An authenticated user, with '*.create' permission can see a create page
      */
 
-    public function test_authenticated_user_with_permission_can_see_create_page()
-    {
+    public function test_authenticated_user_with_permission_can_see_create_page() {
         if (!$this->run["create"]) {
             return $this->markTestSkipped('This test is not relevant for the given route.');
         }
@@ -173,7 +166,7 @@ class PermissionsTest extends TestCase
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
         $this->actingAs($this->admin);
-        $response = $this->get($this->route . '/create');
+        $response = $this->get($this->route.'/create');
         $response->assertStatus(200);
     }
 
@@ -183,8 +176,7 @@ class PermissionsTest extends TestCase
      * @brief An authenticated user, without '*.edit' permission can't see an edit page
      */
 
-    public function test_authenticated_user_without_permission_cant_see_edit_page()
-    {
+    public function test_authenticated_user_without_permission_cant_see_edit_page() {
         if (!$this->run["edit"]) {
             return $this->markTestSkipped('This test is not relevant for the given route.');
         }
@@ -192,7 +184,7 @@ class PermissionsTest extends TestCase
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
         $this->actingAs($this->null);
-        $response = $this->get($this->route . '/' . $this->resource->id . '/edit');
+        $response = $this->get($this->route.'/'.$this->resource->id.'/edit');
         $response->assertStatus(403);
     }
 
@@ -200,8 +192,7 @@ class PermissionsTest extends TestCase
      * @brief An authenticated user, with '*.edit' permission can see an edit page
      */
 
-    public function test_authenticated_user_with_permission_can_see_edit_page()
-    {
+    public function test_authenticated_user_with_permission_can_see_edit_page() {
         if (!$this->run["edit"]) {
             return $this->markTestSkipped('This test is not relevant for the given route.');
         }
@@ -209,7 +200,7 @@ class PermissionsTest extends TestCase
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
         $this->actingAs($this->admin);
-        $response = $this->get($this->route . '/' . $this->resource->id . '/edit');
+        $response = $this->get($this->route.'/'.$this->resource->id.'/edit');
         $response->assertStatus(200);
     }
 
@@ -219,8 +210,7 @@ class PermissionsTest extends TestCase
      * @brief An authenticated user, without '*.destroy' permission can't delete a resource
      */
 
-    public function test_authenticated_user_without_permission_cant_delete_resource()
-    {
+    public function test_authenticated_user_without_permission_cant_delete_resource() {
         if (!$this->run["destroy"]) {
             return $this->markTestSkipped('This test is not relevant for the given route.');
         }
@@ -228,7 +218,7 @@ class PermissionsTest extends TestCase
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
         $this->actingAs($this->null);
-        $response = $this->delete($this->route . '/' . $this->resource->id);
+        $response = $this->delete($this->route.'/'.$this->resource->id);
         $response->assertStatus(403);
     }
 
@@ -236,8 +226,7 @@ class PermissionsTest extends TestCase
      * @brief An authenticated user, with '*.destroy' permission can delete a resource
      */
 
-    public function test_authenticated_user_with_permission_can_delete_resource()
-    {
+    public function test_authenticated_user_with_permission_can_delete_resource() {
         if (!$this->run["destroy"]) {
             return $this->markTestSkipped('This test is not relevant for the given route.');
         }
@@ -245,7 +234,7 @@ class PermissionsTest extends TestCase
             return $this->markTestSkipped('This is the parent class. It should not be tested.');
         }
         $this->actingAs($this->admin);
-        $response = $this->delete($this->route . '/' . $this->resource->id);
+        $response = $this->delete($this->route.'/'.$this->resource->id);
 
         $response->assertStatus(302);
         //check if the resource has been soft deleted

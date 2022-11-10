@@ -24,13 +24,6 @@ class User extends Authenticatable
     use SoftDeletes;
 
     /**
-     * The data type of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
      * Indicates if the model's ID is auto-incrementing.
      *
      * @var bool
@@ -38,12 +31,20 @@ class User extends Authenticatable
 
     public $incrementing = false;
     /**
+     * The data type of the auto-incrementing ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', "token", "role_id", "crew_id"
+        'name', 'email',
+        'password', "token",
+        "role_id", "crew_id",
     ];
 
     /**
@@ -56,7 +57,7 @@ class User extends Authenticatable
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
-        'token'
+        'token',
     ];
 
     /**
@@ -65,15 +66,22 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime'
+        'email_verified_at' => 'datetime',
     ];
 
-    public function crew(){
-        return $this->belongsTo(Crew::class)->withDefault();
-    }
-
-    public function role(){
-        return $this->belongsTo(Role::class)->withDefault();
+    /**
+     * Create the default user
+     *
+     */
+    public static function createDefaultUser() {
+        $new_user = self::create([
+            'name' => "Default user",
+            'email' => env("DEFAULT_EMAIL"),
+            'password' => Hash::make(env("DEFAULT_PASSWORD")),
+            'crew_id' => Crew::getDefaultCrewId(),
+        ]);
+        $new_user->genToken();
+        $new_user->genRole();
     }
 
     /**
@@ -81,10 +89,14 @@ class User extends Authenticatable
      *
      * @return void
      */
-    public function genToken()
-    {
-        $token = $this->createToken('api_token', ["read", "create", "update"])->plainTextToken;
-        $this->token = Crypt::encryptString(md5($this->id) . $token);
+    public function genToken() {
+        $token = $this->createToken('api_token',
+            [
+                "read",
+                "create",
+                "update",
+            ])->plainTextToken;
+        $this->token = Crypt::encryptString(md5($this->id).$token);
         $this->save();
     }
 
@@ -93,11 +105,11 @@ class User extends Authenticatable
      *
      */
 
-    public function genRole()
-    {
+    public function genRole() {
         if (empty($this->role->id)) {
             $users = User::all();
-            $userAdmin = User::where("role_id", Role::biggestRole())->get();
+            $userAdmin = User::where("role_id",
+                Role::biggestRole())->get();
             if ($users->isEmpty() || $userAdmin->isEmpty()) {
                 $this->role_id = Role::biggestRole();
             } else {
@@ -107,33 +119,31 @@ class User extends Authenticatable
         }
     }
 
+    public function crew() {
+        return $this->belongsTo(Crew::class)->withDefault();
+    }
+
+    public function role() {
+        return $this->belongsTo(Role::class)->withDefault();
+    }
+
+    public function roleRequest() {
+        return $this->hasMany(RoleRequest::class,
+            "user_id");
+    }
+
     /**
      * Return an API token
      *
      * @return string|string[]|null
      */
-    public function getToken()
-    {
+    public function getToken() {
         $encrypted_token = $this->token;
         $id = $this->id;
         $decypted = Crypt::decryptString($encrypted_token);
-        $unsalt = preg_replace('/' . md5($id) . '/', '', $decypted, 1);
-        return preg_replace('/[0-9]+\|/', '', $unsalt, 1);
-    }
-
-    /**
-     * Create the default user
-     *
-     */
-    public static function createDefaultUser()
-    {
-        $new_user = self::create([
-            'name' => "Default user",
-            'email' => env("DEFAULT_EMAIL"),
-            'password' => Hash::make(env("DEFAULT_PASSWORD")),
-            'crew_id' => Crew::getDefaultCrewId()
-        ]);
-        $new_user->genToken();
-        $new_user->genRole();
+        $unsalt = preg_replace('/'.md5($id).'/',
+            '', $decypted, 1);
+        return preg_replace('/[0-9]+\|/',
+            '', $unsalt, 1);
     }
 }

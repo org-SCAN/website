@@ -28,9 +28,9 @@ class ManageUsersController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->authorizeResource(User::class, 'user');
+    public function __construct() {
+        $this->authorizeResource(User::class,
+            'user');
     }
 
 
@@ -39,35 +39,25 @@ class ManageUsersController extends Controller
      *
      * @return View
      */
-    public function index()
-    {
+    public function index() {
         //get all users and group them by crew_id
         $users = User::orderBy('crew_id')->orderBy('name')->get();
 
 
-        $request_roles = RoleRequest::where("granted", null)->get();
-        return view("user.index", compact("users", "request_roles"));
+        $request_roles = RoleRequest::where("granted",
+            null)->get();
+        return view("user.index",
+            compact("users",
+                "request_roles"));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
-    public function create()
-    {
-        return view('user.create');
-    }
-
 
     /**
      * Create a newly registered user.
      *
-     * @param array $input
+     * @param  array  $input
      * @return RedirectResponse
      */
-    public function store(StoreUserRequest $request)
-    {
+    public function store(StoreUserRequest $request) {
         $user = $request->validated();
 
         // if the user is invited, we don't need to set a password, but we do need to send an ivitation email
@@ -81,7 +71,7 @@ class ManageUsersController extends Controller
             'email' => $user['email'],
             'password' => Hash::make($user['password']),
             'role_id' => $user['role'],
-            "crew_id" => $user['team']
+            "crew_id" => $user['team'],
         ]);
 
         $created_user->genToken();
@@ -93,71 +83,64 @@ class ManageUsersController extends Controller
             $created_user->notify(new InviteUserNotification(Auth::user()));
         }
 
-        return redirect()->route('user.index')->with('success', 'User created successfully.');
+        return redirect()->route('user.index')->with('success',
+            'User created successfully.');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return View
+     */
+    public function create() {
+        return view('user.create');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param User $user
+     * @param  User  $user
      * @return View
      */
-    public function show(User $user)
-    {
+    public function show(User $user) {
         $roles = Role::orderBy("name")->get();
-        return view("user.show", compact("user", "roles"));
+        return view("user.show",
+            compact("user",
+                "roles"));
 
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param User $user
+     * @param  User  $user
      * @return View
      */
-    public function edit(User $user)
-    {
+    public function edit(User $user) {
         $user_found = $user;
-        return view("user.edit", compact("user_found"));
-
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param User $user
-     * @return RedirectResponse
-     */
-    public function update(UpdateUsersRequest $request, User $user)
-    {
-        // $id->update($request->validated());
-        //$user->roles()->sync($request->input('roles', []));
-        $changes = $request->validated();
-        $user->update($changes);
-
-        return redirect()->route('user.index');
+        return view("user.edit",
+            compact("user_found"));
 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param User $user
+     * @param  User  $user
      * @return RedirectResponse
      */
-    public function destroy(User $user)
-    {
+    public function destroy(User $user) {
         // if there is no more user then error
 
         $rules = [
             "user" => [
                 new notLastUser,
-                new notLastMoreImportantRole($user)
-            ]
+                new notLastMoreImportantRole($user),
+            ],
         ];
 
-        $v = Validator::make(["user" => $user->id], $rules);
+        $v = Validator::make(["user" => $user->id],
+            $rules);
         if ($v->fails()) {
             return redirect()->back()->withErrors(['cantDeleteUser' => $v->errors()]);
         } else {
@@ -167,27 +150,27 @@ class ManageUsersController extends Controller
 
     }
 
-
     /**
      * Add user role request to the request list
      *
-     * @param StoreRequestRoleRequest $request
-     * @param String $id
+     * @param  StoreRequestRoleRequest  $request
+     * @param  String  $id
      * @return RedirectResponse
      */
-    public function RequestRole(StoreRequestRoleRequest $request, $id)
-    {
-        $user = User::find($id);
+    public function RequestRole(StoreRequestRoleRequest $request) {
+        $this->authorize('requestRole',
+            $request->user());
+
+        $user = $request->user();
         $role = $request->input('role');
 
         if ($user->role->id == $role) {
-            return redirect()->back();
+            return redirect()->back()->withErrors(['cantRequestRole' => "You already have this role"]);
         }
         RoleRequest::create([
-                'user_id' => $user->id,
-                'role_id' => $role
-            ]
-        );
+            'user_id' => $user->id,
+            'role_id' => $role,
+        ]);
         return redirect()->back();
     }
 
@@ -197,9 +180,9 @@ class ManageUsersController extends Controller
      * @param $id
      * @return RedirectResponse
      */
-    public function GrantRole($id)
-    {
-        $this->authorize('grantRole', User::class);
+    public function GrantRole($id) {
+        $this->authorize('grantRole',
+            Auth::user());
 
         $request = RoleRequest::find($id);
         $user = $request->user;
@@ -210,15 +193,32 @@ class ManageUsersController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request  $request
+     * @param  User  $user
+     * @return RedirectResponse
+     */
+    public function update(UpdateUsersRequest $request,
+        User $user) {
+
+        $changes = $request->validated();
+        $user->update($changes);
+
+        return redirect()->route('user.index');
+
+    }
+
+    /**
      * Grant the user role request
      *
      * @param $id
      * @return RedirectResponse
      */
-    public function RejectRole($id)
-    {
+    public function RejectRole($id) {
 
-        $this->authorize('rejectRole', User::class);
+        $this->authorize('grantRole',
+            Auth::user());
 
         $request = RoleRequest::find($id);
         $request->update(["granted" => date("Y-m-d H:i:s")]);
@@ -229,12 +229,13 @@ class ManageUsersController extends Controller
     /**
      * Add user role request to the request list
      *
-     * @param Request $request
-     * @param User $user
+     * @param  Request  $request
+     * @param  User  $user
      * @return RedirectResponse
      */
-    public function ChangeTeam(UpdateCrewRequest $request)
-    {
+    public function ChangeTeam(UpdateCrewRequest $request) {
+        $this->authorize('changeTeam',
+            $request->user());
         $crew = $request->input('name');
         $user = $request->user();
         $user->crew_id = $crew;
@@ -246,12 +247,14 @@ class ManageUsersController extends Controller
      * Send an invitation email to the user
      * Redirect to the user show page
      *
-     * @param User $user
+     * @param  User  $user
      * @return RedirectResponse
      **/
-    public function invite(User $user)
-    {
+    public function invite(User $user) {
+        $this->authorize('invite',
+            Auth::user());
         $user->notify(new InviteUserNotification(Auth::user()));
-        return redirect()->back()->with('inviteSuccess', 'Invitation sent successfully.');
+        return redirect()->back()->with('inviteSuccess',
+            'Invitation sent successfully.');
     }
 }
