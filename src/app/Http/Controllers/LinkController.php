@@ -272,17 +272,24 @@ class LinkController extends Controller
      */
     public function apiGetRelations(Request $request,
         Crew $crew = null) {
-        if ($crew == null) {
-            $crew = $request->user()->crew;
+        if ($request->user()->tokenCan("read")) {
+            if ($crew == null) {
+                $crew = $request->user()->crew;
+            }
+            return response(json_encode($crew->relations->makeHidden([
+                "created_at",
+                'updated_at',
+                'api_log',
+                'application_id',
+                'laravel_through_key',
+                "deleted_at",
+            ])->toArray()),
+                200,
+                ['Content-Type' => "application/json"]);
+        } else {
+            return response("Your token can't be use to get datas",
+                403);
         }
-        return response(json_encode($crew->relations->makeHidden([
-            "created_at",
-            'updated_at',
-            'api_log',
-            'application_id',
-            'laravel_through_key',
-            "deleted_at",
-        ])->toArray()), 200,
-            ['Content-Type' => "application/json"]);
+
     }
 }
