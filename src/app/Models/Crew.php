@@ -52,6 +52,14 @@ class Crew extends Model
             "id");
     }
 
+    public function relations() {
+        return $this->hasManyThrough(Link::class,
+            ApiLog::class,
+            "crew_id",
+            "api_log", "id",
+            "id");
+    }
+
     public function hasEvent() {
         return $this->fields()->where('linked_list',
             ListControl::whereName('Event')->first()->id)->exists();
