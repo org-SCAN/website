@@ -14,10 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')->get('/user',
+    function (Request $request) {
+        return $request->user();
+    });
 
-Route::middleware('auth:sanctum')->post('/person', "\App\Http\Controllers\RefugeeController@handleApiRequest");
-Route::middleware('auth:sanctum')->post('/links', "\App\Http\Controllers\LinkController@handleApiRequest");
-Route::middleware('auth:sanctum')->get('/fields', "\App\Http\Controllers\FieldsController@handleApiRequest");
+Route::middleware('auth:sanctum')->get('/person/{crew?}',
+    "\App\Http\Controllers\RefugeeController@apiGetPerson");
+Route::middleware('auth:sanctum')->post('/person',
+    "\App\Http\Controllers\RefugeeController@handleApiRequest");
+Route::middleware('auth:sanctum')->post('/links',
+    "\App\Http\Controllers\LinkController@handleApiRequest");
+Route::middleware('auth:sanctum')->get('/fields',
+    "\App\Http\Controllers\FieldsController@handleApiRequest");
