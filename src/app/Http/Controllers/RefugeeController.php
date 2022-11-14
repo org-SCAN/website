@@ -44,17 +44,16 @@ class RefugeeController extends Controller
 
     public static function apiGetPerson(Request $request,
         Crew $crew = null) {
-        $responseArray = [];
         $log = ApiLog::createFromRequest($request,
             "Refugee");
         if ($request->user()->tokenCan("read")) {
             if ($crew == null) {
-
-
                 $crew = $request->user()->crew;
             }
             $persons = $crew->persons;
+
             $responseArray = Refugee::formatRefugeesData($persons);
+
 
             return response(json_encode($responseArray),
                 200,

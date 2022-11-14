@@ -213,6 +213,7 @@ class Refugee extends Model
 
             }
             $refugeesData[$refugee->id] = $refugeeData;
+
             if (empty($refugeesData[$refugee->id])) {
                 unset($refugeesData[$refugee->id]);
             }
