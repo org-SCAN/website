@@ -17,18 +17,12 @@ class Form extends Component
 
     public function render()
     {
-        $returnView = "";
-        if($this->type == 'text'){
-            $returnView = 'livewire.forms.form-text';
-        }elseif($this->type == 'checkbox'){
-            $returnView = 'livewire.forms.form-checkbox';
-        }elseif($this->type == 'number'){
-            $returnView = 'livewire.forms.form-number';
-        }elseif($this->type == 'date'){
-            $returnView = 'livewire.forms.form-date';
+        try {
+            return view("livewire.forms.form-" . $this->type)->extends('layouts.app');
+        } catch (\Throwable $th) {
+            report($th);
+            return false;
         }
-        $returnView = view($returnView)->extends('layouts.app');
-        return $returnView;
     }
 
 }
