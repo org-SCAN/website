@@ -39,7 +39,7 @@ class PersonTest extends PermissionsTest
         // call the API
         $response = $this->withHeader('Authorization',
             'Bearer '.$this->admin->getToken())->withHeader('Application-id',
-            'AppTest')->get("/api/person");
+            'AppTest')->get("/api/persons");
         $response->assertStatus(200);
 
         // the json should count 10 elements
@@ -60,7 +60,7 @@ class PersonTest extends PermissionsTest
         $crew = Crew::factory()->create();
         $response = $this->withHeader('Authorization',
             'Bearer '.$this->admin->getToken())->withHeader('Application-id',
-            'AppTest')->get("/api/person/".$crew->id);
+            'AppTest')->get("/api/persons/".$crew->id);
         $response->assertStatus(200);
 
         // check that the json is valid according to the regex

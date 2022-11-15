@@ -3,13 +3,13 @@
 namespace Tests;
 
 use App\Traits\ClearProperties;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
-    use RefreshDatabase;
+
+    //use RefreshDatabase;
     use ClearProperties;
 
     /**
@@ -25,9 +25,11 @@ abstract class TestCase extends BaseTestCase
      * @return void
      */
     protected function tearDown(): void {
+
         parent::tearDown();
         $this->clearProperties();
         gc_collect_cycles();
+        echo 'tearDown '.get_called_class().' : '.memory_get_usage().PHP_EOL;
     }
 
 }
