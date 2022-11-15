@@ -1,3 +1,4 @@
+@php use App\Models\Crew; @endphp
 @section('title',"Manage teams")
 <x-app-layout>
     <x-slot name="header">
@@ -8,7 +9,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @can('create', \App\Models\Crew::class)
+            @can('create', Crew::class)
                 <div class="block mb-8">
                     <a href="{{ route("crew.create") }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add a team</a>
@@ -19,10 +20,12 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200">
+                                <caption class="sr-only">Crews</caption>
                                 <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         Name
                                     </th>
 

@@ -1,8 +1,9 @@
+@php use App\Models\User; @endphp
 @section('title',"View ".$user->name."'s details")
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Details of the user: <b> {{$user->name}}</b>
+            Details of the user: <strong> {{$user->name}}</strong>
         </h2>
     </x-slot>
 
@@ -39,7 +40,7 @@
 
                 </form>
                 {{--Add a re-invitation option here--}}
-                @can('invite', \App\Models\User::class)
+                @can('invite', User::class)
                     <form action="{{route('user.invite', $user->id)}}" method="POST"
                           class="w-full md:w-1/2 px-3 mb-6 md:mb-0 mt-2"
                           onsubmit="return confirm('Are you sure you want to re-invite this user?');">
@@ -56,53 +57,63 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200 w-full">
-
+                                <caption class="sr-only">User detail</caption>
                                 <tr class="border-b">
                                     <th scope="col"
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         ID
                                     </th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
                                         {{ $user->id }}
                                     </td>
                                 </tr>
 
                                 <tr class="border-b">
                                     <th scope="col"
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         Name
                                     </th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
                                         {{ $user->name }}
                                     </td>
                                 </tr>
 
                                 <tr class="border-b">
                                     <th scope="col"
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         Email
                                     </th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
                                         {{ $user->email }}
                                     </td>
                                 </tr>
 
                                 <tr class="border-b">
                                     <th scope="col"
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         Roles
                                     </th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
                                         {{$user->role->name}}
                                     </td>
                                 </tr>
 
                                 <tr class="border-b">
                                     <th scope="col"
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         Team
                                     </th>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
                                         {{$user->crew->name}}
                                     </td>
                                 </tr>

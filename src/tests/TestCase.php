@@ -2,13 +2,15 @@
 
 namespace Tests;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Traits\ClearProperties;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
-    use RefreshDatabase;
+
+    //use RefreshDatabase;
+    use ClearProperties;
 
     /**
      * Indicates whether the default seeder should run before each test.
@@ -16,5 +18,18 @@ abstract class TestCase extends BaseTestCase
      * @var bool
      */
     protected $seed = true;
+
+    /**
+     * Unset each property declared in this test class and its traits.
+     *
+     * @return void
+     */
+    protected function tearDown(): void {
+
+        parent::tearDown();
+        $this->clearProperties();
+        gc_collect_cycles();
+        echo 'tearDown '.get_called_class().' : '.memory_get_usage().PHP_EOL;
+    }
 
 }
