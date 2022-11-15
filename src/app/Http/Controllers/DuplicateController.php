@@ -14,12 +14,13 @@ class DuplicateController extends Controller
      *
      * @return Response
      */
-    public function index()
-    {
-        $this->authorize("viewAny", Auth::user());
-        //$duplicates = Duplicate::getDuplicates();
-        $duplicates = [];
-        return view("duplicate.index", compact("duplicates"));
+    public function index() {
+        $this->authorize("viewAny",
+            Auth::user());
+        $duplicates = Duplicate::getSimilarRefugees(Auth::user()->crew);
+        dd($duplicates);
+        return view("duplicate.index",
+            compact("duplicates"));
     }
 
     /**
@@ -27,64 +28,59 @@ class DuplicateController extends Controller
      *
      * @return Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Duplicate $duplicate
+     * @param  Duplicate  $duplicate
      * @return Response
      */
-    public function show(Duplicate $duplicate)
-    {
+    public function show(Duplicate $duplicate) {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Duplicate $duplicate
+     * @param  Duplicate  $duplicate
      * @return Response
      */
-    public function edit(Duplicate $duplicate)
-    {
+    public function edit(Duplicate $duplicate) {
         //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param Duplicate $duplicate
+     * @param  Request  $request
+     * @param  Duplicate  $duplicate
      * @return Response
      */
-    public function update(Request $request, Duplicate $duplicate)
-    {
+    public function update(Request $request,
+        Duplicate $duplicate) {
         //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Duplicate $duplicate
+     * @param  Duplicate  $duplicate
      * @return Response
      */
-    public function destroy(Duplicate $duplicate)
-    {
+    public function destroy(Duplicate $duplicate) {
         //
     }
 }
