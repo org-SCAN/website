@@ -26,7 +26,6 @@
                                         $list=$field->getLinkedListContent();
                                     @endphp
 
-
                                     @livewire("select-dropdown", ['label' => $field->id, 'placeholder' => "--
                                     Select your ".$field->title." --", 'datas' => $list, 'selected_value' =>
                                     old($field->id)])
@@ -45,11 +44,6 @@
                                         'form_elem' => $field->id,
                                         'type' => $field->html_data_type,
                                         'placeHolder' => $field->placeholder ?? ''])
-                                    {{-- <input type="{{$field->html_data_type}}" name="{{$field->id}}"
-                                           id="{{$field->id}}"
-                                           class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                           placeholder="{{$field->placeholder ?? ''}}" value=@error($field->id) "" @else
-                                        "{{old($field->id)}}" @enderror/> --}}
                                 @endif
                                 @error($field->id)
                                 <p class="text-sm text-red-600">{{ Str::replace($field->id, $field->title, $message) }}</p>
