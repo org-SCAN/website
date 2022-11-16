@@ -19,57 +19,46 @@ class InviteUserNotification extends Notification
      *
      * @return void
      */
-    public function __construct(User $inviter)
-    {
+    public function __construct(User $inviter) {
         $this->inviter = $inviter;
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
-    {
+    public function via($notifiable) {
         return ['mail'];
     }
 
     /**
      * Get the mail representation of the notification.
      *
-     * @param mixed $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @param  mixed  $notifiable
+     * @return MailMessage
      */
-    public function toMail($notifiable)
-    {
+    public function toMail($notifiable) {
 
 
         $token = Password::broker('invites')->createToken($notifiable);
 
 
-        return (new MailMessage)
-            ->subject('Invitation to join ' . config('app.name'))
-            ->from(env('MAIL_FROM_EMAIL'), $this->inviter->name)
-            ->greeting('Hello ' . $notifiable->name . '!')
-            ->line($this->inviter->name . ' invited you to SCAN. In order to accept the invitation, please click the button below.')
-            ->line('You will be asked to set a password.')
-            ->action('Finalize my account creation !', url('/reset-password/' . $token . '?email=' . $notifiable->email))
-            ->line('You can find a complete documentation of the application here: ' . url('https://user-doc.netw4ppl.tech'))
-            ->line('Thank you for using our application!');
+        return (new MailMessage)->subject('Invitation to join '.config('app.name'))->from(env('MAIL_FROM_ADDRESS'),
+                $this->inviter->name)->greeting('Hello '.$notifiable->name.'!')->line($this->inviter->name.' invited you to SCAN. In order to accept the invitation, please click the button below.')->line('You will be asked to set a password.')->action('Finalize my account creation !',
+                url('/reset-password/'.$token.'?email='.$notifiable->email))->line('You can find a complete documentation of the application here: '.url('https://user-doc.netw4ppl.tech'))->line('Thank you for using our application!');
 
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
-    {
-        return [
-            //
+    public function toArray($notifiable) {
+        return [//
         ];
     }
 }
