@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CommandRun;
 use App\Models\Duplicate;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
 class DuplicateController extends Controller
@@ -17,10 +20,26 @@ class DuplicateController extends Controller
     public function index() {
         $this->authorize("viewAny",
             Auth::user());
-        $duplicates = Duplicate::getSimilarRefugees(Auth::user()->crew);
-        dd($duplicates);
+
+
+        $duplicates = Duplicate::where("crew_id",
+            Auth::user()->crew_id)->whereNot('resolved')->orderByDesc("similarity")->take(20)->get();
+
+        $average_similarity = Duplicate::where("crew_id",
+            Auth::user()->crew_id)->whereNot('resolved')->avg("similarity");
+        $commandRun = CommandRun::lastEnded('duplicate:compute');
+
+        $nextDue = CommandRun::nextDue('duplicate:compute');
+        $lastRun = Carbon::parse($commandRun->ended_at);
+
+        // get the next due date for the command duplicate:compute
+
+
         return view("duplicate.index",
-            compact("duplicates"));
+            compact("duplicates",
+                "commandRun",
+                'nextDue',
+                'lastRun'));
     }
 
     /**
@@ -82,5 +101,15 @@ class DuplicateController extends Controller
      */
     public function destroy(Duplicate $duplicate) {
         //
+    }
+
+    /**
+     * This function is used to force run the duplicate command
+     *
+     */
+    public function compute() {
+
+        Artisan::queue('duplicate:compute');
+        return redirect()->route('duplicate.index');
     }
 }

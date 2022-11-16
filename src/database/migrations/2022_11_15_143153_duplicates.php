@@ -18,6 +18,7 @@ return new class extends Migration {
                 $table->softDeletes();
                 $table->foreignUuid("person1_id");
                 $table->foreignUuid("person2_id");
+                $table->foreignUuid("crew_id");
                 $table->foreignUuid("command_run_id")->nullable();
                 $table->double("similarity")->nullable();
                 $table->boolean("resolved")->default(false);

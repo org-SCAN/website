@@ -56,6 +56,7 @@ class DuplicateCommand extends Command
                     $duplicate = Duplicate::updateOrCreate([
                         "person1_id" => $person,
                         "person2_id" => $person2,
+                        "crew_id" => $crew->id,
                     ]);
                     $duplicate->similarity = $similarity;
                     $duplicate->command_run_id = $command->id;

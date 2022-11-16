@@ -7,102 +7,91 @@
         </h2>
     </x-slot>
 
+    <div class="bg-indigo-500">
+        <div class="mx-auto max-w-7xl py-3 px-3 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap items-center justify-between">
+                <div class="flex w-0 flex-1 items-center">
+                    <p class="ml-3 truncate font-bold text-white" style="margin-bottom: 0px !important;">
+                        <span class="text-l">Last run : {{ $lastRun->diffForHumans() }}</span> <br>
+                        <span class="text-l">Next due in : {{ $nextDue->diffForHumans() }}</span>
+                    </p>
+                </div>
+                <div class="order-3 mt-2 w-full flex-shrink-0 sm:order-2 sm:mt-0 sm:w-auto">
+                    <a href="{{ route('duplicate.compute') }}"
+                       class="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-bold text-indigo-600 shadow-sm hover:bg-indigo-100">Force
+                        run</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+
+
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                            @foreach($duplicates as $reference => $duplicate)
-                                <h3 class="font-semibold text-l text-gray-800 leading-tight m-3">Duplication
-                                    on {{$reference}} </h3>
-                                <table class="min-w-full divide-y divide-gray-200">
-                                    <caption class="sr-only">Duplicated ids</caption>
-                                    <thead class="bg-gray-50">
+                            <h3 class="text-l text-gray-800 leading-tight m-3">Duplicate </h3>
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <caption class="sr-only">Possible duplicate</caption>
+                                <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
+                                            uppercase tracking-wider">
+                                        Person 1
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
+                                            uppercase tracking-wider">
+                                        Person 2
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
+                                            uppercase tracking-wider">
+                                        Similarity
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
+                                            uppercase tracking-wider">
+                                        Actions
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach($duplicates as $duplicate)
                                     <tr>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500
-                                            uppercase tracking-wider">
-                                            Full Name
-                                        </th>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500
-                                            uppercase tracking-wider">
-                                            Date
-                                        </th>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500
-                                            uppercase tracking-wider">
-                                            Push informations
-                                        </th>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500
-                                            uppercase tracking-wider">
-                                            Actions
-                                        </th>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <a href="{{route("person.show", $duplicate->person1->id)}}"
+                                               class="text-indigo-600 hover:text-blue-900">
+                                                {{$duplicate->person1->best_descriptive_value}}
+                                            </a>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <a href="{{route("person.show", $duplicate->person2->id)}}"
+                                               class="text-indigo-600 hover:text-blue-900">
+                                                {{$duplicate->person2->best_descriptive_value}}
+                                            </a>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ round($duplicate->similarity,2) }}
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            @if($duplicate->person1->updated_at > $commandRun->started_at || $duplicate->person2->updated_at > $commandRun->started_at)
+                                                <button class="btn btn-outline-danger">Updated Since last run</button>
+                                            @endif
+                                        </td>
+
                                     </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach($duplicate as $user_information)
-                                        @php($next_reference = Duplicate::nextID($user_information->unique_id))
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <a href="{{route("person.show", $user_information->id)}}"
-                                                   class="text-indigo-600 hover:text-blue-900">
-                                                    {{$user_information->full_name}}
-                                                    <small>({{$user_information->unique_id}})</small>
-                                                </a>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                {{$user_information->date}}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <a href="{{route("api_logs.show", $user_information->api_log)}}"
-                                                   class="text-indigo-600 hover:text-blue-900">See push context</a>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
 
-                                                <form method="post"
-                                                      action="{{ route('person.fix_duplicated_reference', $user_information->id) }}">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <input type="hidden" name="unique_id" id="unique_id"
-                                                           value="{{$next_reference}}">
-                                                    <button type="submit"
-                                                            class="flex-shrink-0 bg-gray-200 hover:bg-gray-300
-                                                            text-black font-bold py-2 px-4 rounded"
-                                                            title="Auto change the ID!">Assign new ref :
-                                                        {{$next_reference}}</button>
-                                                </form>
-                                                <div class="block mb-2 mt-1">
-
-                                                    <form
-                                                        action="{{route('person.destroy', $user_information->id)}}"
-                                                        method="POST">
-                                                        <a href="{{route("person.edit", $user_information->id)}}"
-                                                           class="flex-shrink-0 bg-blue-200 hover:bg-blue-300
-                                                           text-black font-bold py-2 px-4 rounded mr-2">
-                                                            <em class="fas fa-edit text-blue-600 hover:text-blue-900"
-                                                                title="Edit this refugee!"></em>
-                                                        </a>
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <button type="submit"
-                                                                class="flex-shrink-0 bg-red-200 hover:bg-red-300
-                                                                text-black font-bold py-2 px-4 rounded">
-                                                            <em class="fas fa-trash text-red-600 hover:text-red-900 "
-                                                                title="Delete !"></em></button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    <!-- More items... -->
-                                    </tbody>
-                                </table>
+                                @endforeach
+                                <!-- More items... -->
+                                </tbody>
+                            </table>
 
                         </div>
-                        @endforeach
                     </div>
                 </div>
             </div>

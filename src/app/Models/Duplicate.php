@@ -5,8 +5,8 @@ namespace App\Models;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
 
 class Duplicate extends Model
 {
@@ -36,23 +36,6 @@ class Duplicate extends Model
 
     protected $guarded = [];
 
-    /**
-     * Returns duplicated values in array : Array ( [ABC-000004] => Array ( [0] => 5decaba8-f82f-4b61-858f-bfbf133f0c4f [1] => 95904830-52a5-4fad-982e-b0eed3a5f73b ) )
-     *
-     * @return array
-     *
-     */
-    public static function getDuplicates() {
-
-        $duplicate_ids = DB::table("refugees")->select("unique_id")->whereNull("deleted_at")->groupBy("unique_id")->havingRaw('count(*) > 1')->pluck("unique_id");
-
-        if (empty($duplicate_ids)) {
-            return [];
-        }
-        return Refugee::whereIn("unique_id",
-            $duplicate_ids)->orderBy("date",
-            "desc")->get()->groupBy('unique_id');
-    }
 
     public static function nextID($currentID) {
         $tricode = explode("-",
@@ -68,40 +51,6 @@ class Duplicate extends Model
                 STR_PAD_LEFT);
     }
 
-
-    public static function getSimilarity($duplication_users) {
-        //die(var_dump($collection_to_parse));
-        $similarities = [];
-        $itemSimilarity = [];
-        // [0] => { [elem0] => value00, [elem1] => value01, [elem2] => value02} , [1] => { [elem0] => value10, [elem1] => value11, [elem2] => value12} …
-        foreach ($duplication_users as $userKey => $user) {
-            //[elem0] => value00, [elem1] => value01, [elem2] => value02
-            foreach ($user as $userItemKey => $userItemValue) {
-
-                if ($userItemKey != "id" && $userItemKey != "unique_id" && $userItemKey != "created_at" && $userItemKey != "updated_at" && $userItemKey != "deleted" && $userItemKey != "api_log" && $userItemKey != "application_id") {
-                    foreach ($duplication_users as $user2Key => $user2) {
-                        //  print("Comparing {$item["full_name"]} with {$Parseitem["full_name"]} on $itemKey <br>");
-                        if (isset($user2[$userItemKey]) && !empty($user2[$userItemKey])) {
-                            similar_text($userItemValue,
-                                $user2[$userItemKey],
-                                $perc);
-                            $itemSimilarity[$userKey][$user2Key][$userItemKey] = $perc / 100;
-                        }
-
-                    }
-                }
-            }
-        }
-
-        foreach (array_keys($duplication_users) as $user1) {
-            foreach (array_keys($duplication_users) as $user2) {
-
-                $similarities[$user1][$user2] = array_sum($itemSimilarity[$user1][$user2]) / count($itemSimilarity[$user1][$user2]);
-
-            }
-        }
-        return $similarities;
-    }
 
     /**
      * @param $value
@@ -196,50 +145,6 @@ class Duplicate extends Model
         ];
     }
 
-
-    /**
-     * This function is used to get similar persons. It compares the similarity of the persons based on the fields that are completed.
-     * It computes the similarity of each field and then averages the similarity of each field to get the similarity of the persons for a given team.
-     * @param  Crew  $crew
-     */
-    public static function getSimilarRefugees(Crew $crew) {
-        $persons = $crew->persons;
-        $similarities = [];
-        $nb_op = 0;
-        foreach ($persons as $person) {
-            //get the fields
-            $person_fields = $person->fields;
-            //compare similarity of each field with the other persons
-            foreach ($persons as $person2) {
-                if ($person->id != $person2->id) {
-                    $person2_fields = $person2->fields;
-                    $similarity = 0;
-                    $count = 0;
-                    foreach ($person_fields as $person_field) {
-                        foreach ($person2_fields as $person2_field) {
-                            $nb_op++;
-                            if ($person_field->id == $person2_field->id) {
-
-                                $perc = 0;
-                                similar_text($person_field->pivot->value,
-                                    $person2_field->pivot->value,
-                                    $perc);
-                                $similarity += $perc;
-                                $count++;
-                            }
-                        }
-                    }
-                    $similarity = $similarity / $count;
-                    $similarities[$person->best_descriptive_value][$person2->best_descriptive_value] = $similarity;
-                } else {
-                    $nb_op++;
-                }
-            }
-        }
-        dd($nb_op);
-        return $similarities;
-    }
-
     /**
      * This function is used to get similar persons. It compares the similarity of the persons based on the fields that are completed.
      * It computes the similarity of each field and then averages the similarity of each field to get the similarity of the persons for a given team.
@@ -274,7 +179,7 @@ class Duplicate extends Model
 
                 $notSamePerson = $person->id != $person2->id;
                 $notAlreadyCompared = !isset($similarities[$person2->id][$person->id]);
-                $notUpdatedSinceLastComparison = ($last_comparison == null || ($last_comparison->ended_at < $person->updated_at || $last_comparison->ended_at < $person2->updated_at));
+                $notUpdatedSinceLastComparison = ($last_comparison == null || ($last_comparison->started_at < $person->updated_at || $last_comparison->started_at < $person2->updated_at));
                 $notResolved = !self::isResolved($person,
                     $person2);
                 if ($notSamePerson && $notAlreadyCompared && $notUpdatedSinceLastComparison && $notResolved) {
@@ -325,5 +230,39 @@ class Duplicate extends Model
             return true;
         }
         return false;
+    }
+
+    /**
+     * Relation with crew
+     * @return BelongsTo
+     */
+    public function crew() {
+        return $this->belongsTo(Crew::class);
+    }
+
+    /**
+     * Relation with person1
+     * @return BelongsTo
+     */
+    public function person1() {
+        return $this->belongsTo(Refugee::class,
+            'person1_id');
+    }
+
+    /**
+     * Relation with person2
+     * @return BelongsTo
+     */
+    public function person2() {
+        return $this->belongsTo(Refugee::class,
+            'person2_id');
+    }
+
+    /**
+     * Relation with command run
+     * @return BelongsTo
+     */
+    public function commandRun() {
+        return $this->belongsTo(CommandRun::class);
     }
 }
