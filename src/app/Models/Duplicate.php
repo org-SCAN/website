@@ -160,6 +160,8 @@ class Duplicate extends Model
         $persons = $crew->persons;
         $similarities = [];
 
+
+        $last_comparison = CommandRun::lastEnded('duplicate:compute');
         // foreach persons
         foreach ($persons as $person) {
             //get the fields
@@ -170,7 +172,6 @@ class Duplicate extends Model
                 // do not compute a couple that has already been compared
 
                 // check if the persons have been edited since the last comparison
-                $last_comparison = CommandRun::lastEnded('duplicate:compute');
 
 
                 // compare the updated_at date of the persons with the last comparison date
@@ -182,6 +183,7 @@ class Duplicate extends Model
                 $notUpdatedSinceLastComparison = ($last_comparison == null || ($last_comparison->started_at < $person->updated_at || $last_comparison->started_at < $person2->updated_at));
                 $notResolved = !self::isResolved($person,
                     $person2);
+
                 if ($notSamePerson && $notAlreadyCompared && $notUpdatedSinceLastComparison && $notResolved) {
                     $person2_fields = $person2->fields;
                     $similarity = 0;

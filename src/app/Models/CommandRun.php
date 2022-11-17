@@ -60,7 +60,7 @@ class CommandRun extends Model
      */
 
     public static function lastEnded(string $command): CommandRun|null {
-        return CommandRun::whereCommand($command)->orderByDesc("ended_at")->first();
+        return CommandRun::whereCommand($command)->whereNotNull('ended_at')->orderByDesc("ended_at")->first();
     }
 
     /**

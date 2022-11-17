@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Auth;
 
 class DuplicateController extends Controller
 {
+    //constructor to check policy
+    public function __construct()
+    {
+        $this->authorizeResource(Duplicate::class, 'duplicate');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,17 +29,20 @@ class DuplicateController extends Controller
 
 
         $duplicates = Duplicate::where("crew_id",
-            Auth::user()->crew_id)->whereNot('resolved')->orderByDesc("similarity")->take(20)->get();
+            Auth::user()->crew_id)->where('resolved',false)->orderByDesc("similarity")->take(20)->get();
 
-        $average_similarity = Duplicate::where("crew_id",
-            Auth::user()->crew_id)->whereNot('resolved')->avg("similarity");
+
         $commandRun = CommandRun::lastEnded('duplicate:compute');
 
         $nextDue = CommandRun::nextDue('duplicate:compute');
-        $lastRun = Carbon::parse($commandRun->ended_at);
+        if($commandRun != null){
+            $lastRun = Carbon::parse($commandRun->ended_at);
+        }
+        else {
+            $lastRun = null;
+        }
 
         // get the next due date for the command duplicate:compute
-
 
         return view("duplicate.index",
             compact("duplicates",
@@ -108,8 +117,24 @@ class DuplicateController extends Controller
      *
      */
     public function compute() {
+        $this->authorize("compute",
+            Duplicate::class);
 
         Artisan::queue('duplicate:compute');
+        return redirect()->route('duplicate.index');
+    }
+
+    /**
+     * This function is used to mark a duplicate as resolved
+     *
+     * @param Duplicate $duplicate
+     */
+    public function resolve(Duplicate $duplicate) {
+        $this->authorize("resolve",
+            $duplicate);
+
+        $duplicate->resolved = true;
+        $duplicate->save();
         return redirect()->route('duplicate.index');
     }
 }

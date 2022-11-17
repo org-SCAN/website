@@ -3,7 +3,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Manage duplicates - disabled for now') }}
+            {{ __('Manage duplicates') }}
         </h2>
     </x-slot>
 
@@ -12,15 +12,18 @@
             <div class="flex flex-wrap items-center justify-between">
                 <div class="flex w-0 flex-1 items-center">
                     <p class="ml-3 truncate font-bold text-white" style="margin-bottom: 0px !important;">
-                        <span class="text-l">Last run : {{ $lastRun->diffForHumans() }}</span> <br>
+                        <span class="text-l">Last run : {{ $lastRun == null ? 'Never' : $lastRun->diffForHumans() }}</span>
+                        <br>
                         <span class="text-l">Next due in : {{ $nextDue->diffForHumans() }}</span>
                     </p>
                 </div>
-                <div class="order-3 mt-2 w-full flex-shrink-0 sm:order-2 sm:mt-0 sm:w-auto">
-                    <a href="{{ route('duplicate.compute') }}"
-                       class="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-bold text-indigo-600 shadow-sm hover:bg-indigo-100">Force
-                        run</a>
-                </div>
+                @can('compute', Duplicate::class)
+                    <div class="order-3 mt-2 w-full flex-shrink-0 sm:order-2 sm:mt-0 sm:w-auto">
+                        <a href="{{ route('duplicate.compute') }}"
+                           class="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-bold text-indigo-600 shadow-sm hover:bg-indigo-100">Force
+                            run</a>
+                    </div>
+                @endcan
             </div>
         </div>
     </div>
@@ -52,10 +55,17 @@
                                             uppercase tracking-wider">
                                         Similarity
                                     </th>
+                                    @can('resolve', Duplicate::class)
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500
+                                            uppercase tracking-wider">
+                                            Actions
+                                        </th>
+                                    @endcan
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500
                                             uppercase tracking-wider">
-                                        Actions
+
                                     </th>
                                 </tr>
                                 </thead>
@@ -77,15 +87,19 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             {{ round($duplicate->similarity,2) }}
                                         </td>
-
+                                        @can('resolve', $duplicate)
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <a href="{{ route("duplicate.resolve", $duplicate->id) }}"
+                                                   class="text-indigo-600 hover:text-blue-900">Mark as not
+                                                    duplicated</a>
+                                            </td>
+                                        @endcan
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             @if($duplicate->person1->updated_at > $commandRun->started_at || $duplicate->person2->updated_at > $commandRun->started_at)
                                                 <button class="btn btn-outline-danger">Updated Since last run</button>
                                             @endif
                                         </td>
-
                                     </tr>
-
                                 @endforeach
                                 <!-- More items... -->
                                 </tbody>
