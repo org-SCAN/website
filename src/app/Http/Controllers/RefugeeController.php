@@ -82,6 +82,7 @@ class RefugeeController extends Controller
         $old = array_combine($ids,
             $values);
 
+        
         foreach (array_diff($request->validated(),
             $old) as $key => $value) {
             if (!empty($value)) {
@@ -92,8 +93,12 @@ class RefugeeController extends Controller
                 } else {
                     $person->fields()->attach([$key => ['value' => $value]]);
                 }
+                unset($old[$key]);
+                unset($request->validated()[$key]);
             }
         }
+
+
         //detach fields that are not in the request
         foreach (array_diff($old,
             $request->validated()) as $key => $value) {

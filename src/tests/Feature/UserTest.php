@@ -26,6 +26,25 @@ class UserTest extends PermissionsTest
     /* ---------------------------------------------------------- */
     /*----------------------------------------------------------- */
 
+    /**
+     * @brief An authenticated user, with '*.destroy' permission can delete a resource
+     */
+
+    public function test_authenticated_user_with_permission_can_delete_resource() {
+        if (!$this->run["destroy"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
+        if (get_called_class() == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
+        $this->actingAs($this->admin);
+        $response = $this->delete($this->route.'/'.$this->resource->id);
+
+        $response->assertStatus(302);
+        //check if the resource has been deleted
+        $this->assertModelMissing($this->resource);
+    }
+
     /* ------------------ changeTeam ------------------ */
 
     /**
