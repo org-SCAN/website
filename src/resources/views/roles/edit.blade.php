@@ -10,7 +10,7 @@
     <div>
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <a href="{{URL::previous() }}"
+                <a href="{{ route('roles.index')  }}"
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
                 <form class="inline-block" action="{{ route('roles.destroy', $role->id) }}" method="POST"
                       onsubmit="return confirm('Are you sure you want to delete this role?');">

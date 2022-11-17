@@ -16,7 +16,7 @@
                     @method('DELETE')
                     @csrf
                     @endcan
-                    <a href="{{URL::previous() }}"
+                    <a href="{{ route('links.index')  }}"
                        class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
                     @can("delete", $link)
                     <button type="submit"
