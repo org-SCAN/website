@@ -41,7 +41,7 @@ class UserTest extends PermissionsTest
         $response = $this->delete($this->route.'/'.$this->resource->id);
 
         $response->assertStatus(302);
-        //check if the resource has been soft deleted
+        //check if the resource has been deleted
         $this->assertModelMissing($this->resource);
     }
 
