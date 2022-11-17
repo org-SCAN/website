@@ -19,12 +19,13 @@
                         <!--  TITLE SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "title")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's title</label>
-                            <input type="text" value="{{ old($field->{$form_elem}, $field->{$form_elem}) }}" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="Full Name" />
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500">It'll be shown as title when the field is used.</small>
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @livewire("forms.form", [
+                                'form_elem' => $form_elem,
+                                'type' => "text",
+                                'title' => "Field's title",
+                                'placeHolder' => "Example : Full Name",
+                                'hint' => "It'll be shown as title when the field is used.",
+                                'previous' => $field->{$form_elem}])
                         </div>
 
                         <!--  PLACEHOLDER SECTION  -->
@@ -32,20 +33,13 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "placeholder")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
-                                placeholder</label>
-                            @if(!isset($field->{$form_elem}))
-                                @php($field->{$form_elem} = "")
-                            @endif
-                            <input type="text" value="{{ old($field->{$form_elem}, $field->{$form_elem}) }}"
-                                   name="{{$form_elem}}" id="{{$form_elem}}"
-                                   class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="John Doe"/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
-                                shown as an example when the field is asked.</small>
-
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @livewire("forms.form", [
+                                'form_elem' => $form_elem,
+                                'type' => "text",
+                                'title' => "Field's placeholder",
+                                'placeHolder' => "The placehold is shown as an example when the field is asked (just like this)",
+                                'hint' => "It'll be shown as an example when the field is asked.",
+                                'previous' => $field->{$form_elem}])
                         </div>
 
                         <!--  REQUIRED SECTION  -->
@@ -88,39 +82,25 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "order")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
-                                order</label>
-
-                            <input type="number" value="{{ old($field->{$form_elem}, $field->{$form_elem}) }}"
-                                   name="{{$form_elem}}" id="{{$form_elem}}"
-                                   class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="3"/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
-                                used to order the field. Fields are first order by requirement state, then by
-                                order</small>
-
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @livewire("forms.form", [
+                                'form_elem' => $form_elem,
+                                'type' => "number",
+                                'title' => "Field's order",
+                                'placeHolder' => "Example : 3",
+                                'hint' => "It'll be used to order the field. Fields are first order by requirement state, then by order",
+                                'previous' => $field->{$form_elem}])
                         </div>
 
                         <!--  DESCRIPTIVE_VALUE SECTION  -->
 
                         <div class="px-4 py-5 bg-white sm:p-6">
-
                             @php($form_elem = "descriptive_value")
-                            @php($old = old($field->{$form_elem}, $field->{$form_elem}))
-
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Is that a
-                                descriptive value ?</label>
-
-                            <input value="1" type="checkbox" name="{{$form_elem}}" id="{{$form_elem}}"
-                                   class="form-input rounded-md shadow-sm mt-1 block" @checked($old == 1)/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">If checked,
-                                it will be displayed in the Manage Persons section</small>
-
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @livewire("forms.form", [
+                                'form_elem' => $form_elem,
+                                'type' => "checkbox",
+                                'title' => "Is that a descriptive value ?",
+                                'hint' => "If checked, it will be displayed in the Persons section.",
+                                'previous' => $field->{$form_elem}])
                         </div>
 
 
@@ -129,18 +109,12 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "best_descriptive_value")
-                            @php($old = old($field->{$form_elem}, $field->{$form_elem}))
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Is that the best
-                                descriptive value ?</label>
-
-                            <input value="1" type="checkbox" name="{{$form_elem}}" id="{{$form_elem}}"
-                                   class="form-input rounded-md shadow-sm mt-1 block" @checked($old == 1)/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">If checked,
-                                it will be displayed in the Manage Persons section as the main field.</small>
-
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @livewire("forms.form", [
+                                'form_elem' => $form_elem,
+                                'type' => "checkbox",
+                                'title' => "Is that a descriptive value ?",
+                                'hint' => "If checked, it will be displayed in the Persons section.",
+                                'previous' => $field->{$form_elem}])
                         </div>
 
                         <!--

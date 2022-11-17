@@ -26,7 +26,6 @@
                                         $list=$field->getLinkedListContent();
                                     @endphp
 
-
                                     @livewire("select-dropdown", ['label' => $field->id, 'placeholder' => "--
                                     Select your ".$field->title." --", 'datas' => $list, 'selected_value' =>
                                     old($field->id)])
@@ -41,15 +40,14 @@
                                            placeholder="{{$field->placeholder ?? ''}}"
                                            @checked(old($field->id)) value=1>
                                 @elseif($field->html_data_type != "list")
-                                    <input type="{{$field->html_data_type}}" name="{{$field->id}}"
-                                           id="{{$field->id}}"
-                                           class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                           placeholder="{{$field->placeholder ?? ''}}" value=@error($field->id) "" @else
-                                        "{{old($field->id)}}" @enderror/>
-                                    @endif
-                                    @error($field->id)
-                                    <p class="text-sm text-red-600">{{ Str::replace($field->id, $field->title, $message) }}</p>
-                                    @enderror
+                                    @livewire("forms.form", [
+                                        'form_elem' => $field->id,
+                                        'type' => $field->html_data_type,
+                                        'placeHolder' => $field->placeholder ?? ''])
+                                @endif
+                                @error($field->id)
+                                <p class="text-sm text-red-600">{{ Str::replace($field->id, $field->title, $message) }}</p>
+                                @enderror
                             </div>
                         @endforeach
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
