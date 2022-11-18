@@ -52,8 +52,8 @@
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
-                                used to store the datas. <i class="text-sm text-red-600"> Be careful : you couldn't
-                                    change this value later</i></small>
+                                used to store the datas. <em class="text-sm text-red-600"> Be careful : you couldn't
+                                    change this value later</em></small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -71,8 +71,8 @@
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define
-                                the field's requirement state. <i class="text-sm text-red-600"> Due to deployment
-                                    conditions, you can't define the field as required</i></small>
+                                the field's requirement state. <em class="text-sm text-red-600"> Due to deployment
+                                    conditions, you can't define the field as required</em></small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -90,8 +90,8 @@
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define where
-                                the field will be deployed. <i class="text-sm text-red-600"> Be careful, if the status
-                                    is set to 'Disabled', the field won't be shown.</i></small>
+                                the field will be deployed. <em class="text-sm text-red-600"> Be careful, if the status
+                                    is set to 'Disabled', the field won't be shown.</em></small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
