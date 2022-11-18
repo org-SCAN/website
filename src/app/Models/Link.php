@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -158,5 +159,9 @@ class Link extends Pivot
 
     public function setRelationAttribute($value) {
         $this->attributes["relation"] = ListRelation::getIdFromValue($value);
+    }
+
+    public function getDateAttribute() {
+        return Carbon::parse($this->attributes['date']);
     }
 }

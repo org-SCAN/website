@@ -8,7 +8,7 @@
     <div>
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <a href="{{URL::previous() }}" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
+                <a href="{{ route('links.index') }}" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <form method="post" action="{{ route('links.store') }}">
@@ -79,17 +79,23 @@
                             @enderror
                         </div>
 
+                        <!-- Date SECTION -->
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            @livewire("forms.form", [
+                            'form_elem' => 'date',
+                            'type' => "date",
+                            'title' => "Date"])
+                        </div>
+
                         <!--  detail SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
-
-                            @php($form_elem = "detail")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Detail</label>
-
-                            <input value="{{ old($form_elem)}}" type="text" name="{{$form_elem}}" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" placeholder="Father" />
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @livewire("forms.form", [
+                            'form_elem' => 'detail',
+                            'type' => "text",
+                            'title' => "Detail",
+                            'placeHolder' => "Father"])
                         </div>
+
 
 
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">

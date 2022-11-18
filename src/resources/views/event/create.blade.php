@@ -1,3 +1,5 @@
+@php use App\Models\ListEventType; @endphp
+@php use App\Models\ListCountry; @endphp
 @section('title',"Add a new event")
 <x-app-layout>
     <x-slot name="header">
@@ -8,7 +10,7 @@
     <div>
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <a href="{{URL::previous() }}"
+                <a href="{{ route('event.index')  }}"
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
@@ -33,7 +35,7 @@
                         <!--  Event Type SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "event_type_id")
-                            @php($list = \App\Models\ListEventType::list())
+                            @php($list = ListEventType::list())
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Event's
                                 Type</label>
                             @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => "--
@@ -51,7 +53,7 @@
                         <!--  Country SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "country_id")
-                            @php($list = \App\Models\ListCountry::list())
+                            @php($list = ListCountry::list())
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Event's
                                 Country</label>
                             @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => "--
@@ -149,7 +151,7 @@
 
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
+                                    class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
                                 Add
                             </button>
                         </div>

@@ -1,3 +1,4 @@
+@php use App\Models\Link; @endphp
 @section('title',"View all relations")
 @livewireStyles
 <x-app-layout>
@@ -10,11 +11,11 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mb-8">
-                @can('create', \App\Models\Link::class)
+                @can('create', Link::class)
                     <a href="{{ route("links.create", []) }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add relation</a>
                 @endcan
-                @can('createFromJson', \App\Models\Link::class)
+                @can('createFromJson', Link::class)
                     <a href="{{ route("links.create_from_json") }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add relation from
                         json</a>
@@ -30,6 +31,7 @@
                                     <th class="toFilter">From</th>
                                     <th class="toFilter">Relation</th>
                                     <th class="toFilter">To</th>
+                                    <th class="toFilter">Date</th>
                                     @can('update', $links->first())
                                         <th></th>
                                     @endcan
@@ -44,6 +46,8 @@
                                         <td>{{ $link->relation }}</td>
                                         <td>
                                             <a href="{{route('person.show',  $link->refugeeTo->id)}}"> {{ $link->refugeeTo->best_descriptive_value }}</a>
+                                        </td>
+                                        <td>{{ $link->date->format('d/m/Y') }}</td>
                                         @can('update', $link)
                                             <td><a href="{{route('links.edit',  $link->id)}}">Edit</a></td>
                                         @endcan

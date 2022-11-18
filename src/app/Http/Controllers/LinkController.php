@@ -197,16 +197,15 @@ class LinkController extends Controller
                 $link['api_log'] = $log->id;
                 $link["application_id"] = $log->application_id;
                 //check
-                if (key_exists("id",
-                    $link)) {
+                if (key_exists("id", $link)) { // update
                     $linkUpdate = Link::find($link["id"]);
                     $linkUpdate->update($link);
                     $link = $linkUpdate;
                 } else {
-                    $potentialLink = Link::where('from',
-                        $link["from"])->where('to',
-                        $link["to"])->where('relation',
-                        $link["relation"])->first();
+                    $potentialLink = Link::where('from', $link["from"])
+                        ->where('to', $link["to"])
+                        ->where('relation', $link["relation"])
+                        ->first();
                     if ($potentialLink != null) {
                         $link = $potentialLink;
                     } else {
@@ -248,6 +247,7 @@ class LinkController extends Controller
                 ListControl::where('name',
                     "ListRelation")->first()->displayed_value,
                 "id");
+
         return view("links.edit",
             compact("link",
                 "lists"));

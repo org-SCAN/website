@@ -1,3 +1,5 @@
+@php use App\Models\Field; @endphp
+@php use App\Models\ListControl; @endphp
 @section('title',"Create a new field")
 <x-app-layout>
     <x-slot name="header">
@@ -8,7 +10,8 @@
     <div>
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <a href="{{URL::previous() }}" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
+                <a href="{{ route('fields.index')  }}"
+                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <form method="post" action="{{ route('fields.store') }}">
@@ -19,33 +22,38 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "title")
                             @livewire("forms.form", [
-                                'form_elem' => $form_elem,
-                                'type' => "text",
-                                'title' => "Field's title",
-                                'placeHolder' => "Example : Full Name",
-                                'hint' => "It'll be shown as title when the field is used."])
+                            'form_elem' => $form_elem,
+                            'type' => "text",
+                            'title' => "Field's title",
+                            'placeHolder' => "Example : Full Name",
+                            'hint' => "It'll be shown as title when the field is used."])
                         </div>
 
                         <!--  PLACEHOLDER SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "placeholder")
                             @livewire("forms.form", [
-                                'form_elem' => $form_elem,
-                                'type' => "text",
-                                'title' => "Field's placeholder",
-                                'placeHolder' => "The placehold is shown as an example when the field is asked (just like this)",
-                                'hint' => "It'll be shown as an example when the field is asked."])
+                            'form_elem' => $form_elem,
+                            'type' => "text",
+                            'title' => "Field's placeholder",
+                            'placeHolder' => "The placehold is shown as an example when the field is asked (just like
+                            this)",
+                            'hint' => "It'll be shown as an example when the field is asked."])
                         </div>
 
                         <!--  DATABASE TYPE SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "database_type")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's Data type</label>
+                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's Data
+                                type</label>
 
-                            @php( $list = \App\Models\Field::$databaseTypes )
-                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full" />
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be used to store the datas. <i class="text-sm text-red-600"> Be careful : you couldn't change this value later</i></small>
+                            @php( $list = Field::$databaseTypes )
+                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
+                                           class="form-input rounded-md shadow-sm mt-1 block w-full"/>
+                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
+                                used to store the datas. <em class="text-sm text-red-600"> Be careful : you couldn't
+                                    change this value later</em></small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -59,12 +67,12 @@
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
                                 requirement state</label>
 
-                            @php( $list = \App\Models\Field::$requiredTypes)
+                            @php( $list = Field::$requiredTypes)
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define
-                                the field's requirement state. <i class="text-sm text-red-600"> Due to deployment
-                                    conditions, you can't define the field as required</i></small>
+                                the field's requirement state. <em class="text-sm text-red-600"> Due to deployment
+                                    conditions, you can't define the field as required</em></small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -78,12 +86,12 @@
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
                                 activation status </label>
 
-                            @php( $list = \App\Models\Field::$statusTypes)
+                            @php( $list = Field::$statusTypes)
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define where
-                                the field will be deployed. <i class="text-sm text-red-600"> Be careful, if the status
-                                    is set to 'Disabled', the field won't be shown.</i></small>
+                                the field will be deployed. <em class="text-sm text-red-600"> Be careful, if the status
+                                    is set to 'Disabled', the field won't be shown.</em></small>
 
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -96,11 +104,12 @@
 
                             @php($form_elem = "order")
                             @livewire("forms.form", [
-                                'form_elem' => $form_elem,
-                                'type' => "number",
-                                'title' => "Field's order",
-                                'placeHolder' => "Example : 3",
-                                'hint' => "It'll be used to order the field. Fields are first order by requirement state, then by order"])
+                            'form_elem' => $form_elem,
+                            'type' => "number",
+                            'title' => "Field's order",
+                            'placeHolder' => "Example : 3",
+                            'hint' => "It'll be used to order the field. Fields are first order by requirement state,
+                            then by order"])
                         </div>
 
 
@@ -110,10 +119,10 @@
 
                             @php($form_elem = "descriptive_value")
                             @livewire("forms.form", [
-                                'form_elem' => $form_elem,
-                                'type' => "checkbox",
-                                'title' => "Is that a descriptive value ?",
-                                'hint' => "If checked, it will be displayed in the Persons section."])
+                            'form_elem' => $form_elem,
+                            'type' => "checkbox",
+                            'title' => "Is that a descriptive value ?",
+                            'hint' => "If checked, it will be displayed in the Persons section."])
                         </div>
 
 
@@ -123,11 +132,12 @@
 
                             @php($form_elem = "best_descriptive_value")
                             @livewire("forms.form", [
-                                'form_elem' => $form_elem,
-                                'type' => "checkbox",
-                                'title' => "Is that the best descriptive value ?",
-                                'hint' => "If checked, it will be displayed in the Manage Persons section as the main field.",
-                                'warning' => "Be careful, there is only one best descriptive value per team."])
+                            'form_elem' => $form_elem,
+                            'type' => "checkbox",
+                            'title' => "Is that the best descriptive value ?",
+                            'hint' => "If checked, it will be displayed in the Manage Persons section as the main
+                            field.",
+                            'warning' => "Be careful, there is only one best descriptive value per team."])
                         </div>
 
 
@@ -137,13 +147,13 @@
                             @php($form_elem = "linked_list")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
                                 associated list
-                                    <a href="{{route("lists_control.create")}}"
-                                       class="inline-flex items-center text-blue-800">
-                                        ~ Create a new list
-                                    </a>
+                                <a href="{{route("lists_control.create")}}"
+                                   class="inline-flex items-center text-blue-800">
+                                    ~ Create a new list
+                                </a>
                             </label>
 
-                            @php( $list = [" " => "Choose an associate list"]+array_column(\App\Models\ListControl::whereNotNull('displayed_value')->get()->toArray(), "title", "id"))
+                            @php( $list = [" " => "Choose an associate list"]+array_column(ListControl::whereNotNull('displayed_value')->get()->toArray(), "title", "id"))
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define a
