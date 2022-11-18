@@ -248,6 +248,7 @@ class LinkController extends Controller
                 ListControl::where('name',
                     "ListRelation")->first()->displayed_value,
                 "id");
+
         return view("links.edit",
             compact("link",
                 "lists"));

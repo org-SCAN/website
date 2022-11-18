@@ -38,6 +38,7 @@ class StoreLinkRequest extends FormRequest
             "everyoneTo" => "boolean|prohibits:everyoneFrom|required_without:to|nullable",
 
             "relation" => "Required|uuid|exists:list_relations,id",
+            "date" => "date|nullable",
             "detail" => "string|nullable",
         ];
     }
