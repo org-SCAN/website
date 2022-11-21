@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit : <b>{{$field->title}}</b>
+            Edit : <strong>{{$field->title}}</strong>
         </h2>
     </x-slot>
 
@@ -49,7 +49,7 @@
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
                                 requirement state</label>
                             @if($field->required == "Required")
-                                <b>This field is currently required</b>
+                                <strong>This field is currently required</strong>
                             @endif
                             @php( $list = $lists["required"])
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
@@ -112,31 +112,11 @@
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,
                                 'type' => "checkbox",
-                                'title' => "Is that a descriptive value ?",
-                                'hint' => "If checked, it will be displayed in the Persons section.",
+                                'title' => "Is that the best descriptive value ?",
+                                'hint' => "If checked, it will be displayed in the Persons section as the main field.",
+                                'warning' => "Be careful, there is only one best descriptive value per team.",
                                 'previous' => $field->{$form_elem}])
                         </div>
-
-                        <!--
-
-                        <div class="px-4 py-5 bg-white sm:p-6">
-                            <span class="text-gray-700">Choose the fields validator options</span>
-                            <div class="mt-2">
-                                <div>
-                                    <label class="inline-flex items-center">
-                                        <input type="checkbox" class="form-checkbox">
-                                        <span class="ml-2">Max : 250</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label class="inline-flex items-center">
-                                        <input type="checkbox" class="form-checkbox">
-                                        <span class="ml-2">Min : 1</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        -->
 
                         <!--  Linked List SECTION  -->
 

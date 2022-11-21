@@ -239,13 +239,13 @@ class Refugee extends Model
     public function toRelation() {
         return $this->belongsToMany(ListRelation::class,
             "links", "to",
-            "relation")->using(Link::class)->wherePivotNull("deleted_at")->withPivot("from")->withPivot("id");
+            "relation_id")->using(Link::class)->wherePivotNull("deleted_at")->withPivot("from")->withPivot("id");
     }
 
     public function fromRelation() {
         return $this->belongsToMany(ListRelation::class,
             "links", "from",
-            "relation")->using(Link::class)->wherePivotNull("deleted_at")->withPivot("to")->withPivot("id");
+            "relation_id")->using(Link::class)->wherePivotNull("deleted_at")->withPivot("to")->withPivot("id");
     }
 
     /**

@@ -53,39 +53,6 @@ class GlobalListControlSeeder extends Seeder
         $this->list_id = $list->id;
         $this->list = $list;
     }
-    protected function storeTranslation($displayed_value, $field_key){
-        foreach ($displayed_value as $language => $value) {
-            //check that the language exists in the language DB
-            if (key_exists($language, $this->languages)) {
-                $translation = array();
-                $translation["language"] = $this->languages[$language];
-                $translation["list"] = $this->list_id;
-                $translation["field_key"] = $field_key;
-                $translation["translation"] = $value;
-                //add the translation in the table
-                Translation::create($translation);
-            }
-        }
-        //set the value as the one for the default language
-        return $displayed_value[$this->default_language];
-    }
-
-    /**
-     * Store the structure of the list
-     *
-     */
-
-    protected function storeStructure()
-    {
-        foreach ($this->array_json[0] as $field => $field_content) {
-            $struct = $this->list->structure()->create([
-                "field" => $field
-            ]);
-            if($field == $this->displayed_value){
-                $this->list->update(["displayed_value" => $struct->id]);
-            }
-        }
-    }
 
     /**
      * Run the database seeds.
@@ -106,9 +73,43 @@ class GlobalListControlSeeder extends Seeder
                 $to_store[$key] = $value;
             }
             $model = 'App\Models\\' . $this->class_name;
-            $createdListElem = $model::create($to_store);
+            $createdListElem = $model::updateOrCreate([$this->displayed_value => $to_store[$this->displayed_value]], $to_store);
             $this->storeTranslation($json_elem[$this->displayed_value], $createdListElem->{$this->list_field_key});
 
         }
+    }
+
+    /**
+     * Store the structure of the list
+     *
+     */
+
+    protected function storeStructure()
+    {
+        foreach ($this->array_json[0] as $field => $field_content) {
+            $struct = $this->list->structure()->firstOrCreate([
+                "field" => $field
+            ]);
+            if($field == $this->displayed_value){
+                $this->list->update(["displayed_value" => $struct->id]);
+            }
+        }
+    }
+
+    protected function storeTranslation($displayed_value, $field_key){
+        foreach ($displayed_value as $language => $value) {
+            //check that the language exists in the language DB
+            if (key_exists($language, $this->languages)) {
+                $translation = array();
+                $translation["language"] = $this->languages[$language];
+                $translation["list"] = $this->list_id;
+                $translation["field_key"] = $field_key;
+                $translation["translation"] = $value;
+                //add the translation in the table
+                Translation::create($translation);
+            }
+        }
+        //set the value as the one for the default language
+        return $displayed_value[$this->default_language];
     }
 }

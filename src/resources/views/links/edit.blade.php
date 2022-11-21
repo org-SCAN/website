@@ -1,5 +1,4 @@
 @section('title',"Edit ".$link->refugeeFrom->best_descriptive_value." and ".$link->refugeeTo->best_descriptive_value." relation")
-@php use Carbon\Carbon; @endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -36,7 +35,7 @@
                         <!--  Relation SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
 
-                            @php($form_elem = "relation")
+                            @php($form_elem = "relation_id")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Relation</label>
 
                             @php( $list = $lists["relations"])

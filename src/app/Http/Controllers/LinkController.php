@@ -88,12 +88,23 @@ class LinkController extends Controller
         if (isset($associatedPersonsThroughEvent) && !empty($associatedPersonsThroughEvent) && isset($direction)) {
             foreach ($associatedPersonsThroughEvent as $associatedPerson) {
                 $link[$direction] = $associatedPerson->id;
-                Link::create($link);
+                $new_link = Link::create($link);
+                if((isset($link["type"]) && $link["type"] == "bilateral") || (!isset($link["type"]) && $new_link->relation->type == "bilateral")){
+                    $link[$orgin] = $associatedPerson->id;
+                    $link[$direction] = $person->id;
+                    Link::create($link);
+                }
             }
             return redirect()->route("links.index");
         }
 
-        Link::create($link);
+        $new_link = Link::create($link);
+        if((isset($link["type"]) && $link["type"] == "bilateral") || (!isset($link["type"]) && $new_link->relation->type == "bilateral")){
+            $old_from = $link["from"];
+            $link['from'] = $link['to'];
+            $link['to'] = $old_from;
+            Link::create($link);
+        }
         return redirect()->route("links.index");
     }
 
@@ -243,7 +254,7 @@ class LinkController extends Controller
      * @return Response
      */
     public function edit(Link $link) {
-        $lists["relations"] = [$link->getRelationId() => $link->relation] + array_column(ListRelation::all()->toArray(),
+        $lists["relations"] = [$link->relation->id => $link->relation->displayed_value_content] + array_column(ListRelation::all()->toArray(),
                 ListControl::where('name',
                     "ListRelation")->first()->displayed_value,
                 "id");
