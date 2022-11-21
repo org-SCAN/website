@@ -142,8 +142,8 @@ class ListControl extends Model
      * This function get the list from the list name
      */
     public static function getListFromLinkedListName($list_name) {
-        return "App\Models\\".ListControl::where('name',
-                $list_name)->first();
+        return ListControl::where('name',
+                Str::ucfirst($list_name))->first();
     }
 
     /**

@@ -1,5 +1,4 @@
 @section('title',"Edit ".$link->refugeeFrom->best_descriptive_value." and ".$link->refugeeTo->best_descriptive_value." relation")
-@php use Carbon\Carbon; @endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">

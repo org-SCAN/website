@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('list_relations', function (Blueprint $table) {
-            $table->string('type')->default('unilateral');
+        Schema::table('links', function (Blueprint $table) {
+            $table->renameColumn('relation', 'relation_id');
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('list_relations', function (Blueprint $table) {
-            $table->dropColumn('type');
+        Schema::table('links', function (Blueprint $table) {
+            $table->renameColumn('relation_id', 'relation');
         });
     }
 };
