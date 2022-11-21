@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cytoscape;
 use App\Models\Field;
+use App\Models\Link;
 use App\Models\ListControl;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -21,13 +22,13 @@ class CytoscapeController extends Controller
 
     public function index()
     {
-        $relations = \App\Models\Link::whereRelation('RefugeeFrom.crew', 'crews.id', Auth::user()->crew->id)
+        $relations = Link::whereRelation('RefugeeFrom.crew', 'crews.id', Auth::user()->crew->id)
             ->whereRelation('RefugeeTo.crew', 'crews.id', Auth::user()->crew->id)
             ->get();
 
         //get the role field
         $role_list = ListControl::firstWhere('name', 'ListRole');
-        $role_field = Field::whereCrewId(Auth::user()->crew->id)->firstWhere('linked_list', $role_list->id);
+        $role_field = Field::whereCrewId(Auth::user()->crew->id)->where('linked_list', $role_list->id);
         /*
             $nodes = array();
             foreach ($refugees as $refugee){
@@ -45,7 +46,7 @@ class CytoscapeController extends Controller
             $node["data"] = array();
             $node["data"]["id"] = $relation->getFromId();
             $node["data"]["name"] = $relation->refugeeFrom->best_descriptive_value;
-            if ($role_field->exists()) {
+            if ($role_field->exists() && $relation->refugeeFrom->fields->where('id', $role_field->first()->id)->count() > 0) {
                 $model = "App\Models\\" . $role_list->name; // App\Models\ListRole
                 $value = $model::find($relation->refugeeFrom->fields->firstWhere('id', $role_field->id)->pivot->value)->{$role_list->displayed_value};
                 $node["data"]["role"] = $value;
@@ -55,7 +56,7 @@ class CytoscapeController extends Controller
             $node["data"] = array();
             $node["data"]["id"] = $relation->getToId();
             $node["data"]["name"] = $relation->refugeeTo->best_descriptive_value;
-            if ($role_field->exists()) {
+            if ($role_field->exists() && $relation->refugeeTo->fields->where('id', $role_field->first()->id)->count() > 0) {
                 $model = "App\Models\\" . $role_list->name; // App\Models\ListRole
                 $value = $model::find($relation->refugeeTo->fields->firstWhere('id', $role_field->id)->pivot->value)->{$role_list->displayed_value};
                 $node["data"]["role"] = $value;
