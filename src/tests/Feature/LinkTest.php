@@ -99,6 +99,20 @@ class LinkTest extends PermissionsTest
      */
 
     public function test_authenticated_user_with_permission_can_add_bilateral_link() {
+        $relation = $this->test_a_user_can_create_relation_through_the_form('bilateral');
+        $this->assertDatabaseHas('links',
+            [
+                'from' => $relation['to'],
+                'to' => $relation['from'],
+                'relation_id' => $relation['relation_id'],
+                'detail' => $relation['detail'],
+            ]);
+    }
+
+    /**
+     * This function is used to create a new link through the form
+     */
+    public function test_a_user_can_create_relation_through_the_form($type = null){
         $refugee_from = Refugee::factory()->create();
         $refugee_to = Refugee::factory()->create();
         $relation = ListRelation::inRandomOrder()->first();
@@ -108,23 +122,19 @@ class LinkTest extends PermissionsTest
                 'to' => $refugee_to->id,
                 'relation_id' => $relation->id,
                 'detail' => 'test',
-                'type' => 'bilateral',
+                'type' => $type,
             ]);
         $response->assertRedirect($this->route);
+        $relation =  [
+            'from' => $refugee_from->id,
+            'to' => $refugee_to->id,
+            'relation_id' => $relation->id,
+            'detail' => 'test',
+        ];
         $this->assertDatabaseHas('links',
-            [
-                'from' => $refugee_from->id,
-                'to' => $refugee_to->id,
-                'relation_id' => $relation->id,
-                'detail' => 'test',
-            ]);
-        $this->assertDatabaseHas('links',
-            [
-                'from' => $refugee_to->id,
-                'to' => $refugee_from->id,
-                'relation_id' => $relation->id,
-                'detail' => 'test',
-            ]);
+            $relation);
+
+        return $relation;
     }
 
     /**
@@ -132,32 +142,14 @@ class LinkTest extends PermissionsTest
      */
 
     public function test_authenticated_user_with_permission_can_add_unilateral_link() {
-        $refugee_from = Refugee::factory()->create();
-        $refugee_to = Refugee::factory()->create();
-        $relation = ListRelation::inRandomOrder()->first();
-        $response = $this->actingAs($this->admin)->post(route($this->route.'.store'),
-            [
-                'from' => $refugee_from->id,
-                'to' => $refugee_to->id,
-                'relation_id' => $relation->id,
-                'detail' => 'test',
-                'type' => 'unilateral',
-            ]);
-        $response->assertRedirect($this->route);
-        $this->assertDatabaseHas('links',
-            [
-                'from' => $refugee_from->id,
-                'to' => $refugee_to->id,
-                'relation_id' => $relation->id,
-                'detail' => 'test',
-            ]);
+        $relation = $this->test_a_user_can_create_relation_through_the_form('unilateral');
         $this->assertDatabaseMissing('links',
-            [
-                'from' => $refugee_to->id,
-                'to' => $refugee_from->id,
-                'relation_id' => $relation->id,
-                'detail' => 'test',
-            ]);
+        [
+            'from' => $relation['to'],
+            'to' => $relation['from'],
+            'relation_id' => $relation['relation_id'],
+            'detail' => $relation['detail'],
+        ]);
     }
 
     /**
