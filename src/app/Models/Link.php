@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -42,11 +43,11 @@ class Link extends Pivot
      */
     protected $keyType = 'string';
     /**
-     * The attributes that aren't mass assignable.
+     * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $fillable = ["from", "to", "relation_id", "date", "detail", 'api_log'];
 
     public static function handleApiRequest($relation) {
 
@@ -70,7 +71,7 @@ class Link extends Pivot
         $potential_link = self::where("application_id",
             $application_id)->where("from",
             $from)->where("to",
-            $to)->where("relation",
+            $to)->where("relation_id",
             ListRelation::getIdFromValue($relation_type))->first();
 
         return empty($potential_link) ? null : $potential_link;
@@ -95,9 +96,11 @@ class Link extends Pivot
             "to");
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function relation() {
-        return $this->belongsTo(ListRelation::class,
-            "relation");
+        return $this->belongsTo(ListRelation::class);
     }
 
     public function crew() {
@@ -108,18 +111,7 @@ class Link extends Pivot
             "crew_id");
     }
 
-    /**
-     *
-     * Get relation name
-     *
-     * @param $relation
-     * @return mixed
-     */
-    public function getRelationAttribute($relation) {
-        $displayed_value = ListControl::where("name",
-            "ListRelation")->first()->displayed_value;
-        return ListRelation::find($relation)->$displayed_value;
-    }
+
 
     /**
      * Get from Id
@@ -156,10 +148,10 @@ class Link extends Pivot
      * Store the relation id accorting its key or its code
      * @param $value
      */
-
+/*
     public function setRelationAttribute($value) {
         $this->attributes["relation"] = ListRelation::getIdFromValue($value);
-    }
+    }*/
 
     public function getDateAttribute() {
         return Carbon::parse($this->attributes['date']);

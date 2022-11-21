@@ -37,9 +37,10 @@ class StoreLinkRequest extends FormRequest
             ],
             "everyoneTo" => "boolean|prohibits:everyoneFrom|required_without:to|nullable",
 
-            "relation" => "Required|uuid|exists:list_relations,id",
+            "relation_id" => "Required|uuid|exists:list_relations,id",
             "date" => "date|nullable",
             "detail" => "string|nullable",
+            "type" => "string|nullable|in:unilateral,bilateral",
         ];
     }
 }

@@ -37,7 +37,7 @@ class LinkFactory extends Factory
         $log = ApiLog::create($log);
         return [
             'date' => $this->faker->date("Y-m-d", $max = 'now', $min = '- 2 months'),
-            'relation' => ListRelation::inRandomOrder()->first()->id,
+            'relation_id' => ListRelation::inRandomOrder()->first()->id,
             'from' => Refugee::inRandomOrder()->first()->id,
             'to' => Refugee::inRandomOrder()->first()->id,
             'api_log' => $log->id,

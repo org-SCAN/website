@@ -7,7 +7,8 @@
         },
         "short": "BR",
         "color" : "0099ff",
-        "importance" : 1
+        "importance" : 1,
+        "type" : "bilateral"
     },
     {
         "name": {
@@ -17,7 +18,8 @@
         },
         "short": "NBR",
         "color" : "cbaf1d",
-        "importance" : 1
+        "importance" : 1,
+        "type" : "unilateral"
     },
     {
         "name": {
@@ -27,7 +29,8 @@
         },
         "short": "TW",
         "color" : "00ff2a",
-        "importance" : 1
+        "importance" : 1,
+        "type" : "bilateral"
     },
     {
         "name": {
@@ -37,7 +40,8 @@
         },
         "short": "SA",
         "color" : "734d39",
-        "importance" : 1
+        "importance" : 1,
+        "type" : "unilateral"
     },
     {
         "name": {
@@ -47,7 +51,8 @@
         },
         "short": "SE",
         "color" : "7e00ff",
-        "importance" : 1
+        "importance" : 1,
+        "type" : "unilateral"
     }
 ]
 

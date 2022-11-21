@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cytoscape;
 use App\Models\Field;
+use App\Models\Link;
 use App\Models\ListControl;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +22,7 @@ class CytoscapeController extends Controller
 
     public function index()
     {
-        $relations = \App\Models\Link::whereRelation('RefugeeFrom.crew', 'crews.id', Auth::user()->crew->id)
+        $relations = Link::whereRelation('RefugeeFrom.crew', 'crews.id', Auth::user()->crew->id)
             ->whereRelation('RefugeeTo.crew', 'crews.id', Auth::user()->crew->id)
             ->get();
 
@@ -67,8 +68,8 @@ class CytoscapeController extends Controller
 
             $link["data"] = array();
             $link["data"]["id"] = $relation->id;
-            $link["data"]["label"] = $relation->relation;
-            $link["data"]["weight"] = $relation->getRelationWeight();
+            $link["data"]["label"] = $relation->relation->displayed_value_content;
+            $link["data"]["weight"] = $relation->relation->weight;
             $link["data"]["source"] = $relation->getFromId();
             $link["data"]["target"] = $relation->getToId();
             $link["data"]["detail"] = $relation->detail;

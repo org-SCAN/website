@@ -43,7 +43,7 @@
                                         <td>
                                             <a href="{{route('person.show',  $link->refugeeFrom->id)}}"> {{ $link->refugeeFrom->best_descriptive_value }}</a>
                                         </td>
-                                        <td>{{ $link->relation }}</td>
+                                        <td>{{ $link->relation->displayed_value_content }}</td>
                                         <td>
                                             <a href="{{route('person.show',  $link->refugeeTo->id)}}"> {{ $link->refugeeTo->best_descriptive_value }}</a>
                                         </td>

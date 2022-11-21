@@ -39,21 +39,43 @@
                             @enderror
                         </div>
 
-                        <!--  Relation SECTION  -->
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="row pl-4 pr-4 bg-white">
+                            <div class="col-8 bg-white sm:p-6">
+                                <!--  Relation SECTION  -->
 
-                            @php($form_elem = "relation")
+                            @php($form_elem = "relation_id")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Relation</label>
 
-                            @php( $list = $lists["relations"])
-                            @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the
-                            relation --', 'datas' => $list, 'selected_value' => old($form_elem, $form_elem)])
-                            @stack('scripts')
+                                @php( $list = $lists["relations"])
+                                @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the
+                                relation --', 'datas' => $list, 'selected_value' => old($form_elem, $form_elem)])
+                                @stack('scripts')
 
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                                @error($form_elem)
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+
+                            </div>
+                            <div class="col-4 bg-white sm:p-6">
+
+                                <!--  Relation SECTION  -->
+
+                                    @php($form_elem = "type")
+                                    <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Type</label>
+
+                                        @php( $list = ["unilateral" => "unilateral", 'bilateral' => 'bilateral'])
+                                        @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the
+                                        type --', 'datas' => $list, 'selected_value' => old($form_elem, $form_elem)])
+                                        @stack('scripts')
+
+                                        @error($form_elem)
+                                        <p class="text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
                         </div>
+
+
+
 
                         <!--  To SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
@@ -109,3 +131,17 @@
         </div>
     </div>
 </x-app-layout>
+<script>
+    // on change of the relation, set the associated type
+    $('#relation_id').change(function () {
+        var relations_type = [];
+        @foreach(App\Models\ListRelation::all()->pluck('type', 'id') as $relation => $type)
+            relations_type["{{ $relation }}"] = "{{ $type }}";
+        @endforeach
+        var relation_id = $("#relation_id").val();
+        $("#type")
+            .val(relations_type[relation_id])
+            .trigger("change");
+
+    });
+</script>

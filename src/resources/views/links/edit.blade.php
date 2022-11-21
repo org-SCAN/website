@@ -36,7 +36,7 @@
                         <!--  Relation SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
 
-                            @php($form_elem = "relation")
+                            @php($form_elem = "relation_id")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Relation</label>
 
                             @php( $list = $lists["relations"])
