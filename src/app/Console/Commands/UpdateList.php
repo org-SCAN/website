@@ -39,8 +39,14 @@ class UpdateList extends Command
 
         foreach ($json_content as $new_list) {
             if (!in_array($new_list['name'],
-                $lists)) {
-                $new_list["id"] = (string) Str::uuid();
+                $lists) || $this->argument('listName') == $new_list['name']) {
+
+                if($this->argument('listName') == $new_list['name']) {
+                    $this->info('Updating '.$new_list['name']);
+                } else {
+                    $this->info('Adding '.$new_list['name']);
+                    $new_list["id"] = (string) Str::uuid();
+                }
                 $structure = null;
                 if (key_exists('structure',
                     $new_list)) {
@@ -48,11 +54,11 @@ class UpdateList extends Command
                     unset($new_list["structure"]);
                 }
                 // add the list to the control list
-                $list = ListControl::create($new_list);
+                $list = ListControl::firstOrCreate(['name' => $new_list['name']], $new_list);
                 //save the structure
                 if ($structure != null) {
                     foreach ($structure as $field) {
-                        $struct = $list->structure()->create([
+                        $struct = $list->structure()->firstOrCreate([
                             "field" => $field,
                         ]);
                         if ($field == $list->displayed_value) {
@@ -65,6 +71,7 @@ class UpdateList extends Command
                 // Step 3 : Add and seed the DB if needed
                 if ($this->option("seed")) {
                     //call the seeder
+                    $this->info("Seeding ".$list->name);
                     Artisan::call('db:seed',
                         ['--class' => $new_list["name"].'Seeder']);
                 }

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('list_relations', function (Blueprint $table) {
-            $table->string('type')->default('unilateral');
+            $table->string('type')->nullable();
         });
     }
 
