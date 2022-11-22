@@ -14,6 +14,11 @@ class Form extends Component
     public $previous;
     public $warning;
     public $type;
+    public $format;
+
+    public function mount(){
+        $this->format = "WGS84";
+    }
 
     public function render()
     {
