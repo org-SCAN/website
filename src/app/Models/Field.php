@@ -22,7 +22,8 @@ class Field extends Model
         "integer" => "Number",
         "date" => "Date",
         "boolean" => "Yes / No ",
-        "list" => "List"
+        "list" => "List",
+        "coordinates" => "Coordinates",
     ];
 
     /**
@@ -191,7 +192,8 @@ class Field extends Model
             "integer" => "number",
             "date" => "date",
             "boolean" => "checkbox",
-            "list" => "list"
+            "list" => "list",
+            "coordinates" => "Coordinates"
         ];
         return $type_convert[$database_type];
     }
@@ -210,7 +212,8 @@ class Field extends Model
             "integer" => "number",
             "date" => "date",
             "boolean" => "Radio Button",
-            "list" => "Spinner"
+            "list" => "Spinner",
+            "coordinates" => "Coordinates"
         ];
         return $type_convert[$database_type];
     }
@@ -231,7 +234,8 @@ class Field extends Model
             "integer" => "Integer",
             "date" => "Date",
             "boolean" => "Boolean",
-            "list" => "uuid"
+            "list" => "uuid",
+            "coordinates" => "string"
 
         ];
 
