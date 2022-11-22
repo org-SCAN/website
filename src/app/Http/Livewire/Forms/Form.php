@@ -14,6 +14,8 @@ class Form extends Component
     public $previous;
     public $warning;
     public $type;
+
+    //Specific to the coordinate form
     public $format;
 
     public function mount(){
