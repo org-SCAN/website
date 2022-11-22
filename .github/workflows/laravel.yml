@@ -17,6 +17,10 @@ jobs:
         php-version: '8.1'
         extensions: opcache, mbstring
         ini-values: memory_limit=1024M
+        coverage: xdebug
+        tools: php-cs-fixer, phpunit
+      env:
+        runner: self-hosted
     - uses: actions/checkout@v3
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
