@@ -175,14 +175,6 @@ class RefugeeController extends Controller
      */
     public function store(StoreRefugeeRequest $request) {
         $fields = $request->validated();
-
-        //DECLARATION OBJET
-        //Si on a un fiels de type coordonnées
-        //$fields["coordinates"] = {}
-        //--> remplit l'objet en json
-        //$fields["coordinates"][$key] = $value
-        //Supprime lat et long du tableau fiels
-        //unset($fields[$key]);
         foreach ($fields as $key => $value) {
             if (!empty($value)) {
                 if (is_array($value)) {
