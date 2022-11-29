@@ -197,19 +197,11 @@
                                 'lat' => 48.134664,
                                 'lng' => 11.555220,
                                 'zoom' => 6,
-                                'markers' => [
-                                    [
-                                        'title' => 'Go NoWare',
-                                        'lat' => 48.134664,
-                                        'lng' => 11.555220,
-                                        'popup' => '<h3>Details</h3><p>Click <a href="https://gonoware.com">here</a>.</p>',
-                                    ],
-                                    [
-                                        'title' => 'Test',
-                                        'lat' => 48,
-                                        'lng' => 11,
-                                    ],
-                                ],
+                                'markers' => foreach($person->allCoordinates as $coordinates) {
+                                    'title' => $coordinates->title,
+                                    'lat' => $coordinates->getValue()["lat"],
+                                    'lng' => $coordinates->getValue()["long"],
+                                }
                             ])
                             @mapscripts
                         </div>
