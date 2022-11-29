@@ -15,11 +15,12 @@ class Form extends Component
     public $warning;
     public $type;
 
-    //Specific to the coordinate form
-    public $format;
+    public $lat;
+    public $long;
 
     public function mount(){
-        $this->format = "WGS84";
+        $this->lat = "0";
+        $this->long = "0";
     }
 
     public function render()
