@@ -3,21 +3,13 @@
     <div class="flex">
         <div class="flex-auto pr-4">
             <em class="text-sm">Longitude :</em>
-            <input wire:model="long" type="text" name="long" id="long"
+            <input wire:model="long" type="text" name="{{$form_elem}}[long]" id="long"
                 class="form-input rounded-md shadow-sm mt-1 block w-full"
                 placeholder="{{$placeHolder}}"/>
         </div>
         <div class="flex-auto pr-4">
             <em class="text-sm">Latitude :</em>
-            <input wire:model="lat" type="text" name="lat" id="lat"
-                class="form-input rounded-md shadow-sm mt-1 block w-full"
-                placeholder="{{$placeHolder}}"/>
-        </div>
-    </div>
-    <div class="flex">
-        <div class="flex-auto pr-4">
-            <em class="text-sm">NAD27 :</em>
-            <input value="{{ $this->long . "," . $this->lat}}" type="text" name="{{$form_elem}}" id="{{$form_elem}}"
+            <input wire:model="lat" type="text" name="{{$form_elem}}[lat]" id="lat"
                 class="form-input rounded-md shadow-sm mt-1 block w-full"
                 placeholder="{{$placeHolder}}"/>
         </div>

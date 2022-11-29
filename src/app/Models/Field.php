@@ -235,7 +235,7 @@ class Field extends Model
             "date" => "Date",
             "boolean" => "Boolean",
             "list" => "uuid",
-            "coordinates" => "string"
+            "coordinates" => "Array"
 
         ];
 
