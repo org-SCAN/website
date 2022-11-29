@@ -29,3 +29,8 @@ Route::middleware('auth:sanctum')->get('/links/{crew?}',
     "\App\Http\Controllers\LinkController@apiGetRelations");
 Route::middleware('auth:sanctum')->get('/fields',
     "\App\Http\Controllers\FieldsController@handleApiRequest");
+
+Route::middleware('auth:sanctum')->get('/lists',
+    "\App\Http\Controllers\ListControlController@apiGetLists");
+Route::middleware('auth:sanctum')->get('/list/{listControl}',
+    "\App\Http\Controllers\ListControlController@apiGetList");

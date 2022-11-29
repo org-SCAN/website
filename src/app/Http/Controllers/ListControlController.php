@@ -13,6 +13,7 @@ use App\Models\FieldRefugee;
 use App\Models\ListControl;
 use App\Models\Translation;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -43,16 +44,6 @@ class ListControlController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
-    public function create()
-    {
-        return view("lists_control.create");
-    }
-
-    /**
      * This function is used to add an element to an existing list
      *
      * @param ListControl $list_control
@@ -66,7 +57,6 @@ class ListControlController extends Controller
 
         return view("lists_control.add_to_list", compact("list_control", 'list_fields'));
     }
-
 
     /**
      * This function is used to add an element to a list
@@ -85,6 +75,16 @@ class ListControlController extends Controller
         Translation::handleTranslation($listControl, $listElem->{$listControl->key_value}, $listElem->{$listControl->displayed_value});
         // I have to translate and add to default langage
         return redirect()->route('lists_control.show', $listControl);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return View
+     */
+    public function create()
+    {
+        return view("lists_control.create");
     }
 
     /**
@@ -129,9 +129,22 @@ class ListControlController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param UpdateListControlRequest $request
+     * @param  ListControl  $lists_control
+     * @return RedirectResponse
+     */
+    public function update(UpdateListControlRequest $request, ListControl $lists_control)
+    {
+        $lists_control->update($request->validated());
+        return redirect()->route("lists_control.index");
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\StoreListControlRequest $request
+     * @param  StoreListControlRequest  $request
      * @return View
      */
     public function store(StoreListControlRequest $request)
@@ -158,7 +171,7 @@ class ListControlController extends Controller
     /**
      * After creating the list, this controller method is called to store the fields which describes the list
      *
-     * @param \App\Http\Requests\StoreListControlFieldsRequest $request
+     * @param  StoreListControlFieldsRequest  $request
      * @return RedirectResponse
      */
     public function storeFields(StoreListControlFieldsRequest $request, ListControl $listControl)
@@ -182,11 +195,10 @@ class ListControlController extends Controller
 
     }
 
-
     /**
      * Store the displayed value
      *
-     * @param \App\Http\Requests\StoreListControlAddDisplayedValue $request
+     * @param  StoreListControlAddDisplayedValue  $request
      * @return RedirectResponse
      */
     public function storeDisplayedValue(StoreListControlAddDisplayedValue $request, ListControl $listControl)
@@ -222,19 +234,6 @@ class ListControlController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param UpdateListControlRequest $request
-     * @param \App\Models\ListControl $lists_control
-     * @return RedirectResponse
-     */
-    public function update(UpdateListControlRequest $request, ListControl $lists_control)
-    {
-        $lists_control->update($request->validated());
-        return redirect()->route("lists_control.index");
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param ListControl $lists_control
@@ -267,5 +266,56 @@ class ListControlController extends Controller
         $model = 'App\Models\\' . $listControl->name;
         $model::find($element)->delete();
         return redirect()->route("lists_control.show", $listControl);
+    }
+
+    /**
+     * This function returns the lists of all the lists to the API
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function apiGetLists(Request $request) {
+        //check that the user is authorized
+        if ($request->user()->tokenCan("read")) {
+            $lists = ListControl::all();
+            return response(json_encode($lists->makeHidden(['created_at', 'updated_at','deleted_at'] )), 200)->header("Content-Type", "application/json");
+        }
+        else {
+            return response("Your token can't be use to get datas",
+                403);
+        }
+    }
+
+    /**
+     * This function returns the content of a list to the API
+     * @param Request $request
+     * @param ListControl $listControl
+     * @return JsonResponse
+     */
+
+    public function apiGetList(Request $request, ListControl $listControl) {
+        //check that the user is authorized
+        if ($request->user()->tokenCan("read")) {
+            $list = $listControl->getListContent();
+
+            // get the Translation of the displayed value
+            $translations = Translation::where('list', $listControl->id)
+                ->select(['language', 'field_key','translation'])
+                ->get();
+            foreach($list as $element){
+                $element[$listControl->displayed_value] = $translations->where('field_key', $element->{$listControl->key_value})->pluck('translation', 'language');
+            }
+
+
+            return response(json_encode($list->makeHidden([
+                'created_at',
+                'updated_at',
+                'deleted_at'
+            ])),
+                200)->header("Content-Type",
+                "application/json");
+        } else {
+            return response("Your token can't be use to get datas",
+                403);
+        }
     }
 }
