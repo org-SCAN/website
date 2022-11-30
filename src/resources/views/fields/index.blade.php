@@ -7,7 +7,11 @@
             {{ __('Manage '.auth()->user()->crew->name.' fields') }}
         </h2>
     </x-slot>
-
+    @if(!Field::hasBestDescriptiveValue())
+        <div class="alert alert-danger" role="alert">
+            <strong>No field has been set as the best descriptive field. Please set one in the field controls.</strong>
+        </div>
+    @endif
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mb-8">

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid("id")->primary();
             $table->timestamps();
             $table->softDeletes();
-            $table->string("name");
+            $table->string("name")->unique();
             $table->string('model')->nullable();
             $table->string('database_type');
             $table->string('java_type');

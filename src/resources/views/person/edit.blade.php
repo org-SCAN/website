@@ -19,12 +19,12 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         @foreach($fields as $field)
                             @php
-                                $refugee_detail[$field->label] = isset($refugee_detail[$field->label])
-                                ? $refugee_detail[$field->label]
+                                $refugee_detail[$field->id] = isset($refugee_detail[$field->id])
+                                ? $refugee_detail[$field->id]
                                 : "";
 
                             @endphp
-                            <div class="px-4 py-5 bg-white sm:p-6">
+                            <div class="px-4 py-4 bg-white sm:p-6">
                                 <label for="{{$field->label}}"
                                        class="block font-medium text-sm text-gray-700">{{$field->title}}</label>
                                 @if($field->linked_list != "")
@@ -36,26 +36,17 @@
                                     your ".$field->title." --", 'datas' => $list, "selected_value" =>
                                     $selected])
                                     @stack('scripts')
-
-                                @elseif($field->html_data_type == "textarea")
-                                    <textarea name="{{$field->id}}" id="{{$field->id}}"
-                                              class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                              placeholder="{{$field->placeholder ?? ''}}">
-                                        {{ old($field->label, $refugee_detail[$field->label]) }}
-                                    </textarea>
-                                @elseif($field->html_data_type == "checkbox")
-                                    <input type="checkbox" name="{{$field->id}}" id="{{$field->id}}"
-                                           class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                           placeholder="{{$field->placeholder ?? ''}}"
-                                           value=1 @checked(old($field->label, $refugee_detail[$field->label]))>
                                 @else
-                                    <input type="{{$field->html_data_type}}" name="{{$field->id}}"
-                                           id="{{$field->id}}"
-                                           class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                           value="{{ old($field->label, $refugee_detail[$field->label]) }}"/>
+                                    @livewire("forms.form", [
+                                    'form_elem' => $field->id,
+                                    'type' => $field->dataType->html_type,
+                                    'placeHolder' => $field->placeholder ?? '',
+                                    'previous' => $refugee_detail[$field->id],
+                                    'showError' => false
+                                    ])
                                 @endif
-                                @error($field->label)
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                @error($field->id)
+                                <p class="text-sm text-red-600">{{ Str::replace($field->id, $field->title, $message) }}</p>
                                 @enderror
                             </div>
                         @endforeach

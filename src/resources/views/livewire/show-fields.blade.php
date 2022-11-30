@@ -16,7 +16,7 @@
             @endcannot
         </td>
         <td class="px-6 py-4 whitespace-nowrap">
-            {{$field->database_type}}
+            {{$field->dataType->displayedValueContent}}
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
             {{$field->status}}

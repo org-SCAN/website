@@ -17,7 +17,7 @@
                     @method('PUT')
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <!--  TITLE SECTION  -->
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-4 bg-white sm:p-6">
                             @php($form_elem = "title")
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,
@@ -30,7 +30,7 @@
 
                         <!--  PLACEHOLDER SECTION  -->
 
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-4 bg-white sm:p-6">
 
                             @php($form_elem = "placeholder")
                             @livewire("forms.form", [
@@ -44,7 +44,7 @@
 
                         <!--  REQUIRED SECTION  -->
 
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-4 bg-white sm:p-6">
                             @php($form_elem = "required")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
                                 requirement state</label>
@@ -64,7 +64,7 @@
 
                         <!--  STATUS SECTION  -->
 
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-4 bg-white sm:p-6">
                             @php($form_elem = "status")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's activation status </label>
 
@@ -79,7 +79,7 @@
 
                         <!--  ORDER SECTION  -->
 
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-4 bg-white sm:p-6">
 
                             @php($form_elem = "order")
                             @livewire("forms.form", [
@@ -91,9 +91,23 @@
                                 'previous' => $field->{$form_elem}])
                         </div>
 
+                        <!--  BEST_DESCRIPTIVE_VALUE SECTION  -->
+
+                        <div class="px-4 py-4 bg-white sm:p-6">
+
+                            @php($form_elem = "best_descriptive_value")
+                            @livewire("forms.form", [
+                            'form_elem' => $form_elem,
+                            'type' => "checkbox",
+                            'title' => "Is that the best descriptive value ?",
+                            'hint' => "If checked, it will be displayed in the Persons section as the main field.",
+                            'warning' => "Be careful, there is only one best descriptive value per team.",
+                            'previous' => $field->{$form_elem}])
+                        </div>
+
                         <!--  DESCRIPTIVE_VALUE SECTION  -->
 
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-4 bg-white sm:p-6">
                             @php($form_elem = "descriptive_value")
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,
@@ -104,23 +118,11 @@
                         </div>
 
 
-                        <!--  BEST_DESCRIPTIVE_VALUE SECTION  -->
 
-                        <div class="px-4 py-5 bg-white sm:p-6">
-
-                            @php($form_elem = "best_descriptive_value")
-                            @livewire("forms.form", [
-                                'form_elem' => $form_elem,
-                                'type' => "checkbox",
-                                'title' => "Is that the best descriptive value ?",
-                                'hint' => "If checked, it will be displayed in the Persons section as the main field.",
-                                'warning' => "Be careful, there is only one best descriptive value per team.",
-                                'previous' => $field->{$form_elem}])
-                        </div>
 
                         <!--  Linked List SECTION  -->
 
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-4 bg-white sm:p-6">
                             @php($form_elem = "linked_list")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
                                 associated list
@@ -135,6 +137,20 @@
                             @error($form_elem)
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
+                        </div>
+
+                        <div class="px-4 py-4 bg-white sm:p-6">
+                            @livewire("forms.form", [
+                            'form_elem' => "validation_rules",
+                            'type' => "text",
+                            'title' => "Specific field's validation rules",
+                            'placeHolder' => "Example : required|email",
+                            'hint' => "Define the validation rules for this field. You can find the list of rules
+                            <a href='https://laravel.com/docs/9.x/validation#available-validation-rules' class='text-blue-800'>here</a>",
+                            'warning' => "Be careful, to use this section, you need to know the Laravel validation rules.",
+                            'previous' => $field->validation_laravel
+                            ])
+
                         </div>
 
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">

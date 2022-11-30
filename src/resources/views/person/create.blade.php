@@ -17,7 +17,6 @@
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
                         @foreach($fields as $field)
-
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <label for="{{$field->id}}"
                                        class="block font-medium text-sm text-gray-700">{{$field->title}}</label>
@@ -25,28 +24,20 @@
                                     @php
                                         $list=$field->getLinkedListContent();
                                     @endphp
-
                                     @livewire("select-dropdown", ['label' => $field->id, 'placeholder' => "--
                                     Select your ".$field->title." --", 'datas' => $list, 'selected_value' =>
                                     old($field->id)])
                                     @stack('scripts')
-                                @elseif($field->html_data_type == "textarea")
-                                    <textarea name="{{$field->id}}" id="{{$field->id}}"
-                                              class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                              placeholder="{{$field->placeholder ?? ''}}">{{old($field->id)}}</textarea>
-                                @elseif($field->html_data_type == "checkbox")
-                                    <input type="checkbox" name="{{$field->id}}" id="{{$field->id}}"
-                                           class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                           placeholder="{{$field->placeholder ?? ''}}"
-                                           @checked(old($field->id)) value=1>
-                                @elseif($field->html_data_type != "list")
+                                @elseif($field->dataType->html_type != "list")
                                     @livewire("forms.form", [
                                         'form_elem' => $field->id,
-                                        'type' => $field->html_data_type,
-                                        'placeHolder' => $field->placeholder ?? ''])
+                                        'type' => $field->dataType->html_type,
+                                        'placeHolder' => $field->placeholder ?? '',
+                                        'showError' => false
+                                    ])
                                 @endif
                                 @error($field->id)
-                                <p class="text-sm text-red-600">{{ Str::replace($field->id, $field->title, $message) }}</p>
+                                    <p class="text-sm text-red-600">{{ Str::replace($field->id, $field->title, $message) }}</p>
                                 @enderror
                             </div>
                         @endforeach

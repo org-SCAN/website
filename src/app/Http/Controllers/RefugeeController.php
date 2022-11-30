@@ -279,12 +279,12 @@ class RefugeeController extends Controller
             0)->where("crew_id",
             Auth::user()->crew->id)->orderBy("required")->orderBy("order")->get();
 
-        $labels = array_column($person->fields->toArray(),
-            "label");
+        $ids = array_column($person->fields->toArray(),
+            "id");
         $values = array_column(array_column($person->fields->toArray(),
             "pivot"),
             "value");
-        $refugee_detail = array_combine($labels,
+        $refugee_detail = array_combine($ids,
             $values);
 
         return view("person.edit",

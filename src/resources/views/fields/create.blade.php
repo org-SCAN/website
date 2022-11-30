@@ -19,7 +19,7 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
 
                         <!--  TITLE SECTION  -->
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-4 bg-white sm:p-6">
                             @php($form_elem = "title")
                             @livewire("forms.form", [
                             'form_elem' => $form_elem,
@@ -30,25 +30,24 @@
                         </div>
 
                         <!--  PLACEHOLDER SECTION  -->
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-4 bg-white sm:p-6">
                             @php($form_elem = "placeholder")
                             @livewire("forms.form", [
                             'form_elem' => $form_elem,
                             'type' => "text",
                             'title' => "Field's placeholder",
-                            'placeHolder' => "The placehold is shown as an example when the field is asked (just like
-                            this)",
+                            'placeHolder' => "The placeholder is shown as an example when the field is asked (just like this)",
                             'hint' => "It'll be shown as an example when the field is asked."])
                         </div>
 
                         <!--  DATABASE TYPE SECTION  -->
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-4 bg-white sm:p-6">
 
-                            @php($form_elem = "database_type")
+                            @php($form_elem = "data_type_id")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's Data
                                 type</label>
 
-                            @php( $list = Field::$databaseTypes )
+                            @php( $list = $data_types )
                             <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
                                            class="form-input rounded-md shadow-sm mt-1 block w-full"/>
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
@@ -62,7 +61,7 @@
 
                         <!--  REQUIRED SECTION  -->
 
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-4 bg-white sm:p-6">
                             @php($form_elem = "required")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
                                 requirement state</label>
@@ -81,7 +80,7 @@
 
                         <!--  STATUS SECTION  -->
 
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-4 bg-white sm:p-6">
                             @php($form_elem = "status")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
                                 activation status </label>
@@ -98,37 +97,9 @@
                             @enderror
                         </div>
 
-                        <!--  ORDER SECTION  -->
-
-                        <div class="px-4 py-5 bg-white sm:p-6">
-
-                            @php($form_elem = "order")
-                            @livewire("forms.form", [
-                            'form_elem' => $form_elem,
-                            'type' => "number",
-                            'title' => "Field's order",
-                            'placeHolder' => "Example : 3",
-                            'hint' => "It'll be used to order the field. Fields are first order by requirement state,
-                            then by order"])
-                        </div>
-
-
-                        <!--  DESCRIPTIVE_VALUE SECTION  -->
-
-                        <div class="px-4 py-5 bg-white sm:p-6">
-
-                            @php($form_elem = "descriptive_value")
-                            @livewire("forms.form", [
-                            'form_elem' => $form_elem,
-                            'type' => "checkbox",
-                            'title' => "Is that a descriptive value ?",
-                            'hint' => "If checked, it will be displayed in the Persons section."])
-                        </div>
-
-
                         <!--  BEST_DESCRIPTIVE_VALUE SECTION  -->
 
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-4 bg-white sm:p-6">
 
                             @php($form_elem = "best_descriptive_value")
                             @livewire("forms.form", [
@@ -140,10 +111,21 @@
                             'warning' => "Be careful, there is only one best descriptive value per team."])
                         </div>
 
+                        <!--  DESCRIPTIVE_VALUE SECTION  -->
+                        <div class="px-4 py-4 bg-white sm:p-6">
+
+                            @php($form_elem = "descriptive_value")
+                            @livewire("forms.form", [
+                            'form_elem' => $form_elem,
+                            'type' => "checkbox",
+                            'title' => "Is that a descriptive value ?",
+                            'hint' => "If checked, it will be displayed in the Persons section."])
+                        </div>
+
 
                         <!--  Linked List SECTION  -->
 
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-4 bg-white sm:p-6">
                             @php($form_elem = "linked_list")
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
                                 associated list
@@ -163,26 +145,19 @@
                             <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-                        <!--
 
-                        <div class="px-4 py-5 bg-white sm:p-6">
-                            <span class="text-gray-700">Choose the fields validator options</span>
-                            <div class="mt-2">
-                                <div>
-                                    <label class="inline-flex items-center">
-                                        <input type="checkbox" class="form-checkbox">
-                                        <span class="ml-2">Max : 250</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label class="inline-flex items-center">
-                                        <input type="checkbox" class="form-checkbox">
-                                        <span class="ml-2">Min : 1</span>
-                                    </label>
-                                </div>
-                            </div>
+                        <div class="px-4 py-4 bg-white sm:p-6">
+                            @livewire("forms.form", [
+                            'form_elem' => "validation_rules",
+                            'type' => "text",
+                            'title' => "Specific field's validation rules",
+                            'placeHolder' => "Example : required|email",
+                            'hint' => "Define the validation rules for this field. You can find the list of rules
+                            <a href='https://laravel.com/docs/9.x/validation#available-validation-rules' class='text-blue-800'>here</a>",
+                            'warning' => "Be careful, to use this section, you need to know the Laravel validation rules."
+                            ])
+
                         </div>
-                        -->
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
                                 Add
