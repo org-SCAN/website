@@ -69,7 +69,7 @@ class MakeList extends Command
             'namespace' => 'App\\Models',
             'class' => $list->name,
         ];
-        $content = MakeCommandSet::getStubContents($this->getStubPath('model.listControl'),
+        $content = MakeCommandSet::getStubContents(MakeCommandSet::getStubPath('model.listControl'),
             $stubModelVariables); //replace the variable onto the stub
 
         if (!$this->files->exists($path)) {
@@ -97,7 +97,11 @@ class MakeList extends Command
 
 
         foreach ($list->structure as $field) {
-            $stubMigrationVariable["listFields"] .= '$table->string("'.$field->field.'"'.");\n\t\t\t";
+            $stubMigrationVariable["listFields"] .= '$table->'.$field->dataType->database_type.'("'.$field->field.'"'.")";
+            if(!$field->required){
+                $stubMigrationVariable["listFields"] .= "->nullable()->default(null)";
+            }
+            $stubMigrationVariable["listFields"] .= ";\n\t\t\t";
         }
 
         $content = MakeCommandSet::getStubContents(MakeCommandSet::getStubPath('migration.createList'),

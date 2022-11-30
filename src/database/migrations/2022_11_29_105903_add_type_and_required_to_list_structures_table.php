@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('list_structures', function (Blueprint $table) {
-            $table->string("type")->nullable()->default(null);
+            $table->uuid("data_type_id")->nullable()->default(null);
             $table->boolean("required")->default(false);
         });
     }

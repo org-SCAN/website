@@ -77,8 +77,6 @@ class Field extends Model
      */
     public static function getAPIContent(User $user)
     {
-
-
         $call_class_name = get_called_class();
         $class_name = substr(strrchr($call_class_name, "\\"), 1);
         $database_content = $call_class_name::where('crew_id', $user->crew->id)->where("status", 2)->orderBy("required")->orderBy("order")->get()->toArray();
@@ -96,9 +94,9 @@ class Field extends Model
             unset($api_res[$key_value][$list_info->key_value]);
             unset($api_res[$key_value][$list_info->displayed_value]);
             $api_res[$key_value]["required"] = Field::convertRequiredAttribute( $database_content[$key_index]["required"]);
+            $api_res[$key_value]["android_type"] = Field::find($key_value)->dataType->java_type;
         }
         return $api_res;
-
     }
 
     /**

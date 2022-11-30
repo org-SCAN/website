@@ -39,7 +39,12 @@ class ListControlController extends Controller
      */
     public function index()
     {
-        $lists = ListControl::whereNotNull("displayed_value")->whereVisible(true)->get();
+        $lists = ListControl::whereNotNull("displayed_value");
+        if(!env("APP_DEBUG")){
+            $lists = $lists->whereVisible(true);
+        }
+        $lists = $lists->get();
+
         return view("lists_control.index", compact("lists"));
     }
 
@@ -179,9 +184,11 @@ class ListControlController extends Controller
         $this->authorize('create', $listControl);
         //store the fields onto the ListStructure table
         foreach($request->validated()['fields'] as $field){
-            if(!empty($field) && ($listControl->structure->first() == null || !$listControl->structure()->firstWhere('field', $field)->exists())){
+            if(!empty($field) && ($listControl->structure->first() == null || !$listControl->structure()->where('field', $field['name'])->exists())){
                 $listControl->structure()->create([
-                    "field" => Str::snake($field)
+                    "field" => Str::snake($field['name']),
+                    "data_type_id" => $field['data_type_id'],
+                    "required" => $field['required'] ?? 0,
                 ]);
             }
         }

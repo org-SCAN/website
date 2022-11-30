@@ -30,7 +30,7 @@
       "spa" : "Número"
   },
     "model": "",
-    "database_type": "number",
+    "database_type": "double",
     "html_type": "number",
     "java_type": "number",
     "validation": "numeric"
@@ -70,5 +70,17 @@
     "html_type": "list",
     "java_type": "Spinner",
     "validation": "uuid"
+  },
+  {
+    "name": {
+      "eng" : "Color",
+      "fra" : "Couleur",
+      "spa" : "Color"
+	},
+    "model": "",
+    "database_type": "string",
+    "html_type": "color",
+    "java_type": "color",
+    "validation": "regex:#[a-fA-F0-9]{3,6}"
   }
 ]

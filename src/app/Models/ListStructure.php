@@ -12,20 +12,18 @@ class ListStructure extends Model
     use HasFactory, Uuids, SoftDeletes;
 
     /**
-     * The data type of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
      * Indicates if the model's ID is auto-incrementing.
      *
      * @var bool
      */
 
     public $incrementing = false;
-
+    /**
+     * The data type of the auto-incrementing ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
     /**
      * The attributes that aren't mass assignable.
      *
@@ -35,5 +33,12 @@ class ListStructure extends Model
 
     public function listControl(){
         return $this->belongsTo(ListControl::class);
+    }
+
+    /**
+     * The field has a data type
+     */
+    public function dataType() {
+        return $this->hasOne(ListDataType::class, 'id', 'data_type_id');
     }
 }
