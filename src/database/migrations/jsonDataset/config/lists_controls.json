@@ -77,5 +77,20 @@
             "trust",
             "reference"
         ]
+    },
+    {
+        "title": "Data type",
+        "name": "ListDataType",
+        "displayed_value": "name",
+        "key_value": "id",
+        "structure": [
+            "name",
+            "model",
+            "database_type",
+            "html_type",
+            "java_type",
+            "validation"
+        ],
+        "visible": false
     }
 ]
