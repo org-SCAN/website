@@ -39,7 +39,7 @@ class ListControlController extends Controller
      */
     public function index()
     {
-        $lists = ListControl::whereNotNull("displayed_value")->get();
+        $lists = ListControl::whereNotNull("displayed_value")->whereVisible(true)->get();
         return view("lists_control.index", compact("lists"));
     }
 
