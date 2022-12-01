@@ -4,17 +4,11 @@ namespace App\Models;
 
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class ListDataType extends ListControl
+class AssociatedList extends Pivot
 {
-    use HasFactory, Uuids, SoftDeletes;
-    /**
-     * The default datatype name
-     *
-     * @var string
-     */
-    protected static $default = "Short text";
+    use HasFactory, Uuids;
     /**
      * Indicates if the model's ID is auto-incrementing.
      *
@@ -34,12 +28,4 @@ class ListDataType extends ListControl
      * @var array
      */
     protected $guarded = [];
-
-    /**
-     * Return the default datatype
-     * @return ListDataType
-     */
-    public static function default(){
-        return self::firstWhere('name', self::$default);
-    }
 }

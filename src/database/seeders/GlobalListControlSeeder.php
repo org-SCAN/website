@@ -29,7 +29,7 @@ class GlobalListControlSeeder extends Seeder
         $this->list_name = $list_name;
         $this->class_name = Str::ucfirst(Str::singular($list_name));
         $this->languages = array_column(Language::all()->toArray(), "id", "language");
-        $this->default_language = Language::where("default", 1)->first()->language;
+        $this->default_language = Language::defaultLanguage()->language ?? null;
         $this->getJsonDatas();
         $this->getListInfo();
     }
@@ -47,7 +47,7 @@ class GlobalListControlSeeder extends Seeder
     }
 
     protected function getListInfo(){
-        $list = ListControl::firstWhere('name', $this->list_name);
+        $list = ListControl::getListFromLinkedListName($this->list_name);
         $this->displayed_value = $list->displayed_value;
         $this->list_field_key = $list->key_value;
         $this->list_id = $list->id;
@@ -61,7 +61,6 @@ class GlobalListControlSeeder extends Seeder
      */
     public function run()
     {
-        $this->storeStructure();
         foreach ($this->array_json as $json_elem) {
             $to_store = array();
             // get all the content from the json and store it in the correct DB
@@ -74,24 +73,9 @@ class GlobalListControlSeeder extends Seeder
             }
             $model = 'App\Models\\' . $this->class_name;
             $createdListElem = $model::updateOrCreate([$this->displayed_value => $to_store[$this->displayed_value]], $to_store);
-            $this->storeTranslation($json_elem[$this->displayed_value], $createdListElem->{$this->list_field_key});
 
-        }
-    }
-
-    /**
-     * Store the structure of the list
-     *
-     */
-
-    protected function storeStructure()
-    {
-        foreach ($this->array_json[0] as $field => $field_content) {
-            $struct = $this->list->structure()->firstOrCreate([
-                "field" => $field
-            ]);
-            if($field == $this->displayed_value){
-                $this->list->update(["displayed_value" => $struct->id]);
+            if ($this->list_name != "ListDataType") {
+                $this->storeTranslation($json_elem[$this->displayed_value], $createdListElem->{$this->list_field_key});
             }
         }
     }

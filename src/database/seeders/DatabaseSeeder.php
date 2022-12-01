@@ -17,8 +17,9 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(CrewSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(ListControlSeeder::class);
         $this->call(LanguageSeeder::class);
+
+        $this->call(ListControlSeeder::class);
         $this->call(ListDataTypeSeeder::class);
         $this->call(FieldSeeder::class);
         $this->call(ListCountrySeeder::class);

@@ -29,7 +29,7 @@ class ListStructure extends Model
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $guarded = ["associated_list"];
 
     public function listControl(){
         return $this->belongsTo(ListControl::class);
@@ -40,5 +40,12 @@ class ListStructure extends Model
      */
     public function dataType() {
         return $this->hasOne(ListDataType::class, 'id', 'data_type_id');
+    }
+
+    public function list(){
+        return $this->belongsToMany(ListControl::class, 'associated_lists', 'field_id', 'list_id')
+            ->using(AssociatedList::class)
+            ->withTimestamps()
+            ->withPivot("id");
     }
 }

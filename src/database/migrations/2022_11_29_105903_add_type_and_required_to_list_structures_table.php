@@ -27,7 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('list_structures', function (Blueprint $table) {
-            $table->dropColumn("type");
+            $table->dropColumn("data_type_id");
             $table->dropColumn("required");
         });
     }

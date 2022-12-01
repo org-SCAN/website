@@ -212,7 +212,19 @@ class ListControl extends Model
     }
 
     public function structure() {
-        return $this->hasMAny(ListStructure::class);
+        return $this->hasMany(ListStructure::class);
+    }
+
+
+    /**
+     *
+     * TODO : rename this function when using the associative table with fields
+     * @return void
+     */
+    public function associatedStructureFields(){
+        return $this->belongsToMany(ListStructure::class, 'associated_lists', 'list_id', 'field_id')
+            ->withTimestamps()
+            ->withPivot("id");
     }
 
     public function getDisplayedValueContentAttribute() {
