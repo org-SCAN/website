@@ -9,6 +9,7 @@ use App\Models\Field;
 use App\Models\ListControl;
 use App\Models\ListDataType;
 use App\Models\ListRelation;
+use App\Models\ListRelationType;
 use App\Models\Translation;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -190,15 +191,12 @@ class FieldsController extends Controller
         if ($request->user()->tokenCan("read")) {
             $datas = [];
             $crew = $request->user()->crew;
-            foreach (ListControl::whereRelation('crews',
-                'crew_id',
-                $crew->id)->get() as $list) {
+            foreach (ListControl::whereRelation('crews','crew_id',$crew->id)->get() as $list) {
                 //chek if the associated field should be present in the app
-                $fields = Field::where('crew_id',
-                    $crew->id)->where('linked_list',
-                    $list->id)->where('status',
-                    '>=',
-                    2)->get();
+                $fields = Field::where('crew_id', $crew->id)
+                    ->where('linked_list', $list->id)
+                    ->where('status', '>=', 2)
+                    ->get();
                 if ($fields->count() > 0) {
                     $call_class = '\App\Models\\'.$list->name;
                     $datas[$list->id] = $call_class::getAPIContent($request->user());
@@ -206,6 +204,7 @@ class FieldsController extends Controller
             }
             $datas['fields'] = Field::getAPIContent($request->user());
             $datas['ListRelations'] = ListRelation::getAPIContent($request->user());
+            $datas['ListRelationTypes'] = ListRelationType::getAPIContent($request->user());
             return response(json_encode($datas),
                 200)->header('Content-Type',
                 'application/json');
