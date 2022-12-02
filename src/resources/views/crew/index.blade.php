@@ -42,11 +42,13 @@
                                             @can('view', $crew)
                                                 <a href="{{ route("crew.show", $crew->id) }}"
                                                    class="text-indigo-600 hover:text-blue-900">{{ $crew->name }}</a>
-
                                             @endcan
                                             @cannot('view', $crew)
                                                 {{ $crew->name }}
                                             @endcannot
+                                            @if($crew->id == auth()->user()->crew_id)
+                                                <em class="fa fa-check text-green-500"></em>
+                                            @endif
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

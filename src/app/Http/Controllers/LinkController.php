@@ -11,6 +11,7 @@ use App\Models\Crew;
 use App\Models\Link;
 use App\Models\ListControl;
 use App\Models\ListRelation;
+use App\Models\ListRelationType;
 use App\Models\Refugee;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -66,20 +67,20 @@ class LinkController extends Controller
         $link["api_log"] = ApiLog::createFromRequest($request,
             "Link")->id;
 
+        $relation_type = ListRelationType::list();
+
         if (isset($link["everyoneFrom"]) || isset($link["everyoneTo"])) {
 
             if (isset($link["everyoneTo"])) {
-                $orgin = "from";
+                $origin = "from";
                 $direction = "to";
             } else {
-                $orgin = 'to';
+                $origin = 'to';
                 $direction = 'from';
             }
-            $person = Refugee::find($link[$orgin]);
+            $person = Refugee::find($link[$origin]);
             if ($person->hasEvent()) {
-                $associatedPersonsThroughEvent = $person->event->persons->where("id",
-                    '!=',
-                    $person->id);
+                $associatedPersonsThroughEvent = $person->event->persons->where("id",'!=',$person->id);
             }
             unset($link["everyoneFrom"]);
             unset($link["everyoneTo"]);
@@ -87,10 +88,11 @@ class LinkController extends Controller
 
         if (isset($associatedPersonsThroughEvent) && !empty($associatedPersonsThroughEvent) && isset($direction)) {
             foreach ($associatedPersonsThroughEvent as $associatedPerson) {
+                $link[$origin] = $person->id;
                 $link[$direction] = $associatedPerson->id;
                 $new_link = Link::create($link);
-                if((isset($link["type"]) && $link["type"] == "bilateral") || (!isset($link["type"]) && $new_link->relation->type == "bilateral")){
-                    $link[$orgin] = $associatedPerson->id;
+                if((isset($link["type"]) && $relation_type[$link["type"]] == "Bilateral")){
+                    $link[$origin] = $associatedPerson->id;
                     $link[$direction] = $person->id;
                     Link::create($link);
                 }
@@ -99,7 +101,7 @@ class LinkController extends Controller
         }
 
         $new_link = Link::create($link);
-        if((isset($link["type"]) && $link["type"] == "bilateral") || (!isset($link["type"]) && $new_link->relation->type == "bilateral")){
+        if((isset($link["type"]) && $relation_type[$link["type"]] == "Bilateral")){
             $old_from = $link["from"];
             $link['from'] = $link['to'];
             $link['to'] = $old_from;

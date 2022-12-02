@@ -156,4 +156,5 @@ class Link extends Pivot
     public function getDateAttribute() {
         return Carbon::parse($this->attributes['date']);
     }
+    
 }
