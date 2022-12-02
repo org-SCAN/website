@@ -9,7 +9,7 @@
     </x-slot>
     @if(!Field::hasBestDescriptiveValue())
         <div class="alert alert-danger" role="alert">
-            <strong>No field has been set as the best descriptive field. Please set one in the field controls.</strong>
+            <strong>No field has been set as the best descriptive field. Please set one in the fields management panel.</strong>
         </div>
     @endif
     <div class="py-12">

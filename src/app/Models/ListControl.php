@@ -128,6 +128,7 @@ class ListControl extends Model
             'id');
     }
 
+
     public static function getDisplayedValue() {
         $call_class_name = get_called_class();
         $class_name = substr(strrchr($call_class_name,
@@ -185,7 +186,7 @@ class ListControl extends Model
     }
 
     public function getListDisplayedValue() {
-        return $this->getListContent()->pluck($this->displayed_value);
+        return $this->getListContent()->pluck($this->displayed_value, $this->key_value);
     }
 
     public function getListContent() {

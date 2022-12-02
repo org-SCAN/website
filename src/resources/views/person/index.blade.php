@@ -1,4 +1,4 @@
-@php use App\Models\Refugee; @endphp
+@php use App\Models\Field;use App\Models\Refugee; @endphp
 @section('title','View persons')
 
 <x-app-layout>
@@ -8,6 +8,12 @@
         </h2>
     </x-slot>
 
+    @if(!Field::hasBestDescriptiveValue())
+        <div class="alert alert-danger" role="alert">
+            <strong>No field has been set as the best descriptive field. Please ask an admin to set one in the fields
+                management panel.</strong>
+        </div>
+    @endif
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mb-8">
@@ -71,9 +77,9 @@
       integrity="sha384-Zt18T5BCHWpEjWpkZH11WEAug/T7djz4tR5qA4Gtohb1nnpaNztkYYViNsVcUkEd" crossorigin="anonymous">
 
 <script
-    src="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/sc-2.0.5/sb-1.3.1/sp-1.4.0/datatables.min.js"
-    integrity="sha384-33Dh7Paf7BKMZ84cYXJONPZfgFUgZqvR6KYZGWtvU1u4QQRTy0nZCrGlo7qNZ3f0"
-    crossorigin="anonymous"></script>
+        src="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/sc-2.0.5/sb-1.3.1/sp-1.4.0/datatables.min.js"
+        integrity="sha384-33Dh7Paf7BKMZ84cYXJONPZfgFUgZqvR6KYZGWtvU1u4QQRTy0nZCrGlo7qNZ3f0"
+        crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
         $('#person thead tr')

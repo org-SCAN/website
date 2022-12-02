@@ -40,7 +40,7 @@ class StoreLinkRequest extends FormRequest
             "relation_id" => "Required|uuid|exists:list_relations,id",
             "date" => "date|nullable",
             "detail" => "string|nullable",
-            "type" => "uuid|exists:list_relation_types,id",
+            "type" => "required|uuid|exists:list_relation_types,id",
         ];
     }
 }

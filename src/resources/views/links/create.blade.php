@@ -21,13 +21,16 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
 
                             @php($form_elem = "from")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Person 1</label>
 
-                            @php( $list = $lists["refugees"])
-                            @php($selected_value = (!empty($refugee) && !empty($origin) && $origin == "from") ? $refugee->id : $form_elem )
-                            @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the
-                            first person --', 'datas' => $list, 'selected_value' => old($form_elem, $selected_value)])
-                            @stack('scripts')
+                            @livewire("forms.form", [
+                            'form_elem' => 'from',
+                            'type' => 'select-dropdown',
+                            'title' => 'Person 1',
+                            'placeHolder' => '-- Select the first person --',
+                            'associated_list' => $lists["refugees"],
+                            'previous' => old($form_elem, $selected_value = (!empty($refugee) && !empty($origin) && $origin == "from") ? $refugee->id : $form_elem),
+                            ])
+
                             @if(auth()->user()->crew->hasEvent())
                                 <input type="checkbox" name="everyoneFrom" @checked(old("everyoneFrom")) value="1"> From
                                 all
@@ -36,9 +39,6 @@
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             @endif
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
                         </div>
 
                         <div class="row pl-4 pr-4 bg-white">
@@ -79,16 +79,17 @@
 
                         <!--  To SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
-
                             @php($form_elem = "to")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Person 2</label>
 
-                            @php( $list = $lists["refugees"])
-                            @php($selected_value = (!empty($refugee) && !empty($origin) && $origin == "to") ? $refugee->id : $form_elem )
+                            @livewire("forms.form", [
+                                'form_elem' => 'to',
+                                'type' => 'select-dropdown',
+                                'title' => 'Person 2',
+                                'placeHolder' => '-- Select the second person --',
+                                'associated_list' => $lists["refugees"],
+                                'previous' => old($form_elem, (!empty($refugee) && !empty($origin) && $origin == "to") ? $refugee->id : $form_elem ),
+                            ])
 
-                            @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => '-- Select the
-                            second person --', 'datas' => $list, 'selected_value' => old($form_elem, $selected_value)])
-                            @stack('scripts')
                             @if(auth()->user()->crew->hasEvent())
                                 <input type="checkbox" name="everyoneTo" @checked(old("everyoneTo")) value="1"> To all
                                 person registered in the same event
@@ -96,9 +97,6 @@
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             @endif
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
                         </div>
 
                         <!-- Date SECTION -->
