@@ -7,7 +7,9 @@ use App\Models\Event;
 use App\Models\Field;
 use App\Models\Link;
 use App\Models\ListControl;
+use App\Models\ListDataType;
 use App\Models\ListRelation;
+use App\Models\ListRelationType;
 use App\Models\Refugee;
 
 class LinkTest extends PermissionsTest
@@ -48,6 +50,7 @@ class LinkTest extends PermissionsTest
                 'from' => $refugee_from->id,
                 'to' => $refugee_to->id,
                 'relation_id' => $relation->id,
+                'type' => $relation->type->id,
                 'detail' => 'test',
             ]);
         $response->assertRedirect($this->route);
@@ -73,6 +76,7 @@ class LinkTest extends PermissionsTest
                 'from' => $this->resource->from,
                 'to' => $this->resource->to,
                 'relation_id' => $relation->id,
+                'type' => $relation->type->id,
                 'detail' => 'test EDIT',
             ]);
         $response->assertRedirect($this->route);
@@ -112,17 +116,18 @@ class LinkTest extends PermissionsTest
     /**
      * This function is used to create a new link through the form
      */
-    public function test_a_user_can_create_relation_through_the_form($type = null){
+    public function test_a_user_can_create_relation_through_the_form($type = 'unilateral') {
         $refugee_from = Refugee::factory()->create();
         $refugee_to = Refugee::factory()->create();
         $relation = ListRelation::inRandomOrder()->first();
+        $type = ListRelationType::firstWhere('name', ucfirst($type));
         $response = $this->actingAs($this->admin)->post(route($this->route.'.store'),
             [
                 'from' => $refugee_from->id,
                 'to' => $refugee_to->id,
                 'relation_id' => $relation->id,
-                'detail' => 'test',
-                'type' => $type,
+                'type' => $type->id,
+                'detail' => 'test'
             ]);
         $response->assertRedirect($this->route);
         $relation =  [
@@ -168,7 +173,7 @@ class LinkTest extends PermissionsTest
 
         $response = $this->actingAs($this->admin)->post(route('fields.store'), [
             "title" => "event",
-            "database_type" => "list",
+            "database_type" => ListDataType::firstWhere('name',"List")->id,
             "required" => 2,
             "status" => 1,
             "linked_list" => ListControl::getListFromLinkedListName('event')->id,
@@ -207,7 +212,7 @@ class LinkTest extends PermissionsTest
                 'from' => $refugee_from->id,
                 'everyoneTo' => 1,
                 'relation_id' => $relation->id,
-                'type' => 'unilateral',
+                'type' => ListRelationType::firstWhere('name', 'Unilateral')->id,
                 'detail' => 'test',
             ]);
 
