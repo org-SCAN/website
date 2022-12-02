@@ -116,9 +116,23 @@
                 "field" : "relation_type_id",
                 "required" : false,
                 "data_type_id" : "List",
-                "associated_list" : "ListEventType"
+                "associated_list" : "ListRelationType"
             }
         ]
+    },
+    "ListRelationType" : {
+        "title": "Relation type",
+        "name": "ListRelationType",
+        "displayed_value": "name",
+        "key_value": "id",
+        "structure" : [
+            {
+                "field" : "name",
+                "required" : true,
+                "data_type_id" : "Short text"
+            }
+        ],
+        "visible" : false
     },
     "Field" : {
         "title": "Field",

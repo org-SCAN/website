@@ -8,7 +8,7 @@
         "short": "BR",
         "color" : "0099ff",
         "importance" : 1,
-        "relation_type_id" : "bilateral"
+        "relation_type_id" : "Bilateral"
     },
     {
         "name": {
@@ -19,7 +19,7 @@
         "short": "NBR",
         "color" : "cbaf1d",
         "importance" : 1,
-        "relation_type_id" : "unilateral"
+        "relation_type_id" : "Unilateral"
     },
     {
         "name": {
@@ -30,7 +30,7 @@
         "short": "TW",
         "color" : "00ff2a",
         "importance" : 1,
-        "relation_type_id" : "bilateral"
+        "relation_type_id" : "Bilateral"
     },
     {
         "name": {
@@ -41,7 +41,7 @@
         "short": "SA",
         "color" : "734d39",
         "importance" : 1,
-        "relation_type_id" : "unilateral"
+        "relation_type_id" : "Unilateral"
     },
     {
         "name": {
@@ -52,7 +52,7 @@
         "short": "SE",
         "color" : "7e00ff",
         "importance" : 1,
-        "relation_type_id" : "unilateral"
+        "relation_type_id" : "Unilateral"
     }
 ]
 

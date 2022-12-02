@@ -69,6 +69,12 @@ class GlobalListControlSeeder extends Seeder
                 if ($key == $this->displayed_value) {
                     $value = $value[$this->default_language];
                 }
+
+                if($this->list_name != "ListDataType" && $this->list->structure()->where("field", $key)->first()->list()->exists()){ // the field is associated to a list
+                    // find in the list the id of the value
+
+                    $value = $this->list->structure()->where("field", $key)->first()->list->first()->findElement($this->displayed_value, $value)->id ?? $value;
+                }
                 $to_store[$key] = $value;
             }
             $model = 'App\Models\\' . $this->class_name;

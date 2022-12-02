@@ -46,6 +46,7 @@ class ListControlSeeder extends Seeder
     public function storeStructure(){
         foreach(ListControl::all() as $list){
             foreach($this->json_file[$list->name]["structure"] as $field){
+                $associated_list = null;
                 if($field["data_type_id"] == "List" && isset($field["associated_list"])){
                     $associated_list = ListControl::getListFromLinkedListName($field["associated_list"]); // the list that is associated with the current list
                     unset($field["associated_list"]);
@@ -59,7 +60,7 @@ class ListControlSeeder extends Seeder
                 $structure = $list->structure()->firstOrCreate($field);
 
                 // Associate the list element with the associated list
-                if(isset($associated_list)){
+                if(!empty($associated_list)){
                     $structure->list()->attach([$associated_list->id]);
                 }
 

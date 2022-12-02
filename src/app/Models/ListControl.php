@@ -240,4 +240,19 @@ class ListControl extends Model
                 "\\"),
                 1))->displayed_value;
     }
+
+    /**
+     * This function finds the element in the list, based on field, value
+     * @param string $field
+     * @param string $value
+     *
+     * @return object | null
+     */
+
+    public function findElement($field,$value) {
+
+        $model = 'App\Models\\'.$this->name;
+        return $model::where($field,
+            $value)->first();
+    }
 }
