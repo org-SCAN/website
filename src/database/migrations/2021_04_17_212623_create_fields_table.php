@@ -31,7 +31,6 @@ class CreateFieldsTable extends Migration
             $table->string("placeholder")
                 ->nullable();
             $table->uuid("data_type_id")->nullable();
-            //$table->string( "database_type");
            // $table->string( "android_type");
             $table->string( "linked_list")
                 ->nullable();
