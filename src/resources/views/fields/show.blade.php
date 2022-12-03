@@ -41,13 +41,14 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200 w-full">
-                                @foreach($display_elements as $element_key => $element_value)
+                                @foreach($display_elements as $title => $value)
                                     <tr class="border-b">
                                         <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            {{$element_value}}
+                                            {{ $title }}
                                         </th>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                            {{ $field->$element_key }}
+
+                                            {{ $value }}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -68,9 +69,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="block mt-8">
-                <a href="{{ route('fields.index') }}" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to list</a>
             </div>
         </div>
     </div>

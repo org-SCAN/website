@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('list_relations', function (Blueprint $table) {
-            $table->string('relation_type_id')->nullable();
+        Schema::create('list_relation_types', function (Blueprint $table) {
+            $table->uuid("id")->primary();
+            $table->timestamps();
+            $table->softDeletes();
+            $table->string("name");
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('list_relations', function (Blueprint $table) {
-            $table->dropColumn('relation_type_id');
-        });
+        Schema::dropIfExists('list_relation_types');
     }
 };

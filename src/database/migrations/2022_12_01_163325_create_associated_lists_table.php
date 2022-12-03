@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('list_relations', function (Blueprint $table) {
-            $table->string('relation_type_id')->nullable();
+        Schema::create('associated_lists', function (Blueprint $table) {
+            $table->uuid("id")->primary();
+            $table->timestamps();
+            $table->uuid("field_id");
+            $table->uuid("list_id");
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('list_relations', function (Blueprint $table) {
-            $table->dropColumn('relation_type_id');
-        });
+        Schema::dropIfExists('associated_lists');
     }
 };

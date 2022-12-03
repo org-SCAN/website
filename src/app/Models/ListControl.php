@@ -128,6 +128,7 @@ class ListControl extends Model
             'id');
     }
 
+
     public static function getDisplayedValue() {
         $call_class_name = get_called_class();
         $class_name = substr(strrchr($call_class_name,
@@ -185,7 +186,7 @@ class ListControl extends Model
     }
 
     public function getListDisplayedValue() {
-        return $this->getListContent()->pluck($this->displayed_value);
+        return $this->getListContent()->pluck($this->displayed_value, $this->key_value);
     }
 
     public function getListContent() {
@@ -212,7 +213,19 @@ class ListControl extends Model
     }
 
     public function structure() {
-        return $this->hasMAny(ListStructure::class);
+        return $this->hasMany(ListStructure::class);
+    }
+
+
+    /**
+     *
+     * TODO : rename this function when using the associative table with fields
+     * @return void
+     */
+    public function associatedStructureFields(){
+        return $this->belongsToMany(ListStructure::class, 'associated_lists', 'list_id', 'field_id')
+            ->withTimestamps()
+            ->withPivot("id");
     }
 
     public function getDisplayedValueContentAttribute() {
@@ -227,5 +240,20 @@ class ListControl extends Model
             substr(strrchr(get_called_class(),
                 "\\"),
                 1))->displayed_value;
+    }
+
+    /**
+     * This function finds the element in the list, based on field, value
+     * @param string $field
+     * @param string $value
+     *
+     * @return object | null
+     */
+
+    public function findElement($field,$value) {
+
+        $model = 'App\Models\\'.$this->name;
+        return $model::where($field,
+            $value)->first();
     }
 }

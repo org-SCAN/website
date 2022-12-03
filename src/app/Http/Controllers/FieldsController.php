@@ -7,7 +7,9 @@ use App\Http\Requests\UpdateFieldRequest;
 use App\Models\ApiLog;
 use App\Models\Field;
 use App\Models\ListControl;
+use App\Models\ListDataType;
 use App\Models\ListRelation;
+use App\Models\ListRelationType;
 use App\Models\Translation;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -43,19 +45,36 @@ class FieldsController extends Controller
      * @return RedirectResponse
      */
     public function store(StoreFieldRequest $request) {
-        $apiLog = ApiLog::createFromRequest($request,
-            'Field');
+        $apiLog = ApiLog::createFromRequest($request,'Field');
         $field = $request->validated();
         $field["api_log"] = $apiLog->id;
+
+
+        // compute the order
         if (empty($field["order"])) {
             $last_order = Field::where('crew_id',
                 Auth::user()->crew->id)->get()->sortByDesc('order')->first();
             $field["order"] = empty($last_order) ? 1 : $last_order->order + 1;
         }
+
+        // compute the label
         $field["label"] = Str::snake($field["title"]);
-        $field["html_data_type"] = Field::getHtmlDataTypeFromForm($field["database_type"]);
-        $field["android_type"] = Field::getUITypeFromForm($field["database_type"]);
-        $field["validation_laravel"] = Field::getValidationLaravelFromForm($field);
+
+        // if required is not set to 1, add nullable to the validation rules
+        if ($field["required"] != 1) {
+            $field["validation_rules"] .= "|nullable";
+        }
+        else{
+            $field["validation_rules"] .= "|required";
+        }
+
+        $field["validation_laravel"] = implode("|",
+            array_merge(
+                explode("|",ListDataType::find($field["data_type_id"])->validation),
+                explode("|", $field['validation_rules'])
+            )
+        );
+        unset($field["validation_rules"]);
         $field["crew_id"] = Auth::user()->crew->id;
 
         $field = Field::create($field);
@@ -64,6 +83,7 @@ class FieldsController extends Controller
         $listField = ListControl::firstWhere('name',
             'Field');
 
+        //translate the field
         Translation::handleTranslation($listField,
             $field->{$listField->key_value},
             $field->{$listField->displayed_value});
@@ -80,7 +100,8 @@ class FieldsController extends Controller
      * @return View
      */
     public function create() {
-        return view("fields.create");
+        $data_types = ListDataType::list();
+        return view("fields.create", compact('data_types'));
     }
 
     /**
@@ -91,20 +112,15 @@ class FieldsController extends Controller
      */
     public function show(Field $field) {
         $display_elements = [
-            "title" => "Title",
-            "label" => "Label",
-            "placeholder" => "Placeholder",
-            "html_data_type" => "Html type",
-            "android_type" => "Java type",
-            // "linked_list"=>"Associate list", is removed because it needs a particular display
-            "required" => "Requirement state",
-            "status" => "Status",
-            "attribute" => "Attribute",
-            "database_type" => "Database type",
-            "order" => "Order",
-            "validation_laravel" => "Validations attributes",
-            "descriptive_value" => "Descriptive value",
-            "best_descriptive_value" => "Best descriptive value",
+            "Title" => $field->title,
+            "Placeholder" => $field->placeholder,
+            "Requirement state" => $field->required,
+            "Status" => $field->status,
+            "Order" => $field->order,
+            "Validation rules" => $field->validation_laravel,
+            "Data type" => $field->dataType->displayedValueContent,
+            "Descriptive value" => $field->descriptive_value ? "Yes" : "No",
+            "Best descriptive value" => $field->best_descriptive_value ? "Yes" : "No",
         ];
         return view("fields.show",
             compact('field',
@@ -119,8 +135,8 @@ class FieldsController extends Controller
      */
     public function edit(Field $field) {
         $linked_list_id = $field->getLinkedListId();
-        $lists["database_type"] = Field::getDatabaseTypeList();
-        $lists["database_type"] = [$field->database_type => $lists["database_type"][$field->database_type]] + $lists["database_type"];
+        $lists["database_type"] = ListDataType::list();
+        //$lists["database_type"] = [$field->database_type => $lists["database_type"][$field->database_type]] + $lists["database_type"];
 
         $lists["required"] = [
             0 => "Auto generated",
@@ -133,11 +149,7 @@ class FieldsController extends Controller
             $lists["required"] = [$field->getRequiredId() => $lists["required"][$field->getRequiredId()]] + $lists["required"];
         }
 
-        $lists["status"] = [
-            0 => "Disabled",
-            1 => "Website",
-            2 => "Website & App",
-        ];
+        $lists["status"] = Field::$statusTypes;
         $lists["status"] = [$field->getStatusId() => $lists["status"][$field->getStatusId()]] + $lists["status"];
 
         if (empty($linked_list_id)) {
@@ -179,15 +191,12 @@ class FieldsController extends Controller
         if ($request->user()->tokenCan("read")) {
             $datas = [];
             $crew = $request->user()->crew;
-            foreach (ListControl::whereRelation('crews',
-                'crew_id',
-                $crew->id)->get() as $list) {
+            foreach (ListControl::whereRelation('crews','crew_id',$crew->id)->get() as $list) {
                 //chek if the associated field should be present in the app
-                $fields = Field::where('crew_id',
-                    $crew->id)->where('linked_list',
-                    $list->id)->where('status',
-                    '>=',
-                    2)->get();
+                $fields = Field::where('crew_id', $crew->id)
+                    ->where('linked_list', $list->id)
+                    ->where('status', '>=', 2)
+                    ->get();
                 if ($fields->count() > 0) {
                     $call_class = '\App\Models\\'.$list->name;
                     $datas[$list->id] = $call_class::getAPIContent($request->user());
@@ -195,6 +204,7 @@ class FieldsController extends Controller
             }
             $datas['fields'] = Field::getAPIContent($request->user());
             $datas['ListRelations'] = ListRelation::getAPIContent($request->user());
+            $datas['ListRelationTypes'] = ListRelationType::getAPIContent($request->user());
             return response(json_encode($datas),
                 200)->header('Content-Type',
                 'application/json');
@@ -212,10 +222,10 @@ class FieldsController extends Controller
      * @param  Field  $field
      * @return RedirectResponse
      */
-    public function update(UpdateFieldRequest $request,
-        Field $field) {
+    public function update(UpdateFieldRequest $request, Field $field) {
         $apiLog = ApiLog::createFromRequest($request,
             'Field');
+
         $to_update = $request->validated();
         if (!$request->has('descriptive_value')) {
             $to_update['descriptive_value'] = 0;
@@ -223,9 +233,10 @@ class FieldsController extends Controller
         if (!$request->has('best_descriptive_value')) {
             $to_update['best_descriptive_value'] = 0;
         }
-        $to_update["database_type"] = $field->database_type;
+
         $to_update["api_log"] = $apiLog->id;
-        $to_update["validation_laravel"] = Field::getValidationLaravelFromForm($to_update);
+        $to_update["validation_laravel"] = $to_update["validation_rules"];
+        unset($to_update["validation_rules"]);
         $field->update($to_update);
 
         $listField = ListControl::firstWhere('name',

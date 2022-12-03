@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('list_relations', function (Blueprint $table) {
-            $table->string('relation_type_id')->nullable();
+        Schema::table('list_structures', function (Blueprint $table) {
+            $table->uuid("data_type_id")->nullable()->default(null);
+            $table->boolean("required")->default(false);
         });
     }
 
@@ -25,8 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('list_relations', function (Blueprint $table) {
-            $table->dropColumn('relation_type_id');
+        Schema::table('list_structures', function (Blueprint $table) {
+            $table->dropColumn("data_type_id");
+            $table->dropColumn("required");
         });
     }
 };

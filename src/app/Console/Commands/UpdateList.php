@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\ListControl;
+use App\Models\ListDataType;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
@@ -48,8 +49,7 @@ class UpdateList extends Command
                     $new_list["id"] = (string) Str::uuid();
                 }
                 $structure = null;
-                if (key_exists('structure',
-                    $new_list)) {
+                if (key_exists('structure', $new_list)) {
                     $structure = $new_list["structure"];
                     unset($new_list["structure"]);
                 }
@@ -59,7 +59,9 @@ class UpdateList extends Command
                 if ($structure != null) {
                     foreach ($structure as $field) {
                         $struct = $list->structure()->firstOrCreate([
-                            "field" => $field,
+                            "field" => $field["name"],
+                            "data_type_id" => ListDataType::firstWhere('name',$field["data_type_id"])->id ?? ListDataType::default()->id,
+                            "required" => $field["required"],
                         ]);
                         if ($field == $list->displayed_value) {
                             $list->update(["displayed_value" => $struct->id]);

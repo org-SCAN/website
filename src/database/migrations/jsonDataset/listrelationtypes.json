@@ -1,0 +1,16 @@
+[
+    {
+        "name": {
+            "eng": "Bilateral",
+            "fra": "Bilatéral",
+            "spa": "Bilateral"
+        }
+    },
+    {
+        "name": {
+            "eng": "Unilateral",
+            "fra": "Unilatéral",
+            "spa": "Unilateral"
+        }
+    }
+]

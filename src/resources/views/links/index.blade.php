@@ -1,4 +1,4 @@
-@php use App\Models\Link; @endphp
+@php use App\Models\Field;use App\Models\Link; @endphp
 @section('title',"View all relations")
 @livewireStyles
 <x-app-layout>
@@ -7,7 +7,12 @@
             {{ __('Relations') }}
         </h2>
     </x-slot>
-
+    @if(!Field::hasBestDescriptiveValue())
+        <div class="alert alert-danger" role="alert">
+            <strong>No field has been set as the best descriptive field. Please ask an admin to set one in the fields
+                management panel.</strong>
+        </div>
+    @endif
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mb-8">

@@ -29,10 +29,10 @@ class UpdateFieldRequest extends FormRequest
             "placeholder" => "string|max:80|nullable",
             "required" => "integer|required",
             "status" => "integer|required",
-            "order" => "integer",
             "linked_list" => "uuid|exists:list_controls,id|nullable",
             "descriptive_value" => "integer|nullable",
-            "best_descriptive_value" => "integer|nullable|unique:fields,best_descriptive_value," . $this->route('field')->id . ",id,crew_id," . Auth::user()->crew->id
+            "best_descriptive_value" => "integer|nullable|unique:fields,best_descriptive_value," . $this->route('field')->id . ",id,crew_id," . Auth::user()->crew->id,
+            "validation_rules" => "string|nullable",
 
         ];
         return $rules;
