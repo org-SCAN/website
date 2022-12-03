@@ -30,7 +30,6 @@
 
                         @livewire('create-list')
 
-                        <div id="newRow"></div>
 
 
 
