@@ -60,7 +60,7 @@ class UpdateList extends Command
                     foreach ($structure as $field) {
                         $struct = $list->structure()->firstOrCreate([
                             "field" => $field["name"],
-                            "data_type_id" => ListDataType::firstWhere('name',$field["type"])->id ?? ListDataType::default()->id,
+                            "data_type_id" => ListDataType::firstWhere('name',$field["data_type_id"])->id ?? ListDataType::default()->id,
                             "required" => $field["required"],
                         ]);
                         if ($field == $list->displayed_value) {
