@@ -130,6 +130,11 @@
                 "field" : "name",
                 "required" : true,
                 "data_type_id" : "Short text"
+            },
+            {
+                "field" : "type",
+                "required" : true,
+                "data_type_id" : "Short text"
             }
         ],
         "visible" : false

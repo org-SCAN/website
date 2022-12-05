@@ -67,7 +67,7 @@ class LinkController extends Controller
         $link["api_log"] = ApiLog::createFromRequest($request,
             "Link")->id;
 
-        $relation_type = ListRelationType::list();
+        $relation_type = ListRelationType::all()->pluck('type','id')->toArray();
 
         if (isset($link["everyoneFrom"]) || isset($link["everyoneTo"])) {
 
@@ -91,7 +91,7 @@ class LinkController extends Controller
                 $link[$origin] = $person->id;
                 $link[$direction] = $associatedPerson->id;
                 $new_link = Link::create($link);
-                if((isset($link["type"]) && $relation_type[$link["type"]] == "Bilateral")){
+                if((isset($link["type"]) && $relation_type[$link["type"]] == "bilateral")){
                     $link[$origin] = $associatedPerson->id;
                     $link[$direction] = $person->id;
                     Link::create($link);
@@ -101,7 +101,7 @@ class LinkController extends Controller
         }
 
         $new_link = Link::create($link);
-        if((isset($link["type"]) && $relation_type[$link["type"]] == "Bilateral")){
+        if((isset($link["type"]) && $relation_type[$link["type"]] == "bilateral")){
             $old_from = $link["from"];
             $link['from'] = $link['to'];
             $link['to'] = $old_from;

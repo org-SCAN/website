@@ -4,13 +4,15 @@
             "eng": "Bilateral",
             "fra": "Bilatéral",
             "spa": "Bilateral"
-        }
+        },
+        "type" : "bilateral"
     },
     {
         "name": {
             "eng": "Unilateral",
             "fra": "Unilatéral",
             "spa": "Unilateral"
-        }
+        },
+        "type" : "unilateral"
     }
 ]
