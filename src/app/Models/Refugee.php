@@ -71,6 +71,7 @@ class Refugee extends Model
          return $this->belongsTo(ApiLog::class, "api_log");
      }*/
 
+    /*
     public static function getRefugeeIdFromReference($reference,
         $application_id) {
         $refugee = self::where("application_id",
@@ -78,7 +79,7 @@ class Refugee extends Model
             $reference)->first();
 
         return !empty($refugee) ? $refugee->id : null;
-    }
+    }*/
 
     /**
      * This function is used to handle the API request. If a person exists (id is in the request) update all changed fields, else create the person and return his/her ID.

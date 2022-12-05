@@ -145,17 +145,17 @@ class LinkController extends Controller
             if ($from != null) {
                 $relation["from"] = $from;
             } else {
-                $log->update(["response" => "Error : ".$link["from_unique_id"]." not found with application id : ".$link["application_id"]]);
+                $log->update(["response" => "Error : ".$link["from"]." not found with application id : ".$link["application_id"]]);
                 break;
             }
 
-            $to = Refugee::getRefugeeIdFromReference($link["to_unique_id"],
+            $to = Refugee::getRefugeeIdFromReference($link["to"],
                 $relation["application_id"]);
 
             if ($to != null) {
                 $relation["to"] = $to;
             } else {
-                $log->update(["response" => "Error : ".$link["to_unique_id"]." not found with application id : ".$link["application_id"]]);
+                $log->update(["response" => "Error : ".$link["to"]." not found with application id : ".$link["application_id"]]);
                 break;
             }
 
@@ -215,18 +215,11 @@ class LinkController extends Controller
                     $linkUpdate->update($link);
                     $link = $linkUpdate;
                 } else {
-                    $potentialLink = Link::where('from', $link["from"])
-                        ->where('to', $link["to"])
-                        ->where('relation', $link["relation"])
-                        ->first();
-                    if ($potentialLink != null) {
-                        $link = $potentialLink;
-                    } else {
-                        $link = Link::create($link);
-                    }
+                    //find or create
+                    $link = Link::firstOrCreate($link);
+
                 }
-                array_push($responseArray,
-                    $link->id);
+                array_push($responseArray, $link->id);
             }
             return response(json_encode($responseArray),
                 201,
