@@ -267,7 +267,10 @@ class Refugee extends Model
     public function getBestDescriptiveValueAttribute() {
         $best_descriptive_value = $this->fields->where("best_descriptive_value",
             1)->first();
-        return -empty($best_descriptive_value) ? "" : $best_descriptive_value->pivot->value;
+        if(!empty($best_descriptive_value->linked_list)){
+            return ListControl::getListElementFromId($best_descriptive_value->linked_list, $best_descriptive_value->pivot->value)->displayed_value_content ?? "";
+        }
+        return empty($best_descriptive_value) ? "" : $best_descriptive_value->pivot->value;
     }
 
     public function getRelationsAttribute() {
