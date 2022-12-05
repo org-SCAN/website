@@ -1,3 +1,4 @@
+@php use App\Models\ListControl; @endphp
 @section('title',"View ".$lists_control->title." details")
 <x-app-layout>
     <x-slot name="header">
@@ -37,7 +38,7 @@
                         @error("deleteList")
                         <p class="text-sm text-red-600">{{ $message }}</p>
                         @enderror
-                </form>
+                    </form>
             </div>
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -48,42 +49,52 @@
                                 @foreach($list_structure as $field)
                                     @if($lists_control->displayed_value == $field->field)
 
-                                    <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"><b>{{$field->field}}*</b></th>
+                                        <th scope="col"
+                                            class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                            <b>{{$field->field}}*</b></th>
                                     @else
-                                    <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$field->field}}</th>
+                                        <th scope="col"
+                                            class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$field->field}}</th>
                                     @endif
                                 @endforeach
-                                @canany(['updateListElem', 'deleteListElem'], \App\Models\ListControl::class)
-                                <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"></th>
+                                @canany(['updateListElem', 'deleteListElem'], ListControl::class)
+                                    <th scope="col"
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"></th>
                                 @endcanany
                                 </thead>
                                 <tbody>
                                 @foreach($list_content as $list_elem)
                                     <tr class="border-b">
                                         @foreach($list_structure as $field)
+                                            @if($field->list()->exists())
+                                                @php($list_elem[$field->field] = $field->list->first()->findElement($field->list->first()->key_value, $list_elem[$field->field])->displayed_value_content ?? "")
+                                            @endif
                                             @if($lists_control->displayed_value == $field->field)
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                                    <b>{{ $list_elem[$field->field] }}</b></td>
+                                                    <b>{{ $list_elem[$field->field] }}</b>
+                                                </td>
                                             @else
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">{{ $list_elem[$field->field] }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
+                                                    {{ $list_elem[$field->field] }}
+                                                </td>
                                             @endif
                                         @endforeach
-                                        @canany(['updateListElem', 'deleteListElem'], \App\Models\ListControl::class)
+                                        @canany(['updateListElem', 'deleteListElem'], ListControl::class)
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
                                                 @endcanany
-                                                @can("deleteListElem",\App\Models\ListControl::class)
+                                                @can("deleteListElem",ListControl::class)
 
                                                     <form
-                                                        action="{{route("lists_control.delete_list_elem", [$lists_control, $list_elem->id])}}"
-                                                        method="POST">
+                                                            action="{{route("lists_control.delete_list_elem", [$lists_control, $list_elem->id])}}"
+                                                            method="POST">
                                                         @endcan
-                                                        @can('updateListElem',\App\Models\ListControl::class)
+                                                        @can('updateListElem',ListControl::class)
                                                             <a href="{{route("lists_control.edit_list_elem", [$lists_control, $list_elem->id])}}">
                                                                 <i class="fa fa-pen text-blue-500 hover:text-blue-700"
                                                                    aria-hidden="true"></i>
                                                             </a>
                                                         @endcan
-                                                        @can("deleteListElem",\App\Models\ListControl::class)
+                                                        @can("deleteListElem",ListControl::class)
                                                             &nbsp; &nbsp;
                                                             @csrf
                                                             @method('DELETE')
@@ -96,7 +107,7 @@
                                                             @enderror
                                                     </form>
                                                 @endcan
-                                                @canany(['updateListElem', 'deleteListElem'], \App\Models\ListControl::class)
+                                                @canany(['updateListElem', 'deleteListElem'], ListControl::class)
                                             </td>
                                         @endcanany
                                     </tr>
@@ -111,7 +122,8 @@
                 <small>* : current displayed value</small>
             </div>
             <div class="block mt-8">
-                <a href="{{ URL::previous()}}" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
+                <a href="{{ URL::previous()}}"
+                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
             </div>
         </div>
     </div>
