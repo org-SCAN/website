@@ -23,7 +23,7 @@
             "spa": "Sexo"
         },
         "label": "gender",
-        "placeholder": "F",
+        "placeholder": "-- Select the sex --",
         "linked_list": "ListGender",
         "required": 1,
         "status": 2,
@@ -74,7 +74,7 @@
             "spa": "Nacionalidad"
         },
         "label": "nationality",
-        "placeholder": "Switzerland",
+        "placeholder": "-- Select the nationality --",
         "linked_list": "ListCountry",
         "required": 2,
         "status": 2,
@@ -91,7 +91,7 @@
             "spa": "Papel"
         },
         "label": "role",
-        "placeholder": "",
+        "placeholder": "-- Select the role --",
         "linked_list": "ListRole",
         "required": 2,
         "status": 2,
@@ -176,7 +176,7 @@
             "spa": "Camino"
         },
         "label": "route",
-        "placeholder": "",
+        "placeholder": "-- Select the list --",
         "linked_list": "ListRoute",
         "required": 2,
         "status": 2,
@@ -193,7 +193,7 @@
             "spa": "País de residencia"
         },
         "label": "residence",
-        "placeholder": "Syria",
+        "placeholder": "-- Select the country of residence --",
         "linked_list": "ListCountry",
         "required": 2,
         "status": 2,
@@ -329,7 +329,7 @@
             "spa": "Informaciones suplementarias"
         },
         "label": "detail",
-        "placeholder": "Phone number",
+        "placeholder": "Example : Phone number",
         "linked_list": "",
         "required": 4,
         "status": 2,
@@ -363,14 +363,14 @@
             "spa": "Desastre"
         },
         "label": "disaster",
-        "placeholder": "",
+        "placeholder": "-- Select the event --",
         "linked_list": "Event",
         "required": 100,
-        "status": 0,
+        "status": 2,
         "data_type_id": "List",
         "order": 22,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|max:250"
+        "validation_laravel": "uuid|nullable"
     }
 ]
