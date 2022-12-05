@@ -51,7 +51,8 @@
 
                                         <th scope="col"
                                             class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                            <b>{{$field->field}}*</b></th>
+                                            <strong>{{$field->field}}*</strong>
+                                        </th>
                                     @else
                                         <th scope="col"
                                             class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{$field->field}}</th>
@@ -71,7 +72,7 @@
                                             @endif
                                             @if($lists_control->displayed_value == $field->field)
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
-                                                    <b>{{ $list_elem[$field->field] }}</b>
+                                                    <strong>{{ $list_elem[$field->field] }}</strong>
                                                 </td>
                                             @else
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
@@ -90,8 +91,8 @@
                                                         @endcan
                                                         @can('updateListElem',ListControl::class)
                                                             <a href="{{route("lists_control.edit_list_elem", [$lists_control, $list_elem->id])}}">
-                                                                <i class="fa fa-pen text-blue-500 hover:text-blue-700"
-                                                                   aria-hidden="true"></i>
+                                                                <em class="fa fa-pen text-blue-500 hover:text-blue-700"
+                                                                   aria-hidden="true"></em>
                                                             </a>
                                                         @endcan
                                                         @can("deleteListElem",ListControl::class)
@@ -99,8 +100,8 @@
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="border-0">
-                                                                <i class='fa fa-trash text-red-500 hover:text-red-700'
-                                                                   aria-hidden='true'></i>
+                                                                <em class='fa fa-trash text-red-500 hover:text-red-700'
+                                                                   aria-hidden='true'></em>
                                                             </button>
                                                             @error("delete.".$list_elem->id)
                                                             <p class="text-sm text-red-600">{{ $message }}</p>
