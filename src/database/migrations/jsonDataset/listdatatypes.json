@@ -67,7 +67,7 @@
 	},
     "model": "",
     "database_type": "uuid",
-    "html_type": "list",
+    "html_type": "select-dropdown",
     "java_type": "Spinner",
     "validation": "uuid"
   },
