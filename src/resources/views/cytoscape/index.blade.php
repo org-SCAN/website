@@ -38,9 +38,9 @@
             z-index: 99999;
         }
     </style>
-    <script src="js/cytoscape/index.js"></script>
-    <script src="/js/cytoscape/manifest.js"></script>
-    <script src="/js/cytoscape/vendor.js"></script>
+    <script src="js/cytoscape/vendor.js"></script>
+
+    <script src="js/cytoscape/cytoscape.js"></script>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

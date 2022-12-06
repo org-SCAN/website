@@ -12,16 +12,18 @@ require('laravel-mix-purgecss');
  |
  */
 
+
+
+mix.js('resources/js/cytoscape/*', 'public/js/cytoscape/cytoscape.js')
+    .extract(['cytoscape', 'cytoscape-dagre', 'cytoscape-cise', 'cytoscape-fcose', 'cytoscape-ctxmenu'], 'public/js/cytoscape/vendor.js');
+
 mix.js('resources/js/app.js', 'public/js')
-    .extract()
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),
     ])
+    .extract()
     .purgeCss();
-mix.js('resources/js/cytoscape/*', 'public/js/cytoscape')
-    .extract();
-
 if (mix.inProduction()) {
     mix.version();
 }
