@@ -182,6 +182,11 @@ class Refugee extends Model
             $this->crew->id)->withPivot("id")->withPivot("value")->withTimestamps()->using(FieldRefugee::class)->orderBy("required")->orderBy("order");
     }
 
+    public function allCoordinates() {
+        return $this->fields()->where("database_type",
+            "coordinates")->get();
+    }
+
     /**
      * This function is used to format refugees' data.
      * It takes a collection of refugees and returns an array of formatted refugees data.

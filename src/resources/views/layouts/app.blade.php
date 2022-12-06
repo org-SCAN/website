@@ -34,6 +34,7 @@
                 display: none;
             }
         </style>
+        @mapstyles
     </head>
     <body class="font-sans antialiased">
     <x-jet-banner/>

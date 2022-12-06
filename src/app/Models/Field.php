@@ -213,7 +213,7 @@ class Field extends Model
             "date" => "date",
             "boolean" => "Radio Button",
             "list" => "Spinner",
-            "coordinates" => "Coordinates"
+            "coordinates" => "coordinates"
         ];
         return $type_convert[$database_type];
     }
