@@ -196,7 +196,9 @@
                             @map([
                                 'lat' => 48.134664,
                                 'lng' => 11.555220,
-                                'zoom' => 6
+                                'zoom' => 6,
+                                'markers' => $markers
+
                             ])
                             @mapscripts
                         </div>

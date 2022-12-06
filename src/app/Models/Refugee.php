@@ -184,8 +184,7 @@ class Refugee extends Model
     }
 
     public function allCoordinates() {
-        return $this->fields()->where("database_type",
-            "coordinates")->get();
+        return $this->fields()->whereRelation("dataType", "name", "coordinates")->get();
     }
 
     /**
