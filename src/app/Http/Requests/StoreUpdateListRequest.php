@@ -28,7 +28,14 @@ class StoreUpdateListRequest extends FormRequest
         // I wanna check if the displayed field is set so as the key value, if the key isn't the id
         $rules = [];
         foreach ($list_fields as $field) {
-            $rules[$field->field] = 'Required';
+            $rules[$field->field] = "";
+            if($field->required){
+                $rules[$field->field].='|Required';
+            }
+            else{
+                $rules[$field->field].='|nullable';
+            }
+            $rules[$field->field].='|'.$field->dataType->validation ?? "";
         }
         return $rules;
     }

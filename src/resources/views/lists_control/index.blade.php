@@ -1,3 +1,5 @@
+@php use App\Models\ListControl; @endphp
+@php use App\Models\Field; @endphp
 @section('title',"View lists")
 <x-app-layout>
     <x-slot name="header">
@@ -9,11 +11,11 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mb-8">
-                @can("create", \App\Models\ListControl::class)
+                @can("create", ListControl::class)
                     <a href="{{ route("lists_control.create") }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add list</a>
                 @endcan
-                @can("viewAny", \App\Models\Field::class)
+                @can("viewAny", Field::class)
                     <a href="{{ route("fields.index") }}"
                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Manage field</a>
                 @endcan
@@ -45,17 +47,19 @@
                                 <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach($lists as $list)
                                     <tr>
-                                        @can("view", $list)
-                                            <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            @can("view", $list)
                                                 <a href="{{route("lists_control.show", $list->id)}}"
                                                    class="text-indigo-600 hover:text-blue-900">{{ $list->title }}</a>
-                                            </td>
-                                        @endcan
-                                        @cannot("view", $list)
-                                            <td class="px-6 py-4 whitespace-nowrap">
+                                            @endcan
+                                            @cannot("view", $list)
                                                 {{ $list->title }}
-                                            </td>
-                                        @endcannot
+
+                                            @endcannot
+                                            @if(!$list->visible)
+                                                <em class="fa fa-eye-slash"></em>
+                                            @endif
+                                        </td>
                                         @can("update", $list)
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <a href="{{route("lists_control.edit", $list->id)}}"

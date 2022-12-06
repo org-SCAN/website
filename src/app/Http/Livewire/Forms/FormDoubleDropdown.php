@@ -3,9 +3,8 @@
 namespace App\Http\Livewire\Forms;
 
 use Livewire\Component;
-use Illuminate\Support\Facades\Log;
 
-class FormDropdown extends Component
+class FormDoubleDropdown extends Component
 {
     // Data formatting example for the dropdown
     //It needs to be the same

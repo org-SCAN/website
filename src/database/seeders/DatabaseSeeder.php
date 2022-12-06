@@ -17,13 +17,14 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(CrewSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(ListControlSeeder::class);
         $this->call(LanguageSeeder::class);
+        $this->call(ListControlSeeder::class);
         $this->call(FieldSeeder::class);
         $this->call(ListCountrySeeder::class);
         $this->call(ListRoleSeeder::class);
         $this->call(ListRouteSeeder::class);
         $this->call(ListGenderSeeder::class);
+        $this->call(ListRelationTypeSeeder::class);
         $this->call(ListRelationSeeder::class);
         $this->call(ListEventTypeSeeder::class);
         $this->call(ListSourceTypeSeeder::class);

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('list_relations', function (Blueprint $table) {
-            $table->string('type')->nullable();
+            $table->string('relation_type_id')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('list_relations', function (Blueprint $table) {
-            $table->dropColumn('type');
+            $table->dropColumn('relation_type_id');
         });
     }
 };

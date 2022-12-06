@@ -28,7 +28,7 @@ class CreateListRolesTable extends Migration
                 ->primary();
             $table->string("short");
             $table->string("descr");
-            $table->string("key");
+            $table->string("color");
             $table->timestamps();
             $table->softDeletes();
         });

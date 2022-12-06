@@ -30,15 +30,11 @@ class CreateFieldsTable extends Migration
             $table->string("label");
             $table->string("placeholder")
                 ->nullable();
-            $table->string( "html_data_type");
-            $table->string( "database_type");
-            $table->string( "android_type");
+            $table->uuid("data_type_id")->nullable();
             $table->string( "linked_list")
                 ->nullable();
             $table->integer( "status");
             $table->integer( "required");
-            $table->string( "attribute")
-                ->nullable();
             $table->integer("order")
                 ->default(100);
             $table->string("validation_laravel")

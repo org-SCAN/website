@@ -11,6 +11,7 @@ use App\Models\Crew;
 use App\Models\Link;
 use App\Models\ListControl;
 use App\Models\ListRelation;
+use App\Models\ListRelationType;
 use App\Models\Refugee;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -66,20 +67,20 @@ class LinkController extends Controller
         $link["api_log"] = ApiLog::createFromRequest($request,
             "Link")->id;
 
+        $relation_type = ListRelationType::all()->pluck('type','id')->toArray();
+
         if (isset($link["everyoneFrom"]) || isset($link["everyoneTo"])) {
 
             if (isset($link["everyoneTo"])) {
-                $orgin = "from";
+                $origin = "from";
                 $direction = "to";
             } else {
-                $orgin = 'to';
+                $origin = 'to';
                 $direction = 'from';
             }
-            $person = Refugee::find($link[$orgin]);
+            $person = Refugee::find($link[$origin]);
             if ($person->hasEvent()) {
-                $associatedPersonsThroughEvent = $person->event->persons->where("id",
-                    '!=',
-                    $person->id);
+                $associatedPersonsThroughEvent = $person->event->persons->where("id",'!=',$person->id);
             }
             unset($link["everyoneFrom"]);
             unset($link["everyoneTo"]);
@@ -87,10 +88,11 @@ class LinkController extends Controller
 
         if (isset($associatedPersonsThroughEvent) && !empty($associatedPersonsThroughEvent) && isset($direction)) {
             foreach ($associatedPersonsThroughEvent as $associatedPerson) {
+                $link[$origin] = $person->id;
                 $link[$direction] = $associatedPerson->id;
                 $new_link = Link::create($link);
-                if((isset($link["type"]) && $link["type"] == "bilateral") || (!isset($link["type"]) && $new_link->relation->type == "bilateral")){
-                    $link[$orgin] = $associatedPerson->id;
+                if((isset($link["type"]) && $relation_type[$link["type"]] == "bilateral")){
+                    $link[$origin] = $associatedPerson->id;
                     $link[$direction] = $person->id;
                     Link::create($link);
                 }
@@ -99,7 +101,7 @@ class LinkController extends Controller
         }
 
         $new_link = Link::create($link);
-        if((isset($link["type"]) && $link["type"] == "bilateral") || (!isset($link["type"]) && $new_link->relation->type == "bilateral")){
+        if((isset($link["type"]) && $relation_type[$link["type"]] == "bilateral")){
             $old_from = $link["from"];
             $link['from'] = $link['to'];
             $link['to'] = $old_from;
@@ -143,17 +145,17 @@ class LinkController extends Controller
             if ($from != null) {
                 $relation["from"] = $from;
             } else {
-                $log->update(["response" => "Error : ".$link["from_unique_id"]." not found with application id : ".$link["application_id"]]);
+                $log->update(["response" => "Error : ".$link["from"]." not found with application id : ".$link["application_id"]]);
                 break;
             }
 
-            $to = Refugee::getRefugeeIdFromReference($link["to_unique_id"],
+            $to = Refugee::getRefugeeIdFromReference($link["to"],
                 $relation["application_id"]);
 
             if ($to != null) {
                 $relation["to"] = $to;
             } else {
-                $log->update(["response" => "Error : ".$link["to_unique_id"]." not found with application id : ".$link["application_id"]]);
+                $log->update(["response" => "Error : ".$link["to"]." not found with application id : ".$link["application_id"]]);
                 break;
             }
 
@@ -213,18 +215,11 @@ class LinkController extends Controller
                     $linkUpdate->update($link);
                     $link = $linkUpdate;
                 } else {
-                    $potentialLink = Link::where('from', $link["from"])
-                        ->where('to', $link["to"])
-                        ->where('relation', $link["relation"])
-                        ->first();
-                    if ($potentialLink != null) {
-                        $link = $potentialLink;
-                    } else {
-                        $link = Link::create($link);
-                    }
+                    //find or create
+                    $link = Link::firstOrCreate($link);
+
                 }
-                array_push($responseArray,
-                    $link->id);
+                array_push($responseArray, $link->id);
             }
             return response(json_encode($responseArray),
                 201,

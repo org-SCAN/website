@@ -1,81 +1,316 @@
-[
-    {
+{
+    "ListCountry": {
         "title": "Country",
         "name": "ListCountry",
         "displayed_value": "short",
-        "key_value": "id"
+        "key_value": "id",
+        "structure" : [
+            {
+                "field" : "short",
+                "required" : true,
+                "data_type_id" : "Short text"
+            },
+            {
+                "field" : "full",
+                "required" : false,
+                "data_type_id" : "Short text"
+            },
+            {
+                "field" : "ISO2",
+                "required" : true,
+                "data_type_id" : "Short text"
+            },
+            {
+                "field" : "ISO3",
+                "required" : true,
+                "data_type_id" : "Short text"
+            }
+        ]
     },
-    {
+    "ListGender" : {
         "title": "Gender",
         "name": "ListGender",
         "displayed_value": "full",
-        "key_value": "id"
+        "key_value": "id",
+        "structure" : [
+            {
+                "field" : "full",
+                "required" : true,
+                "data_type_id" : "Short text"
+            },
+            {
+                "field" : "short",
+                "required" : false,
+                "data_type_id" : "Short text"
+            }
+        ]
     },
-    {
+    "ListRoute" : {
         "title": "Route",
         "name": "ListRoute",
         "displayed_value": "full",
-        "key_value": "id"
+        "key_value": "id",
+        "structure" : [
+            {
+                "field" : "full",
+                "required" : true,
+                "data_type_id" : "Short text"
+            },
+            {
+                "field" : "short",
+                "required" : false,
+                "data_type_id" : "Short text"
+            }
+        ]
     },
-    {
+    "ListRole" : {
         "title": "Role",
         "name": "ListRole",
         "displayed_value": "short",
-        "key_value": "id"
+        "key_value": "id",
+        "structure" : [
+            {
+                "field" : "short",
+                "required" : true,
+                "data_type_id" : "Short text"
+            },
+            {
+                "field" : "descr",
+                "required" : false,
+                "data_type_id" : "Long text"
+            },
+            {
+                "field" : "color",
+                "required" : true,
+                "data_type_id" : "Color"
+            }
+        ]
     },
-    {
+    "ListRelation" : {
         "title": "Relation",
         "name": "ListRelation",
         "displayed_value": "name",
-        "key_value": "id"
+        "key_value": "id",
+        "structure" : [
+            {
+                "field" : "name",
+                "required" : true,
+                "data_type_id" : "Short text"
+            },
+            {
+                "field" : "short",
+                "required" : false,
+                "data_type_id" : "Short text"
+            },
+            {
+                "field" : "color",
+                "required" : true,
+                "data_type_id" : "Color"
+            },
+            {
+                "field" : "importance",
+                "required" : false,
+                "data_type_id" : "Number"
+            },
+            {
+                "field" : "relation_type_id",
+                "required" : false,
+                "data_type_id" : "List",
+                "associated_list" : "ListRelationType"
+            }
+        ]
     },
-    {
+    "ListRelationType" : {
+        "title": "Relation type",
+        "name": "ListRelationType",
+        "displayed_value": "name",
+        "key_value": "id",
+        "structure" : [
+            {
+                "field" : "name",
+                "required" : true,
+                "data_type_id" : "Short text"
+            },
+            {
+                "field" : "type",
+                "required" : true,
+                "data_type_id" : "Short text"
+            }
+        ],
+        "visible" : false
+    },
+    "Field" : {
         "title": "Field",
         "name": "Field",
         "displayed_value": "title",
-        "key_value": "id"
+        "key_value": "id",
+        "structure" : [
+            {
+                "field" : "title",
+                "required" : true,
+                "data_type_id" : "Short text"
+            }
+        ],
+        "visible" : false
     },
-    {
+    "ListEventType" : {
         "title": "Event Type",
         "name": "ListEventType",
         "displayed_value": "name",
-        "key_value": "id"
+        "key_value": "id",
+        "structure" : [
+            {
+                "field" : "name",
+                "required" : true,
+                "data_type_id" : "Short text"
+            }
+        ]
     },
-    {
+    "ListSourceType" : {
         "title": "Source Type",
         "name": "ListSourceType",
         "displayed_value": "name",
-        "key_value": "id"
+        "key_value": "id",
+        "structure" : [
+            {
+                "field" : "name",
+                "required" : true,
+                "data_type_id" : "Short text"
+            },
+            {
+                "field" : "detail",
+                "required" : false,
+                "data_type_id" : "Short text"
+            }
+        ]
     },
-    {
+    "Event" : {
         "title": "Event",
         "name": "Event",
         "displayed_value": "name",
         "key_value": "id",
         "structure": [
-            "name",
-            "event_type_id",
-            "event_subtype_id",
-            "country_id",
-            "location_details",
-            "start_date",
-            "stop_date",
-            "stop_date",
-            "latitude",
-            "longitude",
-            "description"
+            {
+                "field": "name",
+                "data_type_id": "Short text",
+                "required": true
+            },
+            {
+                "field": "event_type_id",
+                "data_type_id": "List",
+                "required": true,
+                "associated_list": "ListEventType"
+            },
+            {
+                "field": "event_subtype_id",
+                "data_type_id": "List",
+                "required": false,
+                "associated_list": "ListEventType"
+            },
+            {
+                "field": "country_id",
+                "data_type_id": "List",
+                "required": false,
+                "associated_list": "ListCountry"
+            },
+            {
+                "field": "location_details",
+                "data_type_id": "Short text",
+                "required": false
+            },
+            {
+                "field": "start_date",
+                "data_type_id": "Date",
+                "required": false
+            },
+            {
+                "field": "stop_date",
+                "data_type_id": "Date",
+                "required": false
+            },
+            {
+                "field": "latitude",
+                "data_type_id": "Short text",
+                "required": false
+            },
+            {
+                "field": "longitude",
+                "data_type_id": "Short text",
+                "required": false
+            },
+            {
+                "field": "description",
+                "data_type_id": "Long text",
+                "required": false
+            }
         ]
     },
-    {
+    "Source" : {
         "title": "Source",
         "name": "Source",
         "displayed_value": "name",
         "key_value": "id",
         "structure": [
-            "name",
-            "source_type_id",
-            "trust",
-            "reference"
+            {
+                "field": "name",
+                "data_type_id": "Short text",
+                "required": true
+            },
+            {
+                "field": "source_type_id",
+                "data_type_id": "List",
+                "required": true,
+                "associated_list": "ListSourceType"
+            },
+            {
+                "field": "trust",
+                "data_type_id": "Number",
+                "required": false
+            },
+            {
+                "field": "reference",
+                "data_type_id": "Short text",
+                "required": false
+            }
         ]
+    },
+    "ListDataType" :{
+        "title": "Data type",
+        "name": "ListDataType",
+        "displayed_value": "name",
+        "key_value": "id",
+        "structure": [
+            {
+                "field": "name",
+                "data_type_id": "Short text",
+                "required": true
+            },
+            {
+                "field": "model",
+                "data_type_id": "Short text",
+                "required": false
+            },
+            {
+                "field": "database_type",
+                "data_type_id": "Short text",
+                "required": true
+            },
+            {
+                "field": "html_type",
+                "data_type_id": "Short text",
+                "required": true
+            },
+            {
+                "field": "java_type",
+                "data_type_id": "Short text",
+                "required": true
+            },
+            {
+                "field": "validation",
+                "data_type_id": "Short text",
+                "required": true
+            }
+        ],
+        "visible": false
     }
-]
+}

@@ -51,18 +51,34 @@ class Link extends Pivot
 
     public static function handleApiRequest($relation) {
 
-        $ref = null;
+        //update or create relation
+
+        $link = Link::updateOrCreate(
+            [
+                "from" => $relation["from"],
+                "to" =>  $relation["to"],
+                "relation_id" => $relation["relation_id"],
+                "application_id"=>$relation["application_id"]
+            ],
+            [
+                "date" => request("date"),
+                "detail" => request("detail"),
+                "api_log" => request("api_log"),
+            ]
+        );
+
+        /*
         $potential_link = Link::relationExists($relation["from"],
             $relation["to"],
-            $relation["relation"],
+            $relation["relation_id"],
             $relation["application_id"]);
 
         if ($potential_link != null) {
             $ref = $potential_link->update($relation);
         } else {
             $ref = Link::create($relation);
-        }
-        return $ref;
+        }*/
+        return $link;
     }
 
     public static function relationExists($from,
@@ -156,4 +172,5 @@ class Link extends Pivot
     public function getDateAttribute() {
         return Carbon::parse($this->attributes['date']);
     }
+    
 }

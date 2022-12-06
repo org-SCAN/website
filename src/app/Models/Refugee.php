@@ -71,6 +71,7 @@ class Refugee extends Model
          return $this->belongsTo(ApiLog::class, "api_log");
      }*/
 
+    /*
     public static function getRefugeeIdFromReference($reference,
         $application_id) {
         $refugee = self::where("application_id",
@@ -78,7 +79,7 @@ class Refugee extends Model
             $reference)->first();
 
         return !empty($refugee) ? $refugee->id : null;
-    }
+    }*/
 
     /**
      * This function is used to handle the API request. If a person exists (id is in the request) update all changed fields, else create the person and return his/her ID.
@@ -272,7 +273,10 @@ class Refugee extends Model
     public function getBestDescriptiveValueAttribute() {
         $best_descriptive_value = $this->fields->where("best_descriptive_value",
             1)->first();
-        return -empty($best_descriptive_value) ? "" : $best_descriptive_value->pivot->value;
+        if(!empty($best_descriptive_value->linked_list)){
+            return ListControl::getListElementFromId($best_descriptive_value->linked_list, $best_descriptive_value->pivot->value)->displayed_value_content ?? "";
+        }
+        return empty($best_descriptive_value) ? "" : $best_descriptive_value->pivot->value;
     }
 
     public function getRelationsAttribute() {

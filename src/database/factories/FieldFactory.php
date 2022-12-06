@@ -3,10 +3,12 @@
 namespace Database\Factories;
 
 use App\Models\Crew;
+use App\Models\Field;
+use App\Models\ListDataType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Field>
+ * @extends Factory<Field>
  */
 class FieldFactory extends Factory
 {
@@ -21,9 +23,7 @@ class FieldFactory extends Factory
             "title" => $this->faker->title,
             "label" => $this->faker->title,
             "placeholder" => $this->faker->sentence,
-            "database_type" => "string",
-            "html_data_type" => "text",
-            "android_type" => 'EditText',
+            "data_type_id" => ListDataType::inRandomOrder()->first()->id,
             "crew_id" => Crew::inrandomorder()->first()->id,
             "required" => $this->faker->numberBetween(0, 3),
             "status" => $this->faker->numberBetween(0, 2),

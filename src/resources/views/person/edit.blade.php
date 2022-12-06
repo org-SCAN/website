@@ -1,8 +1,8 @@
-@section('title','Edit '.$person->full_name)
+@section('title','Edit '.$person->best_descriptive_value)
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit : <strong>{{$person->full_name}}</strong>
+            Edit : <strong>{{$person->best_descriptive_value}}</strong>
         </h2>
     </x-slot>
 
@@ -19,43 +19,24 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         @foreach($fields as $field)
                             @php
-                                $refugee_detail[$field->label] = isset($refugee_detail[$field->label])
-                                ? $refugee_detail[$field->label]
+                                $refugee_detail[$field->id] = isset($refugee_detail[$field->id])
+                                ? $refugee_detail[$field->id]
                                 : "";
 
                             @endphp
-                            <div class="px-4 py-5 bg-white sm:p-6">
-                                <label for="{{$field->label}}"
-                                       class="block font-medium text-sm text-gray-700">{{$field->title}}</label>
-                                @if($field->linked_list != "")
-                                    @php
-                                        $list=$field->getLinkedListContent();
-                                        $selected = $refugee_detail[$field->label];
-                                    @endphp
-                                    @livewire("select-dropdown", ['label' => $field->id, 'placeholder' => "-- Select
-                                    your ".$field->title." --", 'datas' => $list, "selected_value" =>
-                                    $selected])
-                                    @stack('scripts')
+                            <div class="px-4 py-4 bg-white sm:p-6">
 
-                                @elseif($field->html_data_type == "textarea")
-                                    <textarea name="{{$field->id}}" id="{{$field->id}}"
-                                              class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                              placeholder="{{$field->placeholder ?? ''}}">
-                                        {{ old($field->label, $refugee_detail[$field->label]) }}
-                                    </textarea>
-                                @elseif($field->html_data_type == "checkbox")
-                                    <input type="checkbox" name="{{$field->id}}" id="{{$field->id}}"
-                                           class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                           placeholder="{{$field->placeholder ?? ''}}"
-                                           value=1 @checked(old($field->label, $refugee_detail[$field->label]))>
-                                @else
-                                    <input type="{{$field->html_data_type}}" name="{{$field->id}}"
-                                           id="{{$field->id}}"
-                                           class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                           value="{{ old($field->label, $refugee_detail[$field->label]) }}"/>
-                                @endif
-                                @error($field->label)
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                    @livewire("forms.form", [
+                                        'title' => $field->title,
+                                        'form_elem' => $field->id,
+                                        'type' => $field->dataType->html_type,
+                                        'placeHolder' => $field->placeholder ?? '',
+                                        'previous' => $refugee_detail[$field->id],
+                                        'showError' => false,
+                                        'associated_list' => $field->linked_list ?? null,
+                                    ])
+                                @error($field->id)
+                                <p class="text-sm text-red-600">{{ Str::replace($field->id, $field->title, $message) }}</p>
                                 @enderror
                             </div>
                         @endforeach

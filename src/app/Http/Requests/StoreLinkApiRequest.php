@@ -21,7 +21,7 @@ class StoreLinkApiRequest extends StoreLinkRequest
             "*.id" => "uuid|exists:links,id",
             "*.from" => "Required|uuid|exists:refugees,id",
             "*.to" => "Required|uuid|exists:refugees,id",
-            "*.relation" => "Required|exists:list_relations,id",
+            "*.relation_id" => "Required|exists:list_relations,id",
             "*.detail" => "String|nullable",
             "*.date" => "Required|date",
         ];

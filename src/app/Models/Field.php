@@ -6,25 +6,11 @@ use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Field extends Model
 {
     use Uuids, SoftDeletes, hasFactory;
-
-    /**
-     * The attributes that defines all dataTypes for a field.
-     *
-     * @var array
-     */
-    public static $databaseTypes = [
-        "string" => "Small text",
-        "text" => "Long text",
-        "integer" => "Number",
-        "date" => "Date",
-        "boolean" => "Yes / No ",
-        "list" => "List",
-        "coordinates" => "Coordinates",
-    ];
 
     /**
      * The requirement of the field.
@@ -49,20 +35,18 @@ class Field extends Model
         2 => "Website & App"
     ];
     /**
-     * The data type of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
      * Indicates if the model's ID is auto-incrementing.
      *
      * @var bool
      */
 
     public $incrementing = false;
-
+    /**
+     * The data type of the auto-incrementing ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
     /**
      * The attributes that aren't mass assignable.
      *
@@ -77,18 +61,78 @@ class Field extends Model
      */
     protected $hidden = ['deleted_at', "created_at", "updated_at", "status", "html_data_type", "validation_laravel", "attribute", "order", "api_log", "crew_id"];
 
-    /**
-     * Return all hidden fields
-     *
-     * @return string
-     *
-     * public  function getHiddenValue(){
-     * return $this->hidden;
-     * } */
 
-    public static function getDatabaseTypeList(): array
+    public static function getUsedLinkedList()
     {
-        return self::$databaseTypes;
+        $used_linked_list = self::where("linked_list", "!=", "")->get()->toArray();
+        return array_column($used_linked_list, "linked_list");
+    }
+
+    /**
+     * It returns the list control dataset for API calls
+     *
+     * @return array
+     *
+     */
+    public static function getAPIContent(User $user)
+    {
+        $call_class_name = get_called_class();
+        $class_name = substr(strrchr($call_class_name, "\\"), 1);
+        $database_content = $call_class_name::where('crew_id', $user->crew->id)->where("status", 2)->orderBy("required")->orderBy("order")->get()->toArray();
+        $list_info = ListControl::where('name', $class_name)->first();
+        $keys = array_column($database_content, $list_info->key_value); // all keys name
+
+        $api_res = array();
+        foreach ($keys as $key_index => $key_value) {
+            $api_res[$key_value] = $database_content[$key_index];
+
+            $translations = array_column(Translation::where('list', $list_info->id)->where('field_key', $key_value)->get()->toArray(), "translation", "language");
+            foreach($translations as $language => $translation){
+                $api_res[$key_value]["displayed_value"][$language] = $translation;
+            }
+            unset($api_res[$key_value][$list_info->key_value]);
+            unset($api_res[$key_value][$list_info->displayed_value]);
+            $api_res[$key_value]["required"] = Field::convertRequiredAttribute( $database_content[$key_index]["required"]);
+            $api_res[$key_value]["android_type"] = Field::find($key_value)->dataType->java_type;
+        }
+        return $api_res;
+    }
+
+    /**
+     * Convert a given requirement description into the associate int
+     *
+     * @param $value
+     * @return int
+     */
+    public static function convertRequiredAttribute($value){
+        switch ($value) {
+            case "Auto generated":
+                $int_required = 0;
+                break;
+            case "Required":
+                $int_required = 1;
+                break;
+            case "Strongly advised":
+                $int_required = 2;
+                break;
+            case "Advised":
+                $int_required = 3;
+                break;
+            case "If possible":
+                $int_required = 4;
+                break;
+            default:
+                $int_required = 100;
+        }
+        return $int_required;
+    }
+
+    /**
+     * This function returns true if the best_descriptive_value is defined, false otherwise
+     * @return bool
+     */
+    public static function hasBestDescriptiveValue() {
+         return self::where('crew_id', Auth::user()->crew->id)->where('best_descriptive_value', 1)->exists();
     }
 
     public function getStatusAttribute($value)
@@ -108,6 +152,21 @@ class Field extends Model
         }
         return $text_status;
     }
+
+
+
+    /**
+     *
+     * Getter to return correctly the linkedlist name
+     * @param $value
+     * @return string
+     */
+    /*
+    public function getLinkedListAttribute($value){
+        $linked_list =  ListControl::find($value);
+        return (empty($linked_list) ? "" : $linked_list->title);
+    }
+    */
     /**
      * Indicate the the status id stored in DB
      *
@@ -116,6 +175,7 @@ class Field extends Model
     public function getStatusId(){
         return $this->attributes['status'];
     }
+
 
     public function getRequiredAttribute($value){
         switch ($value) {
@@ -149,124 +209,6 @@ class Field extends Model
         return $this->attributes['required'];
     }
 
-    /**
-     * Convert a given requirement description into the associate int
-     *
-     * @param $value
-     * @return int
-     */
-    public static function convertRequiredAttribute($value){
-        switch ($value) {
-            case "Auto generated":
-                $int_required = 0;
-                break;
-            case "Required":
-                $int_required = 1;
-                break;
-            case "Strongly advised":
-                $int_required = 2;
-                break;
-            case "Advised":
-                $int_required = 3;
-                break;
-            case "If possible":
-                $int_required = 4;
-                break;
-            default:
-                $int_required = 100;
-        }
-        return $int_required;
-    }
-
-    /**
-     * It returns the html_data_type according the selected database type value
-     *
-     * @param String$database_type
-     * @return string
-     */
-
-    public static function getHtmlDataTypeFromForm(String $database_type){
-        $type_convert = [
-            "string" => "text",
-            "text" => "textarea",
-            "integer" => "number",
-            "date" => "date",
-            "boolean" => "checkbox",
-            "list" => "list",
-            "coordinates" => "Coordinates"
-        ];
-        return $type_convert[$database_type];
-    }
-
-    /**
-     * It returns the UI type value according the selected database type value
-     *
-     * @param String $database_type
-     * @return string
-     */
-
-    public static function getUITypeFromForm(String $database_type){
-        $type_convert = [
-            "string" => "EditText",
-            "text" => "EditText",
-            "integer" => "number",
-            "date" => "date",
-            "boolean" => "Radio Button",
-            "list" => "Spinner",
-            "coordinates" => "coordinates"
-        ];
-        return $type_convert[$database_type];
-    }
-
-    /**
-     * Generates the laravel validator according the field datas
-     *
-     * @param $field
-     * @return string
-     */
-
-    public static function getValidationLaravelFromForm($field){
-
-        $validador = array();
-        $type_convert = [
-            "string" => "String",
-            "text" => "String",
-            "integer" => "Integer",
-            "date" => "Date",
-            "boolean" => "Boolean",
-            "list" => "uuid",
-            "coordinates" => "Array"
-
-        ];
-
-        if($field["required"] == 1){
-            array_push($validador, "required");
-        }
-        else{
-            array_push($validador, "nullable");
-        }
-
-        array_push($validador, $type_convert[$field["database_type"]]);
-
-        //TODO : ajouter la gestion des champs spécifiques à la validation laravel
-
-        $laravel_validator = implode("|", $validador);
-
-        return $laravel_validator;
-    }
-
-    /**
-     *
-     * Getter to return correctly the linkedlist name
-     * @param $value
-     * @return string
-     */
-    /*
-    public function getLinkedListAttribute($value){
-        $linked_list =  ListControl::find($value);
-        return (empty($linked_list) ? "" : $linked_list->title);
-    }
-    */
     public function getValue(){
         if(empty(($this->linked_list))) {
             return $this->pivot->value;
@@ -305,46 +247,15 @@ class Field extends Model
         return $this->attributes['linked_list'];
     }
 
-    public static function getUsedLinkedList()
-    {
-        $used_linked_list = self::where("linked_list", "!=", "")->get()->toArray();
-        return array_column($used_linked_list, "linked_list");
-    }
-
     public function listControl()
     {
         return $this->BelongsTo(ListControl::class, "linked_list", "id");
     }
 
     /**
-     * It returns the list control dataset for API calls
-     *
-     * @return array
-     *
+     * Field hasOne data type
      */
-    public static function getAPIContent(User $user)
-    {
-
-
-        $call_class_name = get_called_class();
-        $class_name = substr(strrchr($call_class_name, "\\"), 1);
-        $database_content = $call_class_name::where('crew_id', $user->crew->id)->where("status", 2)->orderBy("required")->orderBy("order")->get()->toArray();
-        $list_info = ListControl::where('name', $class_name)->first();
-        $keys = array_column($database_content, $list_info->key_value); // all keys name
-
-        $api_res = array();
-        foreach ($keys as $key_index => $key_value) {
-            $api_res[$key_value] = $database_content[$key_index];
-
-            $translations = array_column(Translation::where('list', $list_info->id)->where('field_key', $key_value)->get()->toArray(), "translation", "language");
-            foreach($translations as $language => $translation){
-                $api_res[$key_value]["displayed_value"][$language] = $translation;
-            }
-            unset($api_res[$key_value][$list_info->key_value]);
-            unset($api_res[$key_value][$list_info->displayed_value]);
-            $api_res[$key_value]["required"] = Field::convertRequiredAttribute( $database_content[$key_index]["required"]);
-        }
-        return $api_res;
-
+    public function dataType(){
+        return $this->hasOne(ListDataType::class, "id", "data_type_id");
     }
 }
