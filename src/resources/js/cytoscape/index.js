@@ -10,6 +10,24 @@ cytoscape.use( cise );
 cytoscape.use( fcose );
 cytoscape.use( cxtmenu );
 
+
+/**
+ * This function calls the API to get the list of relations
+ */
+function getListRelations(){
+    var relations = [];
+    $.ajax({
+        url: '/api/relations',
+        type: 'get',
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            relations = data;
+        }
+    });
+    return relations;
+}
+
 function perc2color(perc) {
     var r, g, b = 0;
     if(perc > 50) {
@@ -31,6 +49,7 @@ function view_relative(cy, ele){
     var notConnected = cy.elements().not(connected)
     var saved = cy.remove(notConnected)
 }
+
 function insertParam(key, value) {
     key = encodeURIComponent(key);
     value = encodeURIComponent(value);

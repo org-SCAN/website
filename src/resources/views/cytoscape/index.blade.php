@@ -1,3 +1,4 @@
+@php use App\Models\ListRelation; @endphp
 @section('title',"View network graph")
 <x-app-layout>
     <x-slot name="header">
@@ -8,7 +9,10 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+            integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
 
     <style>
         #cy {
@@ -35,14 +39,16 @@
         }
     </style>
     <script src="js/cytoscape/index.js"></script>
+    <script src="/js/cytoscape/manifest.js"></script>
+    <script src="/js/cytoscape/vendor.js"></script>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col">
                 <h1>Graph</h1>
                 <div class="rounded-lg px-2">
-                    @foreach(\App\Models\ListRelation::all() as $relation)
-                        <i class="fas fa-circle" style="color: #{{$relation->color}}"> {{$relation->name}}</i>
+                    @foreach(ListRelation::all() as $relation)
+                        <i class="fas fa-circle" style="color: {{ $relation->color }}"> {{$relation->name}}</i>
                     @endforeach
                 </div>
                 <div class="rounded-lg px-2">

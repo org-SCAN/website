@@ -1,5 +1,7 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/js/cytoscape/index.js": "/js/cytoscape/index.js",
-    "/css/app.css": "/css/app.css"
+    "/js/app.js": "/js/app.js?id=f61654583b660111ed44a296a197a908",
+    "/js/cytoscape/index.js": "/js/cytoscape/index.js?id=ed797ebf023a100fa604a2bc7358aed4",
+    "/js/cytoscape/manifest.js": "/js/cytoscape/manifest.js?id=574d59ffc0b2ff8f25f6c2882de13cdc",
+    "/css/app.css": "/css/app.css?id=4612e3666d1cd5f4ed96df97512397c8",
+    "/js/cytoscape/vendor.js": "/js/cytoscape/vendor.js?id=3af945d8299752fd1d6da3b2e58eb3fd"
 }

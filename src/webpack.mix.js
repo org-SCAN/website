@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+require('laravel-mix-purgecss');
 
 /*
  |--------------------------------------------------------------------------
@@ -12,11 +13,14 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .extract()
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),
-    ]);
-mix.js('resources/js/cytoscape/*', 'public/js/cytoscape');
+    ])
+    .purgeCss();
+mix.js('resources/js/cytoscape/*', 'public/js/cytoscape')
+    .extract();
 
 if (mix.inProduction()) {
     mix.version();
