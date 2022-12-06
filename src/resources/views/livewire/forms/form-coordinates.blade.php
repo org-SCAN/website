@@ -3,13 +3,13 @@
     <div class="flex">
         <div class="flex-auto pr-4">
             <em class="text-sm">Longitude :</em>
-            <input wire:model="long" type="text" name="{{$form_elem}}[long]" id="long"
+            <input type="text" name="{{$form_elem}}[long]" id="long"
                 class="form-input rounded-md shadow-sm mt-1 block w-full"
                 placeholder="{{$placeHolder}}"/>
         </div>
         <div class="flex-auto pr-4">
             <em class="text-sm">Latitude :</em>
-            <input wire:model="lat" type="text" name="{{$form_elem}}[lat]" id="lat"
+            <input type="text" name="{{$form_elem}}[lat]" id="lat"
                 class="form-input rounded-md shadow-sm mt-1 block w-full"
                 placeholder="{{$placeHolder}}"/>
         </div>

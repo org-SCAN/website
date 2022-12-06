@@ -19,14 +19,6 @@ class Form extends Component
     public $showError = true;
     public $associated_list;
 
-    public $lat;
-    public $long;
-
-    public function mount(){
-        $this->lat = "0";
-        $this->long = "0";
-    }
-
     public function render()
     {
         // check if associated list is set and if it is an uuid

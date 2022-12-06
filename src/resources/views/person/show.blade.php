@@ -196,12 +196,7 @@
                             @map([
                                 'lat' => 48.134664,
                                 'lng' => 11.555220,
-                                'zoom' => 6,
-                                'markers' => foreach($person->allCoordinates as $coordinates) {
-                                    'title' => $coordinates->title,
-                                    'lat' => $coordinates->getValue()["lat"],
-                                    'lng' => $coordinates->getValue()["long"],
-                                }
+                                'zoom' => 6
                             ])
                             @mapscripts
                         </div>
