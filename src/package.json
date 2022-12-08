@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "cytoscape": "^3.18.2",
+        "cytoscape-avsdf": "^1.0.0",
         "cytoscape-cise": "^1.0.0",
         "cytoscape-cola": "^2.4.0",
         "cytoscape-cxtmenu": "^3.4.0",

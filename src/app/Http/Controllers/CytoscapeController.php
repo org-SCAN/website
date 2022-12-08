@@ -29,14 +29,6 @@ class CytoscapeController extends Controller
         //get the role field
         $role_list = ListControl::firstWhere('name', 'ListRole');
         $role_field = Field::whereCrewId(Auth::user()->crew->id)->where('linked_list', $role_list->id);
-        /*
-            $nodes = array();
-            foreach ($refugees as $refugee){
-                $node["data"] = array();
-                $node["data"]["id"] = $refugee->id;
-                $node["data"]["name"] = $refugee->full_name;
-                array_push($nodes, $node);
-            }*/
 
         $links = array();
         $nodes = array();
@@ -74,6 +66,30 @@ class CytoscapeController extends Controller
             $link["data"]["target"] = $relation->getToId();
             $link["data"]["detail"] = $relation->detail;
             array_push($links, $link);
+        }
+
+        /**
+         * If a link exists in the 2 directions between 2 nodes, we only keep the one and delete the other.
+         * We add a tag ['type'] = 'bilateral' to the link.
+         */
+
+        $toUnset = [];
+        foreach ($links as $key => $link) {
+            foreach ($links as $key2 => $link2) {
+                if (!in_array($key2, $toUnset) && !in_array($key, $toUnset) &&
+                    $link['data']['id'] != $link2["data"]["id"] && // not the same relation
+                    $link['data']['label'] == $link2["data"]["label"] && // same relation type
+                    $link['data']['source'] == $link2['data']['target'] &&  // same source and target
+                    $link['data']['target'] == $link2['data']['source']) { // but in the opposite direction
+
+                    $links[$key]['data']['type'] = 'bilateral';
+                    $toUnset[] = $key2;
+
+                }
+            }
+        }
+        foreach ($toUnset as $key) {
+            unset($links[$key]);
         }
 
         // file_put_contents("js/cytoscape/content.json",json_encode(array_merge($nodes, $links)));

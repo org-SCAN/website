@@ -1,4 +1,5 @@
 @php use App\Models\ListRelation; @endphp
+@php use App\Models\ListRole; @endphp
 @section('title',"View network graph")
 <x-app-layout>
     <x-slot name="header">
@@ -15,27 +16,16 @@
     </script>
 
     <style>
-        #cy {
-            position: absolute;
-            top: 450px;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            z-index: 0;
+
+        html,body {
             height: 100%;
+            margin: 0;
         }
 
-        h1 {
-            opacity: 0.5;
-            font-size: 1em;
-            font-weight: bold;
-        }
+        #cy {
 
-        #buttons {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            z-index: 99999;
+            height:70vh;
+            position: relative;
         }
     </style>
     <script src="js/cytoscape/vendor.js"></script>
@@ -45,52 +35,61 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col">
-                <h1>Graph</h1>
-                <div class="rounded-lg px-2">
-                    @foreach(ListRelation::all() as $relation)
-                        <i class="fas fa-circle" style="color: {{ $relation->color }}"> {{$relation->name}}</i>
-                    @endforeach
-                </div>
-                <div class="rounded-lg px-2">
-                    <i class="fas fa-circle" style="color: #000000">deceased</i>
-                    <i class="fas fa-circle" style="color: #f89f9f">informant</i>
-                    <i class="fas fa-circle" style="color: #d995e5">possibly sought</i>
-                    <i class="fas fa-circle" style="color: #7773fc">relative</i>
-                    <i class="fas fa-circle" style="color: #ff0000">sought</i>
-                    <i class="fas fa-circle" style="color: #ff00fa">survivor</i>
-                    <i class="fas fa-circle" style="color: #9f9d9d">witness</i>
-                </div>
+                <div class="container">
+                        <div class="row h/6">
+                            <div class="col-md-2">
+                                <button class="bg-red-200 hover:bg-red-300 text-black hover:text-black font-bold py-2 px-4 rounded" id="clear">
+                                    Clear
+                                </button>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="bg-blue-200 hover:bg-blue-300 text-black hover:text-black font-bold py-2 px-4 rounded"
+                                        id="betweenness_centrality">
+                                    Show betweenness Centrality
+                                </button>
+                            </div>
+                            <div class="col-md-2">
 
-                <div class="block mb-8 mt-8">
-                    <a class="bg-red-200 hover:bg-red-300 text-black hover:text-black font-bold py-2 px-4 rounded"
-                       href="?">Clear</a>
-                    <a class="bg-blue-200 hover:bg-blue-300 text-black hover:text-black font-bold py-2 px-4 rounded"
-                       href="{{ url()->current().'?'.http_build_query(array_merge(request()->all(),['calcul' => "betweennessCentrality"])) }}">Calculate
-                        betweenness Centrality</a>
-                    <div class="mt-3 mb-2">
-                        @livewire("link-select-dropdown", ['label' => "from", 'placeholder' => '-- Select the first
-                        person --', 'datas' => $refugees, "selected_value" => (isset($_GET['from']) ? $_GET['from'] :
-                        "")])
-                        @stack('scripts')
-                    </div>
-                    <div class="mt-2 mb-2">
-                        @livewire("link-select-dropdown", ['label' => "to", 'placeholder' => '-- Select the second
-                        person --', 'datas' => $refugees, "selected_value" => (isset($_GET['to']) ? $_GET['to'] : "")])
-                        @stack('scripts')
-                    </div>
+                                <button id="save" class="bg-green-200 hover:bg-green-300 text-black hover:text-black font-bold py-2 px-4 rounded">
+                                    Save
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mt-3 mb-2">
+                                    @livewire("link-select-dropdown", ['label' => "from", 'placeholder' => '-- Select the first
+                                    person --', 'datas' => $refugees, "selected_value" => (isset($_GET['from']) ? $_GET['from'] :
+                                    "")])
+                                    @stack('scripts')
 
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mt-2 mb-2">
+                                    @livewire("link-select-dropdown", ['label' => "to", 'placeholder' => '-- Select the second
+                                    person --', 'datas' => $refugees, "selected_value" => (isset($_GET['to']) ? $_GET['to'] : "")])
+                                    @stack('scripts')
+                                </div>
+                            </div>
+                            <div class="rounded-lg px-2">
+                                @foreach(ListRelation::all() as $relation)
+                                    <i class="fas fa-circle" style="color: {{ $relation->color }}"> {{$relation->name}}</i>
+                                @endforeach
+                            </div>
+                            <div class="rounded-lg px-2">
 
-                </div>
-                <!--
-                <a href="?layout=cise">Cise</a>
-                <a href="?layout=dagre">Dagre</a>
-                <a href="?layout=fcose">Fcose</a>
-                -->
+                                @foreach(ListRole::all() as $role)
+                                    <i class="fas fa-circle" style="color: {{ $role->color }}"> {{$role->displayed_value_content}}</i>
+                                @endforeach
+                            </div>
+                            <hr>
+                        </div>
 
-
-                <hr>
-                <div id="cy"></div>
             </div>
         </div>
     </div>
+        <div class="ml-5 mr-5">
+            <div id="cyWrapper"  style="border: 1px solid lightgrey;">
+                <div id="cy" class="h5/6"></div>
+            </div>
+        </div>
 </x-app-layout>

@@ -207,16 +207,16 @@ class LinkController extends Controller
         if ($request->user()->tokenCan("update")) {
             $responseArray = [];
             foreach ($request->validated() as $link) {
-                $link['api_log'] = $log->id;
                 $link["application_id"] = $log->application_id;
                 //check
                 if (key_exists("id", $link)) { // update
                     $linkUpdate = Link::find($link["id"]);
+                    $link["api_log"] = $log->id;
                     $linkUpdate->update($link);
                     $link = $linkUpdate;
                 } else {
                     //find or create
-                    $link = Link::firstOrCreate($link);
+                    $link = Link::firstOrCreate($link, ["api_log" => $log->id]);
 
                 }
                 array_push($responseArray, $link->id);
