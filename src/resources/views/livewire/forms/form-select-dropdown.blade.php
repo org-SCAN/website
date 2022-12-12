@@ -6,7 +6,6 @@
         'datas' => $associated_list,
         'selected_value' => old($form_elem, $previous)
         ])
-    @stack('scripts')
     <small id="{{ $form_elem }}Help" class="block font-medium text-sm text-gray-500">
         {!! $hint !!} <em class="text-sm text-red-600">{!! $warning !!}</em></small>
     @if($showError)

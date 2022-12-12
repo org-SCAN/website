@@ -23,7 +23,6 @@
         }
 
         #cy {
-
             height:70vh;
             position: relative;
         }
@@ -33,60 +32,112 @@
     <script src="js/cytoscape/cytoscape.js"></script>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex flex-col">
-                <div class="container">
+            <div class="flex flex-col mb-2">
+                <div class="ml-5 mr-5">
                         <div class="row h/6">
-                            <div class="col-md-2">
-                                <button class="bg-red-200 hover:bg-red-300 text-black hover:text-black font-bold py-2 px-4 rounded" id="clear">
-                                    Clear
-                                </button>
-                            </div>
-                            <div class="col-md-2">
-                                <button class="bg-blue-200 hover:bg-blue-300 text-black hover:text-black font-bold py-2 px-4 rounded"
-                                        id="betweenness_centrality">
-                                    Show betweenness Centrality
-                                </button>
-                            </div>
-                            <div class="col-md-2">
-
-                                <button id="save" class="bg-green-200 hover:bg-green-300 text-black hover:text-black font-bold py-2 px-4 rounded">
-                                    Save
-                                </button>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="mt-3 mb-2">
-                                    @livewire("link-select-dropdown", ['label' => "from", 'placeholder' => '-- Select the first
-                                    person --', 'datas' => $refugees, "selected_value" => (isset($_GET['from']) ? $_GET['from'] :
-                                    "")])
-                                    @stack('scripts')
-
+                            <div class="col-lg-4 col-md-12">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h3>Legend</h3>
+                                    </div>
+                                    <div class="rounded-lg px-2 col-12">
+                                        Relations :
+                                        @foreach(ListRelation::all() as $relation)
+                                            <i class="fas fa-circle" style="color: {{ $relation->color }}"> {{$relation->name}}</i>
+                                        @endforeach
+                                    </div>
+                                    <div class="rounded-lg px-2 col-12">
+                                        Roles
+                                        @foreach(ListRole::all() as $role)
+                                            <i class="fas fa-circle" style="color: {{ $role->color }}"> {{$role->displayed_value_content}}</i>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="mt-2 mb-2">
-                                    @livewire("link-select-dropdown", ['label' => "to", 'placeholder' => '-- Select the second
-                                    person --', 'datas' => $refugees, "selected_value" => (isset($_GET['to']) ? $_GET['to'] : "")])
-                                    @stack('scripts')
+                            <div class="col-lg-4 col-md-6 ">
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h3>Options</h3>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                @livewire('forms.form', [
+                                                'type' => 'select-dropdown',
+                                                'form_elem' => 'layout',
+                                                'placeHolder' => '-- Select the layout --',
+                                                'associated_list' => ['fcose' => 'fcose', 'breadthfirst' => 'breadthfirst', 'dagre' => 'dagre', 'avsdf' => 'avsdf', 'cise' => 'cise'],
+                                                'showError' => false,
+                                                ])
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                @livewire('forms.form', [
+                                                'type' => 'select-dropdown',
+                                                'form_elem' => 'lists',
+                                                'placeHolder' => '-- Select the list --',
+                                                'associated_list' => $lists,
+                                                'showError' => false,
+                                                ])
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h3>Filters</h3>
+                                            </div>
+                                            <div class="col-md-12">
+                                                @livewire('forms.form', [
+                                                    'type' => 'select-dropdown',
+                                                    'form_elem' => 'from',
+                                                    'placeHolder' => '-- Select the first person --',
+                                                    'associated_list' => $refugees,
+                                                    'showError' => false,
+                                                ])
+                                            </div>
+                                            <div class="col-md-12">
+                                                @livewire('forms.form', [
+                                                    'type' => 'select-dropdown',
+                                                    'form_elem' => 'to',
+                                                    'placeHolder' => '-- Select the second person --',
+                                                    'associated_list' => $refugees,
+                                                    'showError' => false,
+                                                ])
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="rounded-lg px-2">
-                                @foreach(ListRelation::all() as $relation)
-                                    <i class="fas fa-circle" style="color: {{ $relation->color }}"> {{$relation->name}}</i>
-                                @endforeach
-                            </div>
-                            <div class="rounded-lg px-2">
 
-                                @foreach(ListRole::all() as $role)
-                                    <i class="fas fa-circle" style="color: {{ $role->color }}"> {{$role->displayed_value_content}}</i>
-                                @endforeach
+                            <div class="col-lg-4 col-md-6 ">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h3>Actions</h3>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="bg-red-200 hover:bg-red-300 text-black hover:text-black font-bold py-2 px-4 rounded" id="clear">
+                                            Clear
+                                        </button>
+
+                                        <button class="bg-blue-200 hover:bg-blue-300 text-black hover:text-black font-bold py-2 px-4 rounded"
+                                                id="betweenness_centrality">
+                                            Show centrality
+                                        </button>
+
+                                        <button id="save" class="bg-green-200 hover:bg-green-300 text-black hover:text-black font-bold py-2 px-4 rounded">
+                                            Save as png
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <hr>
                         </div>
 
             </div>
         </div>
-    </div>
         <div class="ml-5 mr-5">
             <div id="cyWrapper"  style="border: 1px solid lightgrey;">
                 <div id="cy" class="h5/6"></div>

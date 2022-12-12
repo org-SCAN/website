@@ -120,7 +120,6 @@ function view_relative(cy, ele){
     cy.elements().show();
     // check that ele is a node
     if(ele.isNode()){
-        console.log(ele);
         // show all elements
         let connected = ele.union(ele.component())
         let notConnected = cy.elements().not(connected)
@@ -132,33 +131,6 @@ function view_relative(cy, ele){
     cy.fit(shown, 50)
 }
 
-function insertParam(key, value) {
-    key = encodeURIComponent(key);
-    value = encodeURIComponent(value);
-
-    // kvp looks like ['key1=value1', 'key2=value2', ...]
-    var kvp = document.location.search.substr(1).split('&');
-    let i=0;
-
-    for(; i<kvp.length; i++){
-        if (kvp[i].startsWith(key + '=')) {
-            let pair = kvp[i].split('=');
-            pair[1] = value;
-            kvp[i] = pair.join('=');
-            break;
-        }
-    }
-
-    if(i >= kvp.length){
-        kvp[kvp.length] = [key,value].join('=');
-    }
-
-    // can return this or...
-    let params = kvp.join('&');
-
-    // reload page with new params
-    document.location.search = params;
-}
 
 function drawGraph(){
     $.getJSON('/content.json', function(data){
@@ -235,14 +207,12 @@ function drawGraph(){
             style: style
         })
 
-
-
         /*
-
             ******** DEFINE LAYOUT ******
-
          */
         cy.layout(dagre_layout).run();
+        // set the selected layout to dagre in the select and display it as selected
+        changeSelectedLayout('dagre');
 
         /*
 
@@ -251,6 +221,21 @@ function drawGraph(){
 
         let defaults = {
             menuRadius: function(ele){ return 100; }, // the outer radius (node center to the end of the menu) in pixels. It is added to the rendered size of the node. Can either be a number or function as in the example.
+            fillColor: 'rgba(0, 0, 0, 0.75)', // the background colour of the menu
+            activeFillColor: 'rgba(1, 105, 217, 0.75)', // the colour used to indicate the selected command
+            activePadding: 20, // additional size in pixels for the active command
+            indicatorSize: 24, // the size in pixels of the pointer to the active command, will default to the node size if the node size is smaller than the indicator size,
+            separatorWidth: 3, // the empty spacing in pixels between successive commands
+            spotlightPadding: 4, // extra spacing in pixels between the element and the spotlight
+            adaptativeNodeSpotlightRadius: false, // specify whether the spotlight radius should adapt to the node size
+            minSpotlightRadius: 24, // the minimum radius in pixels of the spotlight (ignored for the node if adaptativeNodeSpotlightRadius is enabled but still used for the edge & background)
+            maxSpotlightRadius: 38, // the maximum radius in pixels of the spotlight (ignored for the node if adaptativeNodeSpotlightRadius is enabled but still used for the edge & background)
+            openMenuEvents: 'cxttapstart taphold', // space-separated cytoscape events that will open the menu; only `cxttapstart` and/or `taphold` work here
+            itemColor: 'white', // the colour of text in the command's content
+            itemTextShadowColor: 'transparent', // the text shadow colour of the command's content
+            zIndex: 9999, // the z-index of the ui div
+            atMouse: false, // draw menu at mouse position
+            outsideMenuCancel: false, // if set to a number, this will cancel the command if the pointer is released outside of the spotlight, padded by the number given
             selector: 'node', // elements matching this Cytoscape.js selector will trigger cxtmenus
             commands: [ // an array of commands to list in the menu or a function that returns the array
                 {
@@ -258,6 +243,7 @@ function drawGraph(){
                     select: function(ele){
                         // set the from selected value
                         $('#from').val(ele.id());
+                        $('#select2-from-container').attr('title', ele.json()["data"]["name"]).text(ele.json()["data"]["name"]);
                         view_relative(cy, ele);
                     }
                 },
@@ -265,7 +251,8 @@ function drawGraph(){
                     content: 'set as TO',
                     select: function(ele){
                         $('#to').val(ele.id());
-                        view_relative(cy, ele);
+                        $('#select2-to-container').attr('title', ele.json()["data"]["name"]).text(ele.json()["data"]["name"]);
+                        setTo()
                     }
                 },
                 {
@@ -287,25 +274,11 @@ function drawGraph(){
                     },
                     enabled : false
                 }
-            ], // function( ele ){ return [ /*...*/ ] }, // a function that returns commands or a promise of commands
-            fillColor: 'rgba(0, 0, 0, 0.75)', // the background colour of the menu
-            activeFillColor: 'rgba(1, 105, 217, 0.75)', // the colour used to indicate the selected command
-            activePadding: 20, // additional size in pixels for the active command
-            indicatorSize: 24, // the size in pixels of the pointer to the active command, will default to the node size if the node size is smaller than the indicator size,
-            separatorWidth: 3, // the empty spacing in pixels between successive commands
-            spotlightPadding: 4, // extra spacing in pixels between the element and the spotlight
-            adaptativeNodeSpotlightRadius: false, // specify whether the spotlight radius should adapt to the node size
-            minSpotlightRadius: 24, // the minimum radius in pixels of the spotlight (ignored for the node if adaptativeNodeSpotlightRadius is enabled but still used for the edge & background)
-            maxSpotlightRadius: 38, // the maximum radius in pixels of the spotlight (ignored for the node if adaptativeNodeSpotlightRadius is enabled but still used for the edge & background)
-            openMenuEvents: 'cxttapstart taphold', // space-separated cytoscape events that will open the menu; only `cxttapstart` and/or `taphold` work here
-            itemColor: 'white', // the colour of text in the command's content
-            itemTextShadowColor: 'transparent', // the text shadow colour of the command's content
-            zIndex: 9999, // the z-index of the ui div
-            atMouse: false, // draw menu at mouse position
-            outsideMenuCancel: false // if set to a number, this will cancel the command if the pointer is released outside of the spotlight, padded by the number given
+            ] // function( ele ){ return [ /*...*/ ] }, // a function that returns commands or a promise of commands
         };
 
         cy.cxtmenu( defaults );
+
 
         cy.cxtmenu({
             selector: 'core',
@@ -314,6 +287,7 @@ function drawGraph(){
                 {
                     content: 'Dagre layout',
                     select: function(){
+                        changeSelectedLayout('dagre');
                         cy.layout(dagre_layout).run();
                     }
                 },
@@ -321,24 +295,31 @@ function drawGraph(){
                 {
                     content: 'Cise layout',
                     select: function(){
+                        changeSelectedLayout('cise');
                         cy.layout(cise_layout).run();
                     }
                 },
                 {
                     content: 'Fcose layout',
                     select: function(){
+                        changeSelectedLayout('fcose');
                         cy.layout(fcose_layout).run();
                     }
                 },
                 {
                     content: 'Breadthfirst layout',
                     select: function(){
+
+                        changeSelectedLayout('breadthfirst');
                         cy.layout(breadthfirst_layout).run();
                     }
                 },
                 {
                     content: 'AVSDF layout',
                     select: function(){
+                        // set the selected layout to avsdf in the select
+
+                        changeSelectedLayout('avsdf');
                         cy.layout(avsdf_layout).run();
                     }
                 },
@@ -355,7 +336,6 @@ function drawGraph(){
                 }
             ]
         });
-
         cy.cxtmenu({
             selector: 'edge',
 
@@ -382,77 +362,63 @@ function drawGraph(){
             ]
         });
 
-        /*
 
-                **** DEFINE persons details ****
-
-         */
-        const from = (urlParams.has("from") ? urlParams.get("from") : "");
-        if(from != ""){
-            view_relative(cy, cy.$id(from))
-        }
-        /*
-
-                **** DEFINE CALCULATION ****
-
-         */
-
-
-        const calcul = (urlParams.has("calcul") ? urlParams.get("calcul") : "");
-
-
-        const to = (urlParams.has("to") ? urlParams.get("to") : "");
-
-        if(from != "" && to != "") {
-            var dijkstra = cy.elements().dijkstra('#'+from, function (edge) {
-                return edge.data('weight');
-            }, false);
-            var bfs = dijkstra.pathTo(cy.$('#'+to));
-
-            var x = 0;
-            var highlightNextEle = function () {
-                var el = bfs[x];
-                el.addClass('highlighted');
-                if (x < bfs.length) {
-                    x++;
-                    setTimeout(highlightNextEle);
-                }
-            };
-            highlightNextEle();
-        }
 
 
         // when a person is selected in the from list, we show the related persons
-        $("#from").change(function() {
+        window.$("#from").change(function() {
             view_relative(cy, cy.$id($(this).val() ?? []))
+            // close the dropdown
+            $(this).blur();
         });
 
         // when a person is selected in the to list, we show the related persons, if the from is not empty
         // else we show the shortest path between the two persons
-        $("#to").change(function() {
-            let from = $("#from").val();
-            if(from != ""){
-                console.log("to changed : && from not empty "+$(this).val()+" "+$("#from").val());
-                var dijkstra = cy.elements().dijkstra('#'+from, function (edge) {
-                    return edge.data('weight');
-                }, false);
-                var bfs = dijkstra.pathTo(cy.$('#'+$(this).val()));
+        window.$("#to").change(function() {
 
-                var x = 0;
-                var highlightNextEle = function () {
-                    var el = bfs[x];
-                    el.addClass('highlighted');
-                    if (x < bfs.length) {
-                        x++;
-                        setTimeout(highlightNextEle);
-                    }
-                };
-                highlightNextEle();
-            }else{
-                console.log("to changed && from empty: "+$(this).val());
-                view_relative(cy, cy.$id($(this).val()))
-            }
+            setTo()
+            //close the dropdown
+            $(this).blur();
         });
+
+        // On layout dropdown change, we change the layout accordingly
+        window.$("#layout").change(function() {
+            let layout = $(this).val();
+
+            if(layout == "dagre"){
+                changeSelectedLayout('dagre');
+                cy.layout(dagre_layout).run();
+            }
+            else if(layout == "cise"){
+                changeSelectedLayout('cise');
+                cy.layout(cise_layout).run();
+            }
+            else if(layout == "fcose"){
+                changeSelectedLayout('fcose');
+                cy.layout(fcose_layout).run();
+            }
+            else if(layout == "breadthfirst"){
+                changeSelectedLayout('breadthfirst');
+                cy.layout(breadthfirst_layout).run();
+            }
+            else if(layout == "avsdf"){
+                changeSelectedLayout('avsdf');
+                cy.layout(avsdf_layout).run();
+            }
+
+            $(this).blur();
+        }) ;
+
+        // On layout dropdown change, we change the layout accordingly
+        window.$("#list").change(function() {
+            let list = $(this).val();
+
+            // call the api to get the list content
+
+            // map the list content with colors and add it to the cytoscape graph
+
+            $(this).blur();
+        }) ;
 
         // on click on the save button, save the graph as png
         $("#save").click(function(){
@@ -473,7 +439,7 @@ function drawGraph(){
                     n.style("background-color", perc2color(100 * n.data("bcn")))
                 });
                 // Change the button text to hide the betweenness centrality
-                $("#betweenness_centrality").text("Hide betweenness centrality");
+                $("#betweenness_centrality").text("Hide centrality");
             }
             else{ // if the betweenness centrality is already displayed, hide it
                 cy.nodes().forEach(n => {
@@ -481,7 +447,7 @@ function drawGraph(){
                     // get the color based on the role of the person
                 });
                 // Change the button text to show the betweenness centrality
-                $("#betweenness_centrality").text("Show betweenness centrality");
+                $("#betweenness_centrality").text("Show centrality");
             }
         });
 
@@ -493,20 +459,63 @@ function drawGraph(){
             cy.add(data);
             // clear the from and to lists
             $("#from").val("");
+            $("#select2-from-container").text("-- Select the first person --");
+
             $("#to").val("");
+            $("#select2-to-container").text("-- Select the second person --");
+
             // clear the betweenness centrality
             cy.nodes().forEach(n => {
                 n.style("background-color", role_color[n.data("role")]);
                 // get the color based on the role of the person
             });
             // Change the button text to show the betweenness centrality
-            $("#betweenness_centrality").text("Show betweenness centrality");
+            $("#betweenness_centrality").text("Show centrality");
             cy.layout(dagre_layout).run();
+
+            $("#select2-layout-container").text("dagre");
         });
+
+        function setTo(){
+            let from = $("#from").val();
+            let to = $("#to").val();
+
+            if(to == ""){
+                clearDijkstra()
+            }
+            else if(from != ""){
+                computeDijkstra(from, to);
+            }
+            else{
+                view_relative(cy, cy.$id(to) ?? [])
+            }
+        }
+        function changeSelectedLayout(layout) {
+            $('#layout').val(layout);
+            $('#select2-layout-container').attr('title', layout).text(layout);
+        }
+        function computeDijkstra(from, to) {
+            clearDijkstra()
+            var dijkstra = cy.elements().dijkstra('#'+from, function (edge) {
+                return edge.data('weight');
+            }, false);
+            var bfs = dijkstra.pathTo(cy.$('#'+to));
+
+            var x = 0;
+            var highlightNextEle = function () {
+                var el = bfs[x];
+                el.addClass('highlighted');
+                if (x < bfs.length) {
+                    x++;
+                    setTimeout(highlightNextEle);
+                }
+            };
+            highlightNextEle();
+        }
+        function clearDijkstra() {
+            cy.elements().removeClass('highlighted');
+        }
     });
-
-
-
 }
 drawGraph();
 

@@ -22,6 +22,8 @@ class CytoscapeController extends Controller
 
     public function index()
     {
+        // get the lists associated to the given crew
+        $lists = Field::whereCrewId(Auth::user()->crew_id)->whereRelation('dataType','name', 'List')->get()->pluck('title', 'linked_list');
         $relations = Link::whereRelation('RefugeeFrom.crew', 'crews.id', Auth::user()->crew->id)
             ->whereRelation('RefugeeTo.crew', 'crews.id', Auth::user()->crew->id)
             ->get();
@@ -94,6 +96,6 @@ class CytoscapeController extends Controller
 
         // file_put_contents("js/cytoscape/content.json",json_encode(array_merge($nodes, $links)));
         Storage::disk('public')->put('content.json', json_encode(array_merge($nodes, $links)));
-        return view("cytoscape.index", compact("relations", "refugees"));
+        return view("cytoscape.index", compact("relations", "refugees", "lists"));
     }
 }
