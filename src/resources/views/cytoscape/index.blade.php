@@ -41,16 +41,21 @@
                                         <h3>Legend</h3>
                                     </div>
                                     <div class="rounded-lg px-2 col-12">
-                                        Relations :
-                                        @foreach(ListRelation::all() as $relation)
-                                            <i class="fas fa-circle" style="color: {{ $relation->color }}"> {{$relation->name}}</i>
-                                        @endforeach
+                                        <span class="legendRelation" id="">
+                                            Relations :
+                                        </span>
+                                        <div class="legendRelation">
+                                            @foreach(ListRelation::all() as $relation)
+                                                <em class="fas fa-circle" style="color: {{ $relation->color }}"> {{$relation->name}}</em>
+                                            @endforeach
+                                        </div>
                                     </div>
                                     <div class="rounded-lg px-2 col-12">
-                                        Roles
-                                        @foreach(ListRole::all() as $role)
-                                            <i class="fas fa-circle" style="color: {{ $role->color }}"> {{$role->displayed_value_content}}</i>
-                                        @endforeach
+                                        <span class="legendList">
+                                            Nodes :
+                                        </span>
+                                        <div class="legendList" id="legendList">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -76,9 +81,9 @@
                                             <div class="col-md-12">
                                                 @livewire('forms.form', [
                                                 'type' => 'select-dropdown',
-                                                'form_elem' => 'lists',
+                                                'form_elem' => 'list',
                                                 'placeHolder' => '-- Select the list --',
-                                                'associated_list' => $lists,
+                                                'associated_list' => $lists_name,
                                                 'showError' => false,
                                                 ])
                                             </div>
@@ -143,4 +148,8 @@
                 <div id="cy" class="h5/6"></div>
             </div>
         </div>
+        <script>
+            var persons = {!!  $persons!!};
+            var field_list = {!! $field_list !!};
+        </script>
 </x-app-layout>

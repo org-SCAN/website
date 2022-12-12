@@ -24,19 +24,19 @@ const API_key = process.env.MIX_SCAN_API_TOKEN;
 const API_application_id = 'SCAN_CYTOSCAPE';
 
 var listRelations = [];
-var listRoles = [];
 var lists = getLists()
 
 // toggle elements
 var relation_details = false;
 var betweenness_activate = false;
 
-// colors map
-var role_color = {}
-
+// variable relative to the list of node type
+var listHasChanged = false;
+var listNodeTypeId = "";
+var listNodeType = [];
+var list_node_type_colors = {}
 
 listRelations = getListRelations();
-listRoles = getListRoles();
 
 
 /**
@@ -75,6 +75,19 @@ function getLists(){
 }
 
 /**
+ * This function get the displayed value field based on the list id
+ */
+function getDisplayedValue(list_id){
+    let displayedValue;
+    lists.forEach(function (list) {
+        if(list.id === list_id){
+             return displayedValue = list.displayed_value;
+        }
+    });
+    return displayedValue;
+}
+
+/**
  * This function get the list id from the name of the list.
  */
 function getListId(listName){
@@ -95,11 +108,10 @@ function getListRelations(){
     return callAPI('/api/list/'+getListId('ListRelation'));
 }
 /**
- * This function calls the API to get the list of roles.
- * It gets the relation list id from the lists array.
+ * This function calls the API to get the elem of the selected list.
  */
-function getListRoles(){
-    return callAPI('/api/list/'+getListId('ListRole'));
+function getListNodeType(list_id){
+    return callAPI('/api/list/'+list_id);
 }
 
 function perc2color(perc) {
@@ -131,7 +143,6 @@ function view_relative(cy, ele){
     cy.fit(shown, 50)
 }
 
-
 function drawGraph(){
     $.getJSON('/content.json', function(data){
 
@@ -146,19 +157,6 @@ function drawGraph(){
                 'font-size': 25
             }
         })
-
-        listRoles.forEach(function (role) {
-            role_color[role.short.eng] = role.color;
-            style.push({
-                selector: 'node[role = "'+role.short.eng+'"]',
-                style: {
-                    'background-color': role.color,
-                    'label': 'data(name)',
-                    'font-size': 25,
-                    'shape': role.shape ?? 'diamond'
-                }
-            });
-        });
 
         style.push({
             selector: 'edge',
@@ -276,10 +274,7 @@ function drawGraph(){
                 }
             ] // function( ele ){ return [ /*...*/ ] }, // a function that returns commands or a promise of commands
         };
-
         cy.cxtmenu( defaults );
-
-
         cy.cxtmenu({
             selector: 'core',
 
@@ -411,12 +406,27 @@ function drawGraph(){
 
         // On layout dropdown change, we change the layout accordingly
         window.$("#list").change(function() {
-            let list = $(this).val();
+            if($(this).val() == "") {
+                clear()
+                return ;
+            }
+            listHasChanged = true;
 
-            // call the api to get the list content
+            listNodeTypeId = $(this).val(); // contains the list id
 
-            // map the list content with colors and add it to the cytoscape graph
+            // get the list content from the api
+            listNodeType = getListNodeType(listNodeTypeId) // contains the content of the list
 
+            // update the data : add the type attribute to the nodes according to the list
+            updateData()
+
+            // update the style : add the color attribute to the nodes according to the list
+            updateStyle()
+
+            // update the legend : add the legend according to the list
+            updateLegend()
+
+            listHasChanged = false;
             $(this).blur();
         }) ;
 
@@ -443,8 +453,8 @@ function drawGraph(){
             }
             else{ // if the betweenness centrality is already displayed, hide it
                 cy.nodes().forEach(n => {
-                    n.style("background-color", role_color[n.data("role")]);
-                    // get the color based on the role of the person
+                    n.style("background-color", list_node_type_colors[n.data("type")]);
+                    // get the color based on the node type of the person
                 });
                 // Change the button text to show the betweenness centrality
                 $("#betweenness_centrality").text("Show centrality");
@@ -453,27 +463,7 @@ function drawGraph(){
 
         // on click on the clear button, redraw the graph
         $("#clear").click(function(){
-            // clear the graph
-            cy.remove(cy.elements());
-            // redraw the graph
-            cy.add(data);
-            // clear the from and to lists
-            $("#from").val("");
-            $("#select2-from-container").text("-- Select the first person --");
-
-            $("#to").val("");
-            $("#select2-to-container").text("-- Select the second person --");
-
-            // clear the betweenness centrality
-            cy.nodes().forEach(n => {
-                n.style("background-color", role_color[n.data("role")]);
-                // get the color based on the role of the person
-            });
-            // Change the button text to show the betweenness centrality
-            $("#betweenness_centrality").text("Show centrality");
-            cy.layout(dagre_layout).run();
-
-            $("#select2-layout-container").text("dagre");
+            clear()
         });
 
         function setTo(){
@@ -514,6 +504,90 @@ function drawGraph(){
         }
         function clearDijkstra() {
             cy.elements().removeClass('highlighted');
+        }
+        function generateNodeStyle(){
+            let nodeStyle = [];
+            let displayed = getDisplayedValue(listNodeTypeId);
+            // 3. Generate the style
+            listNodeType.forEach(function(nodeType){
+                //generate a random color
+                let shape = nodeType.shape ?? 'diamond';
+                let value = nodeType[displayed].eng;
+                let color = undefined;
+                if(listHasChanged){
+                    color = nodeType.color ?? '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+                }
+                else{
+                    color = nodeType.color ?? list_node_type_colors[value];
+                }
+                list_node_type_colors[value] = color;
+                let style = {
+                    selector: 'node[type = "'+value+'"]',
+                    style: {
+                        'background-color': color,
+                        'label': 'data(name)',
+                        'font-size': 25,
+                        'shape': shape
+                    }
+                };
+                nodeStyle.push(style);
+            });
+            return nodeStyle;
+        }
+
+        function updateStyle(){
+            // remove the old style
+            cy.style().resetToDefault();
+            // add the new style
+            let nodeStyle = generateNodeStyle();
+
+            // concat style and nodeStyle to get the new style
+            let newStyle = style.concat(nodeStyle);
+
+            cy.style(newStyle);
+        }
+
+        // According to the list, we change the 'type' of each node.
+        // It uses the window.persons variable
+        function updateData(){
+            // foreach nodes
+            cy.nodes().forEach(function(node){
+               //update the data
+                let type = window.persons[node.id()][window.field_list[listNodeTypeId]];
+                node.data("type", type);
+            });
+
+        }
+
+        function updateLegend(){
+            let displayed = getDisplayedValue(listNodeTypeId);
+            let legend = "";
+            listNodeType.forEach(function(nodeType){
+                let value = nodeType[displayed].eng;
+                let color = list_node_type_colors[value];
+                legend += '<em class="fas fa-circle" style="color: '+color+'">'+value+'</em>';
+            });
+            $("#legendList").html(legend);
+        }
+
+        function clear(){
+            // clear the graph
+            cy.remove(cy.elements());
+            // redraw the graph
+            cy.add(data);
+            // clear the from and to lists
+            $("#from").val("");
+            $("#select2-from-container").text("-- Select the first person --");
+
+            $("#to").val("");
+            $("#select2-to-container").text("-- Select the second person --");
+
+            updateStyle();
+            // Change the button text to show the betweenness centrality
+            $("#betweenness_centrality").text("Show centrality");
+            cy.layout(dagre_layout).run();
+
+            $("#select2-layout-container").text("dagre");
         }
     });
 }
