@@ -242,7 +242,7 @@ function drawGraph(){
                         // set the from selected value
                         $('#from').val(ele.id());
                         $('#select2-from-container').attr('title', ele.json()["data"]["name"]).text(ele.json()["data"]["name"]);
-                        view_relative(cy, ele);
+                        setFrom();
                     }
                 },
                 {
