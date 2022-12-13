@@ -81,6 +81,6 @@
     "database_type": "string",
     "html_type": "color",
     "java_type": "color",
-    "validation": "regex:#[a-fA-F0-9]{3,6}"
+    "validation": "regex:/#[a-fA-F0-9]{3,6}/"
   }
 ]

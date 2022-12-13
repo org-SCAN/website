@@ -19,3 +19,33 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+# https://cylab.be/blog/157/laravel-optimization-static-content-caching-and-cache-busting
+<IfModule mod_expires.c>
+  ExpiresActive on
+  ExpiresDefault                          "access plus 0 seconds"
+
+  # Favicon
+  ExpiresByType image/x-icon              "access plus 1 month"
+
+  # CSS and JavaScript
+  ExpiresByType application/javascript    "access plus 1 month"
+  ExpiresByType text/css                  "access plus 1 month"
+
+  # Media: images, video, audio
+  ExpiresByType audio/ogg                 "access plus 1 month"
+  ExpiresByType image/gif                 "access plus 1 month"
+  ExpiresByType image/jpeg                "access plus 1 month"
+  ExpiresByType image/png                 "access plus 1 month"
+  ExpiresByType video/mp4                 "access plus 1 month"
+  ExpiresByType video/ogg                 "access plus 1 month"
+  ExpiresByType video/webm                "access plus 1 month"
+
+  # Webfonts
+  ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
+  ExpiresByType font/ttf                  "access plus 1 month"
+  ExpiresByType font/opentype             "access plus 1 month"
+  ExpiresByType font/woff                 "access plus 1 month"
+  ExpiresByType font/woff2                "access plus 1 month"
+  ExpiresByType image/svg+xml             "access plus 1 month"
+</IfModule>

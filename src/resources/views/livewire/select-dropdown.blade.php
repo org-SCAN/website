@@ -13,11 +13,12 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            function onSelectedChange(id) {
+                var data = $(id).select2("val");
+                @this.set('selected', data);
+            }
             $('#{{$label}}').select2();
-            $('#{{$label}}').on('change', function (e) {
-                var data = $('#{{$label}}').select2("val");
-            @this.set('selected', data);
-            });
+            $('#{{$label}}').change(onSelectedChange('#{{$label}}'));
         });
     </script>
 @endpush
