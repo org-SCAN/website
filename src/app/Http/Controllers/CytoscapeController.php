@@ -24,8 +24,8 @@ class CytoscapeController extends Controller
     {
         // get the lists associated to the given crew
         $lists = Field::whereCrewId(Auth::user()->crew_id)->whereRelation('dataType','name', 'List')->get();
-        $lists_name = $lists->pluck('title', 'linked_list');
-        $field_list = json_encode($lists->pluck('id','linked_list'));
+        $lists_name = $lists->pluck('title', 'id');
+        $field_list = json_encode($lists->pluck('linked_list','id'));
         $relations = Link::whereRelation('RefugeeFrom.crew', 'crews.id', Auth::user()->crew->id)
             ->whereRelation('RefugeeTo.crew', 'crews.id', Auth::user()->crew->id)
             ->get();

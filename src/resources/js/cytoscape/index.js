@@ -32,6 +32,7 @@ var betweenness_activate = false;
 
 // variable relative to the list of node type
 var listHasChanged = false;
+var listFieldId = "";
 var listNodeTypeId = "";
 var listNodeType = [];
 var list_node_type_colors = {}
@@ -412,7 +413,8 @@ function drawGraph(){
             }
             listHasChanged = true;
 
-            listNodeTypeId = $(this).val(); // contains the list id
+            listFieldId = $(this).val(); // contains the field id
+            listNodeTypeId = window.field_list[listFieldId]; // contains the list id
 
             // get the list content from the api
             listNodeType = getListNodeType(listNodeTypeId) // contains the content of the list
@@ -566,7 +568,7 @@ function drawGraph(){
             // foreach nodes
             cy.nodes().forEach(function(node){
                //update the data
-                let type = window.persons[node.id()][window.field_list[listNodeTypeId]];
+                let type = window.persons[node.id()][listFieldId];
                 node.data("type", type);
             });
 
@@ -581,7 +583,7 @@ function drawGraph(){
                 //check if the value is used in at least one node (check it through window.persons)
                 let used = false;
                 for(let person in window.persons){
-                    if(window.persons[person][window.field_list[listNodeTypeId]] == value){
+                    if(window.persons[person][listFieldId] == value){
                         used = true;
                         break;
                     }
