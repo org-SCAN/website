@@ -362,7 +362,7 @@ function drawGraph(){
 
         // when a person is selected in the from list, we show the related persons
         window.$("#from").change(function() {
-            view_relative(cy, cy.$id($(this).val() ?? []))
+            setFrom()
             // close the dropdown
             $(this).blur();
         });
@@ -435,7 +435,8 @@ function drawGraph(){
             var png64 = cy.png();
             var a = document.createElement('a');
             a.href = png64;
-            a.download = 'graph.png';
+            // the filename is the name of the graph + the date
+            a.download = "graph" + "_" + new Date().toISOString().slice(0, 10) + ".png";
             a.click();
         });
 
@@ -453,9 +454,10 @@ function drawGraph(){
             }
             else{ // if the betweenness centrality is already displayed, hide it
                 cy.nodes().forEach(n => {
-                    n.style("background-color", list_node_type_colors[n.data("type")]);
-                    // get the color based on the node type of the person
+                   // remove the background color
+                     n.removeStyle("background-color");
                 });
+                updateStyle()
                 // Change the button text to show the betweenness centrality
                 $("#betweenness_centrality").text("Show centrality");
             }
@@ -466,6 +468,18 @@ function drawGraph(){
             clear()
         });
 
+        function setFrom(){
+            let from = $("#from").val();
+            let to = $("#to").val();
+
+            if(from == ""){
+                clearDijkstra()
+            }
+            else if(to != ""){
+                computeDijkstra(from, to);
+            }
+            view_relative(cy, cy.$id(from) ?? [])
+        }
         function setTo(){
             let from = $("#from").val();
             let to = $("#to").val();
@@ -534,7 +548,6 @@ function drawGraph(){
             });
             return nodeStyle;
         }
-
         function updateStyle(){
             // remove the old style
             cy.style().resetToDefault();
@@ -558,14 +571,24 @@ function drawGraph(){
             });
 
         }
-
         function updateLegend(){
             let displayed = getDisplayedValue(listNodeTypeId);
             let legend = "";
             listNodeType.forEach(function(nodeType){
                 let value = nodeType[displayed].eng;
                 let color = list_node_type_colors[value];
-                legend += '<em class="fas fa-circle" style="color: '+color+'">'+value+'</em>';
+
+                //check if the value is used in at least one node (check it through window.persons)
+                let used = false;
+                for(let person in window.persons){
+                    if(window.persons[person][window.field_list[listNodeTypeId]] == value){
+                        used = true;
+                        break;
+                    }
+                }
+                if(used) {
+                    legend += '<em class="fas fa-circle" style="color: ' + color + '">' + value + '</em>';
+                }
             });
             $("#legendList").html(legend);
         }

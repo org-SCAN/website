@@ -31,11 +31,11 @@
 
     <script src="js/cytoscape/cytoscape.js"></script>
 
-    <div class="py-12">
+    <div class="py-6">
             <div class="flex flex-col mb-2">
                 <div class="ml-5 mr-5">
                         <div class="row h/6">
-                            <div class="col-lg-4 col-md-12">
+                            <div class="col-xl-3 col-md-12">
                                 <div class="row">
                                     <div class="col-12">
                                         <h3>Legend</h3>
@@ -59,16 +59,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6 ">
+                            <div class="col-xl-6 col-lg-8 col-md-12 ">
                                 <div class="row">
-
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 p-2">
                                         <div class="row">
                                             <div class="col-12">
                                                 <h3>Options</h3>
                                             </div>
 
-                                            <div class="col-md-12">
+                                            <div class="col-md-12" style="width:100%">
                                                 @livewire('forms.form', [
                                                 'type' => 'select-dropdown',
                                                 'form_elem' => 'layout',
@@ -78,7 +77,7 @@
                                                 ])
                                             </div>
 
-                                            <div class="col-md-12">
+                                            <div class="col-md-12" style="width:100%">
                                                 @livewire('forms.form', [
                                                 'type' => 'select-dropdown',
                                                 'form_elem' => 'list',
@@ -90,12 +89,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 p-2">
                                         <div class="row">
                                             <div class="col-12">
                                                 <h3>Filters</h3>
                                             </div>
-                                            <div class="col-md-12">
+                                            <div class="col-md-12" style="width:100%">
                                                 @livewire('forms.form', [
                                                     'type' => 'select-dropdown',
                                                     'form_elem' => 'from',
@@ -104,7 +103,7 @@
                                                     'showError' => false,
                                                 ])
                                             </div>
-                                            <div class="col-md-12">
+                                            <div class="col-md-12" style="width:100%">
                                                 @livewire('forms.form', [
                                                     'type' => 'select-dropdown',
                                                     'form_elem' => 'to',
@@ -118,22 +117,22 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4 col-md-6 ">
+                            <div class="col-xl-3 col-lg-4 col-md-12 ">
                                 <div class="row">
                                     <div class="col-12">
                                         <h3>Actions</h3>
                                     </div>
                                     <div class="col-12">
-                                        <button class="bg-red-200 hover:bg-red-300 text-black hover:text-black font-bold py-2 px-4 rounded" id="clear">
+                                        <button class="bg-red-200 hover:bg-red-300 text-black hover:text-black font-bold py-2 px-4 rounded mb-2" id="clear">
                                             Clear
                                         </button>
 
-                                        <button class="bg-blue-200 hover:bg-blue-300 text-black hover:text-black font-bold py-2 px-4 rounded"
+                                        <button class="bg-blue-200 hover:bg-blue-300 text-black hover:text-black font-bold py-2 px-4 rounded mb-2"
                                                 id="betweenness_centrality">
                                             Show centrality
                                         </button>
 
-                                        <button id="save" class="bg-green-200 hover:bg-green-300 text-black hover:text-black font-bold py-2 px-4 rounded">
+                                        <button id="save" class="bg-green-200 hover:bg-green-300 text-black hover:text-black font-bold py-2 px-4 rounded mb-2">
                                             Save as png
                                         </button>
                                     </div>
