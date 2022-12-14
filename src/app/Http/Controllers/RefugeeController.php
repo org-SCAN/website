@@ -82,8 +82,14 @@ class RefugeeController extends Controller
         $old = array_combine($ids,
             $values);
 
-        
-        foreach (array_diff($request->validated(),
+        $validated = array_map((function ($value) {
+            if (is_array($value)) {
+                return json_encode($value);
+            }
+            return $value;
+        }), $request->validated());
+
+        foreach (array_diff($validated,
             $old) as $key => $value) {
             if (!empty($value)) {
                 if ($person->fields()->wherePivot('field_id',
@@ -101,7 +107,7 @@ class RefugeeController extends Controller
 
         //detach fields that are not in the request
         foreach (array_diff($old,
-            $request->validated()) as $key => $value) {
+            $validated) as $key => $value) {
             $person->fields()->detach($key);
         }
         //$refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i', time()));
@@ -177,9 +183,13 @@ class RefugeeController extends Controller
         $fields = $request->validated();
         foreach ($fields as $key => $value) {
             if (!empty($value)) {
+                if (is_array($value)) {
+                    $value = json_encode($value);
+                }
                 $ref[$key] = ["value" => $value];
             }
         }
+        //
         $refugee["date"] = date('Y-m-d H:i',
             time());
         $log = ApiLog::createFromRequest($request,

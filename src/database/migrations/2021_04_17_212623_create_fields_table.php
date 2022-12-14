@@ -46,6 +46,9 @@ class CreateFieldsTable extends Migration
             $table->boolean("descriptive_value")
                 ->default(0)
                 ->nullable();
+            $table->boolean("range")
+                ->default(0)
+                ->nullable();
             $table->foreignUuid('api_log');
             $table->softDeletes();
             $table->timestamps();

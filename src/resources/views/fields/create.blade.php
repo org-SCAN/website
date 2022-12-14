@@ -44,20 +44,22 @@
                         <div class="px-4 py-4 bg-white sm:p-6">
 
                             @php($form_elem = "data_type_id")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's Data
-                                type</label>
+                            @livewire("create-form-choose-field", [
+                                'form_elem' => $form_elem,
+                                'title' => "Field's Data type",
+                                'hint' => "It'll be used to store the datas.",
+                                "warning" => "Be careful : you couldn't change this value later",
+                                "placeHolder" => "-- Select the field type --",
+                                "associated_list" => $data_types
+                            ])
 
-                            @php( $list = $data_types )
-                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
-                                           class="form-input rounded-md shadow-sm mt-1 block w-full"/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">It'll be
-                                used to store the datas. <em class="text-sm text-red-600"> Be careful : you couldn't
-                                    change this value later</em></small>
 
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+
+
+
+
                         </div>
+
 
                         <!--  REQUIRED SECTION  -->
 

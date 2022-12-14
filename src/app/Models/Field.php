@@ -211,6 +211,10 @@ class Field extends Model
     }
 
     public function getValue(){
+
+        if($this->range){
+            return json_decode($this->pivot->value, true);
+        }
         if(empty(($this->linked_list))) {
             return $this->pivot->value;
         }

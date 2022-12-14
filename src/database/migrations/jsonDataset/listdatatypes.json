@@ -9,7 +9,8 @@
     "database_type": "text",
     "html_type": "textarea",
     "java_type": "EditText",
-    "validation": "String"
+    "validation": "String",
+    "rangeable" : false
   },
   {
     "name": {
@@ -21,7 +22,8 @@
     "database_type": "string",
     "html_type": "text",
     "java_type": "EditText",
-    "validation": "String"
+    "validation": "String",
+    "rangeable" : false
   },
   {
     "name": {
@@ -33,7 +35,8 @@
     "database_type": "double",
     "html_type": "number",
     "java_type": "number",
-    "validation": "numeric"
+    "validation": "numeric",
+    "rangeable" : true
   },
   {
     "name": {
@@ -45,7 +48,8 @@
     "database_type": "datetime",
     "html_type": "date",
     "java_type": "date",
-    "validation": "date"
+    "validation": "date",
+    "rangeable" : true
   },
   {
     "name": {
@@ -57,7 +61,8 @@
     "database_type": "boolean",
     "html_type": "checkbox",
     "java_type": "Radio Button",
-    "validation": "Boolean"
+    "validation": "Boolean",
+    "rangeable" : false
   },
   {
     "name": {
@@ -69,7 +74,8 @@
     "database_type": "uuid",
     "html_type": "select-dropdown",
     "java_type": "Spinner",
-    "validation": "uuid"
+    "validation": "uuid",
+    "rangeable" : false
   },
   {
     "name": {
@@ -81,6 +87,7 @@
     "database_type": "string",
     "html_type": "color",
     "java_type": "color",
-    "validation": "regex:/#[a-fA-F0-9]{3,6}/"
+    "validation": "regex:/#[a-fA-F0-9]{3,6}/",
+    "rangeable" : false
   }
 ]

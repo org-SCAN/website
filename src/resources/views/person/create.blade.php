@@ -17,17 +17,17 @@
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
                         @foreach($fields as $field)
-                            <div class="px-4 py-5 bg-white sm:p-6">
+                            <div class="px-4 py-4 bg-white sm:p-6">
                                     @livewire("forms.form", [
                                         'form_elem' => $field->id,
-                                        'title' => $field->title,
-                                        'type' => $field->dataType->html_type,
-                                        'placeHolder' => $field->placeholder ?? '',
                                         'showError' => false,
-                                        'associated_list' => $field->linked_list ?? null,
+                                        'field' => $field,
                                     ])
                                 @error($field->id)
                                     <p class="text-sm text-red-600">{{ Str::replace($field->id, $field->title, $message) }}</p>
+                                @enderror
+                                @error($field->id . '.current')
+                                    <p class="text-sm text-red-600">{{ Str::replace($field->id . '.current', $field->title, $message) }}</p>
                                 @enderror
                             </div>
                         @endforeach
