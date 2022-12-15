@@ -50,14 +50,10 @@
                                 'hint' => "It'll be used to store the datas.",
                                 "warning" => "Be careful : you couldn't change this value later",
                                 "placeHolder" => "-- Select the field type --",
-                                "associated_list" => $data_types
+                                "associated_list" => $data_types,
+                                "wireModel" => "isRangeable()",
+                                "previous" => $form_elem
                             ])
-
-
-
-
-
-
                         </div>
 
 
@@ -105,12 +101,11 @@
 
                             @php($form_elem = "best_descriptive_value")
                             @livewire("forms.form", [
-                            'form_elem' => $form_elem,
-                            'type' => "checkbox",
-                            'title' => "Is that the best descriptive value ?",
-                            'hint' => "If checked, it will be displayed in the Manage Persons section as the main
-                            field.",
-                            'warning' => "Be careful, there is only one best descriptive value per team."])
+                                'form_elem' => $form_elem,
+                                'type' => "checkbox",
+                                'title' => "Is that the best descriptive value ?",
+                                'hint' => "If checked, it will be displayed in the Manage Persons section as the main field.",
+                                'warning' => "Be careful, there is only one best descriptive value per team."])
                         </div>
 
                         <!--  DESCRIPTIVE_VALUE SECTION  -->
@@ -118,45 +113,22 @@
 
                             @php($form_elem = "descriptive_value")
                             @livewire("forms.form", [
-                            'form_elem' => $form_elem,
-                            'type' => "checkbox",
-                            'title' => "Is that a descriptive value ?",
-                            'hint' => "If checked, it will be displayed in the Persons section."])
+                                'form_elem' => $form_elem,
+                                'type' => "checkbox",
+                                'title' => "Is that a descriptive value ?",
+                                'hint' => "If checked, it will be displayed in the Persons section."])
                         </div>
 
-
-                        <!--  Linked List SECTION  -->
-
-                        <div class="px-4 py-4 bg-white sm:p-6">
-                            @php($form_elem = "linked_list")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
-                                associated list
-                                <a href="{{route("lists_control.create")}}"
-                                   class="inline-flex items-center text-blue-800">
-                                    ~ Create a new list
-                                </a>
-                            </label>
-
-                            @php( $list = [" " => "Choose an associate list"]+array_column(ListControl::whereNotNull('displayed_value')->get()->toArray(), "title", "id"))
-                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
-                                           class="form-input rounded-md shadow-sm mt-1 block w-full"/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define a
-                                list which is associated with this field.</small>
-
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
 
                         <div class="px-4 py-4 bg-white sm:p-6">
                             @livewire("forms.form", [
-                            'form_elem' => "validation_rules",
-                            'type' => "text",
-                            'title' => "Specific field's validation rules",
-                            'placeHolder' => "Example : required|email",
-                            'hint' => "Define the validation rules for this field. You can find the list of rules
-                            <a href='https://laravel.com/docs/9.x/validation#available-validation-rules' class='text-blue-800'>here</a>",
-                            'warning' => "Be careful, to use this section, you need to know the Laravel validation rules."
+                                'form_elem' => "validation_rules",
+                                'type' => "text",
+                                'title' => "Specific field's validation rules",
+                                'placeHolder' => "Example : required|email",
+                                'hint' => "Define the validation rules for this field. You can find the list of rules
+                                <a href='https://laravel.com/docs/9.x/validation#available-validation-rules' class='text-blue-800'>here</a>",
+                                'warning' => "Be careful, to use this section, you need to know the Laravel validation rules."
                             ])
 
                         </div>

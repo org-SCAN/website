@@ -3,14 +3,25 @@
 namespace App\Http\Livewire;
 
 
+use App\Models\ListDataType;
+
 class CreateFormChooseField extends Forms\Form
 {
-    public $rangeable = false;
-
+    public  $selectedField = null;
+    public ListDataType|null $dataType = null;
+    public $isList = false;
     // get the selected field from the dropdown
-    public function isRangeable($field)
+    public function updatedSelectedField()
     {
-        $this->rangeable = $field->dataType->rangeable;
+        // get selected field
+        $this->dataType = ListDataType::find($this->selectedField) ?? null;
+        if($this->dataType){
+            $this->rangeable = $this->dataType->rangeable ?? false;
+            $this->isList = $this->dataType->name == 'List' ?? false;
+        }else{
+            $this->rangeable = false;
+            $this->isList = false;
+        }
     }
 
     public function render()

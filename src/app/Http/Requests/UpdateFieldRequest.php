@@ -30,6 +30,7 @@ class UpdateFieldRequest extends FormRequest
             "required" => "integer|required",
             "status" => "integer|required",
             "linked_list" => "uuid|exists:list_controls,id|nullable",
+            "range" => "boolean|nullable",
             "descriptive_value" => "integer|nullable",
             "best_descriptive_value" => "integer|nullable|unique:fields,best_descriptive_value," . $this->route('field')->id . ",id,crew_id," . Auth::user()->crew->id,
             "validation_rules" => "string|nullable",

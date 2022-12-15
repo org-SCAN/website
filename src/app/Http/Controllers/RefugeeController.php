@@ -84,7 +84,10 @@ class RefugeeController extends Controller
 
         $validated = array_map((function ($value) {
             if (is_array($value)) {
-                return json_encode($value);
+                $value = json_encode(array_filter($value));
+                if ($value == "[]") {
+                    $value = null;
+                }
             }
             return $value;
         }), $request->validated());
@@ -184,7 +187,12 @@ class RefugeeController extends Controller
         foreach ($fields as $key => $value) {
             if (!empty($value)) {
                 if (is_array($value)) {
-                    $value = json_encode($value);
+                    $value = json_encode(array_filter($value));
+                    // if value == [] then it is empty, so we don't need to store it
+                    if ($value == "[]") {
+                        continue;
+                    }
+
                 }
                 $ref[$key] = ["value" => $value];
             }
