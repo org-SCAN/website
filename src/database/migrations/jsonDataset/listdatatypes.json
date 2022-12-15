@@ -89,5 +89,18 @@
     "java_type": "color",
     "validation": "regex:/#[a-fA-F0-9]{3,6}/",
     "rangeable" : false
+  },
+  {
+    "name": {
+      "eng" : "Range",
+      "fra" : "Échelle",
+      "spa" : "Escala"
+	},
+    "model": "",
+    "database_type": "double",
+    "html_type": "range",
+    "java_type": "range",
+    "validation": "numeric",
+    "rangeable" : false
   }
 ]
