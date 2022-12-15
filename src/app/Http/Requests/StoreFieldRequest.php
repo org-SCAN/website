@@ -31,6 +31,7 @@ class StoreFieldRequest extends FormRequest
             "data_type_id" => "uuid|required|exists:list_data_types,id",
             "range" => "boolean|nullable",
             "required" => "integer|required",
+            "importance" => "numeric|required",
             "status" => "integer|required",
             "linked_list" => "nullable|uuid|exists:list_controls,id",
             "descriptive_value" => "integer|nullable",

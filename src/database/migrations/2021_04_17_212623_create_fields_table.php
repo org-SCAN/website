@@ -35,6 +35,7 @@ class CreateFieldsTable extends Migration
                 ->nullable();
             $table->integer( "status");
             $table->integer( "required");
+            $table->double( "importance")->default(50);
             $table->integer("order")
                 ->default(100);
             $table->string("validation_laravel")

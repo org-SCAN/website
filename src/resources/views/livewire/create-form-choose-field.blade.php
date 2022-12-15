@@ -37,7 +37,7 @@
                 'type' => 'select-dropdown',
                 'title' => 'Field\'s associated list',
                 'help' => 'Define a list which is associated with this field.',
-                'associated_list' => \App\Models\ListControl::where('visible', true)->orderBy('name')->get()->pluck('name', 'id'),
+                'associated_list' => \App\Models\ListControl::where('visible', true)->orderBy('title')->get()->pluck('title', 'id'),
                 'previous' => old($form_elem),
                 'placeHolder' => '-- Select a list --',
             ])

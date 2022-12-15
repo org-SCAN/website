@@ -29,6 +29,7 @@ class UpdateFieldRequest extends FormRequest
             "placeholder" => "string|max:80|nullable",
             "required" => "integer|required",
             "status" => "integer|required",
+            "importance" => "numeric|required",
             "linked_list" => "uuid|exists:list_controls,id|nullable",
             "range" => "boolean|nullable",
             "descriptive_value" => "integer|nullable",

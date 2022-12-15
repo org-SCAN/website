@@ -56,6 +56,18 @@
                             ])
                         </div>
 
+                        <!--  IMPORTANCE  -->
+
+                        <div class="px-4 py-4 bg-white sm:p-6">
+
+                            @php($form_elem = "importance")
+                            @livewire("forms.form", [
+                            'form_elem' => $form_elem,
+                            'type' => "range",
+                            'title' => "Choose the field weight",
+                            'hint' => "It will be used to compute the duplication."])
+                        </div>
+
 
                         <!--  REQUIRED SECTION  -->
 
