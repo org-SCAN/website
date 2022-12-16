@@ -14,7 +14,8 @@
         "order": 1,
         "descriptive_value": 1,
         "best_descriptive_value": 0,
-        "validation_laravel": "required|regex:/^[A-Z]{3}-[0-9]{6}$/"
+        "validation_laravel": "required|regex:/^[A-Z]{3}-[0-9]{6}$/",
+        "range": false
     },
     {
         "title": {
@@ -31,7 +32,8 @@
         "order": 2,
         "descriptive_value": 1,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|required|exists:list_genders,id"
+        "validation_laravel": "string|required|exists:list_genders,id",
+        "range": false
     },
     {
         "title": {
@@ -48,7 +50,8 @@
         "order": 3,
         "descriptive_value": 1,
         "best_descriptive_value": 1,
-        "validation_laravel": "string|required|max:250"
+        "validation_laravel": "string|required|max:250",
+        "range": false
     },
     {
         "title": {
@@ -65,7 +68,8 @@
         "order": 4,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "required|integer"
+        "validation_laravel": "required|integer",
+        "range": true
     },
     {
         "title": {
@@ -82,7 +86,8 @@
         "order": 5,
         "descriptive_value": 1,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|exists:list_countries,id"
+        "validation_laravel": "string|nullable|exists:list_countries,id",
+        "range": false
     },
     {
         "title": {
@@ -99,7 +104,8 @@
         "order": 6,
         "descriptive_value": 1,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|exists:list_roles,id"
+        "validation_laravel": "string|nullable|exists:list_roles,id",
+        "range": false
     },
     {
         "title": {
@@ -116,7 +122,8 @@
         "order": 7,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "date|nullable"
+        "validation_laravel": "date|nullable",
+        "range": false
     },
     {
         "title": {
@@ -133,7 +140,8 @@
         "order": 8,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|max:250"
+        "validation_laravel": "string|nullable|max:250",
+        "range": false
     },
     {
         "title": {
@@ -150,7 +158,8 @@
         "order": 9,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|max:250"
+        "validation_laravel": "string|nullable|max:250",
+        "range": false
     },
     {
         "title": {
@@ -167,7 +176,8 @@
         "order": 10,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|max:250"
+        "validation_laravel": "string|nullable|max:250",
+        "range": false
     },
     {
         "title": {
@@ -184,7 +194,8 @@
         "order": 11,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|exists:list_routes,id"
+        "validation_laravel": "string|nullable|exists:list_routes,id",
+        "range": false
     },
     {
         "title": {
@@ -201,7 +212,8 @@
         "order": 12,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|exists:list_countries,id"
+        "validation_laravel": "string|nullable|exists:list_countries,id",
+        "range": false
     },
     {
         "title": {
@@ -218,7 +230,8 @@
         "order": 13,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|max:250"
+        "validation_laravel": "string|nullable|max:250",
+        "range": false
     },
     {
         "title": {
@@ -235,7 +248,8 @@
         "order": 14,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "date|nullable"
+        "validation_laravel": "date|nullable",
+        "range": true
     },
     {
         "title": {
@@ -252,7 +266,8 @@
         "order": 15,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable"
+        "validation_laravel": "string|nullable",
+        "range": false
     },
     {
         "title": {
@@ -269,7 +284,8 @@
         "order": 16,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable"
+        "validation_laravel": "string|nullable",
+        "range": false
     },
     {
         "title": {
@@ -286,7 +302,8 @@
         "order": 17,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "date|nullable"
+        "validation_laravel": "date|nullable",
+        "range": true
     },
     {
         "title": {
@@ -303,7 +320,8 @@
         "order": 18,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|max:250"
+        "validation_laravel": "string|nullable|max:250",
+        "range": false
     },
     {
         "title": {
@@ -320,7 +338,8 @@
         "order": 19,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|max:250"
+        "validation_laravel": "string|nullable|max:250",
+        "range": false
     },
     {
         "title": {
@@ -337,7 +356,8 @@
         "order": 20,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "nullable|String"
+        "validation_laravel": "nullable|String",
+        "range": false
     },
     {
         "title": {
@@ -354,7 +374,8 @@
         "order": 21,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|max:250"
+        "validation_laravel": "string|nullable|max:250",
+        "range": false
     },
     {
         "title": {
@@ -371,6 +392,7 @@
         "order": 22,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "uuid|nullable"
+        "validation_laravel": "uuid|nullable",
+        "range": false
     }
 ]

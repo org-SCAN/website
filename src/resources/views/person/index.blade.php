@@ -45,7 +45,7 @@
                                     <tr>
                                         @foreach($fields ?? '' as $field)
                                             <td>
-                                                @if($field->best_descriptive_value == 1)
+                                                @if($field->best_descriptive_value)
                                                     @can('view', Refugee::find($refugee_id))
                                                         <a href="{{route('person.show',$refugee_id)}}">
                                                             {{ $refugee[$field->id] }}
@@ -55,7 +55,26 @@
                                                         {{ $refugee[$field->id] }}
                                                     @endcannot()
                                                 @else
-                                                    {{$refugee[$field->id]?? ''}}
+                                                    @if($field->range)
+                                                        <div class="row">
+                                                            <div class="col-4 text-center">
+                                                                <span class="text-gray-400 ">
+                                                                     {{ json_decode($refugee[$field->id],true)['min'] ?? "Ø"}}
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-4 text-center">
+                                                                <span class="">
+                                                                     {{ json_decode($refugee[$field->id],true)['current'] ?? "Ø"}}
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-4 text-center">
+                                                                <span class="text-gray-400">
+                                                                    {{ json_decode($refugee[$field->id],true)['max'] ?? "Ø"}}
+                                                                </span>
+                                                            </div>
+                                                    @else
+                                                        {{ $refugee[$field->id] ?? ''}}
+                                                    @endif
                                                 @endif
                                             </td>
                                         @endforeach

@@ -42,6 +42,31 @@
                                 'previous' => $field->{$form_elem}])
                         </div>
 
+                        @if($field->dataType->rangeable && false)
+                            <div class="py-4 bg-white sm:p-6">
+                                @livewire('forms.form', [
+                                'form_elem' => 'range',
+                                'type' => 'checkbox',
+                                'title' => 'Add a range to this field ?',
+                                'hint' => 'If checked, you will be able to define a range for this field. Example : Age => Min : 18, Current : 20, Max : 25',
+                                'previous' => $field->range
+                                ])
+                            </div>
+                        @endif
+
+                        <!--  IMPORTANCE  -->
+
+                        <div class="px-4 py-4 bg-white sm:p-6">
+
+                            @php($form_elem = "importance")
+                            @livewire("forms.form", [
+                            'form_elem' => $form_elem,
+                            'type' => "range",
+                            'title' => "Choose the field weight",
+                            'hint' => "It will be used to compute the duplication.",
+                            'previous' => $field->{$form_elem}])
+                        </div>
+
                         <!--  REQUIRED SECTION  -->
 
                         <div class="px-4 py-4 bg-white sm:p-6">
@@ -115,28 +140,6 @@
                                 'title' => "Is that a descriptive value ?",
                                 'hint' => "If checked, it will be displayed in the Persons section.",
                                 'previous' => $field->{$form_elem}])
-                        </div>
-
-
-
-
-                        <!--  Linked List SECTION  -->
-
-                        <div class="px-4 py-4 bg-white sm:p-6">
-                            @php($form_elem = "linked_list")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
-                                associated list
-                            </label>
-
-                            @php( $list = $lists["linked_list"])
-                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
-                                           class="form-input rounded-md shadow-sm mt-1 block w-full"/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define a
-                                list which is associated with this field.</small>
-
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
                         </div>
 
                         <div class="px-4 py-4 bg-white sm:p-6">

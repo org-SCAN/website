@@ -309,6 +309,11 @@
                 "field": "validation",
                 "data_type_id": "Short text",
                 "required": true
+            },
+            {
+                "field": "rangeable",
+                "data_type_id": "Yes / No",
+                "required": true
             }
         ],
         "visible": false
