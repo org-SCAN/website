@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
+use ESolution\DBEncryption\Traits\EncryptedAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -22,6 +23,7 @@ class User extends Authenticatable
     use TwoFactorAuthenticatable;
     use Uuids;
     use SoftDeletes;
+    use EncryptedAttribute;
 
     /**
      * Indicates if the model's ID is auto-incrementing.
@@ -67,6 +69,15 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    /**
+     * The attributes that should be encrypted on save.
+     *
+     * @var array
+     */
+    protected $encryptable = [
+         'name'
     ];
 
     /**

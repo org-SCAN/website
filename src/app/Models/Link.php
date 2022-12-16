@@ -4,14 +4,16 @@ namespace App\Models;
 
 use App\Traits\Uuids;
 use Carbon\Carbon;
+use ESolution\DBEncryption\Traits\EncryptedAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class Link extends Pivot
 {
-    use HasFactory, Uuids, SoftDeletes;
+    use HasFactory, Uuids, SoftDeletes, EncryptedAttribute;
 
     /**
      * Give the route pattern, used in api log
@@ -48,6 +50,14 @@ class Link extends Pivot
      * @var array
      */
     protected $fillable = ["from", "to", "relation_id", "date", "detail", 'api_log'];
+
+    /**
+     * The attributes that should be encrypted on save.
+     *
+     * @var array
+     */
+    protected $encryptable = [
+    ];
 
     public static function handleApiRequest($relation) {
 

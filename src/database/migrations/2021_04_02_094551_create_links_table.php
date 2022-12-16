@@ -32,8 +32,8 @@ class CreateLinksTable extends Migration
 
             $table->softDeletes();
             $table->foreignUuid("relation");
-            $table->foreignUuid("from");
-            $table->foreignUuid("to");
+            $table->string("from");
+            $table->string("to");
             $table->String("detail")->nullable();
             $table->foreignUuid("api_log");
             $table->string("application_id")->default("website");
