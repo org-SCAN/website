@@ -55,7 +55,7 @@
                                                         {{ $refugee[$field->id] }}
                                                     @endcannot()
                                                 @else
-                                                    @if($field->range)
+                                                    @if($field->range && in_array($field->id, $refugee))
                                                         <div class="row">
                                                             <div class="col-4 text-center">
                                                                 <span class="text-gray-400 ">
