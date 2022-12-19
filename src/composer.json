@@ -19,7 +19,8 @@
         "maatwebsite/excel": "^3.1",
         "mediconesystems/livewire-datatables": "dev-master",
         "protonemedia/laravel-form-components": "^3.6",
-        "psr/simple-cache": "^2.0"
+        "psr/simple-cache": "^2.0",
+        "ext-zip": "*"
     },
     "require-dev": {
         "brianium/paratest": "*",

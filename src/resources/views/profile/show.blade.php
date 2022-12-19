@@ -61,6 +61,14 @@
                     @livewire('profile.delete-user-form')
                 </div>
             @endif
+
+            @can("changeTeam", $user)
+                <x-jet-section-border/>
+                <div class="mt-10 sm:mt-0">
+                    @livewire('gdpr-actions')
+                </div>
+                @stack('scripts')
+            @endcan
         </div>
     </div>
 </x-app-layout>
