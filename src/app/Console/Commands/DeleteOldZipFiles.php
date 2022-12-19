@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Console\Commands;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
@@ -11,7 +12,7 @@ class DeleteOldZipFiles extends Command
      *
      * @var string
      */
-    protected $signature = 'delete:oldzipfiles';
+    protected $signature = "delete:oldzipfiles";
 
     /**
      * The console command description.
