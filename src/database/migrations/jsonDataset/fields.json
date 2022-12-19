@@ -394,5 +394,23 @@
         "best_descriptive_value": 0,
         "validation_laravel": "uuid|nullable",
         "range": false
+    },
+    {
+        "title": {
+            "eng": "I give my consent for you to collect and use my personal data as described in SCAN policy.",
+            "fra": "Je vous donne mon accord pour collecter et utiliser mes données personnelles comme décrit dans la politique de SCAN.",
+            "spa": "Doy mi consentimiento para que recojan y utilicen mis datos personales tal como se describe en la política de SCAN."
+        },
+        "label": "RGPD",
+        "placeholder": "",
+        "linked_list": "",
+        "required": 1,
+        "status": 2,
+        "data_type_id": "Yes / No",
+        "order": 23,
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "boolean|required",
+        "range": false
     }
 ]

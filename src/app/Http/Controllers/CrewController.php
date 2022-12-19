@@ -6,8 +6,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\addUserToCrewRequest;
 use App\Http\Requests\StoreCrewRequest;
 use App\Http\Requests\UpdateCrewRequest;
+use App\Models\ApiLog;
 use App\Models\Crew;
+use App\Models\Field;
+use App\Models\ListControl;
+use App\Models\ListDataType;
+use App\Models\Translation;
 use App\Models\User;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -27,7 +33,7 @@ class CrewController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -36,20 +42,10 @@ class CrewController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view("crew.create");
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\StoreCrewRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(StoreCrewRequest $request)
     {
@@ -58,14 +54,49 @@ class CrewController extends Controller
         $user = Auth::user();
         $user->crew_id = $crew->id;
         $user->save();
+
+   // create the GDPR field
+
+        $field = Field::create([
+            "title" => "I give my consent for you to collect and use my personal data as described in SCAN policy.",
+            "label" => "GDPR",
+            "data_type_id" => ListDataType::firstWhere('name', 'Yes / No')->id,
+            "required" => 1,
+            "importance" => 0,
+            "status" => 2,
+            "validation_laravel" => ListDataType::firstWhere('name', 'Yes / No')->validation.'|required',
+            "crew_id" => $crew->id,
+            "order" => 1,
+            "api_log" =>  ApiLog::createFromRequest($request,'Field')->id
+        ]);
+
+
+        $listField = ListControl::firstWhere('name',
+            'Field');
+        //translate the field
+        Translation::handleTranslation($listField,
+            $field->{$listField->key_value},
+            $field->{$listField->displayed_value});
+
+
         return redirect()->route("crew.index");
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        return view("crew.create");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Crew $crew
-     * @return \Illuminate\Http\Response
+     * @param  Crew  $crew
+     * @return Response
      */
     public function show(Crew $crew)
     {
@@ -76,8 +107,8 @@ class CrewController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Crew $crew
-     * @return \Illuminate\Http\Response
+     * @param  Crew  $crew
+     * @return Response
      */
     public function edit(Crew $crew)
     {
@@ -89,7 +120,7 @@ class CrewController extends Controller
      *
      * @param UpdateCrewRequest $request
      * @param Crew $crew
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(UpdateCrewRequest $request, Crew $crew)
     {
@@ -111,7 +142,7 @@ class CrewController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Crew $crew
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(Crew $crew)
     {
