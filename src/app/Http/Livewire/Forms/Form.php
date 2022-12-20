@@ -34,7 +34,7 @@ class Form extends Component
             $this->dataType = $this->dataType ?? $this->field->dataType;
         }
         if($this->previous && $this->dataType && $this->dataType->model){
-            $this->previous = $this->dataType->model::previous($this->previous);
+            $this->previous = $this->dataType->model::decode($this->previous);
         }
         // check if associated list is set and if it is an uuid
         if (isset($this->associated_list) && Str::isUuid($this->associated_list)) {

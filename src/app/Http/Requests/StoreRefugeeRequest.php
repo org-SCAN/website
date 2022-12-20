@@ -26,11 +26,7 @@ class StoreRefugeeRequest extends FormRequest
      */
     public function rules()
     {
-        //$hiddens = new Field();
-        //$hiddens = $hiddens->getHidden();
         $fields = Field::where("status", ">", 0)->where('crew_id', Auth::user()->crew_id)->get();
-        //$fields = $fields->makeVisible($hiddens)->toArray();
-        //$rules = array_column($fields, 'validation_laravel', "id");
         $rules = $fields->pluck('validation_laravel', 'id')->toArray();
         // if a field is rangeable, add the range validation by splitting the validation_laravel
         foreach ($fields as $field) {

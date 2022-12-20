@@ -173,15 +173,17 @@ class RefugeeController extends Controller
             return null;
         });
 
-        //get the center of all the markers
-        $center = $markers->reduce(function ($carry, $item) {
-            $carry["lat"] += $item["lat"];
-            $carry["lng"] += $item["lng"];
-            return $carry;
-        },["lat" => 0, "lng" => 0]
-        );
-        $center["lat"] = $center["lat"] / $markers->count();
-        $center["lng"] = $center["lng"] / $markers->count();
+        $center = ["lat" => 0, "lng" => 0];
+        if($markers->count() > 0){
+            $center = $markers->reduce(function ($carry, $item) {
+                $carry["lat"] += $item["lat"];
+                $carry["lng"] += $item["lng"];
+                return $carry;
+            },["lat" => 0, "lng" => 0]
+            );
+            $center["lat"] = $center["lat"] / $markers->count();
+            $center["lng"] = $center["lng"] / $markers->count();
+        }
 
 
         return view("person.show",

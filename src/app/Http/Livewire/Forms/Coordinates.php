@@ -97,7 +97,7 @@ class Coordinates implements DataTypeModel {
             $fieldname.'.long' => 'numeric',
         ];
     }
-    public static function previous($previous){
+    public static function decode($previous){
         return json_decode($previous, true);
     }
     public static function encode($value){
