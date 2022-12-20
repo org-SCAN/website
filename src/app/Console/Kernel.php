@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule) {
-        $schedule->command(DuplicateCommand::class)->everyFiveMinutes()->withoutOverlapping();
+        $schedule->command(DuplicateCommand::class)->hourly()->withoutOverlapping();
+        $schedule->command('delete:oldzipfiles')->hourlyAt(20)->withoutOverlapping();
     }
 
     /**

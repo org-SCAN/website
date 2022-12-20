@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
+use ESolution\DBEncryption\Traits\EncryptedAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
+
 class Field extends Model
 {
-    use Uuids, SoftDeletes, hasFactory;
+    use Uuids, SoftDeletes, hasFactory, EncryptedAttribute;
 
     /**
      * The requirement of the field.
@@ -61,6 +63,14 @@ class Field extends Model
      */
     protected $hidden = ['deleted_at', "created_at", "updated_at", "status", "html_data_type", "validation_laravel", "attribute", "order", "api_log", "crew_id"];
 
+    /**
+     * The attributes that should be encrypted on save.
+     *
+     * @var array
+     */
+    protected $encryptable = [
+        'title', 'label', 'placeholder'
+    ];
 
     public static function getUsedLinkedList()
     {
@@ -210,6 +220,10 @@ class Field extends Model
     }
 
     public function getValue(){
+
+        if($this->range){
+            return json_decode($this->pivot->value, true);
+        }
         if(empty(($this->linked_list))) {
             return $this->pivot->value;
         }

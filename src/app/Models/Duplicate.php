@@ -195,7 +195,7 @@ class Duplicate extends Model
                                 similar_text($person_field->pivot->value,
                                     $person2_field->pivot->value,
                                     $perc);
-                                $similarity += $perc;
+                                $similarity += $perc*($person_field->importance/100);
                                 $count++;
                             }
                         }

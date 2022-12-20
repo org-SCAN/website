@@ -23,12 +23,12 @@
                             @php($form_elem = "from")
 
                             @livewire("forms.form", [
-                            'form_elem' => 'from',
-                            'type' => 'select-dropdown',
-                            'title' => 'Person 1',
-                            'placeHolder' => '-- Select the first person --',
-                            'associated_list' => $lists["refugees"],
-                            'previous' => old($form_elem, $selected_value = (!empty($refugee) && !empty($origin) && $origin == "from") ? $refugee->id : $form_elem),
+                                'form_elem' => 'from',
+                                'type' => 'select-dropdown',
+                                'title' => 'Person 1',
+                                'placeHolder' => '-- Select the first person --',
+                                'associated_list' => $lists["refugees"],
+                                'previous' => old($form_elem, $selected_value = (!empty($refugee) && !empty($origin) && $origin == "from") ? $refugee->id : $form_elem),
                             ])
 
                             @if(auth()->user()->crew->hasEvent())

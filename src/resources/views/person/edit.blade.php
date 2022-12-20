@@ -29,11 +29,9 @@
                                     @livewire("forms.form", [
                                         'title' => $field->title,
                                         'form_elem' => $field->id,
-                                        'type' => $field->dataType->html_type,
-                                        'placeHolder' => $field->placeholder ?? '',
-                                        'previous' => $refugee_detail[$field->id],
+                                        'field' => $field,
+                                        'previous' => $field->range ? json_decode($refugee_detail[$field->id], true) : $refugee_detail[$field->id],
                                         'showError' => false,
-                                        'associated_list' => $field->linked_list ?? null,
                                     ])
                                 @error($field->id)
                                 <p class="text-sm text-red-600">{{ Str::replace($field->id, $field->title, $message) }}</p>

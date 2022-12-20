@@ -35,6 +35,7 @@ class CreateFieldsTable extends Migration
                 ->nullable();
             $table->integer( "status");
             $table->integer( "required");
+            $table->double( "importance")->default(50);
             $table->integer("order")
                 ->default(100);
             $table->string("validation_laravel")
@@ -44,6 +45,9 @@ class CreateFieldsTable extends Migration
                 ->default(0)
                 ->nullable();
             $table->boolean("descriptive_value")
+                ->default(0)
+                ->nullable();
+            $table->boolean("range")
                 ->default(0)
                 ->nullable();
             $table->foreignUuid('api_log');

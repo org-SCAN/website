@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('java_type');
             $table->string('html_type');
             $table->string('validation');
+            $table->boolean('rangeable')->default(false);
         });
     }
 

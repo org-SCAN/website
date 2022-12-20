@@ -146,6 +146,12 @@
       <path value="$PROJECT_DIR$/src/vendor/fruitcake/php-cors" />
       <path value="$PROJECT_DIR$/src/vendor/nunomaduro/termwind" />
       <path value="$PROJECT_DIR$/src/vendor/brianium/paratest" />
+      <path value="$PROJECT_DIR$/src/vendor/elgibor-solution/laravel-database-encryption" />
+      <path value="$PROJECT_DIR$/src/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/src/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/src/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/src/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/src/vendor/psr/cache" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1">

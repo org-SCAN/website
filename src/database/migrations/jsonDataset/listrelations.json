@@ -6,7 +6,7 @@
             "spa": "Relación biológica"
         },
         "short": "BR",
-        "color" : "0099ff",
+        "color" : "#0099ff",
         "importance" : 1,
         "relation_type_id" : "Bilateral"
     },
@@ -17,7 +17,7 @@
             "spa": "Relación no biológica"
         },
         "short": "NBR",
-        "color" : "cbaf1d",
+        "color" : "#cbaf1d",
         "importance" : 1,
         "relation_type_id" : "Unilateral"
     },
@@ -28,7 +28,7 @@
             "spa": "Viajado con"
         },
         "short": "TW",
-        "color" : "00ff2a",
+        "color" : "#00ff2a",
         "importance" : 1,
         "relation_type_id" : "Bilateral"
     },
@@ -39,7 +39,7 @@
             "spa": "Ha visto"
         },
         "short": "SA",
-        "color" : "734d39",
+        "color" : "#734d39",
         "importance" : 1,
         "relation_type_id" : "Unilateral"
     },
@@ -50,7 +50,7 @@
             "spa": "Servicio"
         },
         "short": "SE",
-        "color" : "7e00ff",
+        "color" : "#7e00ff",
         "importance" : 1,
         "relation_type_id" : "Unilateral"
     }
