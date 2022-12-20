@@ -30,6 +30,60 @@ class LinkController extends Controller
     }
 
     /**
+     * Handle the API request
+     *
+     * @param  StoreLinkApiRequest  $request
+     * @return array
+     */
+    public static function handleApiRequest(StoreLinkApiRequest $request) {
+        $log = ApiLog::createFromRequest($request,
+            "Link");
+
+        if ($request->user()->tokenCan("update")) {
+            $responseArray = [];
+            foreach ($request->validated() as $link) {
+                $link["application_id"] = $log->application_id;
+                //check
+                if (key_exists("id", $link)) { // update
+                    $linkUpdate = Link::find($link["id"]);
+                    $link["api_log"] = $log->id;
+                    $linkUpdate->update($link);
+                    $link = $linkUpdate;
+                } else {
+                    //find or create
+                    $link = Link::firstOrCreate($link, ["api_log" => $log->id]);
+
+                }
+                array_push($responseArray, $link->id);
+            }
+            return response(json_encode($responseArray),
+                201,
+                ['Content-Type' => "application/json"]);
+        }
+        $log->update(["response" => "Bad token access"]);
+        return response("Your token can't be use to send datas",
+            403);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request  $request
+     * @param  Link  $link
+     * @return Response
+     */
+    public function update(UpdateLinkRequest $request,Link $link) {
+
+        $log = ApiLog::createFromRequest($request,
+            "Link");
+        $linkv = $request->validated();
+        $linkv["api_log"] = $log->id;
+        $link->update($linkv);
+
+        return redirect()->route("links.index");
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return Response
@@ -138,96 +192,18 @@ class LinkController extends Controller
         $log = ApiLog::createFromRequest($request,
             "Link");
         foreach ($request->validated() as $link) {
-            $relation["api_log"] = $log->id;
-            $relation["application_id"] = $log->application_id;
-            $from = Refugee::getRefugeeIdFromReference($link["from_unique_id"],
-                $relation["application_id"]);
-            if ($from != null) {
-                $relation["from"] = $from;
-            } else {
-                $log->update(["response" => "Error : ".$link["from"]." not found with application id : ".$link["application_id"]]);
-                break;
-            }
-
-            $to = Refugee::getRefugeeIdFromReference($link["to"],
-                $relation["application_id"]);
-
-            if ($to != null) {
-                $relation["to"] = $to;
-            } else {
-                $log->update(["response" => "Error : ".$link["to"]." not found with application id : ".$link["application_id"]]);
-                break;
-            }
-
-            $relation["relation"] = $link["relation"];
-            if (isset($link["detail"]) && !empty($link["detail"])) {
-                $relation["detail"] = $link["detail"];
-            }
-
             //from there handle API request relation
-            $stored_link = Link::handleApiRequest($relation);
-            if ($stored_link == null) {
+            $link = Link::findOrCreate($link, [
+                "api_log" => $log->id,
+                "application_id" => $log->application_id,
+            ]);
+            if (!$link) {
                 $log->update(["response" => "Error while creating a relation"]);
                 return response("Error while creating this refugee :".json_encode($link),
                     500);
             }
         }
         return redirect()->route("links.index");
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  Link  $link
-     * @return Response
-     */
-    public function update(UpdateLinkRequest $request,
-        Link $link) {
-
-        $log = ApiLog::createFromRequest($request,
-            "Link");
-        $linkv = $request->validated();
-        $linkv["api_log"] = $log->id;
-        $link->update($linkv);
-
-        return redirect()->route("links.index");
-    }
-
-    /**
-     * Handle the API request
-     *
-     * @param  StoreLinkApiRequest  $request
-     * @return array
-     */
-    public static function handleApiRequest(StoreLinkApiRequest $request) {
-        $log = ApiLog::createFromRequest($request,
-            "Link");
-
-        if ($request->user()->tokenCan("update")) {
-            $responseArray = [];
-            foreach ($request->validated() as $link) {
-                $link["application_id"] = $log->application_id;
-                //check
-                if (key_exists("id", $link)) { // update
-                    $linkUpdate = Link::find($link["id"]);
-                    $link["api_log"] = $log->id;
-                    $linkUpdate->update($link);
-                    $link = $linkUpdate;
-                } else {
-                    //find or create
-                    $link = Link::firstOrCreate($link, ["api_log" => $log->id]);
-
-                }
-                array_push($responseArray, $link->id);
-            }
-            return response(json_encode($responseArray),
-                201,
-                ['Content-Type' => "application/json"]);
-        }
-        $log->update(["response" => "Bad token access"]);
-        return response("Your token can't be use to send datas",
-            403);
     }
 
     /**
