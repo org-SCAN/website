@@ -13,10 +13,10 @@
                        placeholder="{{ $placeHolder }}"/>
             </div>
             <div class="col-4">
-    @endif
     <label for="{{ $form_elem }}" class="block font-medium text-md text-gray-700">
         Current :
     </label>
+    @endif
     <input value="{{ $rangeable ? (old($form_elem, $previous ?? ""))['current'] ?? "" : old($form_elem, $previous ?? "") }}" type="date" name="{{ $form_elem }}{{ $rangeable ? '[current]' : '' }}" id="{{$form_elem }}"
         class="form-input rounded-md shadow-sm mt-1 block w-full"
         placeholder="{{ $placeHolder }}"/>
