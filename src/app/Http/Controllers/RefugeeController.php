@@ -159,12 +159,16 @@ class RefugeeController extends Controller
 
         $markers =$person->allCoordinates()->map(function ($item, $key) {
             $value = json_decode($item->pivot->value, true);
-            return [
-                "lat" => $value["lat"],
-                "lng" => $value["long"],
-                "title" => $item->title,
-            ];
+            if(!empty($value)){
+                return [
+                    "lat" => $value["lat"],
+                    "lng" => $value["long"],
+                    "title" => $item->title,
+                ];
+            }
+            return null;
         });
+
 
         return view("person.show",
             compact("person",
