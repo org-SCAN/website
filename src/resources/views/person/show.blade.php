@@ -189,6 +189,7 @@
                     </div>
                 </div>
             @endcan
+            @if($markers->count() > 0)
             <div class="block mb-8">
                 <div class="-my-2 sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -205,6 +206,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </x-app-layout>
