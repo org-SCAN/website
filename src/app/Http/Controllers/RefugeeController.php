@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FileRefugeeRequest;
+use App\Http\Requests\JsonFileRefugeeRequest;
 use App\Http\Requests\StoreRefugeeApiRequest;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
+use App\Imports\RefugeesImport;
 use App\Models\ApiLog;
 use App\Models\Crew;
 use App\Models\Field;
@@ -17,6 +19,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use Throwable;
 
 
 class RefugeeController extends Controller
@@ -71,8 +76,7 @@ class RefugeeController extends Controller
      * @param  Refugee  $person
      * @return RedirectResponse
      */
-    public function update(UpdateRefugeeRequest $request,
-        Refugee $person) {
+    public function update(UpdateRefugeeRequest $request, Refugee $person) {
 
         $ids = array_column($person->fields->toArray(),
             "id");
@@ -131,7 +135,6 @@ class RefugeeController extends Controller
      */
     public function index() {
 
-
         $fields = Field::where("crew_id",
             Auth::user()->crew->id)->where("descriptive_value",
             1)->orderBy("order")->get();
@@ -172,7 +175,6 @@ class RefugeeController extends Controller
      * @return View
      */
     public function createFromJson() {
-
         return view("person.create_from_json");
     }
 
@@ -219,69 +221,13 @@ class RefugeeController extends Controller
      */
     public function create() {
 
-        $fields = Field::where("status",
-            ">",
-            0)->where("crew_id",
-            Auth::user()->crew->id)->orderBy("required")->orderBy("order")->get();
+        $fields = Field::where("status", ">", 0)
+            ->where("crew_id", Auth::user()->crew->id)
+            ->orderBy("required")
+            ->orderBy("order")
+            ->get();
 
-        return view("person.create",
-            compact("fields"));
-    }
-
-    /**
-     * Store a newly created resource from json file in storage.
-     *
-     * @param  FileRefugeeRequest  $request
-     * @return RedirectResponse
-     */
-    public function storeFromJson(FileRefugeeRequest $request) {
-
-        $log = ApiLog::createFromRequest($request,
-            "Refugee");
-        foreach ($request->validated() as $refugee) {
-            $refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i',
-                time()));
-            $refugee["api_log"] = $log->id;
-            $stored_ref = Refugee::handleApiRequest($refugee);
-            if ($stored_ref == null) {
-                $log->update(["response" => "Error while creating a refugee"]);
-            }
-        }
-        return redirect()->route("person.index");
-    }
-
-    /**
-     * Handle the API request
-     *
-     * @param  StoreRefugeeApiRequest  $request
-     * @return Response
-     */
-    public static function handleApiRequest(StoreRefugeeApiRequest $request) {
-        $responseArray = [];
-        $log = ApiLog::createFromRequest($request,
-            "Refugee");
-        if ($request->user()->tokenCan("update")) {
-            foreach ($request->validated() as $person) {
-                $person["api_log"] = $log->id;
-                $person["application_id"] = $log->application_id;
-
-                $stored_person = Refugee::handleApiRequest($person);
-
-                if ($stored_person instanceof Response) {
-                    return $stored_person;
-                } elseif ($stored_person instanceof Refugee) {
-                    array_push($responseArray,
-                        $stored_person->id);
-                }
-
-            }
-            return response(json_encode($responseArray),
-                201,
-                ['Content-type' => 'application/json']);
-        }
-        $log->update(["response" => "Bad token access"]);
-        return response("Your token can't be use to send datas",
-            403);
+        return view("person.create", compact("fields"));
     }
 
     /**
@@ -305,10 +251,7 @@ class RefugeeController extends Controller
         $refugee_detail = array_combine($ids,
             $values);
 
-        return view("person.edit",
-            compact("person",
-                "fields",
-                "refugee_detail"));
+        return view("person.edit",  compact("person","fields", "refugee_detail"));
     }
 
     /**
@@ -318,8 +261,7 @@ class RefugeeController extends Controller
      * @param  String  $refugee_id
      * @return RedirectResponse
      */
-    public function fixDuplicatedReference(Request $request,
-        $refugee_id) {
+    public function fixDuplicatedReference(Request $request, $refugee_id) {
 
         $refugee["unique_id"] = $request->input('unique_id');
 
@@ -337,5 +279,80 @@ class RefugeeController extends Controller
     public function destroy(Refugee $person) {
         $person->delete();
         return redirect()->route("person.index");
+    }
+
+    public function import(FileRefugeeRequest $request)
+    {
+
+        // based on the file extension, we have to use a different reader
+        $extension = $request->file('import_person_file')->getClientOriginalExtension();
+        if ($extension == "json"){ // if the file is a json file
+            // call storeFromJson and cast the request as a JsonFileRefugeeRequest
+            return $this->storeFromJson($request);
+        }else{ // else the file is a csv file
+            try {
+                Excel::import(new RefugeesImport, $request->file('import_person_file'));
+            }
+            catch (Throwable $e) {
+                return redirect()->back()->with('error', 'Something went wrong');
+            }
+        }
+        return redirect()->route("person.index");
+    }
+
+    /**
+     * Store a newly created resource from json file in storage.
+     *
+     * @param  JsonFileRefugeeRequest  $request
+     * @return RedirectResponse
+     */
+    public function storeFromJson(Request $request) {
+
+
+        //remove _token from the request
+        //$request->request->remove('_token');
+        $log = ApiLog::createFromRequest($request,"Refugee");
+
+
+        $validator = Validator::make(json_decode($request->import_person_file->getContent(), true), (new JsonFileRefugeeRequest())->rules());
+
+        foreach ($validator->validated() as $refugee) {
+            $refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i', time()));
+            $refugee["api_log"] = $log->id;
+            $stored_ref = Refugee::handleApiRequest($refugee);
+            if ($stored_ref == null) {
+                $log->update(["response" => "Error while creating a refugee"]);
+            }
+        }
+        return redirect()->route("person.index");
+    }
+
+    /**
+     * Handle the API request
+     *
+     * @param  StoreRefugeeApiRequest  $request
+     * @return Response
+     */
+    public static function handleApiRequest(StoreRefugeeApiRequest $request) {
+        $responseArray = [];
+        $log = ApiLog::createFromRequest($request,"Refugee");
+        if ($request->user()->tokenCan("update")) {
+            foreach ($request->validated() as $person) {
+                $person["api_log"] = $log->id;
+                $person["application_id"] = $log->application_id;
+
+                $stored_person = Refugee::handleApiRequest($person);
+
+                if ($stored_person instanceof Response) {
+                    return $stored_person;
+                } elseif ($stored_person instanceof Refugee) {
+                    array_push($responseArray, $stored_person->id);
+                }
+
+            }
+            return response(json_encode($responseArray),201,['Content-type' => 'application/json']);
+        }
+        $log->update(["response" => "Bad token access"]);
+        return response("Your token can't be use to send data", 403);
     }
 }

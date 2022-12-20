@@ -2,15 +2,25 @@
 
 namespace App\Http\Requests;
 
-class FileRefugeeRequest extends StoreRefugeeApiRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class FileRefugeeRequest extends FormRequest
 {
-    public function validationData()
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
     {
-        return json_decode($this->refugee_json->getContent(), true);
+        return true;
     }
 
     public function rules()
     {
-        return parent::rules() + ["*.application_id" => "required"];
+        // validate the file, the format should be json, csv, xlsx or xls. The file is required
+        return [
+            "import_person_file" => 'required|file|mimes:json,csv,xlsx,xls',
+        ];
     }
 }

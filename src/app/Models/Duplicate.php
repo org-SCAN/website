@@ -200,7 +200,7 @@ class Duplicate extends Model
                             }
                         }
                     }
-                    $similarity = $similarity / $count;
+                    $similarity = $count> 0 ? $similarity / $count : null;
                     $similarities[$person->id][$person2->id] = $similarity;
                 }
             }

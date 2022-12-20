@@ -208,7 +208,7 @@ class Refugee extends Model
                 $value = $field->pivot->value ?? "";
                 if (!empty($field->linked_list)) {
                     $value = ListControl::getListElementFromId($field->linked_list,
-                        $value)->displayed_value_content;
+                        $value)->displayed_value_content ?? "";
                 }
                 $refugeeData[$field->id] = $value;
 
