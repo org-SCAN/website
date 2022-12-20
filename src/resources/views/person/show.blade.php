@@ -197,9 +197,9 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div style="height: 400px" class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             @map([
-                                'lat' => 48.134664,
-                                'lng' => 11.555220,
-                                'zoom' => 6,
+                                'lat' => $center['lat'],
+                                'lng' => $center['lng'],
+                                'zoom' => 2,
                                 'markers' => $markers
 
                             ])

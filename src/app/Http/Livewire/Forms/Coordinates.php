@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Livewire\Forms;
+use App\Interface\DataTypeModel;
 
-class Coordinates {
+class Coordinates implements DataTypeModel {
     public function __construct($lat, $long) {
         $this->lat = $lat;
         $this->long = $long;
@@ -84,10 +85,13 @@ class Coordinates {
         $this->lat = $data["lat"];
         $this->long = $data["long"];
     }
-    public static function rules(){
+    public static function rules() : array{
         return [
             'lat' => 'numeric',
             'long' => 'numeric',
         ];
+    }
+    public static function previous($previous){
+        return json_decode($previous, true);
     }
 }
