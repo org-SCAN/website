@@ -167,6 +167,7 @@ class RefugeeController extends Controller
                     "lat" => $value["lat"],
                     "lng" => $value["long"],
                     "title" => $item->title,
+                    'popup' => '<em style="font-size : 1.3em">'.$item->title.'</em>',
                 ];
             }
             return null;
