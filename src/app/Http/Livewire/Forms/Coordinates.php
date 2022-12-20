@@ -85,13 +85,22 @@ class Coordinates implements DataTypeModel {
         $this->lat = $data["lat"];
         $this->long = $data["long"];
     }
-    public static function rules() : array{
+    public static function rules($fieldname = null) : array {
+        if($fieldname == null) {
+            return [
+                "lat" => "numeric",
+                "long" => "numeric"
+            ];
+        }
         return [
-            'lat' => 'numeric',
-            'long' => 'numeric',
+            $fieldname.'.lat' => 'numeric',
+            $fieldname.'.long' => 'numeric',
         ];
     }
     public static function previous($previous){
         return json_decode($previous, true);
+    }
+    public static function encode($value){
+        return json_encode($value);
     }
 }
