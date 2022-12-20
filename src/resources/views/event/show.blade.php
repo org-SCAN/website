@@ -117,7 +117,22 @@
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
                                     bg-white divide-y divide-gray-200">
-                                        {{ $event->coordinates }}
+                                    @if($event->coordinates)
+                                    <span>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <span>
+                                                    Lat : {{ json_decode($event->coordinates, true)['lat'] ?? ""}}
+                                                </span>
+                                            </div>
+                                            <div class="col-4">
+                                                <span>
+                                                    Long : {{ json_decode($event->coordinates, true)['long'] ?? ""}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </span>
+                                    @endif
                                     </td>
                                 </tr>
                                 <tr class="border-b">
@@ -136,6 +151,7 @@
                     </div>
                 </div>
             </div>
+            @if($event->coordinates)
             <div class="block mb-8 mt-3">
                 <div class="-my-2 sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -157,6 +173,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="block mt-8">
                 <a href="{{ route('event.index') }}"
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
