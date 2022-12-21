@@ -26,6 +26,7 @@ class UpdateRefugeeRequest extends FormRequest
      */
     public function rules()
     {
-        return \App\Http\Requests\StoreRefugeeRequest::rules();
+        $rules = (new StoreRefugeeRequest())->rules();
+        return $rules;
     }
 }

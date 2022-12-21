@@ -24,7 +24,7 @@ class StoreRefugeeRequest extends FormRequest
      *
      * @return array
      */
-    public static function rules()
+    public function rules()
     {
         $fields = Field::where("status", ">", 0)->where('crew_id', Auth::user()->crew_id)->get();
         $rules = $fields->pluck('validation_laravel', 'id')->toArray();
