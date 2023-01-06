@@ -8,7 +8,6 @@ use App\Models\ListDataType;
 class CreateFormChooseField extends Forms\Form
 {
     public  $selectedField = null;
-    public ListDataType|null $dataType = null;
     public $isList = false;
     // get the selected field from the dropdown
     public function updatedSelectedField()

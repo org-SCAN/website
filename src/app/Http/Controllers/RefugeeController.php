@@ -160,10 +160,38 @@ class RefugeeController extends Controller
             $person->id)->orWhere("to",
             $person->id)->get();
 
+        $markers =$person->allCoordinates()->map(function ($item, $key) {
+            $value = json_decode($item->pivot->value, true);
+            if(!empty($value)){
+                return [
+                    "lat" => $value["lat"],
+                    "lng" => $value["long"],
+                    "title" => $item->title,
+                    'popup' => '<em style="font-size : 1.3em">'.$item->title.'</em>',
+                ];
+            }
+            return null;
+        });
+
+        $center = ["lat" => 0, "lng" => 0];
+        if($markers->count() > 0){
+            $center = $markers->reduce(function ($carry, $item) {
+                $carry["lat"] += $item["lat"];
+                $carry["lng"] += $item["lng"];
+                return $carry;
+            },["lat" => 0, "lng" => 0]
+            );
+            $center["lat"] = $center["lat"] / $markers->count();
+            $center["lng"] = $center["lng"] / $markers->count();
+        }
+
+
         return view("person.show",
             compact("person",
                 "fields",
-                "links"));
+                "links",
+                "markers",
+                "center"));
     }
 
     /**

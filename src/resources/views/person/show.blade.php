@@ -74,7 +74,7 @@
                 </div>
             </div>
             @can("viewMenu", Link::class)
-                <div class="block mt-8 flex flex-col">
+                <div class="block mt-8 mb-8 flex flex-col">
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                             <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-8">
@@ -191,6 +191,24 @@
                     </div>
                 </div>
             @endcan
+            @if($markers->count() > 0)
+            <div class="block mb-8">
+                <div class="-my-2 sm:-mx-6 lg:-mx-8">
+                    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                        <div style="height: 400px" class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                            @map([
+                                'lat' => $center['lat'],
+                                'lng' => $center['lng'],
+                                'zoom' => 2,
+                                'markers' => $markers
+
+                            ])
+                            @mapscripts
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </x-app-layout>

@@ -1,106 +1,118 @@
 [
-  {
-    "name": {
-      "eng" : "Long text",
-      "fra" : "Texte long",
-      "spa" : "Texto largo"
+    {
+        "name": {
+            "eng": "Long text",
+            "fra": "Texte long",
+            "spa": "Texto largo"
+        },
+        "model": "",
+        "database_type": "text",
+        "html_type": "textarea",
+        "java_type": "EditText",
+        "validation": "String"
     },
-    "model": "",
-    "database_type": "text",
-    "html_type": "textarea",
-    "java_type": "EditText",
-    "validation": "String",
-    "rangeable" : false
-  },
-  {
-    "name": {
-      "eng" : "Short text",
-      "fra" : "Texte court",
-      "spa" : "Texto corto"
+    {
+        "name": {
+            "eng": "Short text",
+            "fra": "Texte court",
+            "spa": "Texto corto"
+        },
+        "model": "",
+        "database_type": "string",
+        "html_type": "text",
+        "java_type": "EditText",
+        "validation": "String",
+        "rangeable": false
     },
-    "model": "",
-    "database_type": "string",
-    "html_type": "text",
-    "java_type": "EditText",
-    "validation": "String",
-    "rangeable" : false
-  },
-  {
-    "name": {
-      "eng" : "Number",
-      "fra" : "Nombre",
-      "spa" : "Número"
-  },
-    "model": "",
-    "database_type": "double",
-    "html_type": "number",
-    "java_type": "number",
-    "validation": "numeric",
-    "rangeable" : true
-  },
-  {
-    "name": {
-      "eng" : "Date",
-      "fra" : "Date",
-      "spa" : "Fecha"
-	},
-    "model": "",
-    "database_type": "datetime",
-    "html_type": "date",
-    "java_type": "date",
-    "validation": "date",
-    "rangeable" : true
-  },
-  {
-    "name": {
-      "eng" : "Yes / No",
-      "fra" : "Oui / Non",
-      "spa" : "Sí / No"
-	},
-    "model": "",
-    "database_type": "boolean",
-    "html_type": "checkbox",
-    "java_type": "Radio Button",
-    "validation": "Boolean",
-    "rangeable" : false
-  },
-  {
-    "name": {
-      "eng" : "List",
-      "fra" : "Liste",
-      "spa" : "Lista"
-	},
-    "model": "",
-    "database_type": "uuid",
-    "html_type": "select-dropdown",
-    "java_type": "Spinner",
-    "validation": "uuid",
-    "rangeable" : false
-  },
-  {
-    "name": {
-      "eng" : "Color",
-      "fra" : "Couleur",
-      "spa" : "Color"
-	},
-    "model": "",
-    "database_type": "string",
-    "html_type": "color",
-    "java_type": "color",
-    "validation": "regex:/#[a-fA-F0-9]{3,6}/",
-    "rangeable" : false
-  },
-  {
-    "name": {
-      "eng" : "Range",
-      "fra" : "Échelle",
-      "spa" : "Escala"
-	},
-    "model": "",
-    "database_type": "double",
-    "html_type": "range",
-    "java_type": "range",
-    "validation": "numeric",
-    "rangeable" : false
-  }
+    {
+        "name": {
+            "eng": "Number",
+            "fra": "Nombre",
+            "spa": "Número"
+        },
+        "model": "",
+        "database_type": "double",
+        "html_type": "number",
+        "java_type": "number",
+        "validation": "numeric",
+        "rangeable": true
+    },
+    {
+        "name": {
+            "eng": "Date",
+            "fra": "Date",
+            "spa": "Fecha"
+        },
+        "model": "",
+        "database_type": "datetime",
+        "html_type": "date",
+        "java_type": "date",
+        "validation": "date",
+        "rangeable": true
+    },
+    {
+        "name": {
+            "eng": "Yes / No",
+            "fra": "Oui / Non",
+            "spa": "Sí / No"
+        },
+        "model": "",
+        "database_type": "boolean",
+        "html_type": "checkbox",
+        "java_type": "Radio Button",
+        "validation": "Boolean",
+        "rangeable": false
+    },
+    {
+        "name": {
+            "eng": "List",
+            "fra": "Liste",
+            "spa": "Lista"
+        },
+        "model": "",
+        "database_type": "uuid",
+        "html_type": "select-dropdown",
+        "java_type": "Spinner",
+        "validation": "uuid",
+        "rangeable": false
+    },
+    {
+        "name": {
+            "eng": "Color",
+            "fra": "Couleur",
+            "spa": "Color"
+        },
+        "model": "",
+        "database_type": "string",
+        "html_type": "color",
+        "java_type": "color",
+        "validation": "regex:/#[a-fA-F0-9]{3,6}/",
+        "rangeable": false
+    },
+    {
+        "name": {
+            "eng": "Range",
+            "fra": "Échelle",
+            "spa": "Escala"
+        },
+        "model": "",
+        "database_type": "double",
+        "html_type": "range",
+        "java_type": "range",
+        "validation": "numeric",
+        "rangeable": false
+    },
+    {
+        "name": {
+            "eng": "Coordinates",
+            "fra": "Coordonnées",
+            "spa": "Coordenadas"
+        },
+        "model": "\\App\\Http\\Livewire\\Forms\\Coordinates",
+        "database_type": "Array",
+        "html_type": "coordinates",
+        "java_type": "coordinates",
+        "validation": "",
+        "rangeable": false
+    }
 ]
