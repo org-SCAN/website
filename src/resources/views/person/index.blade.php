@@ -23,8 +23,7 @@
                 @endcan
                 @can('createFromJson', Refugee::class)
                     <a href="{{ route("person.create_from_json") }}"
-                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add persons from
-                        json</a>
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Import persons</a>
                 @endcan
             </div>
             <div class="flex flex-col">
@@ -55,7 +54,7 @@
                                                         {{ $refugee[$field->id] }}
                                                     @endcannot()
                                                 @else
-                                                    @if($field->range && in_array($field->id, $refugee))
+                                                    @if($field->range && key_exists($field->id, $refugee))
                                                         <div class="row">
                                                             <div class="col-4 text-center">
                                                                 <span class="text-gray-400 ">

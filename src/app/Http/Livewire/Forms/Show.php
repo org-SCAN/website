@@ -15,7 +15,6 @@ class Show extends Component
 
             return view('livewire.forms.show.'.$this->field->dataType->html_type)->extends('layouts.app');
         } catch (Throwable $th) {
-
             return view('livewire.forms.show.text')->extends('layouts.app');
         }
     }

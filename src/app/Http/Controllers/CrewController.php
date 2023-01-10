@@ -64,7 +64,7 @@ class CrewController extends Controller
             "required" => 1,
             "importance" => 0,
             "status" => 2,
-            "validation_laravel" => ListDataType::firstWhere('name', 'Yes / No')->validation.'|required',
+            "validation_laravel" => ListDataType::firstWhere('name', 'Yes / No')->validation.'|accepted|required',
             "crew_id" => $crew->id,
             "order" => 1,
             "api_log" =>  ApiLog::createFromRequest($request,'Field')->id

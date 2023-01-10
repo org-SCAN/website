@@ -8,6 +8,7 @@
     ],
     "license": "MIT",
     "require": {
+        "ext-zip": "*",
         "php": "^8.1",
         "doctrine/dbal": "^3.5",
         "elgibor-solution/laravel-database-encryption": "^1.1",
@@ -23,8 +24,7 @@
         "maatwebsite/excel": "^3.1",
         "mediconesystems/livewire-datatables": "dev-master",
         "protonemedia/laravel-form-components": "^3.6",
-        "psr/simple-cache": "^2.0",
-        "ext-zip": "*"
+        "psr/simple-cache": "^2.0"
     },
     "require-dev": {
         "brianium/paratest": "*",

@@ -61,7 +61,7 @@ Route::get('links/json/create',
 Route::post('person/json/store',
     [
         'as' => 'person.store_from_json',
-        'uses' => '\App\Http\Controllers\RefugeeController@storeFromJson',
+        'uses' => '\App\Http\Controllers\RefugeeController@import',
     ])->middleware('auth');
 Route::post('links/json/store',
     [
