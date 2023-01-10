@@ -22,8 +22,7 @@ class CreateEventsTable extends Migration
             $table->string("location_details")->nullable();
             $table->date("start_date")->nullable();
             $table->date("stop_date")->nullable();
-            $table->string("latitude")->nullable();
-            $table->string("longitude")->nullable();
+            $table->string("coordinates")->nullable();
             $table->longText("description")->nullable();
             $table->foreignUuid("api_log");
             $table->timestamps();

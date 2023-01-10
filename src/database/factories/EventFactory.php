@@ -35,6 +35,11 @@ class EventFactory extends Factory
 
         $log = ApiLog::create($log);
 
+        $coordinates = json_encode([
+            "lat" => $this->faker->latitude,
+            "long" => $this->faker->longitude,
+        ]);
+
         return [
             "name" => $this->faker->unique()->name,
             "event_type_id" => ListEventType::inRandomOrder()->first()->id,
@@ -43,8 +48,7 @@ class EventFactory extends Factory
             "location_details" => $this->faker->streetAddress,
             "start_date" => $this->faker->dateTime,
             "stop_date" => $this->faker->dateTime,
-            "latitude" => $this->faker->latitude,
-            "longitude" => $this->faker->longitude,
+            "coordinates" => $coordinates,
             "description" => $this->faker->realText,
             'api_log' => $log->id,
         ];

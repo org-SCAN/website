@@ -30,9 +30,7 @@ class StoreEventRequest extends FormRequest
             "location_details" => "nullable|string",
             "start_date" => "nullable|date",
             "stop_date" => "nullable|date|after_or_equal:start_date",
-            "latitude" => "nullable|string",
-            "longitude" => "nullable|string",
             "description" => "nullable|string"
-        ];
+        ] + \App\Http\Livewire\Forms\Coordinates::rules("coordinates");
     }
 }

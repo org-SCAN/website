@@ -14,7 +14,6 @@ class Field extends Model
 {
     use Uuids, SoftDeletes, hasFactory, EncryptedAttribute;
 
-
     /**
      * The requirement of the field.
      *
@@ -224,6 +223,9 @@ class Field extends Model
 
         if($this->range){
             return json_decode($this->pivot->value, true);
+        }
+        if($this->dataType->model){
+            return $this->dataType->model::decode($this->pivot->value);
         }
         if(empty(($this->linked_list))) {
             return $this->pivot->value;
