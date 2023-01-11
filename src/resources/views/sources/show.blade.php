@@ -92,10 +92,6 @@
                     </div>
                 </div>
             </div>
-            <div class="block mt-8">
-                <a href="{{ route('source.index') }}"
-                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to sources</a>
-            </div>
         </div>
     </div>
 </x-app-layout>
