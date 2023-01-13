@@ -144,7 +144,7 @@ class ManageUsersController extends Controller
         if ($v->fails()) {
             return redirect()->back()->withErrors(['cantDeleteUser' => $v->errors()]);
         } else {
-            $user->forceDelete();
+            $user->delete();
             return redirect()->route("user.index");
         }
 
