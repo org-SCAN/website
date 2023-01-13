@@ -20,7 +20,7 @@ class FileRefugeeRequest extends FormRequest
     {
         // validate the file, the format should be json, csv, xlsx or xls. The file is required
         return [
-            "import_person_file" => 'required|file|mimes:json,csv,xlsx,xls',
+            "import_person_file" => 'required|file|mimes:json,csv,xlsx,xls,txt',
         ];
     }
 }
