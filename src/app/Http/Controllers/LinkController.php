@@ -134,7 +134,8 @@ class LinkController extends Controller
             }
             $person = Refugee::find($link[$origin]);
             if ($person->hasEvent()) {
-                $associatedPersonsThroughEvent = $person->event->persons->where("id",'!=',$person->id);
+                $associatedPersonsThroughEvent = $person->event->persons();
+               // dd($person->event);
             }
             unset($link["everyoneFrom"]);
             unset($link["everyoneTo"]);
@@ -142,6 +143,7 @@ class LinkController extends Controller
 
         if (isset($associatedPersonsThroughEvent) && !empty($associatedPersonsThroughEvent) && isset($direction)) {
             foreach ($associatedPersonsThroughEvent as $associatedPerson) {
+                if($associatedPerson->id == $person->id) continue;
                 $link[$origin] = $person->id;
                 $link[$direction] = $associatedPerson->id;
                 $new_link = Link::create($link);

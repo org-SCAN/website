@@ -8,8 +8,8 @@
     ],
     "license": "MIT",
     "require": {
-        "ext-zip": "*",
         "php": "^8.1",
+        "ext-zip": "*",
         "doctrine/dbal": "^3.5",
         "elgibor-solution/laravel-database-encryption": "^1.1",
         "fideloper/proxy": "^4.4",

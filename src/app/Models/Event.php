@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Event extends ListControl
 {
@@ -47,6 +48,17 @@ class Event extends ListControl
 
     public function persons()
     {
-        return $this->hasManyThrough(Refugee::class, FieldRefugee::class, 'value', 'id', 'id', 'refugee_id');
+        $persons_in_event = [];
+        //return $this->hasManyThrough(Refugee::class, FieldRefugee::class, 'value', 'id', 'id', 'refugee_id');
+        $persons = Auth::user()->crew->persons;
+        // for all persons, check if one of the field value is the event id
+        foreach ($persons as $person) {
+            foreach ($person->fields as $field) {
+                if ($field->pivot->value == $this->id) {
+                    array_push($persons_in_event, $person);
+                }
+            }
+        }
+        return $persons_in_event;
     }
 }

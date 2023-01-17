@@ -164,6 +164,9 @@
       <path value="$PROJECT_DIR$/src/vendor/jean85/pretty-package-versions" />
       <path value="$PROJECT_DIR$/src/vendor/fidry/cpu-core-counter" />
       <path value="$PROJECT_DIR$/src/vendor/gonoware/laravel-maps" />
+      <path value="$PROJECT_DIR$/src/vendor/psy/psysh_compare" />
+      <path value="$PROJECT_DIR$/src/vendor/spatie/laravel-package-tools" />
+      <path value="$PROJECT_DIR$/src/vendor/spatie/laravel-query-builder" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1">
