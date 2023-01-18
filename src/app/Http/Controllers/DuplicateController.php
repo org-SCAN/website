@@ -24,8 +24,7 @@ class DuplicateController extends Controller
      * @return Response
      */
     public function index() {
-        $this->authorize("viewAny",
-            Auth::user());
+        $this->authorize("viewAny", Duplicate::class);
 
 
         $duplicates = Duplicate::where("crew_id",
