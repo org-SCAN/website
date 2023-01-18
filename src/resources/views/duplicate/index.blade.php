@@ -71,6 +71,9 @@
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach($duplicates as $duplicate)
+                                    @if($duplicate->person1 == null || $duplicate->person2 == null)
+                                        @continue
+                                    @endif
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <a href="{{route("person.show", $duplicate->person1->id)}}"
