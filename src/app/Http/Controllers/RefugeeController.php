@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateRefugeeRequest;
 use App\Imports\RefugeesImport;
 use App\Models\ApiLog;
 use App\Models\Crew;
+use App\Models\Duplicate;
 use App\Models\Field;
 use App\Models\Link;
 use App\Models\Refugee;
@@ -306,6 +307,11 @@ class RefugeeController extends Controller
      */
     public function destroy(Refugee $person) {
         $person->delete();
+        // Delete the associated duplicate
+        $duplicates = Duplicate::where("person1_id", $person->id)->orWhere("person2_id", $person->id)->get();
+        foreach ($duplicates as $duplicate) {
+            $duplicate->forceDelete();
+        }
         return redirect()->route("person.index");
     }
 
