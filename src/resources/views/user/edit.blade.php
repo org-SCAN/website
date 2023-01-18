@@ -19,7 +19,7 @@
                 <a href="{{URL::previous() }}"
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
                 @can("delete", $user_found)
-                    <form class="inline-block" action="{{ route('user.delete', $user_found->id) }}" method="POST"
+                    <form class="inline-block" action="{{ route('user.destroy', $user_found->id) }}" method="POST"
                           onsubmit="return confirm('Are you sure you want to delete this user?');">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
