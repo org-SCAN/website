@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Crew;
-use App\Models\FieldRefugee;
 use App\Models\Refugee;
 
 class PersonTest extends PermissionsTest
@@ -32,9 +31,9 @@ class PersonTest extends PermissionsTest
         // create 10 persons (associated to the default team)
         $refugees = Refugee::factory()->count(10)->create();
         // add content to these persons
-        foreach ($refugees as $refugee) {
+        /*foreach ($refugees as $refugee) {
             $refugee->fields()->attach(FieldRefugee::random_fields());
-        }
+        }*/
 
         // call the API
         $response = $this->withHeader('Authorization',

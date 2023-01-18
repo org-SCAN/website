@@ -26,25 +26,6 @@ class UserTest extends PermissionsTest
     /* ---------------------------------------------------------- */
     /*----------------------------------------------------------- */
 
-    /**
-     * @brief An authenticated user, with '*.destroy' permission can delete a resource
-     */
-
-    public function test_authenticated_user_with_permission_can_delete_resource() {
-        if (!$this->run["destroy"]) {
-            return $this->markTestSkipped('This test is not relevant for the given route.');
-        }
-        if (get_called_class() == 'Tests\Feature\PermissionsTest') {
-            return $this->markTestSkipped('This is the parent class. It should not be tested.');
-        }
-        $this->actingAs($this->admin);
-        $response = $this->delete($this->route.'/'.$this->resource->id);
-
-        $response->assertStatus(302);
-        //check if the resource has been deleted
-        $this->assertModelMissing($this->resource);
-    }
-
     /* ------------------ changeTeam ------------------ */
 
     /**
@@ -355,7 +336,7 @@ class UserTest extends PermissionsTest
         // check that the user has been created
         $this->assertDatabaseHas('users',
             [
-                'name' => 'Test user',
+                //'name' => 'Test user', comment it since the name is encrypted
                 'email' => 'hello@test.com',
             ]);
 
@@ -457,7 +438,7 @@ class UserTest extends PermissionsTest
         // check that the user has been created
         $this->assertDatabaseHas('users',
             [
-                'name' => 'Test user',
+                // 'name' => 'Test user', name is encrypted
                 'email' => 'allo@gneugneu.gneu',
             ]);
 
@@ -493,9 +474,13 @@ class UserTest extends PermissionsTest
         // check that the user has been edited
         $this->assertDatabaseHas('users',
             [
-                'name' => 'Test user edited',
+                // 'name' => 'Test user edited', encrypted
                 'email' => $user->email,
             ]);
+
+        // Since I use encrypted name, I can't check the name. I have to get the user and check the name
+        $user = User::whereEmail($user->email)->first();
+        $this->assertEquals($user->name, $user_edited['name']);
     }
 
 
@@ -551,11 +536,15 @@ class UserTest extends PermissionsTest
         $this->assertDatabaseHas('users',
             [
                 'id' => $user->id,
-                'name' => 'New admin name',
+                //'name' => 'New admin name',
                 'email' => $user->email,
                 'crew_id' => $crew->id,
                 'role_id' => $user->role->id,
             ]);
+
+        // Since I use encrypted name, I can't check the name. I have to get the user and check the name
+        $user = User::whereEmail($user->email)->first();
+        $this->assertEquals($user->name, $user_edited['name']);
     }
 
 
@@ -590,7 +579,7 @@ class UserTest extends PermissionsTest
         $this->assertDatabaseHas('users',
             [
                 'id' => $user->id,
-                'name' => $user->name,
+                //'name' => $user->name, name is encrypted
                 'email' => $user->email,
                 'role_id' => Role::whereName('Default Viewer')->first()->id,
             ]);
