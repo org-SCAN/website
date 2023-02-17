@@ -1,4 +1,4 @@
-@php use App\Models\ListsourceType; @endphp
+@php use App\Models\ListSourceType; @endphp
 @section('title',"Edit ".$source->name)
 <x-app-layout>
     <x-slot name="header">
