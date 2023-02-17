@@ -37,7 +37,7 @@
                         <!--  Source Type SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "source_type_id")
-                            @php($list = ListsourceType::list())
+                            @php($list = ListSourceType::list())
                             <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Source's
                                 Type</label>
                             @livewire("select-dropdown", ['label' => $form_elem, 'placeholder' => "--
