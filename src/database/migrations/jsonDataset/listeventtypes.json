@@ -1,0 +1,23 @@
+[
+    {
+        "name": {
+            "eng": "Shipwreck",
+            "fra": "Naufrage",
+            "spa": "Naufragio"
+        }
+    },
+    {
+        "name": {
+            "eng": "War",
+            "fra": "Guerre",
+            "spa": "Guerra"
+        }
+    },
+    {
+        "name": {
+            "eng": "Natural disaster",
+            "fra": "Catastrophe Naturelle",
+            "spa": "Catástrofe natural"
+        }
+    }
+]

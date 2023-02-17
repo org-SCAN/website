@@ -3,14 +3,36 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
+use Carbon\Carbon;
+use ESolution\DBEncryption\Traits\EncryptedAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class Link extends Pivot
 {
-    use HasFactory, Uuids, SoftDeletes;
+    use HasFactory, Uuids, SoftDeletes, EncryptedAttribute;
 
+    /**
+     * Give the route pattern, used in api log
+     * @var string
+     */
+    const route_base = "links";
+    /**
+     *
+     * This parameter allows to display the Add from and Add to section in Person.show (relation part)
+     * @var bool
+     */
+    public static bool $quickAdd = true;
+    /**
+     * Indicates if the model's ID is auto-incrementing.
+     *
+     * @var bool
+     */
+
+    public $incrementing = false;
     /**
      * Table
      */
@@ -22,85 +44,98 @@ class Link extends Pivot
      * @var string
      */
     protected $keyType = 'string';
-
     /**
-     * Indicates if the model's ID is auto-incrementing.
-     *
-     * @var bool
-     */
-
-    public $incrementing = false;
-    /**
-     * The attributes that aren't mass assignable.
+     * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $fillable = ["from", "to", "relation_id", "date", "detail", 'api_log'];
 
     /**
-     * Give the route pattern, used in api log
-     * @var string
-     */
-    const route_base = "links";
-
-
-    /**
+     * The attributes that should be encrypted on save.
      *
-     * This parameter allows to display the Add from and Add to section in Person.show (relation part)
-     * @var bool
+     * @var array
      */
-    public static bool $quickAdd = true;
+    protected $encryptable = [
+    ];
+
+    public static function handleApiRequest($relation) {
+
+        //update or create relation
+
+        $link = Link::updateOrCreate(
+            [
+                "from" => $relation["from"],
+                "to" =>  $relation["to"],
+                "relation_id" => $relation["relation_id"],
+                "application_id"=>$relation["application_id"]
+            ],
+            [
+                "date" => request("date"),
+                "detail" => request("detail"),
+                "api_log" => request("api_log"),
+            ]
+        );
+
+        /*
+        $potential_link = Link::relationExists($relation["from"],
+            $relation["to"],
+            $relation["relation_id"],
+            $relation["application_id"]);
+
+        if ($potential_link != null) {
+            $ref = $potential_link->update($relation);
+        } else {
+            $ref = Link::create($relation);
+        }*/
+        return $link;
+    }
+
+    public static function relationExists($from,
+        $to, $relation_type,
+        $application_id) {
+        $potential_link = self::where("application_id",
+            $application_id)->where("from",
+            $from)->where("to",
+            $to)->where("relation_id",
+            ListRelation::getIdFromValue($relation_type))->first();
+
+        return empty($potential_link) ? null : $potential_link;
+    }
 
     /**
      * It returns a representative value, witch could be shown to discribe the element
      *
      * @return mixed
      */
-    public function getBestDescriptiveValueAttribute()
-    {
-        return $this->refugeeFrom->bestDescriptiveValue . " <-> " . $this->refugeeTo->bestDescriptiveValue;
+    public function getBestDescriptiveValueAttribute() {
+        return $this->refugeeFrom->bestDescriptiveValue." <-> ".$this->refugeeTo->bestDescriptiveValue;
     }
 
-    public function refugeeFrom()
-    {
-        return $this->belongsTo(Refugee::class, "from");
+    public function refugeeFrom() {
+        return $this->belongsTo(Refugee::class,
+            "from");
     }
 
-    public function refugeeTo()
-    {
-        return $this->belongsTo(Refugee::class, "to");
-    }
-
-    public function relation()
-    {
-        return $this->belongsTo(ListRelation::class, "relation");
+    public function refugeeTo() {
+        return $this->belongsTo(Refugee::class,
+            "to");
     }
 
     /**
-     *
-     * Get relation name
-     *
-     * @param $relation
-     * @return mixed
+     * @return BelongsTo
      */
-    public function getRelationAttribute($relation)
-    {
-        $displayed_value = ListControl::where("name", "ListRelation")->first()->displayed_value;
-        return ListRelation::find($relation)->$displayed_value;
+    public function relation() {
+        return $this->belongsTo(ListRelation::class);
     }
 
-    /**
-     *
-     * Get relation name
-     *
-     * @param $relation
-     * @return mixed
-     */
-    public function getRelationId()
-    {
-        return $this->attributes["relation"];
+    public function crew() {
+        return $this->hasOneThrough(Crew::class,
+            ApiLog::class,
+            "id", "id",
+            "api_log",
+            "crew_id");
     }
-
 
 
 
@@ -108,60 +143,44 @@ class Link extends Pivot
      * Get from Id
      * @return mixed
      */
-    public function getFromId()
-    {
+    public function getFromId() {
         return $this->attributes["from"];
     }
-
 
     /**
      * Get to Id
      * @return mixed
      */
-    public function getToId()
-    {
+    public function getToId() {
         return $this->attributes["to"];
     }
 
-
-    public function getRelationWeight()
-    {
+    public function getRelationWeight() {
         return ListRelation::find($this->getRelationId())->importance;
     }
 
+    /**
+     *
+     * Get relation name
+     *
+     * @param $relation
+     * @return mixed
+     */
+    public function getRelationId() {
+        return $this->attributes["relation"];
+    }
 
     /**
      * Store the relation id accorting its key or its code
      * @param $value
      */
-
-    public function setRelationAttribute($value)
-    {
+/*
+    public function setRelationAttribute($value) {
         $this->attributes["relation"] = ListRelation::getIdFromValue($value);
+    }*/
+
+    public function getDateAttribute() {
+        return Carbon::parse($this->attributes['date']);
     }
-
-    public static function relationExists($from, $to, $relation_type, $application_id)
-    {
-        $potential_link = self::where("application_id", $application_id)
-            ->where("from", $from)
-            ->where("to", $to)
-            ->where("relation", ListRelation::getIdFromValue($relation_type))
-            ->first();
-
-        return empty($potential_link) ? null : $potential_link;
-    }
-
-    public static function handleApiRequest($relation)
-    {
-
-        $ref = null;
-        $potential_link = Link::relationExists($relation["from"], $relation["to"], $relation["relation"], $relation["application_id"]);
-
-        if ($potential_link != null) {
-            $ref = $potential_link->update($relation);
-        } else {
-            $ref = Link::create($relation);
-        }
-        return $ref;
-    }
+    
 }

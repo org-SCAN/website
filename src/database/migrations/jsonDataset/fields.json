@@ -7,17 +7,15 @@
         },
         "label": "unique_id",
         "placeholder": "AAA-000001",
-        "html_data_type": "text",
-        "android_type": "EditText",
         "linked_list": "",
         "required": 0,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "Short text",
         "order": 1,
-		"descriptive_value" : 1,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "required|regex:/^[A-Z]{3}-[0-9]{6}$/"
+        "descriptive_value": 1,
+        "best_descriptive_value": 0,
+        "validation_laravel": "required|regex:/^[A-Z]{3}-[0-9]{6}$/",
+        "range": false
     },
     {
         "title": {
@@ -26,18 +24,16 @@
             "spa": "Sexo"
         },
         "label": "gender",
-        "placeholder": "F",
-        "html_data_type": "text",
-        "android_type": "Spinner",
+        "placeholder": "-- Select the sex --",
         "linked_list": "ListGender",
         "required": 1,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "List",
         "order": 2,
         "descriptive_value": 1,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|required|exists:list_genders,id"
+        "validation_laravel": "string|required|exists:list_genders,id",
+        "range": false
     },
     {
         "title": {
@@ -47,17 +43,15 @@
         },
         "label": "full_name",
         "placeholder": "John Doe",
-        "html_data_type": "text",
-        "android_type": "EditText",
         "linked_list": "",
         "required": 1,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "Short text",
         "order": 3,
-		"descriptive_value" : 1,
-		"best_descriptive_value" : 1,
-        "validation_laravel": "string|required|max:250"
+        "descriptive_value": 1,
+        "best_descriptive_value": 1,
+        "validation_laravel": "string|required|max:250",
+        "range": false
     },
     {
         "title": {
@@ -67,17 +61,15 @@
         },
         "label": "age",
         "placeholder": "",
-        "html_data_type": "text",
-        "android_type": "EditText",
         "linked_list": "",
         "required": 1,
         "status": 2,
-        "attribute": "",
-        "database_type": "integer",
+        "data_type_id": "Number",
         "order": 4,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "required|integer"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "required|integer",
+        "range": true
     },
     {
         "title": {
@@ -86,18 +78,16 @@
             "spa": "Nacionalidad"
         },
         "label": "nationality",
-        "placeholder": "Switzerland",
-        "html_data_type": "text",
-        "android_type": "AutoCompleteTextView",
+        "placeholder": "-- Select the nationality --",
         "linked_list": "ListCountry",
         "required": 2,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "List",
         "order": 5,
         "descriptive_value": 1,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|exists:list_countries,id"
+        "validation_laravel": "string|nullable|exists:list_countries,id",
+        "range": false
     },
     {
         "title": {
@@ -106,18 +96,16 @@
             "spa": "Papel"
         },
         "label": "role",
-        "placeholder": "",
-        "html_data_type": "text",
-        "android_type": "Spinner",
+        "placeholder": "-- Select the role --",
         "linked_list": "ListRole",
         "required": 2,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "List",
         "order": 6,
         "descriptive_value": 1,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|exists:list_roles,id"
+        "validation_laravel": "string|nullable|exists:list_roles,id",
+        "range": false
     },
     {
         "title": {
@@ -127,17 +115,15 @@
         },
         "label": "birth_date",
         "placeholder": "YYYY-mm-dd",
-        "html_data_type": "date",
-        "android_type": "CalendarView",
         "linked_list": "",
         "required": 2,
         "status": 2,
-        "attribute": "",
-        "database_type": "date",
+        "data_type_id": "date",
         "order": 7,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "date|nullable"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "date|nullable",
+        "range": false
     },
     {
         "title": {
@@ -147,17 +133,15 @@
         },
         "label": "birth_place",
         "placeholder": "Paris",
-        "html_data_type": "text",
-        "android_type": "EditText",
         "linked_list": "",
         "required": 2,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "Short text",
         "order": 8,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "string|nullable|max:250"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "string|nullable|max:250",
+        "range": false
     },
     {
         "title": {
@@ -167,17 +151,15 @@
         },
         "label": "passport_number",
         "placeholder": "",
-        "html_data_type": "text",
-        "android_type": "EditText",
         "linked_list": "",
         "required": 2,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "Short text",
         "order": 9,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "string|nullable|max:250"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "string|nullable|max:250",
+        "range": false
     },
     {
         "title": {
@@ -187,17 +169,15 @@
         },
         "label": "destination",
         "placeholder": "",
-        "html_data_type": "text",
-        "android_type": "EditText",
         "linked_list": "",
         "required": 2,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "Short text",
         "order": 10,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "string|nullable|max:250"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "string|nullable|max:250",
+        "range": false
     },
     {
         "title": {
@@ -206,18 +186,16 @@
             "spa": "Camino"
         },
         "label": "route",
-        "placeholder": "",
-        "html_data_type": "",
-        "android_type": "Spinner",
+        "placeholder": "-- Select the list --",
         "linked_list": "ListRoute",
         "required": 2,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "List",
         "order": 11,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|exists:list_routes,id"
+        "validation_laravel": "string|nullable|exists:list_routes,id",
+        "range": false
     },
     {
         "title": {
@@ -226,18 +204,16 @@
             "spa": "País de residencia"
         },
         "label": "residence",
-        "placeholder": "Syria",
-        "html_data_type": "",
-        "android_type": "AutoCompleteTextView",
+        "placeholder": "-- Select the country of residence --",
         "linked_list": "ListCountry",
         "required": 2,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "List",
         "order": 12,
         "descriptive_value": 0,
         "best_descriptive_value": 0,
-        "validation_laravel": "string|nullable|exists:list_countries,id"
+        "validation_laravel": "string|nullable|exists:list_countries,id",
+        "range": false
     },
     {
         "title": {
@@ -247,17 +223,15 @@
         },
         "label": "alias",
         "placeholder": "Big Joe",
-        "html_data_type": "text",
-        "android_type": "EditText",
         "linked_list": "",
         "required": 3,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "Short text",
         "order": 13,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "string|nullable|max:250"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "string|nullable|max:250",
+        "range": false
     },
     {
         "title": {
@@ -267,17 +241,15 @@
         },
         "label": "embarkation_date",
         "placeholder": "YYYY-mm-dd",
-        "html_data_type": "date",
-        "android_type": "CalendarView",
         "linked_list": "",
         "required": 3,
         "status": 2,
-        "attribute": "",
-        "database_type": "date",
+        "data_type_id": "Date",
         "order": 14,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "date|nullable"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "date|nullable",
+        "range": true
     },
     {
         "title": {
@@ -287,17 +259,15 @@
         },
         "label": "embarkation_place",
         "placeholder": "Roubaix",
-        "html_data_type": "text",
-        "android_type": "EditText",
         "linked_list": "",
         "required": 3,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "Short text",
         "order": 15,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "string|nullable"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "string|nullable",
+        "range": false
     },
     {
         "title": {
@@ -307,17 +277,15 @@
         },
         "label": "detention_place",
         "placeholder": "Aleppo",
-        "html_data_type": "text",
-        "android_type": "EditText",
         "linked_list": "",
         "required": 3,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "Short text",
         "order": 16,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "string|nullable"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "string|nullable",
+        "range": false
     },
     {
         "title": {
@@ -327,17 +295,15 @@
         },
         "label": "date_last_seen",
         "placeholder": "YYYY-mm-dd",
-        "html_data_type": "date",
-        "android_type": "CalendarView",
         "linked_list": "",
         "required": 3,
         "status": 2,
-        "attribute": "",
-        "database_type": "date",
+        "data_type_id": "Short text",
         "order": 17,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "date|nullable"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "date|nullable",
+        "range": true
     },
     {
         "title": {
@@ -347,17 +313,15 @@
         },
         "label": "mothers_names",
         "placeholder": "",
-        "html_data_type": "text",
-        "android_type": "EditText",
         "linked_list": "",
         "required": 3,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "Short text",
         "order": 18,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "string|nullable|max:250"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "string|nullable|max:250",
+        "range": false
     },
     {
         "title": {
@@ -367,17 +331,15 @@
         },
         "label": "fathers_names",
         "placeholder": "",
-        "html_data_type": "text",
-        "android_type": "EditText",
         "linked_list": "",
         "required": 3,
         "status": 2,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "Short text",
         "order": 19,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "string|nullable|max:250"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "string|nullable|max:250",
+        "range": false
     },
     {
         "title": {
@@ -386,18 +348,16 @@
             "spa": "Informaciones suplementarias"
         },
         "label": "detail",
-        "placeholder": "Phone number",
-        "html_data_type": "textarea",
-        "android_type": "EditText",
+        "placeholder": "Example : Phone number",
         "linked_list": "",
         "required": 4,
         "status": 2,
-        "attribute": "",
-        "database_type": "text",
+        "data_type_id": "Long text",
         "order": 20,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "nullable|String"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "nullable|String",
+        "range": false
     },
     {
         "title": {
@@ -407,17 +367,15 @@
         },
         "label": "other_names",
         "placeholder": "",
-        "html_data_type": "text",
-        "android_type": "EditText",
         "linked_list": "",
         "required": 100,
         "status": 0,
-        "attribute": "",
-        "database_type": "string",
+        "data_type_id": "Short text",
         "order": 21,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "string|nullable|max:250"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "string|nullable|max:250",
+        "range": false
     },
     {
         "title": {
@@ -426,17 +384,33 @@
             "spa": "Desastre"
         },
         "label": "disaster",
-        "placeholder": "Sfax",
-        "html_data_type": "text",
-        "android_type": "EditText",
-        "linked_list": "",
+        "placeholder": "-- Select the event --",
+        "linked_list": "Event",
         "required": 100,
-        "status": 0,
-        "attribute": "",
-        "database_type": "string",
+        "status": 2,
+        "data_type_id": "List",
         "order": 22,
-		"descriptive_value" : 0,
-		"best_descriptive_value" : 0,
-        "validation_laravel": "string|nullable|max:250"
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "uuid|nullable",
+        "range": false
+    },
+    {
+        "title": {
+            "eng": "I give my consent for you to collect and use my personal data as described in SCAN policy.",
+            "fra": "Je vous donne mon accord pour collecter et utiliser mes données personnelles comme décrit dans la politique de SCAN.",
+            "spa": "Doy mi consentimiento para que recojan y utilicen mis datos personales tal como se describe en la política de SCAN."
+        },
+        "label": "RGPD",
+        "placeholder": "",
+        "linked_list": "",
+        "required": 1,
+        "status": 2,
+        "data_type_id": "Yes / No",
+        "order": 23,
+        "descriptive_value": 0,
+        "best_descriptive_value": 0,
+        "validation_laravel": "boolean|required",
+        "range": false
     }
 ]

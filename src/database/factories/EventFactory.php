@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\ApiLog;
 use App\Models\Event;
 use App\Models\ListCountry;
+use App\Models\ListEventType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -34,18 +35,22 @@ class EventFactory extends Factory
 
         $log = ApiLog::create($log);
 
+        $coordinates = json_encode([
+            "lat" => $this->faker->latitude,
+            "long" => $this->faker->longitude,
+        ]);
+
         return [
-            "name" => $this->faker->city,
-            "event_type_id" => $this->faker->uuid,
+            "name" => $this->faker->unique()->name,
+            "event_type_id" => ListEventType::inRandomOrder()->first()->id,
             "event_subtype_id" => $this->faker->uuid,
             "country_id" => ListCountry::inRandomOrder()->first()->id,
             "location_details" => $this->faker->streetAddress,
             "start_date" => $this->faker->dateTime,
             "stop_date" => $this->faker->dateTime,
-            "latitude" => $this->faker->latitude,
-            "longitude" => $this->faker->longitude,
+            "coordinates" => $coordinates,
             "description" => $this->faker->realText,
-            'apiLog_id' => $log->id,
+            'api_log' => $log->id,
         ];
     }
 }

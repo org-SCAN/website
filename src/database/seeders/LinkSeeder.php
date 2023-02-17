@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Link;
+use Illuminate\Database\Seeder;
 
 class LinkSeeder extends Seeder
 {
@@ -12,10 +12,7 @@ class LinkSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
-        Link::factory()
-            ->count(40)
-            ->create();
+    public function run() {
+        Link::factory()->count(10)->create();
     }
 }

@@ -26,9 +26,9 @@ class CreateListRolesTable extends Migration
             $table->uuid("id")
                 ->unique()
                 ->primary();
-            $table->string("short");
-            $table->string("descr");
-            $table->string("key");
+            $table->string("short")->nullable();
+            $table->string("descr")->nullable();
+            $table->string("color")->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

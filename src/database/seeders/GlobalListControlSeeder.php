@@ -29,7 +29,7 @@ class GlobalListControlSeeder extends Seeder
         $this->list_name = $list_name;
         $this->class_name = Str::ucfirst(Str::singular($list_name));
         $this->languages = array_column(Language::all()->toArray(), "id", "language");
-        $this->default_language = Language::where("default", 1)->first()->language;
+        $this->default_language = Language::defaultLanguage()->language ?? null;
         $this->getJsonDatas();
         $this->getListInfo();
     }
@@ -47,12 +47,45 @@ class GlobalListControlSeeder extends Seeder
     }
 
     protected function getListInfo(){
-        $list = ListControl::firstWhere('name', $this->list_name);
+        $list = ListControl::getListFromLinkedListName($this->list_name);
         $this->displayed_value = $list->displayed_value;
         $this->list_field_key = $list->key_value;
         $this->list_id = $list->id;
         $this->list = $list;
     }
+
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        foreach ($this->array_json as $json_elem) {
+            $to_store = array();
+            // get all the content from the json and store it in the correct DB
+            foreach ($json_elem as $key => $value) {
+                //If the key is the displayed value, we have to store it in translation
+                if ($key == $this->displayed_value) {
+                    $value = $value[$this->default_language];
+                }
+
+                if($this->list_name != "ListDataType" && $this->list->structure()->where("field", $key)->first()->list()->exists()){ // the field is associated to a list
+                    // find in the list the id of the value
+
+                    $value = $this->list->structure()->where("field", $key)->first()->list->first()->findElement($this->displayed_value, $value)->id ?? $value;
+                }
+                $to_store[$key] = $value;
+            }
+            $model = 'App\Models\\' . $this->class_name;
+            $createdListElem = $model::updateOrCreate([$this->displayed_value => $to_store[$this->displayed_value]], $to_store);
+
+            if ($this->list_name != "ListDataType") {
+                $this->storeTranslation($json_elem[$this->displayed_value], $createdListElem->{$this->list_field_key});
+            }
+        }
+    }
+
     protected function storeTranslation($displayed_value, $field_key){
         foreach ($displayed_value as $language => $value) {
             //check that the language exists in the language DB
@@ -68,47 +101,5 @@ class GlobalListControlSeeder extends Seeder
         }
         //set the value as the one for the default language
         return $displayed_value[$this->default_language];
-    }
-
-    /**
-     * Store the structure of the list
-     *
-     */
-
-    protected function storeStructure()
-    {
-        foreach ($this->array_json[0] as $field => $field_content) {
-            $struct = $this->list->structure()->create([
-                "field" => $field
-            ]);
-            if($field == $this->displayed_value){
-                $this->list->update(["displayed_value" => $struct->id]);
-            }
-        }
-    }
-
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
-        $this->storeStructure();
-        foreach ($this->array_json as $json_elem) {
-            $to_store = array();
-            // get all the content from the json and store it in the correct DB
-            foreach ($json_elem as $key => $value) {
-                //If the key is the displayed value, we have to store it in translation
-                if ($key == $this->displayed_value) {
-                    $value = $value[$this->default_language];
-                }
-                $to_store[$key] = $value;
-            }
-            $model = 'App\Models\\' . $this->class_name;
-            $createdListElem = $model::create($to_store);
-            $this->storeTranslation($json_elem[$this->displayed_value], $createdListElem->{$this->list_field_key});
-
-        }
     }
 }

@@ -24,8 +24,9 @@ class UpdateLinkRequest extends FormRequest
     public function rules()
     {
         return [
-            "relation" => "Required|uuid|exists:list_relations,id",
+            "relation_id" => "Required|uuid|exists:list_relations,id",
             "detail" => "String|nullable",
+            "date" => "date|nullable",
         ];
     }
 }

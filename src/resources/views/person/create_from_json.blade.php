@@ -1,24 +1,34 @@
+@php use App\Models\Field; @endphp
 @section('title','Add persons from json')
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Add persons from Json file
+            Import persons
         </h2>
     </x-slot>
     <div>
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
-
             <div class="block mb-8">
                 <a href="{{URL::previous() }}"
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
             </div>
+
+            <blockquote class="relative border-l-4 pl-4 sm:pl-6 border-red-400 align-justify">
+                <p class="text-gray-800 sm:text-xl dark:text-white ">
+                    You can import csv files or json files. Json files are provided by SCAN application.
+                    Make sure that your team matches the team of the persons you are importing.<br>
+                    If you are importing from a csv file, make sure that the first row contains the field names. They
+                    <strong>must</strong> match the field names in the system.
+                </p>
+            </blockquote>
+
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <form method="post" action="{{route('person.store_from_json') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
-                            <label for="refugee_json" class="block font-medium text-sm text-gray-700">
-                                Update a json file
+                            <label for="import_person_file" class="block font-medium text-sm text-gray-700">
+                                Upload a file (csv, xls, json)
                             </label>
                             <div class="flex flex-col flex-grow mb-3">
                                 <div class="flex flex-col flex-grow mb-3">
@@ -30,16 +40,18 @@
                                                x-on:dragover="$el.classList.add('active')"
                                                x-on:dragleave="$el.classList.remove('active')"
                                                x-on:drop="$el.classList.remove('active')"
-                                               accept="application/json"
-                                               name="refugee_json"
-                                               id="refugee_json"
+                                               accept="application/json, .csv, .xlsx, .xls"
+                                               name="import_person_file"
+                                               id="import_person_file"
                                         >
                                         <template x-if="files !== null">
                                             <div class="flex flex-col space-y-1">
                                                 <template x-for="(_,index) in Array.from({ length: files.length })">
                                                     <div class="flex flex-row items-center space-x-2">
-                                                        <span class="font-medium text-gray-900" x-text="files[index].name">Uploading</span>
-                                                        <span class="text-xs self-end text-gray-500" x-text="filesize(files[index].size)">...</span>
+                                                        <span class="font-medium text-gray-900"
+                                                              x-text="files[index].name">Uploading</span>
+                                                        <span class="text-xs self-end text-gray-500"
+                                                              x-text="filesize(files[index].size)">...</span>
                                                     </div>
                                                 </template>
                                             </div>
@@ -48,7 +60,10 @@
                                             <div class="flex flex-col space-y-2 items-center justify-center">
                                                 <i class="fas fa-cloud-upload-alt fa-3x text-currentColor"></i>
                                                 <p class="text-gray-700">Drag your files here or click in this area.</p>
-                                                <a href="javascript:void(0)" class="flex items-center mx-auto py-2 px-4 text-white text-center font-medium border border-transparent rounded-md outline-none bg-gray-700">Select a file</a>
+                                                <a href="javascript:void(0)"
+                                                   class="flex items-center mx-auto py-2 px-4 text-white text-center font-medium border border-transparent rounded-md outline-none bg-gray-700">
+                                                    Select a file
+                                                </a>
                                             </div>
                                         </template>
                                     </div>
@@ -57,7 +72,9 @@
 
 
                             @error("*")
-                            <p class="text-sm text-red-600">{{ $message }}</p>
+                            @php($replacements = Field::where('crew_id', auth()->user()->crew->id)->get()->pluck('title', 'id')->toArray())
+
+                            <p class="text-sm text-red-600">{{ str_replace(array_keys($replacements), $replacements, $message) }}</p>
                             @enderror
                         </div>
 

@@ -1,0 +1,42 @@
+[
+    {
+        "name": {
+            "eng": "Newpaper",
+            "fra": "Journal",
+            "spa": "Periódico"
+        },
+        "detail": ""
+    },
+    {
+        "name": {
+            "eng": "Person",
+            "fra": "Personne",
+            "spa": "Persona"
+        },
+        "detail": ""
+    },
+    {
+        "name": {
+            "eng": "Social Network",
+            "fra": "Réseau social",
+            "spa": "Red social"
+        },
+        "detail": ""
+    },
+    {
+        "name": {
+            "eng": "Website",
+            "fra": "Site web",
+            "spa": "Sitio web"
+        },
+        "detail": ""
+    },
+    {
+        "name": {
+            "eng": "Other",
+            "fra": "Autre",
+            "spa": "Otro"
+        },
+        "detail": ""
+    }
+]

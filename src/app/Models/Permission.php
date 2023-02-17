@@ -76,7 +76,7 @@ class Permission extends Model
 
     public static function getRoutesWithPermission()
     {
-        $routes_with_permissions = ["user", "person", "links", "cytoscape", "fields", "lists_control", "duplicate", "api_logs", "crew", "roles"];
+        $routes_with_permissions = ["user", "person", "links", "cytoscape", "fields", "lists_control", "duplicate", "api_logs", "crew", "roles", "event", "source"];
         if (env('APP_DEBUG')) {
             array_push($routes_with_permissions, "permissions");
         }

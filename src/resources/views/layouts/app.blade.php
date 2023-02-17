@@ -27,13 +27,13 @@
 
         @livewireStyles
 
-        <!-- Scripts -->
-        <script src="{{ mix('js/app.js') }}" defer></script>
+
         <style>
             [x-cloak] {
                 display: none;
             }
         </style>
+        @mapstyles
     </head>
     <body class="font-sans antialiased">
     <x-jet-banner/>
@@ -57,7 +57,13 @@
         </div>
 
         @stack('modals')
+        @stack('scripts')
 
         @livewireScripts
+
+    <script src="{{ mix('js/manifest.js') }}" defer></script>
+    <script src="{{ mix('js/vendor.js') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
     </body>
+
 </html>

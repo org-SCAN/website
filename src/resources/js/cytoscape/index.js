@@ -2,13 +2,118 @@ import cytoscape from 'cytoscape';
 import dagre from 'cytoscape-dagre';
 import cise from 'cytoscape-cise';
 import fcose from 'cytoscape-fcose';
+import avsdf from 'cytoscape-avsdf';
 import cxtmenu from 'cytoscape-cxtmenu';
 import $ from "jquery";
+
+import {layout_content as dagre_layout} from "./dagre.js";
+import {layout_content as cise_layout} from "./cise.js";
+import {layout_content as fcose_layout} from "./fcose.js";
+import {layout_content as breadthfirst_layout} from "./breadthfirst.js";
+import {layout_content as avsdf_layout} from "./avsdf.js";
+
 
 cytoscape.use( dagre );
 cytoscape.use( cise );
 cytoscape.use( fcose );
+cytoscape.use( avsdf );
 cytoscape.use( cxtmenu );
+
+
+const API_key = process.env.MIX_SCAN_API_TOKEN;
+const API_application_id = 'SCAN_CYTOSCAPE';
+
+var listRelations = [];
+var lists = getLists()
+
+// toggle elements
+var relation_details = false;
+var betweenness_activate = false;
+
+// variable relative to the list of node type
+var listHasChanged = false;
+var listFieldId = "";
+var listNodeTypeId = "";
+var listNodeType = [];
+var list_node_type_colors = {}
+
+listRelations = getListRelations();
+
+
+/**
+ * This function calls the API on the given URL.
+ */
+
+function callAPI(url) {
+    let response;
+    $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            "Accept": "application/json",
+            "Authorization": "Bearer "+API_key,
+            'Application-id': API_application_id
+        },
+        async: false,
+        success: function (data) {
+            response = data;
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+    return response;
+
+}
+
+/**
+ * This function calls the API to get the list of relations
+ */
+function getLists(){
+    // define API key
+    return callAPI('/api/lists');
+}
+
+/**
+ * This function get the displayed value field based on the list id
+ */
+function getDisplayedValue(list_id){
+    let displayedValue;
+    lists.forEach(function (list) {
+        if(list.id === list_id){
+             return displayedValue = list.displayed_value;
+        }
+    });
+    return displayedValue;
+}
+
+/**
+ * This function get the list id from the name of the list.
+ */
+function getListId(listName){
+    let listId;
+    lists.forEach(function (list) {
+        if(list.name === listName){
+            listId = list.id;
+        }
+    });
+    return listId;
+}
+
+/**
+ * This function calls the API to get the list of relations.
+ * It gets the relation list id from the lists array.
+ */
+function getListRelations(){
+    return callAPI('/api/list/'+getListId('ListRelation'));
+}
+/**
+ * This function calls the API to get the elem of the selected list.
+ */
+function getListNodeType(list_id){
+    return callAPI('/api/list/'+list_id);
+}
 
 function perc2color(perc) {
     var r, g, b = 0;
@@ -25,456 +130,96 @@ function perc2color(perc) {
 }
 
 function view_relative(cy, ele){
-    var connected = ele
-
-    connected = connected.union(ele.component())
-    var notConnected = cy.elements().not(connected)
-    var saved = cy.remove(notConnected)
-}
-function insertParam(key, value) {
-    key = encodeURIComponent(key);
-    value = encodeURIComponent(value);
-
-    // kvp looks like ['key1=value1', 'key2=value2', ...]
-    var kvp = document.location.search.substr(1).split('&');
-    let i=0;
-
-    for(; i<kvp.length; i++){
-        if (kvp[i].startsWith(key + '=')) {
-            let pair = kvp[i].split('=');
-            pair[1] = value;
-            kvp[i] = pair.join('=');
-            break;
-        }
+    cy.elements().show();
+    // check that ele is a node
+    if(ele.isNode()){
+        // show all elements
+        let connected = ele.union(ele.component())
+        let notConnected = cy.elements().not(connected)
+        // hide not connected nodes
+        notConnected.hide();
     }
-
-    if(i >= kvp.length){
-        kvp[kvp.length] = [key,value].join('=');
-    }
-
-    // can return this or...
-    let params = kvp.join('&');
-
-    // reload page with new params
-    document.location.search = params;
+    // get current shown elements
+    let shown = cy.elements().filter(':visible');
+    cy.fit(shown, 50)
 }
+
 function drawGraph(){
     $.getJSON('/content.json', function(data){
+
         const urlParams = new URLSearchParams(window.location.search);
-        console.log(data);
-        var cy = cytoscape({
-
-            container: document.getElementById('cy'), // container to render in
-            elements: data,
-            style: [ // the stylesheet for the graph
-
-                {
-                    selector: 'node',
-                    style: {
-                        'background-color': '#666',
-                        'label': 'data(name)',
-                        'font-size': 25
-                    }
-                },
-                {
-                    selector: 'node[role = "deceased"]',
-                    style: {
-                        'background-color': '#000000',
-                        'label': 'data(name)',
-                        'role': 'data(role)',
-                        'font-size': 25,
-                        'shape': 'diamond'
-                    }
-                },
-                {
-                    selector: 'node[role = "informant"]',
-                    style: {
-                        'background-color': '#f89f9f',
-                        'label': 'data(name)',
-                        'role': 'data(role)',
-                        'font-size': 25
-                    }
-                },
-                {
-                    selector: 'node[role = "possibly sought"]',
-                    style: {
-                        'background-color': '#d995e5',
-                        'label': 'data(name)',
-                        'role': 'data(role)',
-                        'font-size': 25
-                    }
-                },
-                {
-                    selector: 'node[role = "relative"]',
-                    style: {
-                        'background-color': '#7773fc',
-                        'label': 'data(name)',
-                        'role': 'data(role)',
-                        'font-size': 25
-                    }
-                },
-                {
-                    selector: 'node[role = "survivor"]',
-                    style: {
-                        'background-color': '#1dfc00',
-                        'label': 'data(name)',
-                        'role': 'data(role)',
-                        'font-size': 25,
-                        'shape': 'star'
-                    }
-                },
-                {
-                    selector: 'node[role = "witness"]',
-                    style: {
-                        'background-color': '#9f9d9d',
-                        'label': 'data(name)',
-                        'role': 'data(role)',
-                        'font-size': 25
-                    }
-                },
-                {
-                    selector: 'node[role = "sought"]',
-                    style: {
-                        'background-color': '#ff0000',
-                        'label': 'data(name)',
-                        'role': 'data(role)',
-                        'font-size': 25,
-                        'shape': 'triangle'
-                    }
-                },
-
-                {
-                    selector: 'edge',
-                    style: {
-                        'width': 3,
-                        'line-color': '#ccc',
-                        'target-arrow-color': '#ccc',
-                        'target-arrow-shape': 'triangle',
-                        'curve-style': 'bezier'
-                    }
-                },
-                {
-                    selector: 'edge[label = "Saw"]',
-                    style: {
-                        'line-color': '#734d39',
-                        'target-arrow-color': '#734d39'
-                    }
-                },
-                {
-                    selector: 'edge[label = "Biological relationship"]',
-                    style: {
-                        'line-color': '#0099ff',
-                        'target-arrow-color': '#0099ff'
-                    }
-                },
-                {
-                    selector: 'edge[label = "Travelled with"]',
-                    style: {
-                        'line-color': '#00ff2a',
-                        'target-arrow-color': '#00ff2a'
-                    }
-                },
-                {
-                    selector: 'edge[label = "Service"]',
-                    style: {
-                        'line-color': '#7e00ff',
-                        'target-arrow-color': '#7e00ff'
-                    }
-                },
-                {
-                    selector: 'edge[label = "Non-biological relationship"]',
-                    style: {
-                        'line-color': '#cbaf1d',
-                        'target-arrow-color': '#cbaf1d'
-                    }
-                },
-                {
-                    selector: '.highlighted',
-                    style: {
-                        'background-color': '#ff0000',
-                        'line-color': '#ff0000',
-                        'target-arrow-color': '#ff0000',
-                        'label': 'data(label)'
-                    }
-                }
-            ],
+        var style = [];
+        // add elem to the style array
+        style.push({
+            selector: 'node',
+            style: {
+                'background-color': '#666',
+                'label': 'data(name)',
+                'font-size': 25
+            }
         })
 
+        style.push({
+            selector: 'edge',
+            style: {
+                'width': 3,
+                'line-color': '#ccc',
+                'target-arrow-color': '#ccc',
+                'target-arrow-shape': 'triangle',
+                'curve-style': 'bezier'
+            }
+        });
 
-        const layout_name = (urlParams.has("layout") ? urlParams.get("layout") : "dagre");
+        listRelations.forEach(function (relation) {
+            style.push({
+                selector: 'edge[label = "'+relation.name.eng+'"]',
+                style: {
+                    'line-color': relation.color,
+                    'target-arrow-color': relation.color,
+                    'source-arrow-color': relation.color,
+                }
+            });
+        });
+
+        style.push({
+            selector: 'edge[type = "bilateral"]',
+            style: {
+                'source-arrow-shape':  'triangle',
+                'width': 4,
+            }
+        });
+
+        style.push({
+            selector: '.highlighted',
+            style: {
+                'background-color': '#ff0000',
+                'line-color': '#ff0000',
+                'target-arrow-color': '#ff0000',
+                'source-arrow-color': '#ff0000',
+                'label': 'data(label)'
+            }
+        });
+
+        var cy = cytoscape({
+            container: document.getElementById('cy'), // container to render in
+            elements: data,
+            style: style
+        })
 
         /*
-
             ******** DEFINE LAYOUT ******
-
          */
-        if(layout_name == "dagre") {
-            cy.layout({
-                name: layout_name,
-                // dagre algo options, uses default value on undefined
-                nodeSep: 30, // the separation between adjacent nodes in the same rank
-                edgeSep: 10, // the separation between adjacent edges in the same rank
-                rankSep: 30, // the separation between each rank in the layout
-                rankDir: "TB", // 'TB' for top to bottom flow, 'LR' for left to right,
-                ranker: "longest-path", // Type of algorithm to assign a rank to each node in the input graph. Possible values: 'network-simplex', 'tight-tree' or 'longest-path'
-                minLen: function (edge) {
-                    return 1;
-                }, // number of ranks to keep between the source and target of the edge
-                edgeWeight: function (edge) {
-                    return 1;
-                }, // higher weight edges are generally made shorter and straighter than lower weight edges
-
-                // general layout options
-                fit: true, // whether to fit to viewport
-                padding: 50, // fit padding
-                spacingFactor: 1.5, // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
-                nodeDimensionsIncludeLabels: true, // whether labels should be included in determining the space used by a node
-                animate: false, // whether to transition the node positions
-                animateFilter: function (node, i) {
-                    return true;
-                }, // whether to animate specific nodes when animation is on; non-animated nodes immediately go to their final positions
-                animationDuration: 500, // duration of animation in ms if enabled
-                animationEasing: undefined, // easing of animation if enabled
-                boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
-                transform: function (node, pos) {
-                    return pos;
-                }, // a function that applies a transform to the final node position
-                ready: function () {
-                }, // on layoutready
-                stop: function () {
-                } // on layoutston
-            }).run();
-        }
-        if(layout_name == "cise") {
-            cy.layout({
-                name: layout_name,
-                // ClusterInfo can be a 2D array contaning node id's or a function that returns cluster ids.
-                // For the 2D array option, the index of the array indicates the cluster ID for all elements in
-                // the collection at that index. Unclustered nodes must NOT be present in this array of clusters.
-                //
-                // For the function, it would be given a Cytoscape node and it is expected to return a cluster id
-                // corresponding to that node. Returning negative numbers, null or undefined is fine for unclustered
-                // nodes.
-                // e.g
-                // Array:                                     OR          function(node){
-                //  [ ['n1','n2','n3'],                                       ...
-                //    ['n5','n6']                                         }
-                //    ['n7', 'n8', 'n9', 'n10'] ]
-                ///clusters: clusterInfo,
-
-                // -------- Optional parameters --------
-                // Whether to animate the layout
-                // - true : Animate while the layout is running
-                // - false : Just show the end result
-                // - 'end' : Animate directly to the end result
-                animate: false,
-
-                // number of ticks per frame; higher is faster but more jerky
-                refresh: 10,
-
-                // Animation duration used for animate:'end'
-                animationDuration: undefined,
-
-                // Easing for animate:'end'
-                animationEasing: undefined,
-
-                // Whether to fit the viewport to the repositioned graph
-                // true : Fits at end of layout for animate:false or animate:'end'
-                fit: true,
-
-                // Padding in rendered co-ordinates around the layout
-                padding: 30,
-
-                // separation amount between nodes in a cluster
-                // note: increasing this amount will also increase the simulation time
-                nodeSeparation: 20,
-
-                // Inter-cluster edge length factor
-                // (2.0 means inter-cluster edges should be twice as long as intra-cluster edges)
-                idealInterClusterEdgeLengthCoefficient: 1.4,
-
-                // Whether to pull on-circle nodes inside of the circle
-                allowNodesInsideCircle: false,
-
-                // Max percentage of the nodes in a circle that can move inside the circle
-                maxRatioOfNodesInsideCircle: 0.1,
-
-                // - Lower values give looser springs
-                // - Higher values give tighter springs
-                springCoeff: 0.45,
-
-                // Node repulsion (non overlapping) multiplier
-                nodeRepulsion: 4500,
-
-                // Gravity force (constant)
-                gravity: 0.25,
-
-                // Gravity range (constant)
-                gravityRange: 3.8,
-
-                // Layout event callbacks; equivalent to `layout.one('layoutready', callback)` for example
-                ready: function(){}, // on layoutready
-                stop: function(){}, // on layoutstop
-            }).run();
-        }
-        if(layout_name == "fcose") {
-            cy.layout({
-                name: layout_name,
-                // 'draft', 'default' or 'proof'
-                // - "draft" only applies spectral layout
-                // - "default" improves the quality with incremental layout (fast cooling rate)
-                // - "proof" improves the quality with incremental layout (slow cooling rate)
-                quality: "default",
-                // Use random node positions at beginning of layout
-                // if this is set to false, then quality option must be "proof"
-                randomize: true,
-                // Whether or not to animate the layout
-                animate: false,
-                // Duration of animation in ms, if enabled
-                animationDuration: 1000,
-                // Easing of animation, if enabled
-                animationEasing: undefined,
-                // Fit the viewport to the repositioned nodes
-                fit: true,
-                // Padding around layout
-                padding: 30,
-                // Whether to include labels in node dimensions. Valid in "proof" quality
-                nodeDimensionsIncludeLabels: true,
-                // Whether or not simple nodes (non-compound nodes) are of uniform dimensions
-                uniformNodeDimensions: false,
-                // Whether to pack disconnected components - valid only if randomize: true
-                packComponents: true,
-                // Layout step - all, transformed, enforced, cose - for debug purpose only
-                step: "all",
-
-                /* spectral layout options */
-
-                // False for random, true for greedy sampling
-                samplingType: true,
-                // Sample size to construct distance matrix
-                sampleSize: 25,
-                // Separation amount between nodes
-                nodeSeparation: 100,
-                // Power iteration tolerance
-                piTol: 0.0000001,
-
-                /* incremental layout options */
-
-                // Node repulsion (non overlapping) multiplier
-                nodeRepulsion: node => 4500,
-                // Ideal edge (non nested) length
-                idealEdgeLength: edge => 50,
-                // Divisor to compute edge forces
-                edgeElasticity: edge => 0.45,
-                // Nesting factor (multiplier) to compute ideal edge length for nested edges
-                nestingFactor: 0.1,
-                // Maximum number of iterations to perform
-                numIter: 2500,
-                // For enabling tiling
-                tile: true,
-                // Represents the amount of the vertical space to put between the zero degree members during the tiling operation(can also be a function)
-                tilingPaddingVertical: 10,
-                // Represents the amount of the horizontal space to put between the zero degree members during the tiling operation(can also be a function)
-                tilingPaddingHorizontal: 10,
-                // Gravity force (constant)
-                gravity: 0.25,
-                // Gravity range (constant) for compounds
-                gravityRangeCompound: 1.5,
-                // Gravity force (constant) for compounds
-                gravityCompound: 1.0,
-                // Gravity range (constant)
-                gravityRange: 3.8,
-                // Initial cooling factor for incremental layout
-                initialEnergyOnIncremental: 0.3,
-
-                /* constraint options */
-
-                // Fix desired nodes to predefined positions
-                // [{nodeId: 'n1', position: {x: 100, y: 200}}, {...}]
-                fixedNodeConstraint: undefined,
-                // Align desired nodes in vertical/horizontal direction
-                // {vertical: [['n1', 'n2'], [...]], horizontal: [['n2', 'n4'], [...]]}
-                alignmentConstraint: undefined,
-                // Place two nodes relatively in vertical/horizontal direction
-                // [{top: 'n1', bottom: 'n2', gap: 100}, {left: 'n3', right: 'n4', gap: 75}, {...}]
-                relativePlacementConstraint: undefined,
-
-                /* layout event callbacks */
-                ready: () => {}, // on layoutready
-                stop: () => {} // on layoutstop
-            }).run();
-        }
-        if(layout_name == "breadthfirst") {
-            cy.layout({
-                    name: 'breadthfirst',
-                    fit: true, // whether to fit the viewport to the graph
-                    directed: false, // whether the tree is directed downwards (or edges can point in any direction if false)
-                    padding: 30, // padding on fit
-                    circle: false, // put depths in concentric circles if true, put depths top down if false
-                    grid: false, // whether to create an even grid into which the DAG is placed (circle:false only)
-                    spacingFactor: 1, // positive spacing factor, larger => more space between nodes (N.B. n/a if causes overlap)
-                    boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
-                    avoidOverlap: true, // prevents node overlap, may overflow boundingBox if not enough space
-                    nodeDimensionsIncludeLabels: true, // Excludes the label when calculating node bounding boxes for the layout algorithm
-                    roots: undefined, // the roots of the trees
-                    maximal: true, // whether to shift nodes down their natural BFS depths in order to avoid upwards edges (DAGS only)
-                    animate: false, // whether to transition the node positions
-                    animationDuration: 500, // duration of animation in ms if enabled
-                    animationEasing: undefined, // easing of animation if enabled,
-                    animateFilter: function ( node, i ){ return true; }, // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
-                    ready: undefined, // callback on layoutready
-                    stop: undefined, // callback on layoutstop
-                    transform: function (node, position ){ return position; } // transform a given node position. Useful for changing flow direction in discrete layouts
-            }).run();
-        }
-
+        cy.layout(dagre_layout).run();
+        // set the selected layout to dagre in the select and display it as selected
+        changeSelectedLayout('dagre');
 
         /*
 
             **** DEFINE MENU ******
-
-         */
-        console.log("Param menu :")
+        */
 
         let defaults = {
             menuRadius: function(ele){ return 100; }, // the outer radius (node center to the end of the menu) in pixels. It is added to the rendered size of the node. Can either be a number or function as in the example.
-            selector: 'node', // elements matching this Cytoscape.js selector will trigger cxtmenus
-            commands: [ // an array of commands to list in the menu or a function that returns the array
-
-                {
-                    content: 'Set as FROM',
-                    select: function(ele){
-                        insertParam("from", ele.id())
-                    }
-                },
-                {
-                    content: 'set as TO',
-                    select: function(ele){
-                        insertParam("to", ele.id())
-                    }
-                },
-                {
-                    content: 'View information',
-                    select: function(ele){
-                        window.location.replace("/person/" + ele.id());
-                    }
-                },
-
-                {
-                    content: 'View related persons',
-                    select: function(ele){
-                        view_relative(cy, ele)
-                    }
-                },
-
-                {
-                    content: 'Save position',
-                    select: function(ele){
-                        console.log( ele.position() );
-                    },
-                    enabled : false
-                }
-            ], // function( ele ){ return [ /*...*/ ] }, // a function that returns commands or a promise of commands
             fillColor: 'rgba(0, 0, 0, 0.75)', // the background colour of the menu
             activeFillColor: 'rgba(1, 105, 217, 0.75)', // the colour used to indicate the selected command
             activePadding: 20, // additional size in pixels for the active command
@@ -489,11 +234,48 @@ function drawGraph(){
             itemTextShadowColor: 'transparent', // the text shadow colour of the command's content
             zIndex: 9999, // the z-index of the ui div
             atMouse: false, // draw menu at mouse position
-            outsideMenuCancel: false // if set to a number, this will cancel the command if the pointer is released outside of the spotlight, padded by the number given
+            outsideMenuCancel: false, // if set to a number, this will cancel the command if the pointer is released outside of the spotlight, padded by the number given
+            selector: 'node', // elements matching this Cytoscape.js selector will trigger cxtmenus
+            commands: [ // an array of commands to list in the menu or a function that returns the array
+                {
+                    content: 'Set as FROM',
+                    select: function(ele){
+                        // set the from selected value
+                        $('#from').val(ele.id());
+                        $('#select2-from-container').attr('title', ele.json()["data"]["name"]).text(ele.json()["data"]["name"]);
+                        setFrom();
+                    }
+                },
+                {
+                    content: 'set as TO',
+                    select: function(ele){
+                        $('#to').val(ele.id());
+                        $('#select2-to-container').attr('title', ele.json()["data"]["name"]).text(ele.json()["data"]["name"]);
+                        setTo()
+                    }
+                },
+                {
+                    content: 'View information',
+                    select: function(ele){
+                        window.location.replace("/person/" + ele.id());
+                    }
+                },
+                {
+                    content: 'View related persons',
+                    select: function(ele){
+                        view_relative(cy, ele)
+                    }
+                },
+                {
+                    content: 'Save position',
+                    select: function(ele){
+                        console.log( ele.position() );
+                    },
+                    enabled : false
+                }
+            ] // function( ele ){ return [ /*...*/ ] }, // a function that returns commands or a promise of commands
         };
-
         cy.cxtmenu( defaults );
-
         cy.cxtmenu({
             selector: 'core',
 
@@ -501,43 +283,55 @@ function drawGraph(){
                 {
                     content: 'Dagre layout',
                     select: function(){
-                        insertParam("layout", "dagre")
+                        changeSelectedLayout('dagre');
+                        cy.layout(dagre_layout).run();
                     }
                 },
 
                 {
                     content: 'Cise layout',
                     select: function(){
-                        insertParam("layout", "cise")
+                        changeSelectedLayout('cise');
+                        cy.layout(cise_layout).run();
                     }
                 },
                 {
                     content: 'Fcose layout',
                     select: function(){
-                        insertParam("layout", "fcose")
+                        changeSelectedLayout('fcose');
+                        cy.layout(fcose_layout).run();
                     }
                 },
                 {
                     content: 'Breadthfirst layout',
                     select: function(){
-                        insertParam("layout", "breadthfirst")
+
+                        changeSelectedLayout('breadthfirst');
+                        cy.layout(breadthfirst_layout).run();
                     }
                 },
                 {
-                    content: 'Show relation details',
+                    content: 'AVSDF layout',
                     select: function(){
-                        cy.style().selector("edge").style('label','data(detail)').update()
+                        // set the selected layout to avsdf in the select
+
+                        changeSelectedLayout('avsdf');
+                        cy.layout(avsdf_layout).run();
                     }
                 },
                 {
-                    content: 'Hide relation details',
+                    content: 'Relation details',
                     select: function(){
-                        cy.style().selector("edge").style('label','').update()
+                        relation_details = !relation_details;
+                        if (relation_details) {
+                            cy.style().selector('edge').style('label', 'data(label)').update();
+                        }else{
+                            cy.style().selector("edge").style('label','').update()
+                        }
                     }
                 }
             ]
         });
-
         cy.cxtmenu({
             selector: 'edge',
 
@@ -564,37 +358,150 @@ function drawGraph(){
             ]
         });
 
-        /*
 
-                **** DEFINE persons details ****
 
-         */
-        const from = (urlParams.has("from") ? urlParams.get("from") : "");
-        if(from != ""){
-            view_relative(cy, cy.$id(from))
+
+        // when a person is selected in the from list, we show the related persons
+        window.$("#from").change(function() {
+            setFrom()
+            // close the dropdown
+            $(this).blur();
+        });
+
+        // when a person is selected in the to list, we show the related persons, if the from is not empty
+        // else we show the shortest path between the two persons
+        window.$("#to").change(function() {
+
+            setTo()
+            //close the dropdown
+            $(this).blur();
+        });
+
+        // On layout dropdown change, we change the layout accordingly
+        window.$("#layout").change(function() {
+            let layout = $(this).val();
+
+            if(layout == "dagre"){
+                changeSelectedLayout('dagre');
+                cy.layout(dagre_layout).run();
+            }
+            else if(layout == "cise"){
+                changeSelectedLayout('cise');
+                cy.layout(cise_layout).run();
+            }
+            else if(layout == "fcose"){
+                changeSelectedLayout('fcose');
+                cy.layout(fcose_layout).run();
+            }
+            else if(layout == "breadthfirst"){
+                changeSelectedLayout('breadthfirst');
+                cy.layout(breadthfirst_layout).run();
+            }
+            else if(layout == "avsdf"){
+                changeSelectedLayout('avsdf');
+                cy.layout(avsdf_layout).run();
+            }
+
+            $(this).blur();
+        }) ;
+
+        // On layout dropdown change, we change the layout accordingly
+        window.$("#list").change(function() {
+            if($(this).val() == "") {
+                clear()
+                return ;
+            }
+            listHasChanged = true;
+
+            listFieldId = $(this).val(); // contains the field id
+            listNodeTypeId = window.field_list[listFieldId]; // contains the list id
+
+            // get the list content from the api
+            listNodeType = getListNodeType(listNodeTypeId) // contains the content of the list
+
+            // update the data : add the type attribute to the nodes according to the list
+            updateData()
+
+            // update the style : add the color attribute to the nodes according to the list
+            updateStyle()
+
+            // update the legend : add the legend according to the list
+            updateLegend()
+
+            listHasChanged = false;
+            $(this).blur();
+        }) ;
+
+        // on click on the save button, save the graph as png
+        $("#save").click(function(){
+            var png64 = cy.png();
+            var a = document.createElement('a');
+            a.href = png64;
+            // the filename is the name of the graph + the date
+            a.download = "graph" + "_" + new Date().toISOString().slice(0, 10) + ".png";
+            a.click();
+        });
+
+        // on click on the betweenness centrality button, calculate the betweenness centrality
+        $("#betweenness_centrality").click(function() {
+            betweenness_activate = !betweenness_activate;
+            if(betweenness_activate){
+                let bcn = cy.elements().bc();
+                cy.nodes().forEach(n => {
+                    n.data("bcn", bcn.betweennessNormalized(n));
+                    n.style("background-color", perc2color(100 * n.data("bcn")))
+                });
+                // Change the button text to hide the betweenness centrality
+                $("#betweenness_centrality").text("Hide centrality");
+            }
+            else{ // if the betweenness centrality is already displayed, hide it
+                cy.nodes().forEach(n => {
+                   // remove the background color
+                     n.removeStyle("background-color");
+                });
+                updateStyle()
+                // Change the button text to show the betweenness centrality
+                $("#betweenness_centrality").text("Show centrality");
+            }
+        });
+
+        // on click on the clear button, redraw the graph
+        $("#clear").click(function(){
+            clear()
+        });
+
+        function setFrom(){
+            let from = $("#from").val();
+            let to = $("#to").val();
+
+            if(from == ""){
+                clearDijkstra()
+            }
+            else if(to != ""){
+                computeDijkstra(from, to);
+            }
+            view_relative(cy, cy.$id(from) ?? [])
         }
-        /*
+        function setTo(){
+            let from = $("#from").val();
+            let to = $("#to").val();
 
-                **** DEFINE CALCULATION ****
-
-         */
-
-
-        const calcul = (urlParams.has("calcul") ? urlParams.get("calcul") : "");
-
-        if(calcul == "betweennessCentrality"){
-
-            let bcn = cy.elements().bc();
-
-            cy.nodes().forEach( n => {
-                n.data("bcn", bcn.betweennessNormalized( n ));
-                n.style("background-color",perc2color(100*n.data("bcn")))
-            } );
-
+            if(to == ""){
+                clearDijkstra()
+            }
+            else if(from != ""){
+                computeDijkstra(from, to);
+            }
+            else{
+                view_relative(cy, cy.$id(to) ?? [])
+            }
         }
-        const to = (urlParams.has("to") ? urlParams.get("to") : "");
-
-        if(from != "" && to != "") {
+        function changeSelectedLayout(layout) {
+            $('#layout').val(layout);
+            $('#select2-layout-container').attr('title', layout).text(layout);
+        }
+        function computeDijkstra(from, to) {
+            clearDijkstra()
             var dijkstra = cy.elements().dijkstra('#'+from, function (edge) {
                 return edge.data('weight');
             }, false);
@@ -611,11 +518,103 @@ function drawGraph(){
             };
             highlightNextEle();
         }
+        function clearDijkstra() {
+            cy.elements().removeClass('highlighted');
+        }
+        function generateNodeStyle(){
+            let nodeStyle = [];
+            let displayed = getDisplayedValue(listNodeTypeId);
+            // 3. Generate the style
+            listNodeType.forEach(function(nodeType){
+                //generate a random color
+                let shape = nodeType.shape ?? 'diamond';
+                let value = nodeType[displayed].eng;
+                let color = undefined;
+                if(listHasChanged){
+                    color = nodeType.color ?? '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+                }
+                else{
+                    color = nodeType.color ?? list_node_type_colors[value];
+                }
+                list_node_type_colors[value] = color;
+                let style = {
+                    selector: 'node[type = "'+value+'"]',
+                    style: {
+                        'background-color': color,
+                        'label': 'data(name)',
+                        'font-size': 25,
+                        'shape': shape
+                    }
+                };
+                nodeStyle.push(style);
+            });
+            return nodeStyle;
+        }
+        function updateStyle(){
+            // remove the old style
+            cy.style().resetToDefault();
+            // add the new style
+            let nodeStyle = generateNodeStyle();
 
+            // concat style and nodeStyle to get the new style
+            let newStyle = style.concat(nodeStyle);
+
+            cy.style(newStyle);
+        }
+
+        // According to the list, we change the 'type' of each node.
+        // It uses the window.persons variable
+        function updateData(){
+            // foreach nodes
+            cy.nodes().forEach(function(node){
+               //update the data
+                let type = window.persons[node.id()][listFieldId];
+                node.data("type", type);
+            });
+
+        }
+        function updateLegend(){
+            let displayed = getDisplayedValue(listNodeTypeId);
+            let legend = "";
+            listNodeType.forEach(function(nodeType){
+                let value = nodeType[displayed].eng;
+                let color = list_node_type_colors[value];
+
+                //check if the value is used in at least one node (check it through window.persons)
+                let used = false;
+                for(let person in window.persons){
+                    if(window.persons[person][listFieldId] == value){
+                        used = true;
+                        break;
+                    }
+                }
+                if(used) {
+                    legend += '<em class="fas fa-circle" style="color: ' + color + '">' + value + '</em>';
+                }
+            });
+            $("#legendList").html(legend);
+        }
+
+        function clear(){
+            // clear the graph
+            cy.remove(cy.elements());
+            // redraw the graph
+            cy.add(data);
+            // clear the from and to lists
+            $("#from").val("");
+            $("#select2-from-container").text("-- Select the first person --");
+
+            $("#to").val("");
+            $("#select2-to-container").text("-- Select the second person --");
+
+            updateStyle();
+            // Change the button text to show the betweenness centrality
+            $("#betweenness_centrality").text("Show centrality");
+            cy.layout(dagre_layout).run();
+
+            $("#select2-layout-container").text("dagre");
+        }
     });
-
-
 }
-
 drawGraph();
 
