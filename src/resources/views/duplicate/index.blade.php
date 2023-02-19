@@ -43,12 +43,12 @@
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500
                                             uppercase tracking-wider">
-                                        Person 1
+                                        Item 1
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500
                                             uppercase tracking-wider">
-                                        Person 2
+                                        Item 2
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500

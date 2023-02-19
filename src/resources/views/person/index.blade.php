@@ -1,10 +1,10 @@
 @php use App\Models\Field;use App\Models\Refugee; @endphp
-@section('title','View persons')
+@section('title','View Items')
 
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Persons') }}
+            {{ __('Items') }}
         </h2>
     </x-slot>
 
@@ -31,7 +31,7 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg p-2">
                             <table id="person" class="display">
-                                <caption class="sr-only">Persons</caption>
+                                <caption class="sr-only">Items</caption>
                                 <thead>
                                 <tr>
                                     @foreach($fields as $field)

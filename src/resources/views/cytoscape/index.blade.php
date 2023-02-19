@@ -96,20 +96,20 @@
                                             </div>
                                             <div class="col-md-12" style="width:100%">
                                                 @livewire('forms.form', [
-                                                    'type' => 'select-dropdown',
-                                                    'form_elem' => 'from',
-                                                    'placeHolder' => '-- Select the first person --',
-                                                    'associated_list' => $refugees,
-                                                    'showError' => false,
+                                                'type' => 'select-dropdown',
+                                                'form_elem' => 'from',
+                                                'placeHolder' => '-- Select the first Item --',
+                                                'associated_list' => $refugees,
+                                                'showError' => false,
                                                 ])
                                             </div>
                                             <div class="col-md-12" style="width:100%">
                                                 @livewire('forms.form', [
-                                                    'type' => 'select-dropdown',
-                                                    'form_elem' => 'to',
-                                                    'placeHolder' => '-- Select the second person --',
-                                                    'associated_list' => $refugees,
-                                                    'showError' => false,
+                                                'type' => 'select-dropdown',
+                                                'form_elem' => 'to',
+                                                'placeHolder' => '-- Select the second Item --',
+                                                'associated_list' => $refugees,
+                                                'showError' => false,
                                                 ])
                                             </div>
                                         </div>
