@@ -19,11 +19,11 @@
             <div class="block mb-8">
                 @can('create', Refugee::class)
                     <a href="{{ route("person.create") }}"
-                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add person</a>
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add Item</a>
                 @endcan
                 @can('createFromJson', Refugee::class)
                     <a href="{{ route("person.create_from_json") }}"
-                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Import persons</a>
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Import Items</a>
                 @endcan
             </div>
             <div class="flex flex-col">
