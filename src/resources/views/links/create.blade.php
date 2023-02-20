@@ -23,18 +23,19 @@
                             @php($form_elem = "from")
 
                             @livewire("forms.form", [
-                                'form_elem' => 'from',
-                                'type' => 'select-dropdown',
-                                'title' => 'Person 1',
-                                'placeHolder' => '-- Select the first person --',
-                                'associated_list' => $lists["refugees"],
-                                'previous' => old($form_elem, $selected_value = (!empty($refugee) && !empty($origin) && $origin == "from") ? $refugee->id : $form_elem),
+                            'form_elem' => 'from',
+                            'type' => 'select-dropdown',
+                            'title' => 'Item 1',
+                            'placeHolder' => '-- Select the first Item --',
+                            'associated_list' => $lists["refugees"],
+                            'previous' => old($form_elem, $selected_value = (!empty($refugee) && !empty($origin) &&
+                            $origin == "from") ? $refugee->id : $form_elem),
                             ])
 
                             @if(auth()->user()->crew->hasEvent())
                                 <input type="checkbox" name="everyoneFrom" @checked(old("everyoneFrom")) value="1"> From
                                 all
-                                person registered in the same event
+                                Item registered in the same event
                                 @error("everyoneFrom")
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -82,17 +83,18 @@
                             @php($form_elem = "to")
 
                             @livewire("forms.form", [
-                                'form_elem' => 'to',
-                                'type' => 'select-dropdown',
-                                'title' => 'Person 2',
-                                'placeHolder' => '-- Select the second person --',
-                                'associated_list' => $lists["refugees"],
-                                'previous' => old($form_elem, (!empty($refugee) && !empty($origin) && $origin == "to") ? $refugee->id : $form_elem ),
+                            'form_elem' => 'to',
+                            'type' => 'select-dropdown',
+                            'title' => 'Item 2',
+                            'placeHolder' => '-- Select the second Item --',
+                            'associated_list' => $lists["refugees"],
+                            'previous' => old($form_elem, (!empty($refugee) && !empty($origin) && $origin == "to") ?
+                            $refugee->id : $form_elem ),
                             ])
 
                             @if(auth()->user()->crew->hasEvent())
                                 <input type="checkbox" name="everyoneTo" @checked(old("everyoneTo")) value="1"> To all
-                                person registered in the same event
+                                Item registered in the same event
                                 @error("everyoneTo")
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                                 @enderror

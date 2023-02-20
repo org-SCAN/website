@@ -125,7 +125,7 @@
                             'form_elem' => $form_elem,
                             'type' => "checkbox",
                             'title' => "Is that the best descriptive value ?",
-                            'hint' => "If checked, it will be displayed in the Persons section as the main field.",
+                            'hint' => "If checked, it will be displayed in the Items section as the main field.",
                             'warning' => "Be careful, there is only one best descriptive value per team.",
                             'previous' => $field->{$form_elem}])
                         </div>
@@ -135,11 +135,11 @@
                         <div class="px-4 py-4 bg-white sm:p-6">
                             @php($form_elem = "descriptive_value")
                             @livewire("forms.form", [
-                                'form_elem' => $form_elem,
-                                'type' => "checkbox",
-                                'title' => "Is that a descriptive value ?",
-                                'hint' => "If checked, it will be displayed in the Persons section.",
-                                'previous' => $field->{$form_elem}])
+                            'form_elem' => $form_elem,
+                            'type' => "checkbox",
+                            'title' => "Is that a descriptive value ?",
+                            'hint' => "If checked, it will be displayed in the Items section.",
+                            'previous' => $field->{$form_elem}])
                         </div>
 
                         <div class="px-4 py-4 bg-white sm:p-6">
