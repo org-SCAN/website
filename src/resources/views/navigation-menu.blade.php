@@ -23,7 +23,7 @@
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('person.index') }}"
                                         :active="request()->routeIs('person.*')">
-                            {{ __('Persons') }}
+                            {{ __('Items') }}
                         </x-jet-nav-link>
                     </div>
                 @endcan
@@ -290,7 +290,7 @@
             @can('viewMenu',\App\Models\Refugee::class)
                 <x-jet-responsive-nav-link href="{{ route('person.index') }}"
                                            :active="request()->routeIs('person.*')">
-                    {{ __('Persons') }}
+                    {{ __('Items') }}
                 </x-jet-responsive-nav-link>
             @endcan
             @can('viewMenu', \App\Models\Event::class)

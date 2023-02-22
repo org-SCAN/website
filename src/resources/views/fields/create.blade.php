@@ -113,11 +113,11 @@
 
                             @php($form_elem = "best_descriptive_value")
                             @livewire("forms.form", [
-                                'form_elem' => $form_elem,
-                                'type' => "checkbox",
-                                'title' => "Is that the best descriptive value ?",
-                                'hint' => "If checked, it will be displayed in the Manage Persons section as the main field.",
-                                'warning' => "Be careful, there is only one best descriptive value per team."])
+                            'form_elem' => $form_elem,
+                            'type' => "checkbox",
+                            'title' => "Is that the best descriptive value ?",
+                            'hint' => "If checked, it will be displayed in the Manage Items section as the main field.",
+                            'warning' => "Be careful, there is only one best descriptive value per team."])
                         </div>
 
                         <!--  DESCRIPTIVE_VALUE SECTION  -->
@@ -125,20 +125,20 @@
 
                             @php($form_elem = "descriptive_value")
                             @livewire("forms.form", [
-                                'form_elem' => $form_elem,
-                                'type' => "checkbox",
-                                'title' => "Is that a descriptive value ?",
-                                'hint' => "If checked, it will be displayed in the Persons section."])
+                            'form_elem' => $form_elem,
+                            'type' => "checkbox",
+                            'title' => "Is that a descriptive value ?",
+                            'hint' => "If checked, it will be displayed in the Items section."])
                         </div>
 
 
                         <div class="px-4 py-4 bg-white sm:p-6">
                             @livewire("forms.form", [
-                                'form_elem' => "validation_rules",
-                                'type' => "text",
-                                'title' => "Specific field's validation rules",
-                                'placeHolder' => "Example : required|email",
-                                'hint' => "Define the validation rules for this field. You can find the list of rules
+                            'form_elem' => "validation_rules",
+                            'type' => "text",
+                            'title' => "Specific field's validation rules",
+                            'placeHolder' => "Example : required|email",
+                            'hint' => "Define the validation rules for this field. You can find the list of rules
                                 <a href='https://laravel.com/docs/9.x/validation#available-validation-rules' class='text-blue-800'>here</a>",
                                 'warning' => "Be careful, to use this section, you need to know the Laravel validation rules."
                             ])

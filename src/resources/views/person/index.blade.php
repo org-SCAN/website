@@ -1,10 +1,10 @@
 @php use App\Models\Field;use App\Models\Refugee; @endphp
-@section('title','View persons')
+@section('title','View Items')
 
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Persons') }}
+            {{ __('Items') }}
         </h2>
     </x-slot>
 
@@ -19,11 +19,11 @@
             <div class="block mb-8">
                 @can('create', Refugee::class)
                     <a href="{{ route("person.create") }}"
-                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add person</a>
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add Item</a>
                 @endcan
                 @can('createFromJson', Refugee::class)
                     <a href="{{ route("person.create_from_json") }}"
-                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Import persons</a>
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Import Items</a>
                 @endcan
             </div>
             <div class="flex flex-col">
@@ -31,7 +31,7 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg p-2">
                             <table id="person" class="display">
-                                <caption class="sr-only">Persons</caption>
+                                <caption class="sr-only">Items</caption>
                                 <thead>
                                 <tr>
                                     @foreach($fields as $field)
@@ -95,9 +95,13 @@
       integrity="sha384-Zt18T5BCHWpEjWpkZH11WEAug/T7djz4tR5qA4Gtohb1nnpaNztkYYViNsVcUkEd" crossorigin="anonymous">
 
 <script
-        src="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/sc-2.0.5/sb-1.3.1/sp-1.4.0/datatables.min.js"
-        integrity="sha384-33Dh7Paf7BKMZ84cYXJONPZfgFUgZqvR6KYZGWtvU1u4QQRTy0nZCrGlo7qNZ3f0"
-        crossorigin="anonymous"></script>
+    src="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/sc-2.0.5/sb-1.3.1/sp-1.4.0/datatables.min.js"
+    integrity="sha384-33Dh7Paf7BKMZ84cYXJONPZfgFUgZqvR6KYZGWtvU1u4QQRTy0nZCrGlo7qNZ3f0"
+    crossorigin="anonymous"></script>
+<script
+    src="https://cdn.datatables.net/plug-ins/1.11.3/features/fuzzySearch/dataTables.fuzzySearch.js"
+    integrity="sha384-7Dn5Qjo6DjZC0FYyj6coY+zPOZuQG2auoMgksD4y5B7ifeecIQAzJFKKOC6L84pF"
+    crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
         $('#person thead tr')
@@ -106,6 +110,7 @@
             .appendTo('#person thead');
 
         $('#person').DataTable({
+            fuzzySearch: true,
             orderCellsTop: true,
             fixedHeader: true,
             initComplete: function () {

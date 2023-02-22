@@ -114,6 +114,7 @@ class FieldsController extends Controller
         $display_elements = [
             "Title" => $field->title,
             "Placeholder" => $field->placeholder,
+            "Importance" => $field->importance,
             "Requirement state" => $field->required,
             "Status" => $field->status,
             "Order" => $field->order,

@@ -1,9 +1,9 @@
 @php use App\Models\Field; @endphp
-@section('title','Add persons from json')
+@section('title','Add Items from json')
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Import persons
+            Import Items
         </h2>
     </x-slot>
     <div>
@@ -16,7 +16,7 @@
             <blockquote class="relative border-l-4 pl-4 sm:pl-6 border-red-400 align-justify">
                 <p class="text-gray-800 sm:text-xl dark:text-white ">
                     You can import csv files or json files. Json files are provided by SCAN application.
-                    Make sure that your team matches the team of the persons you are importing.<br>
+                    Make sure that your team matches the team of the Items you are importing.<br>
                     If you are importing from a csv file, make sure that the first row contains the field names. They
                     <strong>must</strong> match the field names in the system.
                 </p>
