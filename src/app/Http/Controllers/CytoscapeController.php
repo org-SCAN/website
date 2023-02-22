@@ -35,6 +35,7 @@ class CytoscapeController extends Controller
         $links = array();
         $nodes = array();
         $refugees = array();
+        $used_relations = array();
         foreach ($relations as $relation) {
 
             $node["data"] = array();
@@ -60,6 +61,8 @@ class CytoscapeController extends Controller
             $link["data"]["target"] = $relation->getToId();
             $link["data"]["detail"] = $relation->detail;
             array_push($links, $link);
+            $used_relations[$relation->relation->id] = $relation->relation;
+
         }
 
         /**
@@ -97,6 +100,6 @@ class CytoscapeController extends Controller
 
         // file_put_contents("js/cytoscape/content.json",json_encode(array_merge($nodes, $links)));
         Storage::disk('public')->put('content.json', $cytoscape_data);
-        return view("cytoscape.index", compact("relations", "refugees", "lists_name", "field_list", "persons"));
+        return view("cytoscape.index", compact("relations", "refugees", "lists_name", "field_list", "persons", "used_relations"));
     }
 }
