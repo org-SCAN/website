@@ -4,7 +4,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 
 class StoreListControlRequest extends FormRequest
 {
@@ -32,7 +31,7 @@ class StoreListControlRequest extends FormRequest
     public function rules()
     {
         $rules =[
-            "title" => "string|required"//unique where id = id
+            "title" => "string|required|unique:list_controls,title"//unique where id = id
         ];
         return $rules;
     }

@@ -1,6 +1,9 @@
 /node_modules
 /public/hot
 /public/storage
+public/css
+public/js
+public/zip
 /storage/*.key
 /vendor
 .env
@@ -13,3 +16,4 @@ npm-debug.log
 yarn-error.log
 composer.lock
 package-lock.json
+/test_results

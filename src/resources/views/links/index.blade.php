@@ -1,3 +1,4 @@
+@php use App\Models\Field;use App\Models\Link; @endphp
 @section('title',"View all relations")
 @livewireStyles
 <x-app-layout>
@@ -6,15 +7,20 @@
             {{ __('Relations') }}
         </h2>
     </x-slot>
-
+    @if(!Field::hasBestDescriptiveValue())
+        <div class="alert alert-danger" role="alert">
+            <strong>No field has been set as the best descriptive field. Please ask an admin to set one in the fields
+                management panel.</strong>
+        </div>
+    @endif
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mb-8">
-                @can('create', \App\Models\Link::class)
+                @can('create', Link::class)
                     <a href="{{ route("links.create", []) }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add relation</a>
                 @endcan
-                @can('createFromJson', \App\Models\Link::class)
+                @can('createFromJson', Link::class)
                     <a href="{{ route("links.create_from_json") }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add relation from
                         json</a>
@@ -30,6 +36,7 @@
                                     <th class="toFilter">From</th>
                                     <th class="toFilter">Relation</th>
                                     <th class="toFilter">To</th>
+                                    <th class="toFilter">Date</th>
                                     @can('update', $links->first())
                                         <th></th>
                                     @endcan
@@ -41,9 +48,11 @@
                                         <td>
                                             <a href="{{route('person.show',  $link->refugeeFrom->id)}}"> {{ $link->refugeeFrom->best_descriptive_value }}</a>
                                         </td>
-                                        <td>{{ $link->relation }}</td>
+                                        <td>{{ $link->relation->displayed_value_content }}</td>
                                         <td>
                                             <a href="{{route('person.show',  $link->refugeeTo->id)}}"> {{ $link->refugeeTo->best_descriptive_value }}</a>
+                                        </td>
+                                        <td>{{ $link->date->format('d/m/Y') }}</td>
                                         @can('update', $link)
                                             <td><a href="{{route('links.edit',  $link->id)}}">Edit</a></td>
                                         @endcan
@@ -64,6 +73,11 @@
 <script type="text/javascript"
         src="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/sc-2.0.5/sb-1.3.1/sp-1.4.0/datatables.min.js"></script>
 
+<script
+    src="https://cdn.datatables.net/plug-ins/1.11.3/features/fuzzySearch/dataTables.fuzzySearch.js"
+    integrity="sha384-7Dn5Qjo6DjZC0FYyj6coY+zPOZuQG2auoMgksD4y5B7ifeecIQAzJFKKOC6L84pF"
+    crossorigin="anonymous"></script>
+
 <script>
     $(document).ready(function () {
         $('#links thead tr')
@@ -72,6 +86,7 @@
             .appendTo('#links thead');
 
         $('#links').DataTable({
+            fuzzySearch: true,
             orderCellsTop: true,
             fixedHeader: true,
             initComplete: function () {

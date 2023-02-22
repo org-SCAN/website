@@ -9,7 +9,7 @@
     <div>
         <div class="max-w-6xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <a href="{{ URL::previous()}}"
+                <a href="{{ route('lists_control.show', $list_control) }}"
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
             </div>
             <div class="flex flex-col">
@@ -26,14 +26,13 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         @foreach($list_fields as $listField)
                             <div class="px-4 py-5 bg-white sm:p-6">
-                                <label for="{{ $listField->field }}"
-                                       class="block font-medium text-sm text-gray-700">{{ $listField->field }}</label>
-                                <input type="text" name="{{ $listField->field }}" id="{{ $listField->field }}"
-                                       class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                       value="{{ old($listField->field, '') }}"/>
-                                @error($listField->field)
-                                <p class="text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                @livewire('forms.form', [
+                                'form_elem' => $listField->field,
+                                'type' => $listField->dataType->html_type,
+                                'placeHolder' => '',
+                                'title' => $listField->field,
+                                'associated_list' => $listField->list->first()->id ?? null,
+                                ])
                             </div>
                         @endforeach
                     </div>

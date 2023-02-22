@@ -6,7 +6,7 @@
             "spa": "buscado"
         },
         "descr": "the police is looking for this person",
-        "key" : "sought"
+        "color" : "#ff0000"
     },
     {
         "short": {
@@ -15,7 +15,7 @@
             "spa": "posiblemente buscado"
         },
         "descr": "the police might be looking for this person",
-        "key" : "possibly_sought"
+        "color" : "#00ff00"
     },
     {
         "short": {
@@ -24,7 +24,7 @@
             "spa": "testigo"
         },
         "descr": "",
-        "key" : "witness"
+        "color" : "#0000ff"
     },
     {
         "short": {
@@ -33,7 +33,7 @@
             "spa": "sobreviviente"
         },
         "descr": "",
-        "key": "survivor"
+        "color": "#ffff00"
     },
     {
         "short": {
@@ -42,7 +42,7 @@
             "spa": "fallecido"
         },
         "descr": "",
-        "key": "deceased"
+        "color": "#000000"
     },
     {
         "short": {
@@ -51,7 +51,7 @@
             "spa": "informante"
         },
         "descr": "",
-        "key": "informant"
+        "color": "#ff00ff"
     },
     {
         "short": {
@@ -60,6 +60,6 @@
             "spa": "familiar"
         },
         "descr": "",
-        "key" : "relative"
+        "color" : "#00ffff"
     }
 ]

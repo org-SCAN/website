@@ -8,7 +8,7 @@ class EventPolicy extends GlobalPolicy
 {
     use HandlesAuthorization;
 
-    public function __construct($route_name = "events")
+    public function __construct($route_name = "event")
     {
         parent::__construct($route_name);
     }

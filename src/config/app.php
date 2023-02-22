@@ -1,5 +1,7 @@
 <?php
 
+use ESolution\DBEncryption\Providers\DBEncryptionServiceProvider;
+
 return [
 
     /*
@@ -176,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
+        DBEncryptionServiceProvider::class,
 
     ],
 

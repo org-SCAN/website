@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
+use App\Models\ApiLog;
 use App\Models\Event;
-use Illuminate\Http\Request;
+use App\Models\Language;
+use App\Models\ListControl;
+use App\Models\Translation;
+use Illuminate\View\View;
 
 class EventController extends Controller
 {
@@ -31,7 +37,7 @@ class EventController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
@@ -41,13 +47,18 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\StoreEventRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreEventRequest $request)
     {
+        $log = ApiLog::createFromRequest($request, 'Event');
         $event = $request->validated();
-        Event::create($event);
+        $event["api_log"] = $log->id;
+        $event["coordinates"] = \App\Http\Livewire\Forms\Coordinates::encode($event["coordinates"]);
+        $event = Event::create($event);
+        $listControl = ListControl::where("name", "Event")->first();
+        Translation::handleTranslation($listControl, $event->{$listControl->key_value}, $event->{$listControl->displayed_value}, Language::defaultLanguage()->id);
         return redirect()->route("event.index");
     }
 
@@ -55,7 +66,7 @@ class EventController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Event $event
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function show(Event $event)
     {
@@ -66,7 +77,7 @@ class EventController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Event $event
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function edit(Event $event)
     {
@@ -76,23 +87,26 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\UpdateEventRequest $request
      * @param \App\Models\Event $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(UpdateEventRequest $request, Event $event)
     {
-        //
+        $event["coordinates"] = \App\Http\Livewire\Forms\Coordinates::encode($event["coordinates"]);
+        $event->update($request->validated());
+        return redirect()->route('event.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Event $event
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Event $event)
     {
-        //
+        $event->delete();
+        return redirect()->route("event.index");
     }
 }

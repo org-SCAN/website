@@ -28,14 +28,15 @@ class StoreFieldRequest extends FormRequest
         $rules = [
             "title" => "required|string",
             "placeholder" => "string|max:80|nullable",
-            "database_type" => "string|required",
+            "data_type_id" => "uuid|required|exists:list_data_types,id",
+            "range" => "boolean|nullable",
             "required" => "integer|required",
+            "importance" => "numeric|required",
             "status" => "integer|required",
             "linked_list" => "nullable|uuid|exists:list_controls,id",
-            "order" => "integer|nullable",
             "descriptive_value" => "integer|nullable",
-            "best_descriptive_value" => "integer|nullable|unique:fields,best_descriptive_value,NULL,id,crew_id," . Auth::user()->crew->id
-
+            "best_descriptive_value" => "integer|nullable|unique:fields,best_descriptive_value,NULL,id,crew_id," . Auth::user()->crew->id,
+            "validation_rules" => "string|nullable",
         ];
         return $rules;
     }
