@@ -45,7 +45,7 @@
                                             Relations :
                                         </span>
                                         <div class="legendRelation">
-                                            @foreach(ListRelation::all() as $relation)
+                                            @foreach($used_relations as $relation)
                                                 <em class="fas fa-circle" style="color: {{ $relation->color }}"> {{$relation->name}}</em>
                                             @endforeach
                                         </div>
