@@ -1,0 +1,17 @@
+name: Assign issues and add to project automatically
+on:
+  issues:
+    types: [opened]
+jobs:
+  assign-and-add-to-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check issue pattern
+        if: ${{ github.event.issue.title =~ /\[CLIENT_REQUEST\] \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/ }}
+        run: |
+          echo "Issue matches pattern"
+          echo "Assigning to team"
+          # Replace <team_slug> with the slug of your team
+          # Replace <org_name> with the name of your organization
+          # Replace <access_token> with a personal access token with "repo" scope
+          curl -X POST -H "Authorization: Bearer ${{ secrets.ACCESS_TOKEN }}" -H "Accept: application/vnd.github.v3+json" -d '{"assignees":[], "team_assignees":["support"]}' "https://api.github.com/repos/org-SCAN/website/issues/${{ github.event.issue.number }}/assignees"
