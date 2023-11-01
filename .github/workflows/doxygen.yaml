@@ -1,0 +1,35 @@
+name: Generate and Publish Doxygen
+
+on:
+  push:
+    branches:
+      - main  # ou votre branche par défaut
+  pull_request:
+    branches:
+      - main  # ou votre branche par défaut
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive  # Si votre projet utilise des submodules
+
+    - name: Install Doxygen
+      run: sudo apt-get install doxygen
+
+    - name: Generate Doxygen Documentation
+      uses: mattnotmitt/doxygen-action@v1.9.5
+      with:
+        doxyfile-path: 'Doxyfile'  # Assurez-vous que le Doxyfile est à la racine du projet
+        additional-packages: font-fira-code  # Seulement si vous avez besoin de paquets supplémentaires
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'  # Cette étape s'exécute uniquement sur la branche principale
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/html  # Assurez-vous que c'est le répertoire de sortie configuré dans Doxyfile
