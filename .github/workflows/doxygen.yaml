@@ -25,6 +25,7 @@ jobs:
       uses: mattnotmitt/doxygen-action@v1.9.5
       with:
         doxyfile-path: 'Doxyfile'  # Assurez-vous que le Doxyfile est à la racine du projet
+        enable-latex: true
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
