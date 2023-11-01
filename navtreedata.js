@@ -24,12 +24,39 @@
 */
 var NAVTREE =
 [
-  [ "SCAN", "index.html", ]
+  [ "SCAN", "index.html", [
+    [ "Namespaces", "namespaces.html", [
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ]
+    ] ],
+    [ "Classes", "annotated.html", [
+      [ "Class List", "annotated.html", "annotated_dup" ],
+      [ "Class Index", "classes.html", null ],
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
+      [ "Class Members", "functions.html", [
+        [ "All", "functions.html", "functions_dup" ],
+        [ "Functions", "functions_func.html", "functions_func" ],
+        [ "Variables", "functions_vars.html", null ]
+      ] ]
+    ] ],
+    [ "Files", "files.html", [
+      [ "File List", "files.html", "files_dup" ],
+      [ "File Members", "globals.html", [
+        [ "All", "globals.html", null ],
+        [ "Variables", "globals_vars.html", null ]
+      ] ]
+    ] ]
+  ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"index.html"
+"401_8blade_8php.html",
+"PreventRequestsDuringMaintenance_8php.html",
+"classApp_1_1Exceptions_1_1Handler.html#aab34629ab414b983d518197ac24ad500",
+"classApp_1_1Http_1_1Middleware_1_1VerifyCsrfToken.html#a5a05d5a6db35d91bb1350161686c3f73",
+"classApp_1_1Models_1_1ListStructure.html#a1f0dbe70e5ac0d5253226d02b7ae0022",
+"classDatabase_1_1Seeders_1_1LanguageSeeder.html",
+"hashing_8php.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

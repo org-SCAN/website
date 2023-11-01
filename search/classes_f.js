@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['redirectifauthenticated_0',['RedirectIfAuthenticated',['../classApp_1_1Http_1_1Middleware_1_1RedirectIfAuthenticated.html',1,'App::Http::Middleware']]],
+  ['refugee_1',['Refugee',['../classApp_1_1Models_1_1Refugee.html',1,'App::Models']]],
+  ['refugeecontroller_2',['RefugeeController',['../classApp_1_1Http_1_1Controllers_1_1RefugeeController.html',1,'App::Http::Controllers']]],
+  ['refugeefactory_3',['RefugeeFactory',['../classDatabase_1_1Factories_1_1RefugeeFactory.html',1,'Database::Factories']]],
+  ['refugeepolicy_4',['RefugeePolicy',['../classApp_1_1Policies_1_1RefugeePolicy.html',1,'App::Policies']]],
+  ['refugeeseeder_5',['RefugeeSeeder',['../classDatabase_1_1Seeders_1_1RefugeeSeeder.html',1,'Database::Seeders']]],
+  ['refugeesimport_6',['RefugeesImport',['../classApp_1_1Imports_1_1RefugeesImport.html',1,'App::Imports']]],
+  ['relationdoesnotalreadyexist_7',['RelationDoesNotAlreadyExist',['../classApp_1_1Rules_1_1RelationDoesNotAlreadyExist.html',1,'App::Rules']]],
+  ['removeteammember_8',['RemoveTeamMember',['../classApp_1_1Actions_1_1Jetstream_1_1RemoveTeamMember.html',1,'App::Actions::Jetstream']]],
+  ['requestrole_9',['RequestRole',['../classApp_1_1Http_1_1Controllers_1_1RequestRole.html',1,'App\Http\Controllers\RequestRole'],['../classApp_1_1Http_1_1Livewire_1_1RequestRole.html',1,'App\Http\Livewire\RequestRole']]],
+  ['resetuserpassword_10',['ResetUserPassword',['../classApp_1_1Actions_1_1Fortify_1_1ResetUserPassword.html',1,'App::Actions::Fortify']]],
+  ['role_11',['Role',['../classApp_1_1Models_1_1Role.html',1,'App::Models']]],
+  ['rolecontroller_12',['RoleController',['../classApp_1_1Http_1_1Controllers_1_1RoleController.html',1,'App::Http::Controllers']]],
+  ['rolefactory_13',['RoleFactory',['../classDatabase_1_1Factories_1_1RoleFactory.html',1,'Database::Factories']]],
+  ['rolepolicy_14',['RolePolicy',['../classApp_1_1Policies_1_1RolePolicy.html',1,'App::Policies']]],
+  ['rolerequest_15',['RoleRequest',['../classApp_1_1Models_1_1RoleRequest.html',1,'App::Models']]],
+  ['roleseeder_16',['RoleSeeder',['../classDatabase_1_1Seeders_1_1RoleSeeder.html',1,'Database::Seeders']]],
+  ['routeserviceprovider_17',['RouteServiceProvider',['../classApp_1_1Providers_1_1RouteServiceProvider.html',1,'App::Providers']]]
+];
