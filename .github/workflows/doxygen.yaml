@@ -36,18 +36,11 @@ jobs:
         git add docs/
         git commit -m "Update documentation" -a || echo "No changes to commit"
       
-    - name: Push Changes
+    - name: Push Changes to Different Repository
       uses: ad-m/github-push-action@v0.6.0
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # Use a personal access token with permission to the target repo
         force: true
-        branch : main
-        directory: ${{ github.workspace }}/docs
-
-
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: github.ref == 'refs/heads/main'  # Cette étape s'exécute uniquement sur la branche principale
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs/html  # Assurez-vous que c'est le répertoire de sortie configuré dans Doxyfile
+        branch: website-code-doc
+        repository: org-SCAN/doc  # Replace with your username and the target repository
+        directory: 'docs'
