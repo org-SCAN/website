@@ -35,6 +35,7 @@ jobs:
         API_TOKEN_GITHUB: ${{ secrets.REPO_PUSH }}
       with:
         source-directory: 'docs/'
+        target-directory: 'docs/'
         destination-github-username: 'org-scan'
         destination-repository-name: 'doc'
         user-email: lucas@scan4ppl.tech
