@@ -39,8 +39,7 @@ jobs:
     - name: Push Changes to Different Repository
       uses: ad-m/github-push-action@v0.6.0
       with:
-        github_token: ${{ secrets.LUCAS_SECRET_TO_PUSH }}  # Use a personal access token with permission to the target repo
+        github_token: ${{ secrets.REPO_PUSH}}  # Use a personal access token with permission to the target repo
         force: true
         branch: website-code-doc
         repository: org-SCAN/doc  # Replace with your username and the target repository
-        directory: 'docs'
