@@ -11,7 +11,7 @@ on:
 jobs:
   generate-docs:
     runs-on: ubuntu-latest
-    
+    if: github.actor != 'github-actions[bot]'
     steps:
     - name: Checkout repo
       uses: actions/checkout@v3
@@ -26,6 +26,27 @@ jobs:
       uses: mattnotmitt/doxygen-action@v1.9.5
       with:
         doxyfile-path: 'Doxyfile'  # Assurez-vous que le Doxyfile est à la racine du projet
+
+    - name: Create /docs directory if not exists
+      run: mkdir -p ${{ github.workspace }}/docs
+    
+    - name: Move documentation to /docs
+      run: mv -v docs/* ${{ github.workspace }}/docs/
+
+    - name: Commit Documentation
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add docs/
+        git commit -m "Update documentation" -a || echo "No changes to commit"
+      
+    - name: Push Changes
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        force: true
+        directory: ${{ github.workspace }}/docs
+
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
