@@ -18,7 +18,6 @@ jobs:
       with:
         submodules: recursive  # Si votre projet utilise des submodules
         
-
     - name: Install Doxygen
       run: sudo apt-get install doxygen
 
@@ -29,9 +28,6 @@ jobs:
 
     - name: Create /docs directory if not exists
       run: mkdir -p ${{ github.workspace }}/docs
-    
-    - name: Move documentation to /docs
-      run: mv -v docs/* ${{ github.workspace }}/docs/
 
     - name: Commit Documentation
       run: |
