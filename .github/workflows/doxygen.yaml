@@ -29,17 +29,13 @@ jobs:
     - name: Create /docs directory if not exists
       run: mkdir -p ${{ github.workspace }}/docs
 
-    - name: Commit Documentation
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add docs/
-        git commit -m "Update documentation" -a || echo "No changes to commit"
-      
-    - name: Push Changes to Different Repository
-      uses: ad-m/github-push-action@v0.6.0
+    - name: Pushes to another repository
+      uses: cpina/github-action-push-to-another-repository@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.REPO_PUSH }}
       with:
-        github_token: ${{ secrets.REPO_PUSH}}  # Use a personal access token with permission to the target repo
-        force: true
-        branch: website-code-doc
-        repository: org-SCAN/doc  # Replace with your username and the target repository
+        source-directory: 'docs/'
+        destination-github-username: 'org-scan'
+        destination-repository-name: 'doc'
+        user-email: lucas@scan4ppl.tech
+        target-branch: website-code-doc
