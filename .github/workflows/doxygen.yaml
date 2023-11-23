@@ -1,0 +1,42 @@
+name: Generate and Publish Doxygen
+
+on:
+  push:
+    branches:
+      - main  # ou votre branche par défaut
+  pull_request:
+    branches:
+      - main  # ou votre branche par défaut
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-actions[bot]'
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive  # Si votre projet utilise des submodules
+        
+    - name: Install Doxygen
+      run: sudo apt-get install doxygen
+
+    - name: Generate Doxygen Documentation
+      uses: mattnotmitt/doxygen-action@v1.9.5
+      with:
+        doxyfile-path: 'Doxyfile'  # Assurez-vous que le Doxyfile est à la racine du projet
+
+    - name: Create /docs directory if not exists
+      run: mkdir -p ${{ github.workspace }}/docs
+
+    - name: Pushes to another repository
+      uses: cpina/github-action-push-to-another-repository@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.REPO_PUSH }}
+      with:
+        source-directory: 'docs/'
+        target-directory: 'docs/'
+        destination-github-username: 'org-scan'
+        destination-repository-name: 'doc'
+        user-email: lucas@scan4ppl.tech
+        target-branch: website-code-doc
