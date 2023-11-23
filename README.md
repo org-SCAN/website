@@ -6,6 +6,15 @@ Site web du projet :)
 
 # Start the project
 
+## Using SAIL
+
+To run the project, you must have docker and docker-compose installed on your machine.
+
+Following the [laravel sail documentation](https://laravel.com/docs/10.x/sail#installing-sail-into-existing-applications.
+
+
+
+
 ## Using docker
 
 ### Using portainer on your machine
@@ -163,7 +172,14 @@ chmod -R 777 storage/
 php artisan migrate:refresh --seed
 ```
 
-# N4P API
+# Configure your IDE
 
-You can find the API documentation
-here : [https://documenter.getpostman.com/view/15399454/2s83tJGAMW](https://documenter.getpostman.com/view/15399454/2s83tJGAMW)
+- We recommend using PHPStorm as IDE
+
+## Run tests with PHPStorm
+
+This configuration works if you have set up the project with sail.
+
+1. Go to `Run > Edit Configurations`
+2. Add a new cli configuration
+3. …
