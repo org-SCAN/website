@@ -34,7 +34,7 @@
                     </div>
                 @endif
             </x-slot>
-
+            @endif
             <x-slot name="actions">
                 <x-jet-action-message class="mr-3" on="created">
                     {{ __('api/api-token-manager.created') }}
