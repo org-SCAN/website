@@ -1,29 +1,29 @@
-@section('title',"Edit ".$crew->name."'s details")
+@section('title', __('crew/edit.edit_team_details', ['team_name' => $crew->name]))
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit : <strong>{{$crew->name}}</strong>
+            {{ __('crew/edit.edit') }} : <strong>{{ $crew->name }}</strong>
         </h2>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-              integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
-              crossorigin="anonymous">
+        <!-- Include Bootstrap CSS -->
     </x-slot>
 
     <div>
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
                 <a href="{{ route('crew.index') }}"
-                   class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded">Back to list</a>
+                   class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded">
+                    {{ __('crew/edit.back_to_list') }}
+                </a>
                 <form class="inline-block" action="{{ route('crew.destroy', $crew->id) }}" method="POST"
-                      onsubmit="return confirm('Are you sure you want to delete this crew?');">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                      onsubmit="return confirm('{{ __('crew/edit.delete_confirm') }}');">
+                    @csrf
+                    @method('DELETE')
                     <button type="submit"
                             class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
-                        Delete
+                        {{ __('crew/edit.delete') }}
                     </button>
                 </form>
-
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <form method="post" action="{{ route('crew.update', $crew->id) }}">
@@ -31,12 +31,12 @@
                     @method('put')
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
-                            <label for="name" class="block font-medium text-sm text-gray-700">Name</label>
+                            <label for="name" class="block font-medium text-sm text-gray-700"> {{ __('crew/edit.name') }}</label>
                             <input type="text" name="name" id="name"
                                    class="form-input rounded-md shadow-sm mt-1 block w-full"
                                    value="{{ old('name', $crew->name) }}"/>
                             @error('name')
-                            <p class="text-sm text-red-600">{{ $message }}</p>
+                                <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -46,7 +46,7 @@
                                 rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700
                                 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray
                                 disabled:opacity-25 transition ease-in-out duration-150">
-                                Save
+                                {{ __('crew/edit.save') }}
                             </button>
                         </div>
                     </div>
