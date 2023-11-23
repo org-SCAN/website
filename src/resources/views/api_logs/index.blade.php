@@ -1,9 +1,9 @@
 @php use App\Models\User; @endphp
-@section('title',"View API logs")
+@section('title', __('api_logs/index.view_api_logs'))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Api Logs') }}
+            {{ __('api_logs/index.api_logs') }}
         </h2>
     </x-slot>
 
@@ -14,33 +14,33 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200">
-                                <caption class="sr-only">Api Logs</caption>
+                                <caption class="sr-only">{{ __('api_logs/index.api_logs') }}</caption>
                                 <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500
                                         uppercase tracking-wider">
-                                        Status
+                                        {{ __('api_logs/index.status') }}
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500
                                         uppercase tracking-wider">
-                                        Date
+                                        {{ __('api_logs/index.date') }}
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500
                                         uppercase tracking-wider">
-                                        User
+                                        {{ __('api_logs/index.user') }}
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500
                                         uppercase tracking-wider">
-                                        Type
+                                        {{ __('api_logs/index.type') }}
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500
                                         uppercase tracking-wider">
-                                        Action
+                                        {{ __('api_logs/index.action') }}
                                     </th>
                                 </tr>
                                 </thead>
@@ -74,7 +74,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             @can('view', $log)
                                                 <a href="{{ route("api_logs.show", $log->id) }}"
-                                                   class="text-indigo-600 hover:text-blue-900">View detail
+                                                   class="text-indigo-600 hover:text-blue-900">{{ __('api_logs/index.view_detail') }}
                                                 </a>
                                             @endcan
                                         </td>

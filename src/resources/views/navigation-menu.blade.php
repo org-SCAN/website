@@ -15,7 +15,7 @@
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('cytoscape.index') }}"
                                         :active="request()->routeIs('cytoscape.*')">
-                            {{ __('Network graph') }}
+                            {{ __('navigation-menu.network_graph') }}
                         </x-jet-nav-link>
                     </div>
                 @endcan
@@ -23,7 +23,7 @@
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('person.index') }}"
                                         :active="request()->routeIs('person.*')">
-                            {{ __('Items') }}
+                            {{ __('navigation-menu.items') }}
                         </x-jet-nav-link>
                     </div>
                 @endcan
@@ -31,7 +31,7 @@
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('event.index') }}"
                                         :active="request()->routeIs('event.*')">
-                            {{ __('Events') }}
+                            {{ __('navigation-menu.events') }}
                         </x-jet-nav-link>
                     </div>
                 @endcan
@@ -39,14 +39,14 @@
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('source.index') }}"
                                         :active="request()->routeIs('source.*')">
-                            {{ __('Sources') }}
+                            {{ __('navigation-menu.sources') }}
                         </x-jet-nav-link>
                     </div>
                 @endcan
                 @can('viewMenu', \App\Models\Link::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.*')">
-                            {{ __('Relations') }}
+                            {{ __('navigation-menu.relations') }}
                         </x-jet-nav-link>
                     </div>
                 @endcan
@@ -55,7 +55,7 @@
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('duplicate.index') }}"
                                         :active="request()->routeIs('duplicate.*')">
-                            {{ __('Duplicates') }}
+                            {{ __('navigation-menu.duplicates') }}
                         </x-jet-nav-link>
                     </div>
                 @endcan
@@ -69,7 +69,7 @@
                                 <span class="inline-flex rounded-md pt-4">
                                     <button type="button"
                                             class="inline-flex items-center text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
-                                        {{ __('Field Management')}}
+                                        {{ __('navigation-menu.field_management')}}
 
                                     </button>
                                 </span>
@@ -78,18 +78,18 @@
                             <x-slot name="content">
                                 <!-- Fields Management -->
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{ __('Field Management') }}
+                                    {{ __('navigation-menu.field_management') }}
                                 </div>
                                 @can('viewMenu', \App\Models\Field::class)
                                     <x-jet-dropdown-link href="{{ route('fields.index') }}"
                                                          :active="request()->routeIs('fields.*')">
-                                        {{ __('Fields') }}
+                                        {{ __('navigation-menu.fields') }}
                                     </x-jet-dropdown-link>
                                 @endcan
                                 @can("viewMenu", \App\Models\ListControl::class)
                                     <x-jet-dropdown-link href="{{ route('lists_control.index') }}"
                                                          :active="request()->routeIs('lists_control.*')">
-                                        {{ __('Lists') }}
+                                        {{ __('navigation-menu.lists') }}
                                     </x-jet-dropdown-link>
                                 @endcan
 
@@ -108,7 +108,7 @@
                                 <span class="inline-flex rounded-md pt-4">
                                     <button
                                         class="inline-flex items-center text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
-                                        {{ __('User Management')}}
+                                        {{ __('navigation-menu.user_management')}}
 
                                     </button>
                                 </span>
@@ -117,24 +117,24 @@
                             <x-slot name="content">
                                 <!-- Account Management -->
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{ __('User Management') }}
+                                    {{ __('navigation-menu.user_management') }}
                                 </div>
                                 @can('viewMenu', \App\Models\User::class)
                                     <x-jet-dropdown-link href="{{ route('user.index') }}"
                                                          :active="request()->routeIs('user.*')">
-                                        {{ __('Users') }}
+                                        {{ __('navigation-menu.users') }}
                                     </x-jet-dropdown-link>
                                 @endcan
                                 @can('viewMenu', \App\Models\Crew::class)
                                     <x-jet-dropdown-link href="{{ route('crew.index') }}"
                                                          :active="request()->routeIs('crew.*')">
-                                        {{ __('Teams') }}
+                                        {{ __('navigation-menu.teams') }}
                                     </x-jet-dropdown-link>
                                 @endcan
                                 @can('viewMenu', \App\Models\Role::class)
                                     <x-jet-dropdown-link href="{{ route('roles.index') }}"
                                                          :active="request()->routeIs('roles.*')">
-                                        {{ __('Roles') }}
+                                        {{ __('navigation-menu.roles') }}
                                     </x-jet-dropdown-link>
                                 @endcan
 
@@ -147,7 +147,7 @@
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('api_logs.index') }}"
                                         :active="request()->routeIs('api_logs.*')">
-                            {{ __('Api logs') }}
+                            {{ __('navigation-menu.api_logs') }}
                         </x-jet-nav-link>
                     </div>
                 @endcan
@@ -156,7 +156,7 @@
                 <!--
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('lists_control.index') }}" :active="request()->routeIs('lists_control.index')">
-                        {{ __('Manage lists') }}
+                        {{ __('navigation-menu.manage_list') }}
                 </x-jet-nav-link>
             </div>
 -->
@@ -183,17 +183,17 @@
                                 <div class="w-60">
                                     <!-- Team Management -->
                                     <div class="block px-4 py-2 text-xs text-gray-400">
-                                        {{ __('Manage Team') }}
+                                        {{ __('navigation-menu.manage_team') }}
                                     </div>
 
                                     /*<!-- Team Settings -->
                                     <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                                        {{ __('Team Settings') }}
+                                        {{ __('navigation-menu.team_settings') }}
                                     </x-jet-dropdown-link>
 
                                     @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                         <x-jet-dropdown-link href="{{ route('teams.create') }}">
-                                            {{ __('Create New Team') }}
+                                            {{ __('navigation-menu.create_new_team') }}
                                         </x-jet-dropdown-link>
                                     @endcan
 
@@ -201,7 +201,7 @@
 
                                     <!-- Team Switcher -->
                                     <div class="block px-4 py-2 text-xs text-gray-400">
-                                        {{ __('Switch Teams') }}
+                                        {{ __('navigation-menu.switch_teams') }}
                                     </div>
 
                                     @foreach (Auth::user()->allTeams() as $team)
@@ -237,16 +237,16 @@
                         <x-slot name="content">
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Manage Account') }}
+                                {{ __('navigation-menu.manage_account') }}
                             </div>
 
                             <x-jet-dropdown-link href="{{ route('profile.show') }}">
-                                {{ __('Profile') }}
+                                {{ __('navigation-menu.profile') }}
                             </x-jet-dropdown-link>
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
-                                    {{ __('API Tokens') }}
+                                    {{ __('navigation-menu.api_tokens') }}
                                 </x-jet-dropdown-link>
                             @endif
 
@@ -259,7 +259,7 @@
                                 <x-jet-dropdown-link href="{{ route('logout') }}"
                                          onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                    {{ __('Log Out') }}
+                                    {{ __('navigation-menu.log_out') }}
                                 </x-jet-dropdown-link>
                             </form>
                         </x-slot>
@@ -285,36 +285,36 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('cytoscape.index') }}"
                                        :active="request()->routeIs('cytoscape.*')">
-                {{ __('Network graph') }}
+                {{ __('navigation-menu.network_graph') }}
             </x-jet-responsive-nav-link>
             @can('viewMenu',\App\Models\Refugee::class)
                 <x-jet-responsive-nav-link href="{{ route('person.index') }}"
                                            :active="request()->routeIs('person.*')">
-                    {{ __('Items') }}
+                    {{ __('navigation-menu.items') }}
                 </x-jet-responsive-nav-link>
             @endcan
             @can('viewMenu', \App\Models\Event::class)
                 <x-jet-responsive-nav-link href="{{ route('event.index') }}"
                                            :active="request()->routeIs('event.*')">
-                    {{ __('Events') }}
+                    {{ __('navigation-menu.events') }}
                 </x-jet-responsive-nav-link>
             @endcan
             @can('viewMenu', \App\Models\Source::class)
                 <x-jet-responsive-nav-link href="{{ route('source.index') }}"
                                            :active="request()->routeIs('source.*')">
-                    {{ __('Sources') }}
+                    {{ __('navigation-menu.sources') }}
                 </x-jet-responsive-nav-link>
             @endcan
             @can('viewMenu',\App\Models\Link::class)
                 <x-jet-responsive-nav-link href="{{ route('links.index') }}"
                                            :active="request()->routeIs('links.*')">
-                    {{ __('Relations') }}
+                    {{ __('navigation-menu.relations') }}
                 </x-jet-responsive-nav-link>
             @endcan
             @can('viewMenu',\App\Models\Duplicate::class)
                 <x-jet-responsive-nav-link href="{{ route('duplicate.index') }}"
                                            :active="request()->routeIs('duplicate.*')">
-                    {{ __('Duplicates') }}
+                    {{ __('navigation-menu.duplicates') }}
                 </x-jet-responsive-nav-link>
             @endcan
             <div class="pt-2 pb-1 border-t border-gray-200">
@@ -322,13 +322,13 @@
                 @can('viewMenu',\App\Models\Field::class)
                     <x-jet-responsive-nav-link href="{{ route('fields.index') }}"
                                                :active="request()->routeIs('fields.*')">
-                        {{ __('Fields') }}
+                        {{ __('navigation-menu.fields') }}
                     </x-jet-responsive-nav-link>
                 @endcan
                 @can('viewMenu',\App\Models\ListControl::class)
                     <x-jet-responsive-nav-link href="{{ route('lists_control.index') }}"
                                                :active="request()->routeIs('lists_control.*')">
-                        {{ __('List') }}
+                        {{ __('navigation-menu.lists') }}
                     </x-jet-responsive-nav-link>
                 @endcan
             </div>
@@ -337,19 +337,19 @@
                 @can('viewMenu',\App\Models\User::class)
                     <x-jet-responsive-nav-link href="{{ route('user.index') }}"
                                                :active="request()->routeIs('user.*')">
-                        {{ __('Users') }}
+                        {{ __('navigation-menu.users') }}
                     </x-jet-responsive-nav-link>
                 @endcan
                 @can('viewMenu',\App\Models\Crew::class)
                     <x-jet-responsive-nav-link href="{{ route('crew.index') }}"
                                                :active="request()->routeIs('crew.*')">
-                        {{ __('Teams') }}
+                        {{ __('navigation-menu.teams') }}
                     </x-jet-responsive-nav-link>
                 @endcan
                 @can('viewMenu',\App\Models\Role::class)
                     <x-jet-responsive-nav-link href="{{ route('roles.index') }}"
                                                :active="request()->routeIs('roles.*')">
-                        {{ __('Roles') }}
+                        {{ __('navigation-menu.roles') }}
                     </x-jet-responsive-nav-link>
                 @endcan
             </div>
@@ -357,7 +357,7 @@
                 @can('viewMenu',\App\Models\ApiLog::class)
                     <x-jet-responsive-nav-link href="{{ route('api_logs.index') }}"
                                                :active="request()->routeIs('api_logs.*')">
-                        {{ __('Api logs') }}
+                        {{ __('navigation-menu.api_logs') }}
                     </x-jet-responsive-nav-link>
                 @endif
             </div>
@@ -382,7 +382,7 @@
                     <!-- Account Management -->
                     <x-jet-responsive-nav-link href="{{ route('profile.show') }}"
                                                :active="request()->routeIs('profile.show')">
-                        {{ __('Profile') }}
+                        {{ __('navigation-menu.profile') }}
                     </x-jet-responsive-nav-link>
 
                     <!-- Authentication -->
@@ -392,7 +392,7 @@
                         <x-jet-responsive-nav-link href="{{ route('logout') }}"
                                                    onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                            {{ __('Log Out') }}
+                            {{ __('navigation-menu.log_out') }}
                         </x-jet-responsive-nav-link>
                     </form>
 
@@ -401,19 +401,19 @@
                         <div class="border-t border-gray-200"></div>
 
                         <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Manage Team') }}
+                            {{ __('navigation-menu.manage_team') }}
                         </div>
 
                         <!-- Team Settings -->
                         <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
                                                    :active="request()->routeIs('teams.show')">
-                            {{ __('Team Settings') }}
+                            {{ __('navigation-menu.team_settings') }}
                         </x-jet-responsive-nav-link>
 
                         @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                             <x-jet-responsive-nav-link href="{{ route('teams.create') }}"
                                                        :active="request()->routeIs('teams.create')">
-                                {{ __('Create New Team') }}
+                                {{ __('navigation-menu.create_new_team') }}
                             </x-jet-responsive-nav-link>
                         @endcan
 
@@ -421,7 +421,7 @@
 
                         <!-- Team Switcher -->
                         <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Switch Teams') }}
+                            {{ __('navigation-menu.switch_teams') }}
                         </div>
 
                         @foreach (Auth::user()->allTeams() as $team)

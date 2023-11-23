@@ -201,7 +201,6 @@
                                 'lng' => $center['lng'],
                                 'zoom' => 2,
                                 'markers' => $markers
-
                             ])
                             @mapscripts
                         </div>
