@@ -1,10 +1,10 @@
 @php use App\Models\Event; @endphp
-@section('title',"View all events")
+@section('title', __('event/index.view_all_events'))
 @livewireStyles
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Events') }}
+            {{ __('event/index.events') }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,9 @@
             <div class="block mb-8">
                 @can('create', Event::class)
                     <a href="{{ route("event.create", []) }}"
-                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add event</a>
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        {{ __('event/index.add_event') }}
+                    </a>
                 @endcan
             </div>
             <div class="flex flex-col">
@@ -21,15 +23,15 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg p-2">
                             <table id="events" class="display">
-                                <caption class="sr-only">Events</caption>
+                                <caption class="sr-only">{{ __('event/index.events') }}</caption>
                                 <thead>
                                 <tr>
-                                    <th class="toFilter">Name</th>
-                                    <th class="toFilter">Type</th>
-                                    <th class="toFilter">Subtype</th>
-                                    <th class="toFilter">Country</th>
-                                    <th class="toFilter">Start Date</th>
-                                    <th class="toFilter">Stop Date</th>
+                                    <th class="toFilter">{{ __('event/index.name') }}</th>
+                                    <th class="toFilter">{{ __('event/index.type') }}</th>
+                                    <th class="toFilter">{{ __('event/index.subtype') }}</th>
+                                    <th class="toFilter">{{ __('event/index.country') }}</th>
+                                    <th class="toFilter">{{ __('event/index.start_date') }}</th>
+                                    <th class="toFilter">{{ __('event/index.stop_date') }}</th>
                                     @can('update', $events->first())
                                         <th></th>
                                     @endcan
@@ -47,7 +49,7 @@
                                         <td>{{ $event->start_date }}</td>
                                         <td>{{ $event->stop_date }}</td>
                                         @can('update', $event)
-                                            <td><a href="{{route('event.edit',  $event->id)}}">Edit</a></td>
+                                            <td><a href="{{route('event.edit',  $event->id)}}">{{ __('event/index.edit') }}</a></td>
                                         @endcan
                                     </tr>
                                 @endforeach

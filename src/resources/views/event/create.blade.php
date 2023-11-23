@@ -1,17 +1,17 @@
 @php use App\Models\ListEventType; @endphp
 @php use App\Models\ListCountry; @endphp
-@section('title',"Add a new event")
+@section('title', __('event/create.add_new_event'))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Add an Event
+            {{ __('event/create.add_event') }}
         </h2>
     </x-slot>
     <div>
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
                 <a href="{{ route('event.index')  }}"
-                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
+                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">{{ __('event/create.back') }}</a>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <form method="post" action="{{ route('event.store') }}">
@@ -24,8 +24,9 @@
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,
                                 'type' => "text",
-                                'title' => "Event's name",
-                                'hint' => "The name of the event."])
+                                'title' => __("event/create.event_name"),
+                                'hint' => __("event/create.event_name_hint")
+                                ])
                         </div>
 
                         <!--  Event Type SECTION  -->
@@ -35,10 +36,10 @@
                             @livewire('forms.form', [
                                 'form_elem' => $form_elem,
                                 'type' => 'select-dropdown',
-                                'title' => 'Event\'s type',
+                                'title' => __("event/create.event_type"),
                                 'associated_list' => $list,
-                                'placeHolder' => '-- Select the event type --',
-                            ])
+                                'placeHolder' => __("event/create.select_event_type"),
+                                ])
                         </div>
 
 
@@ -48,12 +49,12 @@
                             @php($list = ListCountry::list())
                             @livewire('forms.form', [
                                 'form_elem' => $form_elem,
-                                'title' => "Event's Country",
+                                'title' => __("event/create.event_country"),
                                 'type' => 'select-dropdown',
-                                'hint' => "The country associated to the event.",
-                                "placeHolder" => "-- Select the event country --",
+                                'hint' => __("event/create.event_country_hint"),
+                                "placeHolder" => __("event/create.select_event_country"),
                                 "associated_list" => $list,
-                            ])
+                             ])
                         </div>
 
                         <!--  Location details SECTION  -->
@@ -62,8 +63,9 @@
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,
                                 'type' => "text",
-                                'title' => "Event's precise location",
-                                'hint' => "The precise location of the event."])
+                                'title' => __('event/create.location_details'),
+                                'hint' => __('event/create.location_details_hint')
+                                ])
                         </div>
 
                         <!--  start date SECTION  -->
@@ -72,8 +74,10 @@
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,
                                 'type' => "date",
-                                'title' => "Event's start date",
-                                'hint' => "The start date."])
+                                'title' => __('event/create.start_date'),
+                                'hint' => __('event/create.start_date_hint'),
+                                ])
+
                         </div>
 
                         <!--  stop date SECTION  -->
@@ -82,8 +86,9 @@
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,
                                 'type' => "date",
-                                'title' => "Event's stop date",
-                                'hint' => "The stop date."])
+                                'title' => __('event/create.stop_date'),
+                                'hint' => __('event/create.stop_date_hint'),
+                                ])
                         </div>
 
                         <!--  coordinates SECTION  -->
@@ -92,8 +97,9 @@
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,
                                 'type' => "coordinates",
-                                'title' => "The coordinates of the event",
-                                'hint' => "A latitude and longitude in decimal degree."])
+                                'title' => __('event/create.coordinates'),
+                                'hint' => __('event/create.coordinates_hint'),
+                                ])
                         </div>
 
                         <!--  description SECTION  -->
@@ -102,13 +108,14 @@
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,
                                 'type' => "textarea",
-                                'title' => "Event's description"])
+                                'title' => __('event/create.description'),
+                                ])
                         </div>
 
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button
                                     class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
-                                Add
+                                {{ __('event/create.add_button') }}
                             </button>
                         </div>
                     </div>
