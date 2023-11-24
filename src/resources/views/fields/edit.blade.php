@@ -1,8 +1,10 @@
-@section('title',"Edit ".$field->title." field")
+@php use App\Models\Field; @endphp
+@php use App\Models\ListControl; @endphp
+@section('title', __('fields/edit.edit_field', ['field_title' => $field->title]))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit : <strong>{{$field->title}}</strong>
+            {{ __('fields/edit.edit') }} : <strong>{{$field->title}}</strong>
         </h2>
     </x-slot>
 
@@ -22,10 +24,11 @@
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,
                                 'type' => "text",
-                                'title' => "Field's title",
-                                'placeHolder' => "Example : Full Name",
-                                'hint' => "It'll be shown as title when the field is used.",
-                                'previous' => $field->{$form_elem}])
+                                'title' => __('fields/create.field_title'),
+                                'placeHolder' => __('fields/create.field_title_placeholder'),
+                                'hint' => __('fields/create.field_title_hint'),
+                                'previous' => $field->{$form_elem}
+                            ])
                         </div>
 
                         <!--  PLACEHOLDER SECTION  -->
@@ -36,10 +39,11 @@
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,
                                 'type' => "text",
-                                'title' => "Field's placeholder",
-                                'placeHolder' => "The placehold is shown as an example when the field is asked (just like this)",
-                                'hint' => "It'll be shown as an example when the field is asked.",
-                                'previous' => $field->{$form_elem}])
+                                'title' => __('fields/create.field_placeholder'),
+                                'placeHolder' => __('fields/create.field_placeholder_placeholder'),
+                                'hint' => __('fields/create.field_placeholder_hint'),
+                                'previous' => $field->{$form_elem}
+                            ])
                         </div>
 
                         @if($field->dataType->rangeable && false)
@@ -47,8 +51,8 @@
                                 @livewire('forms.form', [
                                 'form_elem' => 'range',
                                 'type' => 'checkbox',
-                                'title' => 'Add a range to this field ?',
-                                'hint' => 'If checked, you will be able to define a range for this field. Example : Age => Min : 18, Current : 20, Max : 25',
+                                'title' => __('fields/edit.field_range_title'),
+                                'hint' => __('fields/edit.field_range_hint'),
                                 'previous' => $field->range
                                 ])
                             </div>
@@ -62,8 +66,8 @@
                             @livewire("forms.form", [
                             'form_elem' => $form_elem,
                             'type' => "range",
-                            'title' => "Choose the field weight",
-                            'hint' => "It will be used to compute the duplication.",
+                            'title' => __('fields/create.field_importance'),
+                            'hint' => __('fields/create.field_importance_hint'),
                             'previous' => $field->{$form_elem}])
                         </div>
 
@@ -71,35 +75,38 @@
 
                         <div class="px-4 py-4 bg-white sm:p-6">
                             @php($form_elem = "required")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's
-                                requirement state</label>
-                            @if($field->required == "Required")
-                                <strong>This field is currently required</strong>
-                            @endif
-                            @php( $list = $lists["required"])
-                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
-                                           class="form-input rounded-md shadow-sm mt-1 block w-full"/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define the
-                                field's requirement state.</small>
+                            @livewire("forms.form", [
+                           'form_elem' => $form_elem,
+                           'type' => "select-dropdown",
+                           'associated_list' => Field::$requiredTypes,
+                           'title' => __('fields/create.field_required'),
+                           'hint' => __('fields/create.field_required_hint'),
+                           'placeHolder' => __('fields/create.field_required_placeholder'),
+                           'warning' => __('fields/create.field_required_warning'),
+                           'previous' => array_search($field->{$form_elem}, Field::$requiredTypes),
+                            ])
 
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @if($field->required == "Required")
+                                <strong>{{ __("fields/edit.field_currently_required") }}</strong>
+                            @endif
+
                         </div>
 
                         <!--  STATUS SECTION  -->
 
                         <div class="px-4 py-4 bg-white sm:p-6">
                             @php($form_elem = "status")
-                            <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">Field's activation status </label>
+                            @livewire("forms.form", [
+                            'form_elem' => $form_elem,
+                            'type' => "select-dropdown",
+                            'associated_list' => Field::$statusTypes,
+                            'title' => __('fields/create.field_status'),
+                            'hint' => __('fields/create.field_status_hint'),
+                            'placeHolder' => __('fields/create.field_status_placeholder'),
+                            'warning' => __('fields/create.field_status_warning'),
+                            'previous' => array_search($field->{$form_elem}, Field::$statusTypes),
 
-                            @php( $list = $lists["status"])
-                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}" class="form-input rounded-md shadow-sm mt-1 block w-full"/>
-                            <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">Define where the field will be deployed.</small>
-
-                            @error($form_elem)
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            ])
                         </div>
 
                         <!--  ORDER SECTION  -->
@@ -110,9 +117,9 @@
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,
                                 'type' => "number",
-                                'title' => "Field's order",
-                                'placeHolder' => "Example : 3",
-                                'hint' => "It'll be used to order the field. Fields are first order by requirement state, then by order",
+                                'title' => __('fields/edit.field_order'),
+                                'placeHolder' => __('fields/edit.field_order_placeholder'),
+                                'hint' => __('fields/edit.field_order_hint'),
                                 'previous' => $field->{$form_elem}])
                         </div>
 
@@ -124,9 +131,9 @@
                             @livewire("forms.form", [
                             'form_elem' => $form_elem,
                             'type' => "checkbox",
-                            'title' => "Is that the best descriptive value ?",
-                            'hint' => "If checked, it will be displayed in the Items section as the main field.",
-                            'warning' => "Be careful, there is only one best descriptive value per team.",
+                            'title' => __('fields/create.field_best_descriptive_value'),
+                            'hint' => __('fields/create.field_best_descriptive_value_hint'),
+                            'warning' => __('fields/create.field_best_descriptive_value_warning'),
                             'previous' => $field->{$form_elem}])
                         </div>
 
@@ -137,8 +144,8 @@
                             @livewire("forms.form", [
                             'form_elem' => $form_elem,
                             'type' => "checkbox",
-                            'title' => "Is that a descriptive value ?",
-                            'hint' => "If checked, it will be displayed in the Items section.",
+                            'title' => __('fields/create.field_descriptive_value'),
+                            'hint' => __('fields/create.field_descriptive_value_hint'),
                             'previous' => $field->{$form_elem}])
                         </div>
 
@@ -146,11 +153,10 @@
                             @livewire("forms.form", [
                             'form_elem' => "validation_rules",
                             'type' => "text",
-                            'title' => "Specific field's validation rules",
-                            'placeHolder' => "Example : required|email",
-                            'hint' => "Define the validation rules for this field. You can find the list of rules
-                            <a href='https://laravel.com/docs/9.x/validation#available-validation-rules' class='text-blue-800'>here</a>",
-                            'warning' => "Be careful, to use this section, you need to know the Laravel validation rules.",
+                            'title' => __('fields/create.field_validation_rules'),
+                            'placeHolder' => __('fields/create.field_validation_rules_placeholder'),
+                            'hint' => __('fields/create.field_validation_rules_hint'),
+                            'warning' => __('fields/create.field_validation_rules_warning'),
                             'previous' => $field->validation_laravel
                             ])
 
@@ -158,7 +164,7 @@
 
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
-                                Save
+                                {{ __('fields/edit.save') }}
                             </button>
                         </div>
                     </div>

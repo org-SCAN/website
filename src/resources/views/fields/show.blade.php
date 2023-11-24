@@ -1,8 +1,8 @@
-@section('title',"View ".$field->title."'s details")
+@section('title', __('fields/show.view_field_details', ['field_title' => $field->title]))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <b>{{ $field->title }}</b> details
+            <b>{{ $field->title }}</b> {{ __('fields/show.details') }}
         </h2>
     </x-slot>
 
@@ -16,13 +16,16 @@
 
                         @can("viewAny", $field)
                             <a href="{{ route('fields.index') }}"
-                               class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to
-                                list</a>
+                               class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
+                                {{ __('fields/show.back_to_list') }}
+                            </a>
                         @endcan
 
                         @can("update", $field)
                             <a href="{{ route('fields.edit', $field->id) }}"
-                               class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">Edit</a>
+                               class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">
+                                {{ __('fields/show.edit') }}
+                            </a>
                         @endcan
 
 
@@ -31,7 +34,7 @@
                             @csrf
                             <button type="submit"
                                     class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
-                                Delete
+                                {{ __('fields/show.delete') }}
                             </button>
                     </form>
                 @endcan
@@ -55,7 +58,7 @@
                                 <tr class="border-b">
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Associate list
+                                        {{ __("fields/show.associate_list") }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-900 bg-white divide-y divide-gray-200">
                                         @if(!empty($field->listControl))

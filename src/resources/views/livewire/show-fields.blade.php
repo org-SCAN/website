@@ -26,7 +26,9 @@
         </td>
         @can("update", $field)
         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-            <a href="{{route("fields.edit", $field->id)}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+            <a href="{{route("fields.edit", $field->id)}}" class="text-indigo-600 hover:text-indigo-900">
+                {{ __('fields/index.edit') }}
+            </a>
         </td>
         @endcan
     </tr>
