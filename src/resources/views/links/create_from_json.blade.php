@@ -1,8 +1,8 @@
-@section('title',"Add new relations from json")
+@section('title', __('links/create_from_json.add_relations_from_json'))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Add relations from Json file
+            {{ __('links/create_from_json.add_relations_from_json') }}
         </h2>
     </x-slot>
     <div>
@@ -13,7 +13,7 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="link_json" class="block font-medium text-sm text-gray-700">
-                                Update a json file
+                                {{ __('links/create_from_json.update_json_file') }}
                             </label>
                             <div class="flex flex-col flex-grow mb-3">
                                 <div class="flex flex-col flex-grow mb-3">
@@ -34,7 +34,7 @@
                                                 <template x-for="(_,index) in Array.from({ length: files.length })">
                                                     <div class="flex flex-row items-center space-x-2">
                                                         <span class="font-medium text-gray-900"
-                                                              x-text="files[index].name">Uploading</span>
+                                                              x-text="files[index].name">{{ __('links/create_from_json.uploading') }}</span>
                                                         <span class="text-xs self-end text-gray-500"
                                                               x-text="filesize(files[index].size)">...</span>
                                                     </div>
@@ -44,10 +44,11 @@
                                         <template x-if="files === null">
                                             <div class="flex flex-col space-y-2 items-center justify-center">
                                                 <i class="fas fa-cloud-upload-alt fa-3x text-currentColor"></i>
-                                                <p class="text-gray-700">Drag your files here or click in this area.</p>
+                                                <p class="text-gray-700">{{ __('links/create_from_json.drag_files_here') }}</p>
                                                 <a href="javascript:void(0)"
-                                                   class="flex items-center mx-auto py-2 px-4 text-white text-center font-medium border border-transparent rounded-md outline-none bg-gray-700">Select
-                                                    a file</a>
+                                                   class="flex items-center mx-auto py-2 px-4 text-white text-center font-medium border border-transparent rounded-md outline-none bg-gray-700">
+                                                    {{ __('links/create_from_json.select_file') }}
+                                                </a>
                                             </div>
                                         </template>
                                     </div>
@@ -63,7 +64,7 @@
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button
                                 class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
-                                Add
+                                {{ __('links/create_from_json.add') }}
                             </button>
                         </div>
                     </div>

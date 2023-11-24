@@ -1,16 +1,17 @@
 @php use App\Models\Field;use App\Models\Link; @endphp
-@section('title',"View all relations")
+@section('title', __('links/index.title'))
 @livewireStyles
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Relations') }}
+            {{ __('links/index.relations') }}
         </h2>
     </x-slot>
     @if(!Field::hasBestDescriptiveValue())
         <div class="alert alert-danger" role="alert">
-            <strong>No field has been set as the best descriptive field. Please ask an admin to set one in the fields
-                management panel.</strong>
+            <strong>
+                {{ __('links/index.no_best_descriptive_field_warning') }}
+            </strong>
         </div>
     @endif
     <div class="py-12">
@@ -18,12 +19,15 @@
             <div class="block mb-8">
                 @can('create', Link::class)
                     <a href="{{ route("links.create", []) }}"
-                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add relation</a>
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        {{ __('links/index.add_relation') }}
+                    </a>
                 @endcan
                 @can('createFromJson', Link::class)
                     <a href="{{ route("links.create_from_json") }}"
-                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add relation from
-                        json</a>
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        {{ __('links/index.add_relation_from_json') }}
+                    </a>
                 @endcan
             </div>
             <div class="flex flex-col">
@@ -33,10 +37,10 @@
                             <table id="links" class="display">
                                 <thead>
                                 <tr>
-                                    <th class="toFilter">From</th>
-                                    <th class="toFilter">Relation</th>
-                                    <th class="toFilter">To</th>
-                                    <th class="toFilter">Date</th>
+                                    <th class="toFilter">{{ __('links/index.from') }}</th>
+                                    <th class="toFilter">{{ __('links/index.relation') }}</th>
+                                    <th class="toFilter">{{ __('links/index.to') }}</th>
+                                    <th class="toFilter">{{ __('links/index.date') }}</th>
                                     @can('update', $links->first())
                                         <th></th>
                                     @endcan
@@ -54,7 +58,7 @@
                                         </td>
                                         <td>{{ $link->date->format('d/m/Y') }}</td>
                                         @can('update', $link)
-                                            <td><a href="{{route('links.edit',  $link->id)}}">Edit</a></td>
+                                            <td><a href="{{route('links.edit',  $link->id)}}">{{ __('links/index.edit') }}</a></td>
                                         @endcan
                                     </tr>
                                 @endforeach
