@@ -1,9 +1,9 @@
 @php use App\Models\ListControl; @endphp
-@section('title',"View ".$lists_control->title." details")
+@section('title',__("lists_control/show.title", ["list_title" => $lists_control->title]))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <b>{{ $lists_control->title }}</b> details
+            {!! __("lists_control/show.section_title", ["list_title" => $lists_control->title]) !!}
         </h2>
     </x-slot>
     <div>
@@ -15,24 +15,28 @@
                         @endcan
                         @can('viewAny', $lists_control)
                             <a href="{{ route('lists_control.index')}}"
-                               class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Lists</a>
+                               class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
+                                {{ __('common.back') }}
+                            </a>
                         @endcan
                         @can("update", $lists_control)
                             <a href="{{ route('lists_control.edit', $lists_control->id) }}"
-                               class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">Edit</a>
+                               class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">
+                                {{ __('common.edit') }}
+                            </a>
                         @endcan
                         @can('addToList', $lists_control)
                             <a href="{{ route('lists_control.add_to_list', $lists_control->id) }}"
-                               class="bg-green-200 hover:bg-green-300 text-black font-bold py-2 px-4 rounded">Add an
-                                element to
-                                the list</a>
+                               class="bg-green-200 hover:bg-green-300 text-black font-bold py-2 px-4 rounded">
+                                {{ __("lists_control/show.add_to_list") }}
+                            </a>
                         @endcan
                         @can("delete", $lists_control)
                             @method('DELETE')
                             @csrf
                             <button type="submit"
                                     class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
-                                Delete
+                                {{ __('common.delete') }}
                             </button>
                         @endcan
                         @error("deleteList")
@@ -120,11 +124,13 @@
                 </div>
             </div>
             <div class="block mt-8">
-                <small>* : current displayed value</small>
+                <small>{{ __("lists_control/show.current_displayed_value") }}</small>
             </div>
             <div class="block mt-8">
                 <a href="{{ URL::previous()}}"
-                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
+                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
+                    {{ __('common.back') }}
+                </a>
             </div>
         </div>
     </div>

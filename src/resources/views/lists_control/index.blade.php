@@ -1,10 +1,10 @@
 @php use App\Models\ListControl; @endphp
 @php use App\Models\Field; @endphp
-@section('title',"View lists")
+@section('title',__("lists_control/index.title"))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Manage Lists') }}
+            {{ __("lists_control/index.section_title") }}
         </h2>
     </x-slot>
 
@@ -13,11 +13,15 @@
             <div class="block mb-8">
                 @can("create", ListControl::class)
                     <a href="{{ route("lists_control.create") }}"
-                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add list</a>
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        {{ __("lists_control/index.add_list") }}
+                    </a>
                 @endcan
                 @can("viewAny", Field::class)
                     <a href="{{ route("fields.index") }}"
-                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Manage field</a>
+                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        {{ __("lists_control/index.manage_fields") }}
+                    </a>
                 @endcan
 
             </div>
@@ -30,16 +34,16 @@
                                 <tr>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        List
+                                        {{ __("lists_control/index.lists") }}
                                     </th>
                                     @can("update", $lists[0])
                                         <th scope="col" class="relative px-6 py-3">
-                                            <span class="sr-only">Action</span>
+                                            <span class="sr-only">{{ __('common.action') }}</span>
                                         </th>
                                     @endcan
                                     @can('addToList',$lists[0])
                                         <th scope="col" class="relative px-6 py-3">
-                                            <span class="sr-only">Add element to list</span>
+                                            <span class="sr-only">{{ __("lists_control/index.add_to_list") }}</span>
                                         </th>
                                     @endcan
                                 </tr>
@@ -63,13 +67,17 @@
                                         @can("update", $list)
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <a href="{{route("lists_control.edit", $list->id)}}"
-                                                   class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                                   class="text-indigo-600 hover:text-indigo-900">
+                                                    {{ __('common.edit') }}
+                                                </a>
                                             </td>
                                         @endcan
                                         @can('addToList',$list)
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <a href="{{route("lists_control.add_to_list", $list->id)}}"
-                                                   class="text-indigo-600 hover:text-indigo-900">Add element</a>
+                                                   class="text-indigo-600 hover:text-indigo-900">
+                                                    {{ __("lists_control/index.add_to_list") }}
+                                                </a>
                                             </td>
                                         @endcan
                                     </tr>

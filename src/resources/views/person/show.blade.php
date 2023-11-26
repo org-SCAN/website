@@ -1,11 +1,11 @@
 @php use App\Models\Source; @endphp
 @php use App\Models\ListSourceType; @endphp
 @php use App\Models\Link; @endphp
-@section('title','View '.$person->best_descriptive_value." details")
+@section('title', __('person/show.view_details', ['name' => $person->best_descriptive_value]))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <strong>{{ $person->best_descriptive_value }}</strong> details
+            <strong>{{ $person->best_descriptive_value }}</strong> {{ __('person/show.details') }}
         </h2>
     </x-slot>
 
@@ -15,20 +15,23 @@
                 <form action="{{route('person.destroy', $person->id)}}" method="POST"
                       class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <a href="{{ route('person.index') }}"
-                       class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to list</a>
+                       class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
+                        {{ __('common.back') }}
+                    </a>
                     @can("update", $person)
                         <a href="{{ route('person.edit', $person->id) }}"
-                           class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">Edit</a>
+                           class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">
+                            {{ __('common.edit') }}
+                        </a>
                     @endcan
 
                     @can("delete", $person)
                         @method('DELETE')
                         @csrf
                         <button type="submit"
-
                                 class="flex-shrink-0 bg-red-200 hover:bg-red-300
                                 text-black font-bold py-2 px-4 rounded">
-                            Delete
+                            {{ __('common.delete') }}
                         </button>
                     @endcan
                 </form>
@@ -43,7 +46,7 @@
                         <button type="submit"
                                 class="flex-shrink-0 bg-green-200 hover:bg-green-300
                                 text-black font-bold py-2 px-4 rounded">
-                            Add as a source
+                            {{ __('person/show.add_as_source') }}
                         </button>
                 @endcan
             </div>
@@ -52,7 +55,7 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200 w-full">
-                                <caption class="sr-only">Item details</caption>
+                                <caption class="sr-only">{{ __('person/show.item_details') }}</caption>
                                 @foreach($person->fields as $field)
                                     <tr class="border-b">
                                         <th scope="col"
@@ -78,30 +81,30 @@
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                             <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-8">
-                                <strong>{{ $person->full_name }}</strong> relations
+                                <strong>{{ $person->full_name }}</strong> {{ __('person/show.relation') }}
                             </h2>
                             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                                 <div class="block mb-8 mt-4">
                                     <a href="{{ route('cytoscape.index', ["from"=>$person->id]) }}"
                                        class="bg-gray-200 hover:bg-gray-300 hover:text-black text-black
                                        font-bold py-2 px-4 rounded m-3">
-                                        View relations in graph
+                                        {{ __('person/show.view_relations_in_graph') }}
                                     </a>
                                 </div>
                                 <table class="min-w-full divide-y divide-gray-200 w-full">
-                                    <caption class="sr-only">Item realtions</caption>
+                                    <caption class="sr-only">{{ __('person/show.item_relation') }}</caption>
                                     <thead>
                                     <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-800 uppercase tracking-wider">
-                                        From
+                                        {{ __('person/show.from') }}
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-800 uppercase tracking-wider">
-                                        Relation
+                                        {{ __('person/show.relation') }}
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-800 uppercase tracking-wider">
-                                        To
+                                        {{ __('person/show.to') }}
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-800 uppercase tracking-wider"></th>
@@ -129,7 +132,7 @@
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm
                                                 text-gray-900 bg-white divide-y divide-gray-200">
                                                     <a href="{{route("links.edit", $link->pivot->id)}}">
-                                                        Edit
+                                                        {{ __('person/show.edit') }}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -158,7 +161,7 @@
                                                     <a href="{{ route("links.create", ["origin" => 'from', 'refugee' => $person]) }}"
                                                        class="bg-green-200 hover:bg-green-300
                                                        text-black font-bold py-2 px-4 rounded">
-                                                        Add To
+                                                        {{ __('person/show.add_to') }}
                                                     </a>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
@@ -170,7 +173,7 @@
                                                     <a href="{{ route("links.create", ["origin" => 'to', 'refugee' => $person]) }}"
                                                        class="bg-green-200 hover:bg-green-300 text-black
                                                        font-bold py-2 px-4 rounded">
-                                                        Add from
+                                                        {{ __('person/show.add_from') }}
                                                     </a>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
@@ -201,7 +204,6 @@
                                 'lng' => $center['lng'],
                                 'zoom' => 2,
                                 'markers' => $markers
-
                             ])
                             @mapscripts
                         </div>

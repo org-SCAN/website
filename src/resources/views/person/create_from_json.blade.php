@@ -1,24 +1,23 @@
 @php use App\Models\Field; @endphp
-@section('title','Add Items from json')
+@section('title', __('person/create_from_json.title'))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Import Items
+            {{ __('person/create_from_json.header') }}
         </h2>
     </x-slot>
     <div>
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
                 <a href="{{URL::previous() }}"
-                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
+                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
+                    {{ __('common.back') }}
+                </a>
             </div>
 
             <blockquote class="relative border-l-4 pl-4 sm:pl-6 border-red-400 align-justify">
                 <p class="text-gray-800 sm:text-xl dark:text-white ">
-                    You can import csv files or json files. Json files are provided by SCAN application.
-                    Make sure that your team matches the team of the Items you are importing.<br>
-                    If you are importing from a csv file, make sure that the first row contains the field names. They
-                    <strong>must</strong> match the field names in the system.
+                    {!! __('person/create_from_json.import_instruction') !!}
                 </p>
             </blockquote>
 
@@ -28,7 +27,7 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="import_person_file" class="block font-medium text-sm text-gray-700">
-                                Upload a file (csv, xls, json)
+                                {{ __('person/create_from_json.upload_file_label') }}
                             </label>
                             <div class="flex flex-col flex-grow mb-3">
                                 <div class="flex flex-col flex-grow mb-3">
@@ -49,7 +48,7 @@
                                                 <template x-for="(_,index) in Array.from({ length: files.length })">
                                                     <div class="flex flex-row items-center space-x-2">
                                                         <span class="font-medium text-gray-900"
-                                                              x-text="files[index].name">Uploading</span>
+                                                              x-text="files[index].name">{{ __('person/create_from_json.uploading') }}</span>
                                                         <span class="text-xs self-end text-gray-500"
                                                               x-text="filesize(files[index].size)">...</span>
                                                     </div>
@@ -59,10 +58,10 @@
                                         <template x-if="files === null">
                                             <div class="flex flex-col space-y-2 items-center justify-center">
                                                 <i class="fas fa-cloud-upload-alt fa-3x text-currentColor"></i>
-                                                <p class="text-gray-700">Drag your files here or click in this area.</p>
+                                                <p class="text-gray-700">{{ __('person/create_from_json.drag_files_instruction') }}</p>
                                                 <a href="javascript:void(0)"
                                                    class="flex items-center mx-auto py-2 px-4 text-white text-center font-medium border border-transparent rounded-md outline-none bg-gray-700">
-                                                    Select a file
+                                                    {{ __('person/create_from_json.select_file_button') }}
                                                 </a>
                                             </div>
                                         </template>
@@ -80,7 +79,7 @@
 
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
-                                Add
+                                {{ __('common.save') }}
                             </button>
                         </div>
                     </div>

@@ -1,8 +1,9 @@
-@section('title',"Manage API tokens")
+@section('title', __('api/index.manage_api_tokens'))
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('API Tokens') }}
+            {{ __('api/index.api_tokens') }}
         </h2>
     </x-slot>
 
