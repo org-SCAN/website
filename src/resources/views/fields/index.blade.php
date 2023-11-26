@@ -61,7 +61,7 @@
                                     @can("update", Field::first())
                                         <th scope="col" class="relative px-6 py-3">
                                             <span class="sr-only">
-                                                {{ __('fields/index.actions') }}
+                                                {{ __('common.action') }}
                                             </span>
                                         </th>
                                     @endcan

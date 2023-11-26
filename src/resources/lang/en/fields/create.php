@@ -3,7 +3,6 @@
 
 return [
     'add_new_field' => 'Add a new field',
-    'back' => 'Back',
     'field_title' => "Field's title",
     'field_title_placeholder' => "Example : Full Name",
     'field_title_hint' => "It'll be shown as title when the field is used.",
@@ -43,5 +42,4 @@ return [
     'field_validation_rules_placeholder' => "Example : required|email",
     'field_validation_rules_warning' => "Be careful, to use this section, you need to know the Laravel validation rules.",
 
-    'add_button' => 'Add',
 ];

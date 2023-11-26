@@ -17,14 +17,14 @@
                         @can("viewAny", $field)
                             <a href="{{ route('fields.index') }}"
                                class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
-                                {{ __('fields/show.back_to_list') }}
+                                {{ __('common.back') }}
                             </a>
                         @endcan
 
                         @can("update", $field)
                             <a href="{{ route('fields.edit', $field->id) }}"
                                class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">
-                                {{ __('fields/show.edit') }}
+                                {{ __('common.edit') }}
                             </a>
                         @endcan
 
@@ -34,7 +34,7 @@
                             @csrf
                             <button type="submit"
                                     class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
-                                {{ __('fields/show.delete') }}
+                                {{ __('common.delete') }}
                             </button>
                     </form>
                 @endcan

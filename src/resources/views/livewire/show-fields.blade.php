@@ -8,11 +8,11 @@
         <td class="px-6 py-4 whitespace-nowrap">
             @can("view", $field)
                 <a href="{{route("fields.show", $field->id)}}" class="text-indigo-600 hover:text-blue-900">
-                    {{$field->title}}
+                    {{ $field->title }}
                 </a>
             @endcan
             @cannot("view", $field)
-                {{$field->title}}
+                {{ $field->title }}
             @endcannot
         </td>
         <td class="px-6 py-4 whitespace-nowrap">
@@ -27,7 +27,7 @@
         @can("update", $field)
         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <a href="{{route("fields.edit", $field->id)}}" class="text-indigo-600 hover:text-indigo-900">
-                {{ __('fields/index.edit') }}
+                {{ __('common.edit') }}
             </a>
         </td>
         @endcan

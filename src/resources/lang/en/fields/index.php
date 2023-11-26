@@ -11,8 +11,6 @@ return [
     'type' => 'Type',
     'status' => 'Status',
     'required' => 'Required',
-    'action' => 'Action',
     'team_form' => ":team_name team's form",
-    'edit' => 'Edit',
 ];
 
