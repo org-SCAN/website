@@ -10,7 +10,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mb-8">
                 <a href="{{URL::previous() }}"
-                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">{{ __('roles/index.back') }}</a>
+                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">{{ __('common.back') }}</a>
                 @can('create', \App\Models\Role::class)
                     <a href="{{ route("roles.create") }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">{{ __('roles/index.new_role') }}</a>
@@ -33,7 +33,7 @@
                                     </th>
 
                                     <th scope="col" class="relative px-6 py-3">
-                                        <span class="sr-only">{{ __('roles/index.action') }}</span>
+                                        <span class="sr-only">{{ __('common.action') }}</span>
                                     </th>
                                 </tr>
                                 </thead>
@@ -48,7 +48,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             @can('update', $role)
                                                 <a href="{{route("roles.edit", $role)}}"
-                                                   class="text-indigo-600 hover:text-indigo-900">{{ __('roles/index.edit') }}</a>
+                                                   class="text-indigo-600 hover:text-indigo-900">{{ __('common.edit') }}</a>
                                             @endcan
                                         </td>
                                     </tr>

@@ -12,10 +12,10 @@
                 <form action="{{route('roles.destroy', $role->id)}}" method="POST"
                       class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <a href="{{URL::previous() }}"
-                       class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">{{ __('roles/show.back') }}</a>
+                       class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">{{ __('common.back') }}</a>
                     @can('update', $role)
                         <a href="{{ route('roles.edit', $role) }}"
-                           class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">{{ __('roles/show.edit') }}</a>
+                           class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">{{ __('common.edit') }}</a>
                     @endcan
                     <form class="inline-block" action="{{ route('roles.destroy', $role->id) }}" method="POST"
                           onsubmit="return confirm('Are you sure you want to delete this role?');">
@@ -24,7 +24,7 @@
                         @can("delete", $role)
                         <button type="submit"
                                 class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
-                            {{ __('roles/show.delete') }}
+                            {{ __('common.delete') }}
                         </button>
                         @endcan
                     </form>
