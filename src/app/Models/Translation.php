@@ -58,16 +58,21 @@ class Translation extends Model
     public function autoTranslate()
     {
         foreach (Language::otherLanguages() as $language) {
-            // create post request to deepl
-            $response = Http::withHeaders([
-                'Authorization' => "DeepL-Auth-Key " . env("TRANSLATION_API_TOKEN")
-            ])->withBody(http_build_query([
-                //'source_lang' => Language::defaultLanguage()->API_language_key,
-                'target_lang' => $language->API_language_key,
-                'text' => utf8_encode($this->translation)
-            ]), "application/x-www-form-urlencoded")->post(env("TRANSLATION_API_URL"));
-            $content = $response->json()["translations"][0]["text"];
-            Translation::handleTranslation(ListControl::find($this->list), $this->field_key, $content, $language->id);
+            if(env("TRANSLATION_API_URL") == null || env("TRANSLATION_API_TOKEN") == null){
+                Translation::handleTranslation(ListControl::find($this->list), $this->field_key, $this->translation, $language->id);
+            }
+            else{
+                // create post request to deepl
+                $response = Http::withHeaders([
+                    'Authorization' => "DeepL-Auth-Key " . env("TRANSLATION_API_TOKEN")
+                ])->withBody(http_build_query([
+                    //'source_lang' => Language::defaultLanguage()->API_language_key,
+                    'target_lang' => $language->API_language_key,
+                    'text' => utf8_encode($this->translation)
+                ]), "application/x-www-form-urlencoded")->post(env("TRANSLATION_API_URL"));
+                $content = $response->json()["translations"][0]["text"];
+                Translation::handleTranslation(ListControl::find($this->list), $this->field_key, $content, $language->id);
+            }
         }
     }
 
