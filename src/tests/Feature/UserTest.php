@@ -38,7 +38,7 @@ class UserTest extends PermissionsTest
         $response = $this->get($this->route.'/profile');
 
         $response->assertStatus(200);
-        $response->assertSee('Change team');
+        $response->assertSee(__("livewire/change_crew.change_team"));
 
         $response = $this->post(route($this->route.'.change_team',
             $user->id), [
@@ -66,7 +66,7 @@ class UserTest extends PermissionsTest
         $response = $this->get($this->route.'/profile');
 
         $response->assertStatus(200);
-        $response->assertDontSee('Change team');
+        $response->assertDontSee('Change Team');
 
         $response = $this->post(route($this->route.'.change_team',
             $user->id), [
@@ -110,7 +110,7 @@ class UserTest extends PermissionsTest
         $response = $this->get($this->route.'/profile');
 
         $response->assertStatus(200);
-        $response->assertSee('Request role');
+        $response->assertSee(__("livewire/request_role.title"));
 
         $requested_role = Role::whereName("Default Editor")->first();
 
@@ -185,7 +185,7 @@ class UserTest extends PermissionsTest
         $response = $this->get($this->route.'/profile');
 
         $response->assertStatus(200);
-        $response->assertSee('Request role');
+        $response->assertSee(__("livewire/request_role.title"));
 
         $response = $this->post(route($this->route.'.request_role',
             $user->id), [
@@ -251,7 +251,7 @@ class UserTest extends PermissionsTest
         $response = $this->get(route($this->route.'.index'));
 
         $response->assertStatus(200);
-        $response->assertSee('Grant user permissions');
+        $response->assertSee(__("user/index.grant_permission"));
 
         return $response;
     }
@@ -266,8 +266,7 @@ class UserTest extends PermissionsTest
         $base_role = $user->role;
         $requested_role = Role::whereName("Default Editor")->first();
 
-        $this->requestRole($user,
-            $requested_role);
+        $this->requestRole($user,  $requested_role);
 
         $response = $this->get(route($this->route.'.reject_role',
             $user->roleRequest->first()->id));
