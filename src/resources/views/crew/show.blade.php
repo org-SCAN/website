@@ -13,21 +13,21 @@
 
                 @can('viewAny', Crew::class)
                     <a href="{{ route('crew.index') }}"
-                       class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">{{ __('crew/show.back_to_list') }}</a>
+                       class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">{{ __('common.back') }}</a>
                 @endcan
                 @can('update', $crew)
                     <a href="{{ route('crew.edit', $crew->id) }}"
-                       class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">{{ __('crew/show.edit') }}</a>
+                       class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">{{ __('common.edit') }}</a>
                 @endcan
                 @can("delete", $crew)
                     <form class="inline-block" action="{{ route('crew.destroy', $crew->id) }}" method="POST"
-                          onsubmit="return confirm('Are you sure you want to delete this crew ?');">
+                          onsubmit="return confirm( {{ __("crew/show.confirm_delete") }});">
                         <input type="hidden" name="_method" value="DELETE">
                         @csrf
                         <button type="submit"
                                 class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black
                                 font-bold py-2 px-4 rounded">
-                            {{ __('crew/show.delete') }}
+                            {{ __('common.delete') }}
                         </button>
                     </form>
                 @endcan

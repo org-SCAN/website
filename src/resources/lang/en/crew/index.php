@@ -6,6 +6,4 @@ return [
     'teams' => 'Teams',
     'add_team' => 'Add a team',
     'name' => 'Name',
-    'action' => 'Action',
-    'edit' => 'Edit',
 ];

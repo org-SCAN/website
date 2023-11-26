@@ -4,9 +4,6 @@
 return [
     'view_team_details' => 'View :team_name\'s details',
     'details_of_team' => 'Details of the team:',
-    'back_to_list' => 'Back to list',
-    'edit' => 'Edit',
-    'delete' => 'Delete',
     'confirm_delete' => 'Are you sure you want to delete this crew?',
     'id' => 'ID',
     'name' => 'Name',

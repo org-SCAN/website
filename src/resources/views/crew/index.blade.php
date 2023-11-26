@@ -32,7 +32,7 @@
                                     </th>
 
                                     <th scope="col" class="relative px-6 py-3">
-                                        <span class="sr-only">{{ __('crew/index.action') }}</span>
+                                        <span class="sr-only">{{ __('common.action') }}</span>
                                     </th>
                                 </tr>
                                 </thead>
@@ -56,7 +56,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             @can('update', $crew)
                                                 <a href="{{route("crew.edit", $crew->id)}}"
-                                                   class="text-indigo-600 hover:text-indigo-900">{{ __('crew/index.edit') }}</a>
+                                                   class="text-indigo-600 hover:text-indigo-900">{{ __('common.edit') }}</a>
                                             @endcan
                                         </td>
                                     </tr>

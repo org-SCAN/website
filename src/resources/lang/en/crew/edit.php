@@ -6,7 +6,5 @@ return [
     'edit' => 'Edit',
     'back_to_list' => 'Back to list',
     'delete_confirm' => 'Are you sure you want to delete this crew?',
-    'delete' => 'Delete',
     'name' => 'Name',
-    'save' => 'Save',
 ];

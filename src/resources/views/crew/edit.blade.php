@@ -13,7 +13,7 @@
             <div class="block mb-8">
                 <a href="{{ route('crew.index') }}"
                    class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded">
-                    {{ __('crew/edit.back_to_list') }}
+                    {{ __('common.back') }}
                 </a>
                 <form class="inline-block" action="{{ route('crew.destroy', $crew->id) }}" method="POST"
                       onsubmit="return confirm('{{ __('crew/edit.delete_confirm') }}');">
@@ -21,7 +21,7 @@
                     @method('DELETE')
                     <button type="submit"
                             class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
-                        {{ __('crew/edit.delete') }}
+                        {{ __('common.delete') }}
                     </button>
                 </form>
             </div>
@@ -31,13 +31,13 @@
                     @method('put')
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
-                            <label for="name" class="block font-medium text-sm text-gray-700"> {{ __('crew/edit.name') }}</label>
-                            <input type="text" name="name" id="name"
-                                   class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                   value="{{ old('name', $crew->name) }}"/>
-                            @error('name')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @php($form_elem = "name")
+                            @livewire("forms.form", [
+                                'form_elem' => $form_elem,
+                                'type' => "text",
+                                'title' => __("crew/edit.name"),
+                                'previous' => old($form_elem, $crew->name),
+                            ])
                         </div>
 
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -46,7 +46,7 @@
                                 rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700
                                 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray
                                 disabled:opacity-25 transition ease-in-out duration-150">
-                                {{ __('crew/edit.save') }}
+                                {{ __('common.save') }}
                             </button>
                         </div>
                     </div>
