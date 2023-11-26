@@ -4,9 +4,6 @@
 return [
     'view_event_details' => 'View :event_name\'s details',
     'event_details' => ':event_name details',
-    'back_to_events' => 'Back to events',
-    'edit' => 'Edit',
-    'delete' => 'Delete',
     'name' => 'Name',
     'event_detail' => 'Event detail',
     'event_type' => 'Event Type',

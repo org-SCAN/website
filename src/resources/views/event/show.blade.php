@@ -16,12 +16,12 @@
 
                         @can("viewAny", $event)
                             <a href="{{ route('event.index') }}"
-                               class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">{{ __('event/show.back_to_events') }}</a>
+                               class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">{{ __('common.back') }}</a>
                         @endcan
 
                         @can("update", $event)
                             <a href="{{ route('event.edit', $event->id) }}"
-                               class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">{{ __('event/show.edit') }}</a>
+                               class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">{{ __('common.edit') }}</a>
                         @endcan
 
 
@@ -31,7 +31,7 @@
                             <button type="submit"
                                     class="flex-shrink-0 bg-red-200 hover:bg-red-300
                                     text-black font-bold py-2 px-4 rounded">
-                                {{ __('event/show.delete') }}
+                                {{ __('common.delete') }}
                             </button>
                     </form>
                 @endcan
@@ -176,7 +176,7 @@
             <div class="block mt-8">
                 <a href="{{ route('event.index') }}"
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
-                    {{ __('event/show.back_to_events') }}
+                    {{ __('common.back') }}
                 </a>
             </div>
         </div>

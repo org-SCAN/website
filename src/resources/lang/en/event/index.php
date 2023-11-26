@@ -5,7 +5,6 @@ return [
     'view_all_events' => 'View all events',
     'events' => 'Events',
     'add_event' => 'Add event',
-    'edit' => 'Edit',
     'name' => 'Name',
     'type' => 'Type',
     'subtype' => 'Subtype',

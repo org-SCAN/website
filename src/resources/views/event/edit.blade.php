@@ -12,7 +12,7 @@
             <div class="block mb-8">
                 <a href="{{ route('event.index') }}"
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
-                    {{ __('event/edit.back') }}
+                    {{ __('common.back') }}
                 </a>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
@@ -122,7 +122,7 @@
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button
                                     class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
-                                {{ __('event/edit.save_button') }}
+                                {{ __('common.save') }}
                             </button>
                         </div>
                     </div>

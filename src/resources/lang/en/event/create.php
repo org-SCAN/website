@@ -4,7 +4,6 @@
 return [
     'add_new_event' => 'Add a new event',
     'add_event' => 'Add an Event',
-    'back' => 'Back',
     'event_name' => "Event's name",
     'event_name_hint' => "The name of the event.",
     'event_type' => "Event's type",
@@ -21,5 +20,4 @@ return [
     'coordinates' => "The coordinates of the event",
     'coordinates_hint' => "A latitude and longitude in decimal degree.",
     'description' => "Event's description",
-    'add_button' => 'Add',
 ];

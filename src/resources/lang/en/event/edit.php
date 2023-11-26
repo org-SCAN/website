@@ -3,6 +3,4 @@
 
 return [
     'edit_event' => 'Edit :event_name',
-    'back' => 'Back',
-    'save_button' => 'Save',
 ];

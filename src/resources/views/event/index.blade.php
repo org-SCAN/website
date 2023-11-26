@@ -49,7 +49,7 @@
                                         <td>{{ $event->start_date }}</td>
                                         <td>{{ $event->stop_date }}</td>
                                         @can('update', $event)
-                                            <td><a href="{{route('event.edit',  $event->id)}}">{{ __('event/index.edit') }}</a></td>
+                                            <td><a href="{{route('event.edit',  $event->id)}}">{{ __('common.edit') }}</a></td>
                                         @endcan
                                     </tr>
                                 @endforeach
