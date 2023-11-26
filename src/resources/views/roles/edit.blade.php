@@ -1,9 +1,9 @@
-@section('title',"Edit ".$role->name."'s details")
+@section('title', __("roles/edit.title", ["role_name" => $role->name]))
 
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit : <b>{{$role->name}}</b>
+            {{ __('roles/edit.edit') }} : <b>{{$role->name}}</b>
         </h2>
     </x-slot>
 
@@ -11,14 +11,14 @@
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
                 <a href="{{ route('roles.index')  }}"
-                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
+                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">{{ __('roles/create.back') }}</a>
                 <form class="inline-block" action="{{ route('roles.destroy', $role->id) }}" method="POST"
                       onsubmit="return confirm('Are you sure you want to delete this role?');">
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <button type="submit"
                             class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
-                        Delete
+                        {{ __('roles/edit.delete') }}
                     </button>
                 </form>
 
@@ -29,17 +29,16 @@
                     @method('put')
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
-                            <label for="name" class="block font-medium text-sm text-gray-700">Name</label>
-                            <input type="text" name="role[name]" id="name"
-                                   class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                   value="{{ old('role.name', $role->name) }}"/>
-                            @error('role.name')
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            @livewire("forms.form", [
+                                "form_elem" => "role[name]",
+                                "type" => "text",
+                                "title" => __('roles/create.name'),
+                                "previous" => old("role.name", $role->name),
+                            ])
                         </div>
 
                         <div class="px-4 py-5 bg-white sm:p-6">
-                            <a class="block font-medium text-sm text-gray-700">Permissions</a>
+                            <a class="block font-medium text-sm text-gray-700">{{ __('roles/create.permissions') }}</a>
                             @foreach ($route_bases as $route_base)
                                 <label for="{{ $route_base }}All">
                                     <input name="{{ $route_base }}All" style="margin: 10px" type="checkbox"
@@ -66,7 +65,7 @@
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button
                                 class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
-                                Save
+                                {{ __('roles/edit.save') }}
                             </button>
                         </div>
                     </div>
