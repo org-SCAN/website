@@ -1,9 +1,9 @@
 @php use App\Models\Refugee; @endphp
-@section('title',"Profile")
+@section('title', __('profile/show.title'))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
+            {{ __('profile/show.profile') }}
         </h2>
     </x-slot>
 
