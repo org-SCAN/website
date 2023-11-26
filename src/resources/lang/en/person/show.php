@@ -3,9 +3,6 @@
 return [
     'view_details' => 'View :name details',
     'details' => 'details',
-    'back_to_list' => 'Back to list',
-    'edit' => 'Edit',
-    'delete' => 'Delete',
     'add_as_source' => 'Add as a source',
     'item_details' => 'Item details',
     'item_relations' => 'Item relations',
