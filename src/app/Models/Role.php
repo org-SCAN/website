@@ -99,4 +99,12 @@ class Role extends Model
         }
         return $sorted_permissions;
     }
+
+    public static function list() {
+        // order by displayed value and pluck it
+        $displayed_value = "name";
+
+        return self::orderBy($displayed_value)->pluck($displayed_value,
+            'id');
+    }
 }

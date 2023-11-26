@@ -39,6 +39,11 @@ class StoreUserRequest extends FormRequest
                     ->letters()
                     ->numbers()
             ],
+            'password_confirmation' => [
+                'required_without:invite',
+                'nullable',
+                'same:password',
+            ],
             'role' => [
                 'required',
                 'exists:roles,id',
