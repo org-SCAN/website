@@ -9,7 +9,7 @@
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
                 <a href="{{ route('lists_control.index')  }}" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
-                    {{ __("lists_control/create.back") }}
+                    {{ __('common.back') }}
                 </a>
             </div>
 

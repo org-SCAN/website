@@ -16,13 +16,13 @@
                         @can('viewAny', $lists_control)
                             <a href="{{ route('lists_control.index')}}"
                                class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
-                                {{ __("lists_control/show.lists") }}
+                                {{ __('common.back') }}
                             </a>
                         @endcan
                         @can("update", $lists_control)
                             <a href="{{ route('lists_control.edit', $lists_control->id) }}"
                                class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">
-                                {{ __("lists_control/show.edit_list") }}
+                                {{ __('common.edit') }}
                             </a>
                         @endcan
                         @can('addToList', $lists_control)
@@ -36,7 +36,7 @@
                             @csrf
                             <button type="submit"
                                     class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
-                                {{ __("lists_control/show.delete") }}
+                                {{ __('common.delete') }}
                             </button>
                         @endcan
                         @error("deleteList")
@@ -129,7 +129,7 @@
             <div class="block mt-8">
                 <a href="{{ URL::previous()}}"
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
-                    {{ __("lists_control/show.back") }}
+                    {{ __('common.back') }}
                 </a>
             </div>
         </div>

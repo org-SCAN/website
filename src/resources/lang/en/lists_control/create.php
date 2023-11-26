@@ -2,7 +2,6 @@
     return [
         'title' => "Add a new list",
         'add_list' => "Add a list",
-        'back' => "Back",
         'next' => "Next",
 
         'list_title' => "List title",

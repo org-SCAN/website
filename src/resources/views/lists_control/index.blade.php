@@ -38,7 +38,7 @@
                                     </th>
                                     @can("update", $lists[0])
                                         <th scope="col" class="relative px-6 py-3">
-                                            <span class="sr-only">{{ __("lists_control/index.action") }}</span>
+                                            <span class="sr-only">{{ __('common.action') }}</span>
                                         </th>
                                     @endcan
                                     @can('addToList',$lists[0])
@@ -68,7 +68,7 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <a href="{{route("lists_control.edit", $list->id)}}"
                                                    class="text-indigo-600 hover:text-indigo-900">
-                                                    {{ __("lists_control/index.edit_list") }}
+                                                    {{ __('common.edit') }}
                                                 </a>
                                             </td>
                                         @endcan
