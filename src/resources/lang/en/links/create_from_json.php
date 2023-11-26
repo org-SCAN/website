@@ -7,5 +7,4 @@ return [
     'drag_files_here' => 'Drag your files here or click in this area.',
     'select_file' => 'Select a file',
     'uploading' => 'Uploading',
-    'add' => 'Add',
 ];

@@ -58,7 +58,7 @@
                                         </td>
                                         <td>{{ $link->date->format('d/m/Y') }}</td>
                                         @can('update', $link)
-                                            <td><a href="{{route('links.edit',  $link->id)}}">{{ __('links/index.edit') }}</a></td>
+                                            <td><a href="{{route('links.edit',  $link->id)}}">{{ __('common.edit') }}</a></td>
                                         @endcan
                                     </tr>
                                 @endforeach

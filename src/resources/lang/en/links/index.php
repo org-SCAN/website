@@ -11,5 +11,4 @@ return [
     'relation' => 'Relation',
     'to' => 'To',
     'date' => 'Date',
-    'edit' => 'Edit',
 ];
