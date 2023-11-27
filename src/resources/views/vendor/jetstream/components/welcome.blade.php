@@ -1,14 +1,13 @@
 @section('title',"Dashboard")
 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-    <div>
+    <div class="flex items-center">
         <x-jet-application-logo class="block h-12 w-auto"/>
+        <div class="ml-4 text-2xl text-gray-600">
+            {!! __('dashboard.welcome')  !!}
+        </div>
     </div>
 
-    <div class="mt-8 text-2xl">
-        Welcome to <b>SCAN</b> : <b>S</b>hare <b>C</b>ompile <b>AN</b>alyse
-    </div>
-
-    <div class="mt-6 text-gray-500">
-        WIP
+    <div class="mt-8">
+        {!! __('dashboard.description') !!}
     </div>
 </div>
