@@ -58,11 +58,8 @@ class Translation extends Model
     public function autoTranslate()
     {
         foreach (Language::otherLanguages() as $language) {
-            if(env("TRANSLATION_API_URL") == null || env("TRANSLATION_API_TOKEN") == null){
-                Translation::handleTranslation(ListControl::find($this->list), $this->field_key, $this->translation, $language->id);
-            }
-            else{
-                // create post request to deepl
+            // check that the API token and url are set and if not use the default translation
+            try{
                 $response = Http::withHeaders([
                     'Authorization' => "DeepL-Auth-Key " . env("TRANSLATION_API_TOKEN")
                 ])->withBody(http_build_query([
@@ -72,6 +69,10 @@ class Translation extends Model
                 ]), "application/x-www-form-urlencoded")->post(env("TRANSLATION_API_URL"));
                 $content = $response->json()["translations"][0]["text"];
                 Translation::handleTranslation(ListControl::find($this->list), $this->field_key, $content, $language->id);
+            }
+            catch(\Exception $e){
+                // if the translation fails, use the default translation
+               Translation::handleTranslation(ListControl::find($this->list), $this->field_key, $this->translation, $language->id);
             }
         }
     }
