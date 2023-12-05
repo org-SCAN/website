@@ -10,5 +10,6 @@ return [
     'email' => 'Email',
     'roles' => 'Roles',
     'team' => 'Team',
+    'language' => 'Language',
     'user_details' => 'User Details',
 ];
