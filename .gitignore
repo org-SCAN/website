@@ -16,3 +16,4 @@ vcs.xml
 /httpRequests/
 
 .vscode/*
+/.phpunit.result.cache
