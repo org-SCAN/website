@@ -3,6 +3,10 @@ save.txt
 .env
 mongo-volume/*
 .idea/*
+.idea/php.xml
+/.idea/vsc.xml
+/.idea/website.iml
+/.idea/*
 vcs.xml
 
 
