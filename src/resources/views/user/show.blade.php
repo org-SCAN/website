@@ -129,7 +129,6 @@
                                         {{$user->language->language_name ?? ""}}
                                     </td>
                                 </tr>
-                                </tr>
                             </table>
                         </div>
                     </div>
