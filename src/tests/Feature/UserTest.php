@@ -624,6 +624,10 @@ class UserTest extends PermissionsTest
     }
 
     /* ------------------ changeLanguage ------------------ */
+    /**
+     * @brief Test that the language is updated on the site once the user changed it
+     * @return void
+     */
     public function test_user_can_see_their_language_on_their_profile()
     {
         //Make sure user is logged in
