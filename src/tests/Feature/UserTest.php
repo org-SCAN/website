@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Crew;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Language;
 use App\Notifications\InviteUserNotification;
 use Illuminate\Support\Facades\Notification;
 
@@ -622,4 +623,36 @@ class UserTest extends PermissionsTest
         $response->assertStatus(200);
     }
 
+    /* ------------------ changeLanguage ------------------ */
+    public function test_user_can_see_their_language_on_their_profile()
+    {
+        //Make sure user is logged in
+        $user = $this->admin;
+        $this->actingAs($user);
+        //Define the user's language
+        $user->language_id = Language::whereLanguageName('Français')->first()->id;
+        $user->save();
+
+
+        //Check the language has been changed on the user page
+        $response = $this->get($this->route);
+        $response->assertSee("Autorisations de l'utilisateur");
+        $response->assertDontSee('Grant user Permissions');
+    }
+
+    /**
+     * @brief Test that a user is redirected to the url corresponding to their language
+     * @return void
+     */
+    public function test_user_is_redirected_to_the_right_language_url()
+    {
+        //Make sure user is logged in
+        $user = $this->admin;
+        $this->actingAs($user);
+
+        $response = $this->post(route($this->route.'.change_language', $user->id), [
+            'language_id' => Language::whereLanguageName('Français')->first()->id,
+        ]);
+        $response->assertRedirect('/language/fr');
+    }
 }
