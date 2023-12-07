@@ -30,12 +30,6 @@ Route::get('/', function () {
     return view('dashboard');
 })->name("/")->middleware('auth');
 
-Route::get('language/{locale}', function ($locale) {
-    app()->setLocale($locale);
-    session()->put('locale', $locale);
-    return redirect()->back();
-})->middleware('auth');
-
 Route::get('/content.json',
     function () {
         return Storage::disk('public')->get('content.json');
@@ -79,11 +73,21 @@ Route::post('user/request_role/{id}',
         'as' => 'user.request_role',
         'uses' => '\App\Http\Controllers\ManageUsersController@RequestRole',
     ])->middleware('auth');
+
+Route::post('user/change_language/{id}',
+    [
+        'as' => 'user.change_language',
+        'uses' => '\App\Http\Controllers\ManageUsersController@ChangeLanguage',
+    ])->middleware('auth');
+
 Route::post('user/change_team/{id}',
     [
         'as' => 'user.change_team',
         'uses' => '\App\Http\Controllers\ManageUsersController@ChangeTeam',
     ])->middleware('auth');
+
+
+
 Route::get('user/grant_role/{id}',
     [
         'as' => 'user.grant_role',

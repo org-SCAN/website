@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('associated_lists', function (Blueprint $table) {
-            $table->uuid("id")->primary();
-            $table->timestamps();
-            $table->foreignUuid("field_id");
-            $table->foreignUuid("list_id");
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignUuid('language_id')->nullable();
         });
     }
 
@@ -28,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('associated_lists');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['language_id']);
+        });
     }
 };

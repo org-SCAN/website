@@ -15,6 +15,12 @@
                 <x-jet-section-border/>
 
             @endif
+
+            <div class="mt-10 sm:mt-0">
+                @livewire('change-language')
+            </div>
+            <hr/>
+
             <div class="mt-10 sm:mt-0">
                 @livewire('view-token')
             </div>

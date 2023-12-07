@@ -30,7 +30,7 @@ class CreateFieldsTable extends Migration
             $table->string("label");
             $table->string("placeholder")
                 ->nullable();
-            $table->uuid("data_type_id")->nullable();
+            $table->foreignUuid("data_type_id")->nullable();
             $table->string( "linked_list")
                 ->nullable();
             $table->integer( "status");

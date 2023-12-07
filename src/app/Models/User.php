@@ -167,4 +167,8 @@ class User extends Authenticatable
         return $this->hasMany(RoleRequest::class,
             "user_id");
     }
+
+    public function language(){
+        return $this->belongsTo(Language::class);
+    }
 }

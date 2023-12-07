@@ -33,6 +33,7 @@
             "links.update",
             "links.destroy",
             "user.change_team",
+            "user.change_language",
             "user.request_role",
             "duplicate.index",
             "duplicate.create",
@@ -61,7 +62,8 @@
             "links.index",
             "links.show",
             "event.index",
-            "event.show"
+            "event.show",
+            "user.change_language"
         ]
     },
     {
