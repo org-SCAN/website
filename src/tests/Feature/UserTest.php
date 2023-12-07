@@ -628,7 +628,7 @@ class UserTest extends PermissionsTest
      * @brief Test that the language is updated on the site once the user changed it
      * @return void
      */
-    public function test_user_can_see_their_language_on_their_profile()
+    public function test_user_can_sees_the_correct_language()
     {
         //Make sure user is logged in
         $user = $this->admin;
@@ -640,7 +640,7 @@ class UserTest extends PermissionsTest
 
         //Check the language has been changed on the user page
         $response = $this->get($this->route);
-        $response->assertSee("Autorisations de l'utilisateur");
+        $response->assertSee("Demande de rôle");
         $response->assertDontSee('Grant user Permissions');
     }
 
@@ -657,6 +657,22 @@ class UserTest extends PermissionsTest
         $response = $this->post(route($this->route.'.change_language', $user->id), [
             'language_id' => Language::whereLanguageName('Français')->first()->id,
         ]);
+
+        //Check redirection to the right language url
         $response->assertRedirect('/language/fr');
+    }
+    public function test_the_language_root_really_changes_the_language()
+    {
+        //Make sure user is logged in
+        $user = $this->admin;
+        $this->actingAs($user);
+        $this->get($this->route);
+
+        //Define the language root
+        $response = $this->get('/language/fr');
+
+        //Check the language has been changed on the website
+        $response->assertSee("Demande de rôle");
+        $response->assertDontSee('Grant user Permissions');
     }
 }
