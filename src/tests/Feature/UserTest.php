@@ -628,7 +628,7 @@ class UserTest extends PermissionsTest
      * @brief Test that the language is updated on the site once the user changed it
      * @return void
      */
-    public function test_user_can_sees_the_correct_language()
+    public function test_user_can_see_the_correct_language()
     {
         //Make sure user is logged in
         $user = $this->admin;
@@ -640,8 +640,8 @@ class UserTest extends PermissionsTest
 
         //Check the language has been changed on the user page
         $response = $this->get($this->route);
-        $response->assertSee("Demande de rôle");
-        $response->assertDontSee('Grant user Permissions');
+        $response->assertSeeText("Demande de rôle");
+        $response->assertDontSeeText('Grant user Permissions');
     }
 
     /**
@@ -659,20 +659,26 @@ class UserTest extends PermissionsTest
         ]);
 
         //Check redirection to the right language url
-        $response->assertRedirect('/language/fr');
+        $response->assertRedirect();
+        //Check the language has been changed on the user page
+        $response = $this->get($this->route);
+        $response->assertSeeText("Demande de rôle");
+        $response->assertDontSeeText('Grant user Permissions');
     }
-    public function test_the_language_root_really_changes_the_language()
-    {
+
+    /**
+     * @bried Test that a user without language sees the default language (English)
+     */
+    public function test_user_without_language_sees_the_default_language(){
         //Make sure user is logged in
         $user = $this->admin;
         $this->actingAs($user);
-        $this->get($this->route);
+        //Define the user's language
+        $user->language_id = null;
+        $user->save();
 
-        //Define the language root
-        $response = $this->get('/language/fr');
-
-        //Check the language has been changed on the website
-        $response->assertSee("Demande de rôle");
-        $response->assertDontSee('Grant user Permissions');
+        $response = $this->get($this->route);
+        $response->assertDontSeeText("Demande de rôle");
+        $response->assertSeeText('Grant user Permissions');
     }
 }

@@ -259,7 +259,7 @@ class ManageUsersController extends Controller
         $user->language_id = $language;
         $user->save();
         $user->refresh();
-        return redirect()->route('language', ["locale"=>strtolower($user->language->API_language_key)]);
+        return redirect()->back();
     }
 
     /**

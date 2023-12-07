@@ -30,12 +30,6 @@ Route::get('/', function () {
     return view('dashboard');
 })->name("/")->middleware('auth');
 
-Route::get('language/{locale}', function ($locale) {
-    app()->setLocale($locale);
-    session()->put('locale', $locale);
-    return redirect()->back();
-})->name("language")->middleware('auth');
-
 Route::get('/content.json',
     function () {
         return Storage::disk('public')->get('content.json');
