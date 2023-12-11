@@ -1,0 +1,26 @@
+{
+  "name": "issuegpt",
+  "version": "1.0.0",
+  "description": "## Overview The GitHub Issue Processor is an automated action that enhances the quality and clarity of newly opened issues on a GitHub repository. Utilizing OpenAI's GPT-4 model, this action automatically processes each new issue to:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lduf/issueGPT.git"
+  },
+  "author": "lduf",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lduf/issueGPT/issues"
+  },
+  "homepage": "https://github.com/lduf/issueGPT#readme",
+  "dependencies": {
+    "@octokit/core": "^5.0.2",
+    "axios": "^1.6.2",
+    "fs": "^0.0.1-security",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.20.1"
+  }
+}
