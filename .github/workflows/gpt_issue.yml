@@ -1,17 +1,34 @@
-name: Improve Issue
+name: Improve Issue Workflow
+
 on:
   issues:
-    types: [opened]
+    types: [labeled]
+    labels:
+      - AI-issue
+
 jobs:
-  test-job:
+  process-issue:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Test Issue Processor
-        uses: lduf/issueGPT@0.1
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Process Issue
+        uses: lduf/issueGPT@1.0
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.GPT_KEY }}
         with:
           ai_model: 'gpt-4-1106-preview'
           max_tokens: '1000'
-          OPENAI_API_KEY: ${{ secrets.GPT_KEY }}
-          
