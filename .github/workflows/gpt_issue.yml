@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Create useful comment with AI
-        uses: lduf/issue-improver-action@0.1.1
+        uses: lduf/issue-improver-action@0.1.2
         with:
           openai-key: ${{ secrets.GPT_KEY }}
           model: "gpt-4-1106-preview"
