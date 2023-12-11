@@ -1,20 +1,17 @@
-name: Improve issues
-
+name: Improve Issue
 on:
   issues:
     types: [opened]
-
 jobs:
-  gpt-comment:
+  test-job:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Create useful comment with AI
-        uses: lduf/issue-improver-action@0.1.2
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test Issue Processor
+        uses: lduf/issueGPT@0.1
         with:
-          openai-key: ${{ secrets.GPT_KEY }}
-          model: "gpt-4-1106-preview"
-          max-tokens: 400
-          add-related-issues-section: true
-          add-summary-section: true
-          add-label-section: true
+          ai_model: 'gpt-4-1106-preview'
+          max_tokens: '1000'
+          OPENAI_API_KEY: ${{ secrets.GPT_KEY }}
+          
