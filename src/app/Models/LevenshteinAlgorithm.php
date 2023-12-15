@@ -24,6 +24,6 @@ class LevenshteinAlgorithm extends MatchingAlgorithm
 
     public function computeMetaphoneSimilarity($person1, $person2)
     {
-        // TODO: Implement computeMetaphoneSimilarity() method.
+        // Implement computeMetaphoneSimilarity() method.
     }
 }
