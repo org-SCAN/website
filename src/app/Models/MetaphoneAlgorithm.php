@@ -15,7 +15,7 @@ class MetaphoneAlgorithm extends MatchingAlgorithm
         $metaphone1 = metaphone($person1->field->best_descriptive_value);
         $metaphone2 = metaphone($person2->field->best_descriptive_value);
 
-        $similarity = similar_text($metaphone1,$metaphone2,$perc);
+        similar_text($metaphone1,$metaphone2,$perc);
         $similarity = $perc*$field_importance;
 
         return($similarity);
