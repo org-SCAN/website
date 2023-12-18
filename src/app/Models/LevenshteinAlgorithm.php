@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 class LevenshteinAlgorithm extends MatchingAlgorithm
 {
-    public function computeLevenshteinSimilarity($person1, $person2, $field_importance=1){
+    public function computeSimilarity($person1, $person2, $field_importance=1){
 
         $perc = 0;
 
@@ -20,10 +20,5 @@ class LevenshteinAlgorithm extends MatchingAlgorithm
         $similarity = $perc*$field_importance;
 
         return($similarity);
-    }
-
-    public function computeMetaphoneSimilarity($person1, $person2)
-    {
-        // Implement computeMetaphoneSimilarity() method.
     }
 }

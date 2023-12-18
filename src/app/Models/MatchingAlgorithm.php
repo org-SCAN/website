@@ -51,17 +51,7 @@ abstract class MatchingAlgorithm extends Model
      * @param mixed $person2
      * @return float
      */
-    abstract protected function computeLevenshteinSimilarity($person1, $person2);
-
-    /**
-     * Abstract method to compute Metaphone similarity.
-     *
-     * @param mixed $person1
-     * @param mixed $person2
-     * @return float
-     */
-    abstract protected function computeMetaphoneSimilarity($person1, $person2);
-
+    abstract protected function computeSimilarity($person1, $person2);
 
     /**
      * Define the relationship to Duplicate model.
