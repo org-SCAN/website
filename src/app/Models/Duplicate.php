@@ -77,7 +77,7 @@ class Duplicate extends Model
                 $notUpdatedSinceLastComparison = ($last_comparison == null || ($last_comparison->started_at < $person->updated_at || $last_comparison->started_at < $person2->updated_at));
                 $notResolved = !self::isResolved($person,
                     $person2);
-
+                    
                 if ($notSamePerson && $notAlreadyCompared && $notUpdatedSinceLastComparison && $notResolved) {
                     $person2_fields = $person2->fields;
                     $similarity = 0;
@@ -85,15 +85,10 @@ class Duplicate extends Model
                     foreach ($person_fields as $person_field) {
                         foreach ($person2_fields as $person2_field) {
                             if ($person_field->id == $person2_field->id) {
-                                if($person_field->id == "best_descriptive_value"){
+                                if($person_field->best_descriptive_value == 1){
                                     $similarity += $metaphoneAlgorithm->computeSimilarity($person,$person2,$person_field->importance/100);
-                                }else{
-                                    $perc = 0;
-                                    similar_text($person_field->pivot->value,
-                                        $person2_field->pivot->value,
-                                        $perc);
-                                    $similarity += $perc*($person_field->importance/100);
                                 }
+                                // Compute distance for the other fields
                                 $count++;
                             }
                         }
