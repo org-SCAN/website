@@ -77,7 +77,7 @@ class Duplicate extends Model
                 $notUpdatedSinceLastComparison = ($last_comparison == null || ($last_comparison->started_at < $person->updated_at || $last_comparison->started_at < $person2->updated_at));
                 $notResolved = !self::isResolved($person,
                     $person2);
-                    
+
                 if ($notSamePerson && $notAlreadyCompared && $notUpdatedSinceLastComparison && $notResolved) {
                     $person2_fields = $person2->fields;
                     $similarity = 0;
