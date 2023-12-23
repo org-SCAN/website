@@ -160,12 +160,4 @@ class Duplicate extends Model
     public function commandRun() {
         return $this->belongsTo(CommandRun::class);
     }
-
-    /**
-     * Relation with MatchingAlgorithm
-     * @return BelongsTo
-     */
-    public function matchingAlgorithm(){
-        return $this->belongsTo(MatchingAlgorithm::class);
-    }
 }

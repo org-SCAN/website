@@ -51,14 +51,5 @@ abstract class MatchingAlgorithm extends Model
      * @param mixed $person2
      * @return float
      */
-    abstract protected function computeSimilarity($person1, $person2);
-
-    /**
-     * Define the relationship to Duplicate model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */    
-    public function duplicates(){
-        return $this->hasMany(Duplicate::class);
-    }
+    abstract protected function computeSimilarity($person1, $person2, $field_importance);
 }
