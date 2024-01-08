@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Exception;
 
 class LevenshteinAlgorithm extends MatchingAlgorithm
 {
@@ -21,7 +22,7 @@ class LevenshteinAlgorithm extends MatchingAlgorithm
 
             return ($similarity);
         } else {
-            throw new \Exception("Field importance must be between 0 and 1");
+            throw new Exception("Field importance must be between 0 and 1");
         }
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Exception;
 
 class MetaphoneAlgorithm extends MatchingAlgorithm
 {
@@ -20,9 +21,8 @@ class MetaphoneAlgorithm extends MatchingAlgorithm
             $similarity = $perc*$field_importance;
 
             return($similarity);
-        }
-        else{
-            throw new \Exception("Field importance must be between 0 and 1");
+        }else{
+            throw new Exception("Field importance must be between 0 and 1");
         }
     }
 }
