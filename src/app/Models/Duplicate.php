@@ -88,7 +88,6 @@ class Duplicate extends Model
                                 if($person_field->best_descriptive_value == 1){
                                     $similarity += $metaphoneAlgorithm->computeSimilarity($person,$person2,$person_field->importance/100);
                                 }
-                                // Compute distance for the other fields
                                 $count++;
                             }
                         }
