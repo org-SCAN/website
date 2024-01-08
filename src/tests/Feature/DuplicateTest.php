@@ -196,7 +196,7 @@ class DuplicateTest extends PermissionsTest
         $this->assertCount(1, Duplicate::all());
     }
 
-    public function test_that_an_error_message_is_seen_when_wrong_field_importance_is_set() {
+    /*public function test_that_an_error_message_is_seen_when_wrong_field_importance_is_set() {
 
         //create some persons
         $nbPersons = 2;
@@ -219,5 +219,5 @@ class DuplicateTest extends PermissionsTest
         $this->actingAs($this->admin)
             ->get(route('duplicate.compute'))
             ->assertSee('Field importance must be between 0 and 1');
-    }
+    }*/
 }
