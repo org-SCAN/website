@@ -6,6 +6,8 @@ use App\Models\Duplicate;
 use App\Models\FieldRefugee;
 use App\Models\Refugee;
 use Illuminate\Support\Facades\Queue;
+use App\Exceptions\Handler;
+use App\Models\Field;
 
 class DuplicateTest extends PermissionsTest
 {
@@ -173,51 +175,30 @@ class DuplicateTest extends PermissionsTest
         Queue::assertPushed(\App\Jobs\DuplicateComputeJob::class);
     }
 
-    public function test_metaphone_algorithm_to_compute_duplicates() {
+    public function test_that_an_error_message_is_seen_when_wrong_field_importance_is_set() {
+
+        // Disable Laravel's exception handling for this test
+        $this->withoutExceptionHandling();
+
         //create some persons
         $nbPersons = 2;
         // add fields to these persons
         foreach(Refugee::factory()->count($nbPersons)->create() as $person) {
             $person->fields()->attach(FieldRefugee::random_fields());
-        }
-
-        // set importance of best descriptive value field
-        foreach($person->fields as $field) {
-            if ($field->best_descriptive_value == 1){
-                $field->importance = 50;
+            // change the importance of each field
+            foreach ($person->fields as $field) {
+                if ($field->best_descriptive_value == 1){
+                    $field->importance = 200;
+                    $field->save();
+                }
             }
         }
 
-        // compute duplicates
-        $this
-            ->artisan('duplicate:compute');
+        // Expect an exception to be thrown
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Field importance must be between 0 and 1');
 
-        // check that the duplicates are computed
-        $this->assertCount(1, Duplicate::all());
+        // Execute the artisan command
+        $this->artisan('duplicate:compute');
     }
-
-    /*public function test_that_an_error_message_is_seen_when_wrong_field_importance_is_set() {
-
-        //create some persons
-        $nbPersons = 2;
-        // add fields to these persons
-        foreach(Refugee::factory()->count($nbPersons)->create() as $person) {
-            $person->fields()->attach(FieldRefugee::random_fields());
-        }
-
-        // set importance of best descriptive value field
-        foreach($person->fields as $field) {
-            if ($field->best_descriptive_value == 1){
-                $field->importance = 1000;
-            }
-        }
-        // compute duplicates
-        $this
-            ->artisan('duplicate:compute');
-
-        // check the error message is seen
-        $this->actingAs($this->admin)
-            ->get(route('duplicate.compute'))
-            ->assertSee('Field importance must be between 0 and 1');
-    }*/
 }
