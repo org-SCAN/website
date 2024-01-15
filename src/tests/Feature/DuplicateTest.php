@@ -175,6 +175,69 @@ class DuplicateTest extends PermissionsTest
         Queue::assertPushed(\App\Jobs\DuplicateComputeJob::class);
     }
 
+    /*public function test_that_two_persons_with_same_best_descriptive_value_have_max_similarity() {
+
+       // create one person and replicate it
+        $person = Refugee::factory()->create();
+        $person->fields()->attach(FieldRefugee::random_fields());
+        $person2 = $person->replicate();
+        $person2->update(['id' => '49d63b05-36d7-40d7-b10c-7a8c23c41932']);
+        $person2->save();
+
+        // get parameters value
+        $importance = 0;
+        $count = count($person->fields);
+
+        foreach ($person->fields as $field) {
+            if ($field->best_descriptive_value == 1){
+                $importance = $field->importance;
+            }
+        }
+
+        // set max percentage
+        $perc = 100;
+        // compute similarity manually
+        $similarity = $perc/$count*$importance/100;
+        // call the command to compute the duplicates
+        $this->artisan('duplicate:compute');
+
+        // check that the similarity is maximum
+        $duplicate = Duplicate::where('resolved', false)->orderByDesc("similarity")->first();
+        $this->assertEquals($similarity,$duplicate->similarity);
+    }*/
+
+    public function test_that_two_persons_with_very_different_best_descriptive_value_have_low_similarity() {
+
+        //create some persons
+        $nbPersons = 2;
+
+        // set parameters value
+        $count = 0;
+        $importance = 0;
+
+        // add fields to these persons
+        foreach(Refugee::factory()->count($nbPersons)->create() as $person) {
+            $person->fields()->attach(FieldRefugee::random_fields());
+            foreach ($person->fields as $field) {
+                if ($field->best_descriptive_value == 1){
+                    $importance = $field->importance;
+                }
+            }
+            $count = count($person->fields);
+        }
+
+        // compute max similarity
+        $perc = 100;
+        $similarity = $perc/$count*$importance/100;
+
+        // call the command to compute the duplicates
+        $this->artisan('duplicate:compute');
+
+        // check that the similarity is lesser than maximum
+        $duplicate = Duplicate::where('resolved', false)->orderByDesc("similarity")->first();
+        $this->assertLessThan($similarity,$duplicate->similarity);
+    }
+
     public function test_that_an_error_message_is_seen_when_wrong_field_importance_is_set() {
 
         // Disable Laravel's exception handling for this test
