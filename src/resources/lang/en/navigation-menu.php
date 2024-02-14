@@ -26,4 +26,5 @@ return [
     'switch_teams' => 'Switch Teams',
     'manage_list' => 'Manage List',
     'api_tokens' => 'Api Tokens',
+    'places' => 'Places',
 ];

@@ -35,6 +35,14 @@
                         </x-jet-nav-link>
                     </div>
                 @endcan
+                @can('viewMenu', \App\Models\Places::class)
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('places.index') }}"
+                                        :active="request()->routeIs('places.*')">
+                            {{ __('navigation-menu.places') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endcan
                 @can('viewMenu', \App\Models\Source::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('source.index') }}"
