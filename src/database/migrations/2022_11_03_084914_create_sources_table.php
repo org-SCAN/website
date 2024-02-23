@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('sources', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->uuid("source_type_id");
+            $table->foreignUuid("source_type_id");
             $table->string("name");
             $table->string("reference")->nullable();
             $table->float("trust")->default(1);

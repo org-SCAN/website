@@ -6,6 +6,36 @@ Site web du projet :)
 
 # Start the project
 
+## Using SAIL (recommended)
+
+To run the project, you must have : 
+- [Docker](https://docs.docker.com/engine/install/)
+- [Composer](https://getcomposer.org/doc/00-intro.md)
+- [PHP](https://www.php.net/manual/fr/install.php)
+
+You need to create a `.env` file in the `src` directory based on the `.env.example` file.  
+> 💡 When you code you should switch the `APP_DEBUG` to `true` to see the errors.  
+
+You can now start Docker and follow the [laravel sail documentation](https://laravel.com/docs/10.x/sail#installing-sail-into-existing-applications)
+more specifically the installation part.  
+Once the installation is done you can run the following command to start the project :
+
+```bash
+./vendor/bin/sail up -d #-d to detach the process, you can create an alias for sail later
+#Run these in the docker container
+npm update
+cd /var/www/html
+composer update
+php artisan cache:clear
+composer dump-autoload
+php artisan key:generate
+chmod -R 777 storage/
+php artisan migrate:refresh --seed
+```
+
+You can now access the website at [localhost:80](http://localhost:80).
+
+
 ## Using docker
 
 ### Using portainer on your machine
@@ -163,7 +193,14 @@ chmod -R 777 storage/
 php artisan migrate:refresh --seed
 ```
 
-# N4P API
+# Configure your IDE
 
-You can find the API documentation
-here : [https://documenter.getpostman.com/view/15399454/2s83tJGAMW](https://documenter.getpostman.com/view/15399454/2s83tJGAMW)
+- We recommend using PHPStorm as IDE
+
+## Run tests with PHPStorm
+
+This configuration works if you have set up the project with sail.
+
+1. Go to `Run > Edit Configurations`
+2. Add a new cli configuration
+3. …

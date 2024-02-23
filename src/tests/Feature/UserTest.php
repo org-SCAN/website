@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Crew;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Language;
 use App\Notifications\InviteUserNotification;
 use Illuminate\Support\Facades\Notification;
 
@@ -38,7 +39,7 @@ class UserTest extends PermissionsTest
         $response = $this->get($this->route.'/profile');
 
         $response->assertStatus(200);
-        $response->assertSee('Change team');
+        $response->assertSee(__("livewire/change_crew.change_team"));
 
         $response = $this->post(route($this->route.'.change_team',
             $user->id), [
@@ -66,7 +67,7 @@ class UserTest extends PermissionsTest
         $response = $this->get($this->route.'/profile');
 
         $response->assertStatus(200);
-        $response->assertDontSee('Change team');
+        $response->assertDontSee('Change Team');
 
         $response = $this->post(route($this->route.'.change_team',
             $user->id), [
@@ -110,7 +111,7 @@ class UserTest extends PermissionsTest
         $response = $this->get($this->route.'/profile');
 
         $response->assertStatus(200);
-        $response->assertSee('Request role');
+        $response->assertSee(__("livewire/request_role.title"));
 
         $requested_role = Role::whereName("Default Editor")->first();
 
@@ -185,7 +186,7 @@ class UserTest extends PermissionsTest
         $response = $this->get($this->route.'/profile');
 
         $response->assertStatus(200);
-        $response->assertSee('Request role');
+        $response->assertSee(__("livewire/request_role.title"));
 
         $response = $this->post(route($this->route.'.request_role',
             $user->id), [
@@ -251,7 +252,7 @@ class UserTest extends PermissionsTest
         $response = $this->get(route($this->route.'.index'));
 
         $response->assertStatus(200);
-        $response->assertSee('Grant user permissions');
+        $response->assertSee(__("user/index.grant_permission"));
 
         return $response;
     }
@@ -266,8 +267,7 @@ class UserTest extends PermissionsTest
         $base_role = $user->role;
         $requested_role = Role::whereName("Default Editor")->first();
 
-        $this->requestRole($user,
-            $requested_role);
+        $this->requestRole($user,  $requested_role);
 
         $response = $this->get(route($this->route.'.reject_role',
             $user->roleRequest->first()->id));
@@ -623,4 +623,62 @@ class UserTest extends PermissionsTest
         $response->assertStatus(200);
     }
 
+    /* ------------------ changeLanguage ------------------ */
+    /**
+     * @brief Test that the language is updated on the site once the user changed it
+     * @return void
+     */
+    public function test_user_can_see_the_correct_language()
+    {
+        //Make sure user is logged in
+        $user = $this->admin;
+        $this->actingAs($user);
+        //Define the user's language
+        $user->language_id = Language::whereLanguageName('Français')->first()->id;
+        $user->save();
+
+
+        //Check the language has been changed on the user page
+        $response = $this->get($this->route);
+        $response->assertSeeText("Demande de rôle");
+        $response->assertDontSeeText('Grant user Permissions');
+    }
+
+    /**
+     * @brief Test that a user is redirected to the url corresponding to their language
+     * @return void
+     */
+    public function test_user_is_redirected_to_the_right_language_url()
+    {
+        //Make sure user is logged in
+        $user = $this->admin;
+        $this->actingAs($user);
+
+        $response = $this->post(route($this->route.'.change_language', $user->id), [
+            'language_id' => Language::whereLanguageName('Français')->first()->id,
+        ]);
+
+        //Check redirection to the right language url
+        $response->assertRedirect();
+        //Check the language has been changed on the user page
+        $response = $this->get($this->route);
+        $response->assertSeeText("Demande de rôle");
+        $response->assertDontSeeText('Grant user Permissions');
+    }
+
+    /**
+     * @bried Test that a user without language sees the default language (English)
+     */
+    public function test_user_without_language_sees_the_default_language(){
+        //Make sure user is logged in
+        $user = $this->admin;
+        $this->actingAs($user);
+        //Define the user's language
+        $user->language_id = null;
+        $user->save();
+
+        $response = $this->get($this->route);
+        $response->assertDontSeeText("Demande de rôle");
+        $response->assertSeeText('Grant user Permissions');
+    }
 }

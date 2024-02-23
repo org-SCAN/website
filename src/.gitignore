@@ -7,9 +7,11 @@ public/zip
 /storage/*.key
 /vendor
 .env
+.env.testing
 .env.backup
 .phpunit.result.cache
 docker-compose.override.yml
+docker-compose.yml
 Homestead.json
 Homestead.yaml
 npm-debug.log

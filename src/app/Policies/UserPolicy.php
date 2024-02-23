@@ -33,6 +33,11 @@ class UserPolicy extends GlobalPolicy
             'user.requestRole') ? Response::allow() : Response::deny(parent::ERROR_MESSAGE);
     }
 
+    public function changeLanguage(User $user) {
+        return $this->hasPermission($user,
+            __FUNCTION__,
+            'user.changeLanguage') ? Response::allow() : Response::deny(parent::ERROR_MESSAGE);
+    }
     public function invite(User $user) {
 
         return $this->hasPermission($user,

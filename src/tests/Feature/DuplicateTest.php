@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Duplicate;
 use App\Models\FieldRefugee;
 use App\Models\Refugee;
+use Illuminate\Support\Facades\Queue;
 
 class DuplicateTest extends PermissionsTest
 {
@@ -154,6 +155,22 @@ class DuplicateTest extends PermissionsTest
             ->assertStatus(403);
     }
 
+    /**
+     * @return void
+     */
+    public function test_it_queues_the_duplicate_compute_job()
+    {
+        $this->actingAs($this->admin);
+        Queue::fake();
 
+        // Faites une requête HTTP à la route qui déclenche le job
+        $response = $this->get(route('duplicate.compute'));
+
+        // Vérifiez si la réponse est correcte (redirection, status, etc.)
+        $response->assertRedirect(route('duplicate.index'));
+
+        // Assert a job was pushed onto the default queue
+        Queue::assertPushed(\App\Jobs\DuplicateComputeJob::class);
+    }
 
 }

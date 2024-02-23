@@ -7,9 +7,12 @@ use Livewire\Component;
 
 class CreateList extends Component
 {
-    public $fields = [''];
+    public $fields = [];
     public function mount()
     {
+        $this->fields = [
+            ['name' => '', 'data_type_id' => '', 'required' => false] // Initialize with one empty field
+        ];
         $this->data_types = ListDataType::list();
     }
     public function render()
@@ -19,7 +22,7 @@ class CreateList extends Component
 
     public function addField()
     {
-        $this->fields[] = '';
+        $this->fields[] = ['name' => '', 'data_type_id' => '', 'required' => false];
     }
 
     public function removeField($index)

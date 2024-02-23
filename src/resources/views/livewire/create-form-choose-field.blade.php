@@ -21,8 +21,8 @@
                 @livewire('forms.form', [
                     'form_elem' => 'range',
                     'type' => 'checkbox',
-                    'title' => 'Add a range to this field ?',
-                    'hint' => 'If checked, you will be able to define a range for this field. Example : Age => Min : 18, Current : 20, Max : 25',
+                    'title' => __("livewire/create-form-choose-field.rangeable.title"),
+                    'hint' => __("livewire/create-form-choose-field.rangeable.hint"),
                 ])
             </div>
         @endif
@@ -35,11 +35,11 @@
             @livewire('forms.form', [
                 'form_elem' => $form_elem,
                 'type' => 'select-dropdown',
-                'title' => 'Field\'s associated list',
-                'help' => 'Define a list which is associated with this field.',
+                'title' => __("livewire/create-form-choose-field.associated_list.title"),
+                'hint' => __("livewire/create-form-choose-field.associated_list.hint"),
                 'associated_list' => \App\Models\ListControl::where('visible', true)->orderBy('title')->get()->pluck('title', 'id'),
                 'previous' => old($form_elem),
-                'placeHolder' => '-- Select a list --',
+                'placeHolder' => __("livewire/create-form-choose-field.associated_list.placeholder"),
             ])
             @stack('scripts')
         </div>

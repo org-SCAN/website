@@ -7,8 +7,8 @@ use App\Models\Duplicate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use App\Jobs\DuplicateComputeJob;
 
 class DuplicateController extends Controller
 {
@@ -119,7 +119,7 @@ class DuplicateController extends Controller
         $this->authorize("compute",
             Duplicate::class);
 
-        Artisan::queue('duplicate:compute');
+        DuplicateComputeJob::dispatch();
         return redirect()->route('duplicate.index');
     }
 

@@ -1,8 +1,9 @@
-@section('title',"View ".$source->name."'s details")
+@section('title', __("sources/show.title", ["source" => $source->name]))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <strong>{{ $source->name }}</strong> details
+            <strong>{{ $source->name }}</strong> {{ __('sources/show.details') }}
+        </h2>
         </h2>
     </x-slot>
 
@@ -16,13 +17,12 @@
 
                         @can("viewAny", $source)
                             <a href="{{ route('source.index') }}"
-                               class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to
-                                sources</a>
+                               class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">{{ __("common.back") }}</a>
                         @endcan
 
                         @can("update", $source)
                             <a href="{{ route('source.edit', $source->id) }}"
-                               class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">Edit</a>
+                               class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">{{ __("common.edit") }}</a>
                         @endcan
 
 
@@ -32,7 +32,7 @@
                             <button type="submit"
                                     class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black
                                     font-bold py-2 px-4 rounded">
-                                Delete
+                                {{ __("common.delete") }}
                             </button>
                     </form>
                 @endcan
@@ -47,7 +47,7 @@
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs
                                         font-medium text-gray-500 uppercase tracking-wider">
-                                        Name
+                                        {{ __('sources/show.name') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm
                                     text-gray-900 bg-white divide-y divide-gray-200">
@@ -58,7 +58,7 @@
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs
                                         font-medium text-gray-500 uppercase tracking-wider">
-                                        Source Type
+                                        {{ __('sources/show.source_type') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm
                                     text-gray-900 bg-white divide-y divide-gray-200">
@@ -69,7 +69,7 @@
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs
                                         font-medium text-gray-500 uppercase tracking-wider">
-                                        Trust
+                                        {{ __('sources/show.trust') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm
                                     text-gray-900 bg-white divide-y divide-gray-200">
@@ -80,7 +80,7 @@
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs
                                         font-medium text-gray-500 uppercase tracking-wider">
-                                        Reference
+                                        {{ __('sources/show.reference') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm
                                     text-gray-900 bg-white divide-y divide-gray-200">
