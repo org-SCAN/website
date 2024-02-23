@@ -3,11 +3,10 @@ name: Improve Issue Workflow
 on:
   issues:
     types: [labeled]
-    labels:
-      - AI-issue
 
 jobs:
   process-issue:
+    if: github.event.label.name == 'AI-issue'
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -25,7 +24,10 @@ jobs:
 
       - name: Process Issue
         uses: ./
-
+        if: >
+          github.event.action == 'labeled' &&
+          contains(github.event.issue.labels.*.name, 'AI-issue') &&
+          !(contains(join(github.event.issue.labels.*.name, ','), 'AI-issue') && contains(fromJson(steps.check-labeled.outputs.result).labels, 'AI-issue'))
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.GPT_KEY }}
