@@ -28,8 +28,23 @@
                 </p>
             </div>
 
-            <!-- TODO: Add a map here -->
-
+            <div class="block mb-8">
+                <div class="-my-2 sm:-mx-6 lg:-mx-8">
+                    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                        <div style="height: 400px" class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                            @map([
+                            'lat' => $place->lat,
+                            'lng' => $place->lon,
+                            'zoom' => 10,
+                            'markers' => [
+                            ['lat' => $place->lat, 'lng' => $place->lon],
+                            ]
+                            ])
+                            @mapscripts
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </x-app-layout>
