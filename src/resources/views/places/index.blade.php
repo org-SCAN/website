@@ -39,17 +39,17 @@
                                         <td>{{ $value->description }}</td>
 
                                         <!-- we will also add show, edit, and delete buttons -->
-                                        <td>
+                                        <td class="flex space-x-1">
 
-                                            <!-- delete the shark (uses the destroy method DESTROY /sharks/{id} -->
-                                            <!-- we will add this later since its a little more complicated than the other two buttons -->
+                                            <a class="btn btn-small bg-green-500 hover:bg-green-700 text-white" href="{{ URL::to('places/' . $value->id) }}">Show</a>
 
-                                            <!-- show the shark (uses the show method found at GET /sharks/{id} -->
-                                            <a class="btn btn-small btn-success" href="{{ URL::to('places/' . $value->id) }}">Show</a>
-
-                                            <!-- edit this shark (uses the edit method found at GET /sharks/{id}/edit -->
                                             <a class="btn btn-small btn-info" href="{{ URL::to('places/' . $value->id . '/edit') }}">Edit</a>
 
+                                            <form action="{{ route('places.destroy', $value->id) }}" method="POST" class="delete">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -62,3 +62,9 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    $(".delete").on("submit", function(){
+        return confirm("Are you sure?");
+    });
+</script>

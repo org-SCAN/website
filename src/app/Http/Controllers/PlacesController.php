@@ -98,8 +98,15 @@ class PlacesController extends Controller
         ]);
     }
 
-    public function destroy(Places $places)
+    public function destroy($id)
     {
         // Your destroy logic here
+        $place = Places::find($id);
+        $place->delete();
+
+        return redirect('places')->with([
+            'message', 'Place deleted successfully!',
+            'status', 'success'
+        ]);
     }
 }
