@@ -56,19 +56,46 @@ class PlacesController extends Controller
         ]);
     }
 
-    public function show(Places $places)
+    public function show($id)
     {
         // Your show logic here
+        $place = Places::find($id);
+        return view('places.show', ['place' => $place]);
     }
 
-    public function edit(Places $places)
+    public function edit($id)
     {
         // Your edit logic here
+        $place = Places::find($id);
+        return view('places.edit', ['place' => $place]);
     }
 
-    public function update(Request $request, Places $places)
+    public function update(Request $request, $id)
     {
         // Your update logic here
+        $rules = [
+            'name' => 'required|string|max:255',
+            'lat' => 'required|numeric',
+            'lon' => 'required|numeric',
+            'description' => 'required|string',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return redirect('places/' . $id . '/edit')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $place = Places::find($id);
+        $place->name = $request->input('name');
+        $place->lat = $request->input('lat');
+        $place->lon = $request->input('lon');
+        $place->description = $request->input('description');
+        $place->save();
+
+        return redirect('places')->with([
+            'message', 'Place updated successfully!',
+            'status', 'success'
+        ]);
     }
 
     public function destroy(Places $places)

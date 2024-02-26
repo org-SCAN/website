@@ -9,7 +9,12 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <!-- Forms to add a place based on the migratin -->
+            <div class="block mb-8">
+                <a href="{{ route('places.index') }}"
+                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
+                    Back
+                </a>
+            </div>
 
             <form class="w-px-500 p-3 p-md-3" action="{{ route('places.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
