@@ -21,18 +21,16 @@
                             <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <td>ID</td>
-                                    <td>Name</td>
-                                    <td>Latitude</td>
-                                    <td>Longitude</td>
-                                    <td>Description</td>
-                                    <td>Actions</td>
+                                    <td>{{__('place/index.fields.name')}}</td>
+                                    <td>{{__('place/index.fields.lat')}}</td>
+                                    <td>{{__('place/index.fields.lon')}}</td>
+                                    <td>{{__('place/index.fields.description')}}</td>
+                                    <td>{{__('place/index.fields.actions')}}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($places as $key => $place)
                                     <tr>
-                                        <td>{{ $place->id }}</td>
                                         <td>{{ $place->name }}</td>
                                         <td>{{ $place->lat }}</td>
                                         <td>{{ $place->lon }}</td>
@@ -42,16 +40,15 @@
                                         <td class="flex space-x-1">
 
                                             <a class="btn btn-small bg-green-500 hover:bg-green-700 text-white"
-                                               href="{{ route('place.show', $place->id) }}">Show</a>
+                                               href="{{ route('place.show', $place->id) }}">{{__('place/index.show')}}</a>
 
                                             <a class="btn btn-small btn-info"
-                                               href="{{ route('place.edit', $place->id) }}">Edit</a>
+                                               href="{{ route('place.edit', $place->id) }}">{{__('place/index.edit')}}</a>
 
-                                            <form action="{{ route('place.destroy', ['place' => $place]) }}" method="POST"
-                                                  class="delete">
+                                            <form action="{{ route('place.destroy', ['place' => $place]) }}" method="POST" class="delete-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                                                <button type="submit" class="btn btn-small btn-danger delete-btn">{{__('place/index.delete')}}</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -67,7 +64,19 @@
 </x-app-layout>
 
 <script>
-    $(".delete").on("submit", function () {
-        return confirm("Are you sure?");
+document.addEventListener('DOMContentLoaded', function () {
+    var deleteForms = document.querySelectorAll('.delete-form');
+
+    deleteForms.forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            var deleteBtn = form.querySelector('.delete-btn');
+            var confirmationMessage = "{{ __('place/index.delete_confirm') }}";
+
+            if (!confirm(confirmationMessage)) {
+                event.preventDefault();
+            }
+        });
     });
+});
 </script>
+
