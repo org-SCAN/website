@@ -37,17 +37,11 @@ class PlacesController extends Controller
             'lon' => 'required|numeric',
             'description' => 'required|string',
         ];
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return redirect('places/create')
-                ->withErrors($validator)
-                ->withInput();
-        }
         $place = new Places();
-        $place->name = $request->input('name');
-        $place->lat = $request->input('lat');
-        $place->lon = $request->input('lon');
-        $place->description = $request->input('description');
+        $validated = $request->validate($rules);
+        foreach ($rules as $key => $value) {
+            $place->$key = $validated[$key];
+        }
         $place->save();
 
         return redirect('places')->with([
@@ -79,17 +73,12 @@ class PlacesController extends Controller
             'lon' => 'required|numeric',
             'description' => 'required|string',
         ];
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return redirect('places/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
-        }
+
+        $validated = $request->validate($rules);
         $place = Places::find($id);
-        $place->name = $request->input('name');
-        $place->lat = $request->input('lat');
-        $place->lon = $request->input('lon');
-        $place->description = $request->input('description');
+        foreach ($rules as $key => $value) {
+            $place->$key = $validated[$key];
+        }
         $place->save();
 
         return redirect('places')->with([
