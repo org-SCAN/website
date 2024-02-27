@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     deleteForms.forEach(function (form) {
         form.addEventListener('submit', function (event) {
-            var deleteBtn = form.querySelector('.delete-btn');
             var confirmationMessage = "{{ __('place/index.delete_confirm') }}";
 
             if (!confirm(confirmationMessage)) {
