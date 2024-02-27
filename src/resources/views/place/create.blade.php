@@ -1,31 +1,33 @@
-@php use App\Models\Places @endphp
+@php use App\Models\Place @endphp
 
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('places/index.places') }}
+            {{ __('place/index.place') }}
         </h2>
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
             <div class="block mb-8">
-                <a href="{{ route('places.index') }}"
+                <a href="{{ route('place.index') }}"
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
                     Back
                 </a>
             </div>
 
-            <form class="w-px-500 p-3 p-md-3" action="{{ route('places.update', ['place' => $place->id]) }}" method="POST" enctype="multipart/form-data">
+            <form class="w-px-500 p-3 p-md-3" action="{{ route('place.store') }}" method="post"
+                  enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Name</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Name" value="{{$place->name}}">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
+                               placeholder="Name">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
-                        </span>
+                                    </span>
                         @enderror
                     </div>
                 </div>
@@ -33,7 +35,8 @@
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Latitude</label>
                     <div class="col-sm-9">
-                        <input type="number" step="0.000001" class="form-control @error('lat') is-invalid @enderror" name="lat" placeholder="Latitude" value="{{$place->lat}}">
+                        <input type="number" step="0.000001" class="form-control @error('lat') is-invalid @enderror"
+                               name="lat" placeholder="Latitude">
                         @error('lat')
                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -45,7 +48,8 @@
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Longitude</label>
                     <div class="col-sm-9">
-                        <input type="number" step="0.000001" class="form-control @error('lon') is-invalid @enderror" name="lon" placeholder="Longitude" value="{{$place->lon}}">
+                        <input type="number" step="0.000001" class="form-control @error('lon') is-invalid @enderror"
+                               name="lon" placeholder="Longitude">
                         @error('lon')
                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -57,7 +61,8 @@
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Description</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control @error('description') is-invalid @enderror" name="description" placeholder="Description" value="{{$place->description}}">
+                        <input type="text" class="form-control @error('description') is-invalid @enderror"
+                               name="description" placeholder="Description">
                         @error('description')
                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -69,7 +74,7 @@
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label"></label>
                     <div class="col-sm-9">
-                        <button type="submit" class="btn btn-success btn-block text-white">Update</button>
+                        <button type="submit" class="btn btn-success btn-block text-white">Submit</button>
                     </div>
                 </div>
             </form>

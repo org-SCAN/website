@@ -1,17 +1,17 @@
-@php use App\Models\Places @endphp
+@php use App\Models\Place @endphp
 
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('places/index.places') }}
+            {{ __('place/index.place') }}
         </h2>
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <a href="{{ route("places.create") }}"
+                <a href="{{ route("place.create") }}"
                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    {{ __('places/index.add_item') }}
+                    {{ __('place/index.add_item') }}
                 </a>
             </div>
             <div class="flex flex-col">
@@ -41,11 +41,14 @@
                                         <!-- we will also add show, edit, and delete buttons -->
                                         <td class="flex space-x-1">
 
-                                            <a class="btn btn-small bg-green-500 hover:bg-green-700 text-white" href="{{ URL::to('places/' . $value->id) }}">Show</a>
+                                            <a class="btn btn-small bg-green-500 hover:bg-green-700 text-white"
+                                               href="{{ URL::to('place/' . $value->id) }}">Show</a>
 
-                                            <a class="btn btn-small btn-info" href="{{ URL::to('places/' . $value->id . '/edit') }}">Edit</a>
+                                            <a class="btn btn-small btn-info"
+                                               href="{{ URL::to('place/' . $value->id . '/edit') }}">Edit</a>
 
-                                            <form action="{{ route('places.destroy', $value->id) }}" method="POST" class="delete">
+                                            <form action="{{ route('place.destroy', $value->id) }}" method="POST"
+                                                  class="delete">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-small btn-danger">Delete</button>
@@ -64,7 +67,7 @@
 </x-app-layout>
 
 <script>
-    $(".delete").on("submit", function(){
+    $(".delete").on("submit", function () {
         return confirm("Are you sure?");
     });
 </script>

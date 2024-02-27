@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PlacesPolicy extends GlobalPolicy
+class PlacePolicy extends GlobalPolicy
 {
     use HandlesAuthorization;
 

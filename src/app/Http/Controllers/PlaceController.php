@@ -2,30 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Places;
+use App\Models\Place;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class PlacesController extends Controller
+class PlaceController extends Controller
 {
     public function index()
     {
-        //get all places
-        $places = Places::all();
+        //get all place
+        $places = Place::all();
 
-        //load the view and pass the places
-        return view('places.index', ['places' => $places]);
+        //load the view and pass the place
+        return view('place.index', ['places' => $places]);
     }
 
     public function create()
     {
-        $fields = [
-            'name' => 'Name',
-            'lat' => 'Latitude',
-            'lon' => 'Longitude',
-            'description' => 'Description',
-        ];
-        return view('places.create');
+        return view('place.create');
     }
 
     public function store(Request $request)
@@ -37,31 +31,28 @@ class PlacesController extends Controller
             'lon' => 'required|numeric',
             'description' => 'required|string',
         ];
-        $place = new Places();
+        $place = new Place();
         $validated = $request->validate($rules);
         foreach ($rules as $key => $value) {
             $place->$key = $validated[$key];
         }
         $place->save();
 
-        return redirect('places')->with([
+        return redirect('place')->with([
             'message', 'Place created successfully!',
             'status', 'success'
         ]);
     }
 
-    public function show($id)
+    public function show(Place $place)
     {
         // Your show logic here
-        $place = Places::find($id);
-        return view('places.show', ['place' => $place]);
+        return view('place.show', ['place' => $place]);
     }
 
-    public function edit($id)
+    public function edit(Place $place)
     {
-        // Your edit logic here
-        $place = Places::find($id);
-        return view('places.edit', ['place' => $place]);
+        return view('place.edit', ['place' => $place]);
     }
 
     public function update(Request $request, $id)
@@ -75,13 +66,13 @@ class PlacesController extends Controller
         ];
 
         $validated = $request->validate($rules);
-        $place = Places::find($id);
+        $place = Place::find($id);
         foreach ($rules as $key => $value) {
             $place->$key = $validated[$key];
         }
         $place->save();
 
-        return redirect('places')->with([
+        return redirect('place')->with([
             'message', 'Place updated successfully!',
             'status', 'success'
         ]);
@@ -90,10 +81,10 @@ class PlacesController extends Controller
     public function destroy($id)
     {
         // Your destroy logic here
-        $place = Places::find($id);
+        $place = Place::find($id);
         $place->delete();
 
-        return redirect('places')->with([
+        return redirect('place')->with([
             'message', 'Place deleted successfully!',
             'status', 'success'
         ]);

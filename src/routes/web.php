@@ -9,7 +9,7 @@ use App\Http\Controllers\LinkController;
 use App\Http\Controllers\ListControlController;
 use App\Http\Controllers\ManageUsersController;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\PlacesController;
+use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\RefugeeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SourceController;
@@ -213,5 +213,5 @@ Route::resource("event",
     EventController::class)->middleware('auth');
 Route::resource("source",
     SourceController::class)->middleware('auth');
-Route::resource("places",
-    PlacesController::class)->middleware('auth');
+Route::resource("place",
+    PlaceController::class)->middleware('auth');
