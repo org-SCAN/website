@@ -12,19 +12,17 @@
             <div class="block mb-8">
                 <a href="{{ route('place.index') }}"
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
-                    Back
+                    {{__('common.back')}}
                 </a>
             </div>
 
-            <h1>Showing {{ $place->name }}</h1>
+            <h1>{{ $place->name }}</h1>
 
             <div class="jumbotron text-center">
                 <p>
-                    <strong>ID:</strong> {{ $place->id }}<br>
-                    <strong>Name:</strong> {{ $place->name }}<br>
-                    <strong>Latitude:</strong> {{ $place->lat }}<br>
-                    <strong>Longitude:</strong> {{ $place->lon }}<br>
-                    <strong>Description:</strong> {{ $place->description }}
+                    <strong>{{__('place/show.fields.lat')}} : </strong> {{ $place->lat }}<br>
+                    <strong>{{__('place/show.fields.lon')}} :</strong> {{ $place->lon }}<br>
+                    <strong>{{__('place/show.fields.description')}} :</strong> {{ $place->description }}
                 </p>
             </div>
 
