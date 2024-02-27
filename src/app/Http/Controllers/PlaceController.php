@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePlaceRequest;
+use App\Http\Requests\UpdatePlaceRequest;
 use App\Models\Place;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class PlaceController extends Controller
 {
@@ -22,20 +22,10 @@ class PlaceController extends Controller
         return view('place.create');
     }
 
-    public function store(Request $request)
+    public function store(StorePlaceRequest $request)
     {
-        // Your store logic here
-        $rules = [
-            'name' => 'required|string|max:255',
-            'lat' => 'required|numeric',
-            'lon' => 'required|numeric',
-            'description' => 'required|string',
-        ];
-        $place = new Place();
-        $validated = $request->validate($rules);
-        foreach ($rules as $key => $value) {
-            $place->$key = $validated[$key];
-        }
+        $place = $request->validated();
+        $place = Place::create($place);
         $place->save();
 
         return redirect('place')->with([
@@ -55,33 +45,19 @@ class PlaceController extends Controller
         return view('place.edit', ['place' => $place]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdatePlaceRequest $request, Place $place)
     {
-        // Your update logic here
-        $rules = [
-            'name' => 'required|string|max:255',
-            'lat' => 'required|numeric',
-            'lon' => 'required|numeric',
-            'description' => 'required|string',
-        ];
+        $place->update($request->validated());
 
-        $validated = $request->validate($rules);
-        $place = Place::find($id);
-        foreach ($rules as $key => $value) {
-            $place->$key = $validated[$key];
-        }
-        $place->save();
-
-        return redirect('place')->with([
-            'message', 'Place updated successfully!',
-            'status', 'success'
+        return redirect()->route('place.index')->with([
+            'message' => 'Place updated successfully!',
+            'status' => 'success'
         ]);
     }
 
-    public function destroy($id)
+    public function destroy(Place $place)
     {
         // Your destroy logic here
-        $place = Place::find($id);
         $place->delete();
 
         return redirect('place')->with([

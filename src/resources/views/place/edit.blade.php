@@ -15,8 +15,7 @@
                 </a>
             </div>
 
-            <form class="w-px-500 p-3 p-md-3" action="{{ route('place.update', ['place' => $place->id]) }}"
-                  method="POST" enctype="multipart/form-data">
+            <form class="w-px-500 p-3 p-md-3" action="{{ route('place.update', $place->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="row mb-3">

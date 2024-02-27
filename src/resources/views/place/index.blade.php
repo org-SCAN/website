@@ -30,24 +30,24 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($places as $key => $value)
+                                @foreach($places as $key => $place)
                                     <tr>
-                                        <td>{{ $value->id }}</td>
-                                        <td>{{ $value->name }}</td>
-                                        <td>{{ $value->lat }}</td>
-                                        <td>{{ $value->lon }}</td>
-                                        <td>{{ $value->description }}</td>
+                                        <td>{{ $place->id }}</td>
+                                        <td>{{ $place->name }}</td>
+                                        <td>{{ $place->lat }}</td>
+                                        <td>{{ $place->lon }}</td>
+                                        <td>{{ $place->description }}</td>
 
                                         <!-- we will also add show, edit, and delete buttons -->
                                         <td class="flex space-x-1">
 
                                             <a class="btn btn-small bg-green-500 hover:bg-green-700 text-white"
-                                               href="{{ URL::to('place/' . $value->id) }}">Show</a>
+                                               href="{{ route('place.show', $place->id) }}">Show</a>
 
                                             <a class="btn btn-small btn-info"
-                                               href="{{ URL::to('place/' . $value->id . '/edit') }}">Edit</a>
+                                               href="{{ route('place.edit', $place->id) }}">Edit</a>
 
-                                            <form action="{{ route('place.destroy', $value->id) }}" method="POST"
+                                            <form action="{{ route('place.destroy', ['place' => $place]) }}" method="POST"
                                                   class="delete">
                                                 @csrf
                                                 @method('DELETE')
