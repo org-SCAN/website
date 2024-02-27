@@ -11,7 +11,7 @@
             <div class="block mb-8">
                 <a href="{{ route("place.create") }}"
                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    {{ __('place/index.add_item') }}
+                    {{ __('common.add') }}
                 </a>
             </div>
             <div class="flex flex-col">
@@ -40,15 +40,15 @@
                                         <td class="flex space-x-1">
 
                                             <a class="btn btn-small bg-green-500 hover:bg-green-700 text-white"
-                                               href="{{ route('place.show', $place->id) }}">{{__('place/index.show')}}</a>
+                                               href="{{ route('place.show', $place->id) }}">{{__('common.show')}}</a>
 
                                             <a class="btn btn-small btn-info"
-                                               href="{{ route('place.edit', $place->id) }}">{{__('place/index.edit')}}</a>
+                                               href="{{ route('place.edit', $place->id) }}">{{__('common.edit')}}</a>
 
                                             <form action="{{ route('place.destroy', ['place' => $place]) }}" method="POST" class="delete-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-small btn-danger delete-btn">{{__('place/index.delete')}}</button>
+                                                <button type="submit" class="btn btn-small btn-danger delete-btn">{{__('common.delete')}}</button>
                                             </form>
                                         </td>
                                     </tr>
