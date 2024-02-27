@@ -1,4 +1,5 @@
 @php use App\Models\Place @endphp
+@section('title', __('place/create.title'))
 
 <x-app-layout>
     <x-slot name="header">

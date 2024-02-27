@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'view_place_details' => 'View :place_name\'s details',
     'place' => 'Place',
     'fields' => [
         'name' => 'Name',

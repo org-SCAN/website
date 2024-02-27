@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'title' => 'Create a place',
     'fields' => [
         'name' => 'Name',
         'description' => 'Description',

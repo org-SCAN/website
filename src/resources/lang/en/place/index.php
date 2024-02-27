@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'view_all_places' => 'View all places',
     'place' => 'Place',
     'fields' => [
         'name' => 'Name',

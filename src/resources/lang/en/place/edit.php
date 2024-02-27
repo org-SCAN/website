@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'edit_place' => 'Edit :place_name',
     'fields' => [
         'name' => 'Name',
         'description' => 'Description',

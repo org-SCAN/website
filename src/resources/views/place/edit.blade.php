@@ -1,9 +1,10 @@
 @php use App\Models\Place @endphp
+@section('title', __('place/edit.edit_place', ['place_name' => $place->name]))
 
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('place/index.place') }}
+            {{ __('place/edit.edit_place', ['place_name' => $place->name]) }}
         </h2>
     </x-slot>
     <div class="py-12">
