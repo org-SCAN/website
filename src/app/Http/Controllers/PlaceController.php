@@ -8,6 +8,17 @@ use App\Models\Place;
 
 class PlaceController extends Controller
 {
+
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Place::class, 'place');
+    }
+
     public function index()
     {
         //get all place
