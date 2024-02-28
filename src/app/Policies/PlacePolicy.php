@@ -8,7 +8,7 @@ class PlacePolicy extends GlobalPolicy
 {
     use HandlesAuthorization;
 
-    public function __construct($route_name = "permissions")
+    public function __construct($route_name = "place")
     {
         parent::__construct($route_name);
     }
