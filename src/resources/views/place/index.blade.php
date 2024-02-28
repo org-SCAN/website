@@ -37,20 +37,24 @@
                                         <td>{{ $place->lon }}</td>
                                         <td>{{ $place->description }}</td>
 
-                                        <!-- we will also add show, edit, and delete buttons -->
                                         <td class="flex space-x-1">
+                                            @can('view', $place)
+                                                <a class="btn btn-small bg-green-500 hover:bg-green-700 text-white"
+                                                   href="{{ route('place.show', $place->id) }}">{{__('common.show')}}</a>
+                                            @endcan
 
-                                            <a class="btn btn-small bg-green-500 hover:bg-green-700 text-white"
-                                               href="{{ route('place.show', $place->id) }}">{{__('common.show')}}</a>
+                                            @can('update', $place)
+                                                <a class="btn btn-small btn-info"
+                                                   href="{{ route('place.edit', $place->id) }}">{{__('common.edit')}}</a>
+                                            @endcan
 
-                                            <a class="btn btn-small btn-info"
-                                               href="{{ route('place.edit', $place->id) }}">{{__('common.edit')}}</a>
-
-                                            <form action="{{ route('place.destroy', ['place' => $place]) }}" method="POST" class="delete-form">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-small btn-danger delete-btn">{{__('common.delete')}}</button>
-                                            </form>
+                                            @can('delete', $place)
+                                                <form action="{{ route('place.destroy', ['place' => $place]) }}" method="POST" class="delete-form">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-small btn-danger delete-btn">{{__('common.delete')}}</button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
