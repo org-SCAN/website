@@ -28,10 +28,7 @@ class PlaceController extends Controller
         $place = Place::create($place);
         $place->save();
 
-        return redirect('place')->with([
-            'message', 'Place created successfully!',
-            'status', 'success'
-        ]);
+        return redirect('place');
     }
 
     public function show(Place $place)
@@ -49,10 +46,7 @@ class PlaceController extends Controller
     {
         $place->update($request->validated());
 
-        return redirect()->route('place.index')->with([
-            'message' => 'Place updated successfully!',
-            'status' => 'success'
-        ]);
+        return redirect()->route('place.index');
     }
 
     public function destroy(Place $place)
@@ -60,9 +54,6 @@ class PlaceController extends Controller
         // Your destroy logic here
         $place->delete();
 
-        return redirect('place')->with([
-            'message', 'Place deleted successfully!',
-            'status', 'success'
-        ]);
+        return redirect('place');
     }
 }
