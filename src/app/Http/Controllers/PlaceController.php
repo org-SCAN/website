@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePlaceRequest;
 use App\Http\Requests\UpdatePlaceRequest;
 use App\Models\Place;
+use \App\Http\Livewire\Forms\Coordinates;
 
 class PlaceController extends Controller
 {
@@ -36,6 +37,7 @@ class PlaceController extends Controller
     public function store(StorePlaceRequest $request)
     {
         $place = $request->validated();
+        $place['coordinates'] = Coordinates::encode($place['coordinates']);
         $place = Place::create($place);
         $place->save();
 
@@ -55,6 +57,7 @@ class PlaceController extends Controller
 
     public function update(UpdatePlaceRequest $request, Place $place)
     {
+        $place['coordinates'] = Coordinates::encode($place['coordinates']);
         $place->update($request->validated());
 
         return redirect()->route('place.index');

@@ -15,10 +15,9 @@ return new class extends Migration
     {
         Schema::create('places', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->string('name');
-            $table->double('lat', 10, 6);
-            $table->double('lon', 10, 6);
-            $table->text('description');
+            $table->string('name')->unique();
+            $table->string('coordinates');
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

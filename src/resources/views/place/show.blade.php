@@ -21,8 +21,8 @@
 
             <div class="jumbotron text-center">
                 <p>
-                    <strong>{{__('place/show.fields.lat')}} : </strong> {{ $place->lat }}<br>
-                    <strong>{{__('place/show.fields.lon')}} :</strong> {{ $place->lon }}<br>
+                    <strong>{{__('place/show.fields.lat')}} : </strong> {{ json_decode($place->coordinates, true)['lat'] }}<br>
+                    <strong>{{__('place/show.fields.lon')}} :</strong> {{ json_decode($place->coordinates, true)['long'] }}<br>
                     <strong>{{__('place/show.fields.description')}} :</strong> {{ $place->description }}
                 </p>
             </div>
@@ -33,12 +33,13 @@
                         <div style="height: 400px"
                              class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             @map([
-                            'lat' => $place->lat,
-                            'lng' => $place->lon,
-                            'zoom' => 10,
-                            'markers' => [
-                            ['lat' => $place->lat, 'lng' => $place->lon],
-                            ]
+                                'lat' => json_decode($place->coordinates, true)['lat'],
+                                'lng' => json_decode($place->coordinates, true)['long'],
+                                'zoom' => 10,
+                                'markers' => [
+                                    ['lat' => json_decode($place->coordinates, true)['lat'],
+                                    'lng' => json_decode($place->coordinates, true)['long'],]
+                                ]
                             ])
                             @mapscripts
                         </div>

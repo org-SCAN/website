@@ -33,8 +33,8 @@
                                 @foreach($places as $key => $place)
                                     <tr>
                                         <td>{{ $place->name }}</td>
-                                        <td>{{ $place->lat }}</td>
-                                        <td>{{ $place->lon }}</td>
+                                        <td>{{ json_decode($place->coordinates, true)['lat'] }}</td>
+                                        <td>{{ json_decode($place->coordinates, true)['long'] }}</td>
                                         <td>{{ $place->description }}</td>
 
                                         <td class="flex space-x-1">

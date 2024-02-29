@@ -32,22 +32,12 @@
                         </div>
 
                         <div class="px-4 py-5 bg-white sm:p-6">
-                            @php($form_elem = "lat")
+                            @php($form_elem = "coordinates")
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,
-                                'type' => "text",
-                                'title' => __('place/create.fields.lat'),
-                                'hint' => __('place/create.placeholders.lat')
-                                ])
-                        </div>
-
-                        <div class="px-4 py-5 bg-white sm:p-6">
-                            @php($form_elem = "lon")
-                            @livewire("forms.form", [
-                                'form_elem' => $form_elem,
-                                'type' => "text",
-                                'title' => __('place/create.fields.lon'),
-                                'hint' => __('place/create.placeholders.lon')
+                                'type' => "coordinates",
+                                'title' => __('place/create.fields.coordinates'),
+                                'hint' => __('place/create.placeholders.coordinates')
                                 ])
                         </div>
 

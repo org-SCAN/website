@@ -11,10 +11,15 @@ class PlaceFactory extends Factory
 
     public function definition(): array
     {
+
+        $coordinates = json_encode([
+            "lat" => $this->faker->latitude,
+            "long" => $this->faker->longitude,
+        ]);
+
         return [
             "name" => $this->faker->unique()->name,
-            "lat" => $this->faker->latitude,
-            "lon" => $this->faker->longitude,
+            "coordinates" => $coordinates,
             "description" => $this->faker->realText,
         ];
     }

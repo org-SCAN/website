@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Livewire\Forms\Coordinates;
 
 class UpdatePlaceRequest extends FormRequest
 {
@@ -25,9 +26,7 @@ class UpdatePlaceRequest extends FormRequest
     {
         return [
                 'name' => 'required|string|max:255',
-                'lat' => 'required|numeric',
-                'lon' => 'required|numeric',
                 'description' => 'required|string',
-        ];
+        ] + Coordinates::rules('coordinates');
     }
 }
