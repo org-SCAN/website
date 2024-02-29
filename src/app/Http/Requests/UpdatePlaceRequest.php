@@ -25,8 +25,8 @@ class UpdatePlaceRequest extends FormRequest
     public function rules()
     {
         return [
-                'name' => 'required|string|max:255',
-                'description' => 'required|string',
+                'name' => 'required|string|max:255|unique:places,name',
+                'description' => 'string',
         ] + Coordinates::rules('coordinates');
     }
 }
