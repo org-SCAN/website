@@ -27,15 +27,4 @@ class PermissionController extends Controller
         $permissions = Permission::all();
         return view("permissions.index", compact("permissions"));
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\Permission $permission
-     * @return View
-     */
-    public function show(Permission $permission)
-    {
-        return view("permissions.show", compact("permission"));
-    }
 }
