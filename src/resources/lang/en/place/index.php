@@ -3,6 +3,8 @@
 return [
     'view_all_places' => 'View all places',
     'place' => 'Place',
+    'places' => 'Places',
+    'add_place' => 'Add place',
     'fields' => [
         'name' => 'Name',
         'description' => 'Description',

@@ -4,7 +4,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('place/index.place') }}
+            {{ __('place/index.places') }}
         </h2>
     </x-slot>
     <div class="py-12">
@@ -13,7 +13,7 @@
                 @can('create', Place::class)
                     <a href="{{ route("place.create") }}"
                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                        {{ __('common.add') }}
+                        {{ __('place/index.add_place') }}
                     </a>
                 @endcan
             </div>
