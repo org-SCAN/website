@@ -17,10 +17,10 @@
     <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500">
         {{$hint}} <em class="text-sm text-red-600">{{$warning}}</em></small>
     @error($form_elem.'.lat')
-        <p class="text-sm text-red-600">{{ Str::replace($form_elem.'.lat', $this->field->title.' (latitude)', $message) }}</p>
+        <p class="text-sm text-red-600">{{ Str::replace($form_elem.'.lat', $this->title.' (latitude)', $message) }}</p>
     @enderror
     @error($form_elem.'.long')
-        <p class="text-sm text-red-600">{{ Str::replace($form_elem.'.long', $this->field->title.' (longitude)', $message) }}</p>
+        <p class="text-sm text-red-600">{{ Str::replace($form_elem.'.long', $this->title.' (longitude)', $message) }}</p>
     @enderror
 </div>
 
