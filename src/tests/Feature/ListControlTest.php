@@ -16,6 +16,15 @@ class ListControlTest extends PermissionsTest
         $this->route = "lists_control";
         // Use a pre-existing list control
         $this->resource = ListControl::whereName("ListCountry")->first();
+        $this->run = [
+            "index" => true,
+            "show" => true,
+            "create" => true,
+            "store" => false,
+            "edit" => true,
+            "update" => false,
+            "destroy" => true,
+        ];
     }
 
 

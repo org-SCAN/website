@@ -22,7 +22,9 @@ class ApiLogTest extends PermissionsTest
             "index" => true,
             "show" => true,
             "create" => false,
+            "store" => false,
             "edit" => false,
+            "update" => false,
             "destroy" => false,
         ];
     }
