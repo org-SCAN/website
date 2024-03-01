@@ -20,6 +20,7 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg p-2">
                             <table class="table table-striped table-bordered">
+                                <caption class="sr-only">{{__('place/index.view_all_places')}}</caption>
                                 <thead>
                                 <tr>
                                     <th>{{__('place/index.fields.name')}}</th>
