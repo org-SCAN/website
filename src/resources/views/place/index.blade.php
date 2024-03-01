@@ -22,11 +22,11 @@
                             <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <td>{{__('place/index.fields.name')}}</td>
-                                    <td>{{__('place/index.fields.lat')}}</td>
-                                    <td>{{__('place/index.fields.lon')}}</td>
-                                    <td>{{__('place/index.fields.description')}}</td>
-                                    <td>{{__('place/index.fields.actions')}}</td>
+                                    <th>{{__('place/index.fields.name')}}</th>
+                                    <th>{{__('place/index.fields.lat')}}</th>
+                                    <th>{{__('place/index.fields.lon')}}</th>
+                                    <th>{{__('place/index.fields.description')}}</th>
+                                    <th>{{__('place/index.fields.actions')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
