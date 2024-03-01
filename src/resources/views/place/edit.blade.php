@@ -40,7 +40,8 @@
                                 'type' => "coordinates",
                                 'title' => __('place/create.fields.coordinates'),
                                 'hint' => __('place/create.placeholders.coordinates'),
-                                'previous' => $place->{$form_elem}
+                                'previous' => $place->{$form_elem},
+                                'dataType' => \App\Models\ListDataType::where('name', 'Coordinates')->first()
                             ])
                         </div>
 
