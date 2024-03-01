@@ -7,6 +7,7 @@ trait ResourceWithCoordinatesTrait
 
     /**
      * Shared test method for storing a resource
+     * @brief This test is used to check if the user can store a resource
      */
     public function test_authenticated_user_with_permission_can_store_resource()
     {
