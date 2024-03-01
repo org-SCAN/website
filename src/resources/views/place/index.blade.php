@@ -29,36 +29,23 @@
                                     <th class="toFilter">{{__('place/index.fields.lat')}}</th>
                                     <th class="toFilter">{{__('place/index.fields.lon')}}</th>
                                     <th class="toFilter">{{__('place/index.fields.description')}}</th>
-                                    <th>{{__('place/index.fields.actions')}}</th>
+                                    @can('update', $places->first())
+                                        <th></th>
+                                    @endcan
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($places as $key => $place)
                                     <tr>
-                                        <td>{{ $place->name }}</td>
+                                        <td>
+                                            <a href="{{route('place.show',  $place->id)}}"> {{ $place->name }}</a>
+                                        </td>
                                         <td>{{ json_decode($place->coordinates, true)['lat'] }}</td>
                                         <td>{{ json_decode($place->coordinates, true)['long'] }}</td>
                                         <td>{{ $place->description }}</td>
-
-                                        <td class="flex space-x-1">
-                                            @can('view', $place)
-                                                <a class="btn btn-small bg-green-500 hover:bg-green-700 text-white"
-                                                   href="{{ route('place.show', $place->id) }}">{{__('common.show')}}</a>
-                                            @endcan
-
-                                            @can('update', $place)
-                                                <a class="btn btn-small btn-info"
-                                                   href="{{ route('place.edit', $place->id) }}">{{__('common.edit')}}</a>
-                                            @endcan
-
-                                            @can('delete', $place)
-                                                <form action="{{ route('place.destroy', ['place' => $place]) }}" method="POST" class="delete-form">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-small btn-danger delete-btn">{{__('common.delete')}}</button>
-                                                </form>
-                                            @endcan
-                                        </td>
+                                        @can('update', $place)
+                                            <td><a href="{{ route('place.edit', $place->id) }}">{{__('common.edit')}}</a></td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                                 </tbody>
