@@ -26,7 +26,7 @@ class StorePlaceRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|unique:places,name',
-            'description' => 'string',
+            'description' => 'nullable|string',
         ] + Coordinates::rules('coordinates');
     }
 }

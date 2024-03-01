@@ -26,7 +26,7 @@ class UpdatePlaceRequest extends FormRequest
     {
         return [
                 "name" => "required|unique:places,name," . $this->route('place')->id . "|string",
-                'description' => 'string',
+                'description' => 'nullable|string',
         ] + Coordinates::rules('coordinates');
     }
 }
