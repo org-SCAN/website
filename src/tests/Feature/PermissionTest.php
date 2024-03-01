@@ -26,4 +26,16 @@ class PermissionTest extends PermissionsTest
         // get the fist permission
         $this->resource = Permission::first();
     }
-}
+
+    public function test_authenticated_user_with_permission_can_see_index_page() {
+        // set APP_DEBUG to true only for this test, then call the parent function
+        if(!env('APP_DEBUG')) {
+            putenv("APP_DEBUG=true");
+        }
+        parent::test_authenticated_user_with_permission_can_see_index_page();
+        if(!env('APP_DEBUG')) {
+            putenv("APP_DEBUG=false");
+        }
+    }
+
+    }
