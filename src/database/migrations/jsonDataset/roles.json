@@ -48,7 +48,14 @@
             "event.store",
             "event.edit",
             "event.update",
-            "event.destroy"
+            "event.destroy",
+            "place.index",
+            "place.show",
+            "place.create",
+            "place.store",
+            "place.edit",
+            "place.update",
+            "place.destroy"
         ]
     },
     {
@@ -63,6 +70,8 @@
             "links.show",
             "event.index",
             "event.show",
+            "place.index",
+            "place.show",
             "user.change_language"
         ]
     },
