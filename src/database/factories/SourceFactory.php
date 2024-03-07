@@ -20,7 +20,7 @@ class SourceFactory extends Factory
         return [
             'name' => $this->faker->name,
             'source_type_id' => ListSourceType::inRandomOrder()->first()->id,
-            'trust' => $this->faker->randomFloat(2, 0, 10),
+            'trust' => 1,
             'reference' => $this->faker->text,
         ];
     }

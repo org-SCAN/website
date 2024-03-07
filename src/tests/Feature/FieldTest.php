@@ -15,6 +15,15 @@ class FieldTest extends PermissionsTest
         parent::setUp();
         $this->route = "fields";
         $this->resource = Field::factory()->create();
+        $this->run = [
+            "index" => true,
+            "show" => true,
+            "create" => true,
+            "store" => false,
+            "edit" => true,
+            "update" => false,
+            "destroy" => true,
+        ];
     }
 
     /**

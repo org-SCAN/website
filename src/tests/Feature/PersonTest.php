@@ -16,6 +16,15 @@ class PersonTest extends PermissionsTest
         parent::setUp();
         $this->route = "person";
         $this->resource = Refugee::factory()->create();
+        $this->run = [
+            "index" => true,
+            "show" => true,
+            "create" => true,
+            "store" => false,
+            "edit" => true,
+            "update" => false,
+            "destroy" => true,
+        ];
     }
 
     /**

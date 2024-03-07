@@ -40,7 +40,7 @@ class RoleController extends Controller
     {
         $role = $request->validated();
         $created_role = Role::create($role["role"]);
-        $created_role->permissions()->attach($role["permissions"]);
+        $created_role->permissions()->attach($role["permissions"] ?? []);
         return redirect()->route("roles.index");
     }
 
@@ -90,6 +90,8 @@ class RoleController extends Controller
     public function update(UpdateRoleRequest $request, Role $role)
     {
         $upd = $request->validated();
+        // if permissions are not set, set them to an empty array
+        $upd["permissions"] = $upd["permissions"] ?? [];
         $db_permissions = $role->permissions->pluck("id")->toArray();
         $to_attach = array_diff($upd["permissions"], $db_permissions);
         $to_detach = array_diff($db_permissions, $upd["permissions"]);
