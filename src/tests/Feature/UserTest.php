@@ -19,6 +19,15 @@ class UserTest extends PermissionsTest
         parent::setUp();
         $this->route = "user";
         $this->resource = User::factory()->create();
+        $this->run = [
+            "index" => true,
+            "show" => true,
+            "create" => true,
+            "store" => false,
+            "update" => false,
+            "edit" => true,
+            "destroy" => true,
+        ];
     }
 
     /*----------------------------------------------------------- */
