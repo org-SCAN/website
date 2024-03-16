@@ -18,7 +18,7 @@
   "homepage": "https://github.com/lduf/issueGPT#readme",
   "dependencies": {
     "@octokit/core": "^5.0.2",
-    "axios": "^1.6.2",
+    "axios": "^1.6.8",
     "fs": "^0.0.1-security",
     "node-fetch": "^3.3.2",
     "openai": "^4.20.1"
