@@ -147,7 +147,10 @@ class DuplicateController extends Controller
         $input['rows'] = $request->input('rows');
 
         foreach ($input['rows'] as $duplicate_id) {
-            $duplicate = Duplicate::where('id', intval($duplicate_id))->first();
+            $duplicate = Duplicate::where('id', $duplicate_id)->first();
+            dd($duplicate, $duplicate_id);
+            $this->authorize("resolve",
+                $duplicate);
 
             $duplicate->resolved = true;
             $duplicate->save();
