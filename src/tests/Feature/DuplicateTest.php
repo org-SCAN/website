@@ -155,6 +155,49 @@ class DuplicateTest extends PermissionsTest
             ->assertStatus(403);
     }
 
+    public function test_authenticated_user_with_permission_can_mark_multiple_duplicates_as_resolved() {
+        // call the command to compute the duplicates
+        $this->test_duplicate_compute_command();
+
+        // mark the first two duplicates as resolved
+        $duplicates = Duplicate::where('resolved', false)->orderByDesc("similarity")->limit(2)->get();
+
+        // check that the duplicates are no more shown in the list
+        $this->actingAs($this->admin)
+            ->get(route('duplicate.multiple_resolve', ['rows' => $duplicates->pluck('id')->toArray()]))
+            ->assertStatus(302);
+
+        //check that the duplicate as been marked as resolved in the database
+        $this->assertDatabaseHas('duplicates', [
+            'id' => $duplicates->first()->id,
+            'resolved' => true
+        ]);
+
+        $this->assertDatabaseHas('duplicates', [
+            'id' => $duplicates->last()->id,
+            'resolved' => true
+        ]);
+
+        //check that the duplicates are no more shown in the list
+        $this->actingAs($this->admin)
+            ->get(route('duplicate.index'))
+            ->assertDontSee($duplicates->first()->id)
+            ->assertDontSee($duplicates->last()->id);
+    }
+
+    public function test_authenticated_user_without_permission_cant_mark_multiple_duplicates_as_resolved() {
+        // call the command to compute the duplicates
+        $this->test_duplicate_compute_command();
+
+        // mark the first two duplicates as resolved
+        $duplicates = Duplicate::where('resolved', false)->orderByDesc("similarity")->limit(2)->get();
+
+        // check that the duplicates are no more shown in the list
+        $this->actingAs($this->null)
+            ->get(route('duplicate.multiple_resolve', ['rows' => $duplicates->pluck('id')->toArray()]))
+            ->assertStatus(403);
+    }
+
     /**
      * @return void
      */
