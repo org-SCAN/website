@@ -136,4 +136,23 @@ class DuplicateController extends Controller
         $duplicate->save();
         return redirect()->route('duplicate.index');
     }
+
+    /**
+     * This function is used to mark multiple duplicates as resolved
+     *
+     * @param object $duplicates
+     */
+    public function multiple_resolve(Request $request) {
+        $input = $request->all();
+        $input['rows'] = $request->input('rows');
+
+        foreach ($input['rows'] as $duplicate_id) {
+            $duplicate = Duplicate::where('id', intval($duplicate_id))->first();
+
+            $duplicate->resolved = true;
+            $duplicate->save();
+        }
+
+        return redirect()->route('duplicate.index');
+    }
 }

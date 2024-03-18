@@ -12,9 +12,11 @@
             <div class="flex flex-wrap items-center justify-between">
                 <div class="flex w-0 flex-1 items-center">
                     <p class="ml-3 truncate font-bold text-white" style="margin-bottom: 0px !important;">
-                        <span class="text-l">{{ __('duplicate/index.last_run') }} : {{ $lastRun == null ? __('duplicate/index.never') : $lastRun->diffForHumans() }}</span>
+                        <span
+                            class="text-l">{{ __('duplicate/index.last_run') }} : {{ $lastRun == null ? __('duplicate/index.never') : $lastRun->diffForHumans() }}</span>
                         <br>
-                        <span class="text-l">{{ __('duplicate/index.next_due_in') }} : {{ $nextDue->diffForHumans() }}</span>
+                        <span
+                            class="text-l">{{ __('duplicate/index.next_due_in') }} : {{ $nextDue->diffForHumans() }}</span>
                     </p>
                 </div>
                 @can('compute', Duplicate::class)
@@ -42,6 +44,10 @@
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500
                                             uppercase tracking-wider">
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
+                                            uppercase tracking-wider">
                                         {{ __('duplicate/index.item1') }}
                                     </th>
                                     <th scope="col"
@@ -66,42 +72,52 @@
                                             uppercase tracking-wider">
 
                                     </th>
+
                                 </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                @foreach($duplicates as $duplicate)
-                                    @if($duplicate->person1 == null || $duplicate->person2 == null)
-                                        @continue
-                                    @endif
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("person.show", $duplicate->person1->id)}}"
-                                               class="text-indigo-600 hover:text-blue-900">
-                                                {{$duplicate->person1->best_descriptive_value}}
-                                            </a>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{route("person.show", $duplicate->person2->id)}}"
-                                               class="text-indigo-600 hover:text-blue-900">
-                                                {{$duplicate->person2->best_descriptive_value}}
-                                            </a>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            {{ round($duplicate->similarity,2) }}
-                                        </td>
-                                        @can('resolve', $duplicate)
+                                <form method="get" action="{{route('duplicate.multiple_resolve')}}">
+                                    @csrf
+                                    @foreach($duplicates as $duplicate)
+                                        @if($duplicate->person1 == null || $duplicate->person2 == null)
+                                            @continue
+                                        @endif
+                                        <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <a href="{{ route("duplicate.resolve", $duplicate->id) }}"
-                                                   class="text-indigo-600 hover:text-blue-900">{{ __('duplicate/index.mark_as_not_duplicated') }}</a>
+                                                <input type="checkbox" name="rows[]"
+                                                       value="{{ $duplicate->id }}">
                                             </td>
-                                        @endcan
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            @if($duplicate->person1->updated_at > $commandRun->started_at || $duplicate->person2->updated_at > $commandRun->started_at)
-                                                <button class="btn btn-outline-danger">{{ __('duplicate/index.updated_since_last_run') }}</button>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <a href="{{route("person.show", $duplicate->person1->id)}}"
+                                                   class="text-indigo-600 hover:text-blue-900">
+                                                    {{$duplicate->person1->best_descriptive_value}}
+                                                </a>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <a href="{{route("person.show", $duplicate->person2->id)}}"
+                                                   class="text-indigo-600 hover:text-blue-900">
+                                                    {{$duplicate->person2->best_descriptive_value}}
+                                                </a>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                {{ round($duplicate->similarity,2) }}
+                                            </td>
+                                            @can('resolve', $duplicate)
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <a href="{{ route("duplicate.resolve", $duplicate->id) }}"
+                                                       class="text-indigo-600 hover:text-blue-900">{{ __('duplicate/index.mark_as_not_duplicated') }}</a>
+                                                </td>
+                                            @endcan
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                @if($duplicate->person1->updated_at > $commandRun->started_at || $duplicate->person2->updated_at > $commandRun->started_at)
+                                                    <button
+                                                        class="btn btn-outline-danger">{{ __('duplicate/index.updated_since_last_run') }}</button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    <input type="submit" value="submit">
+                                </form>
                                 <!-- More items... -->
                                 </tbody>
                             </table>
