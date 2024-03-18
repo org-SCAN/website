@@ -35,49 +35,54 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
 
 
-                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                            <h3 class="text-l text-gray-800 leading-tight m-3">{{ __('duplicate/index.duplicate') }} </h3>
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <caption class="sr-only">{{ __('duplicate/index.possible_duplicate') }}</caption>
-                                <thead class="bg-gray-50">
-                                <tr>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
-                                            uppercase tracking-wider">
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
-                                            uppercase tracking-wider">
-                                        {{ __('duplicate/index.item1') }}
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
-                                            uppercase tracking-wider">
-                                        {{ __('duplicate/index.item2') }}
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
-                                            uppercase tracking-wider">
-                                        {{ __('duplicate/index.similarity') }}
-                                    </th>
-                                    @can('resolve', Duplicate::class)
+                        <form method="get" action="{{route('duplicate.multiple_resolve')}}">
+                            @csrf
+                            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                <div class="flex justify-between">
+                                    <h3 class="text-l text-gray-800 leading-tight m-3">{{ __('duplicate/index.duplicate') }} </h3>
+                                    <input
+                                        class="text-indigo-600 no-underline hover:underline hover:text-blue-900 cursor-pointer m-3 bg-transparent"
+                                        type="submit" value="Mark selected as not duplicated">
+                                </div>
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <caption class="sr-only">{{ __('duplicate/index.possible_duplicate') }}</caption>
+                                    <thead class="bg-gray-50">
+                                    <tr>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500
                                             uppercase tracking-wider">
-                                            {{ __('duplicate/index.actions') }}
                                         </th>
-                                    @endcan
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500
+                                            uppercase tracking-wider">
+                                            {{ __('duplicate/index.item1') }}
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500
+                                            uppercase tracking-wider">
+                                            {{ __('duplicate/index.item2') }}
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500
+                                            uppercase tracking-wider">
+                                            {{ __('duplicate/index.similarity') }}
+                                        </th>
+                                        @can('resolve', Duplicate::class)
+                                            <th scope="col"
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500
+                                            uppercase tracking-wider">
+                                                {{ __('duplicate/index.actions') }}
+                                            </th>
+                                        @endcan
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500
                                             uppercase tracking-wider">
 
-                                    </th>
+                                        </th>
 
-                                </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                <form method="get" action="{{route('duplicate.multiple_resolve')}}">
-                                    @csrf
+                                    </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach($duplicates as $duplicate)
                                         @if($duplicate->person1 == null || $duplicate->person2 == null)
                                             @continue
@@ -116,18 +121,17 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                    <input type="submit" value="submit">
-                                </form>
-                                <!-- More items... -->
-                                </tbody>
-                            </table>
+                                    <!-- More items... -->
+                                    </tbody>
+                                </table>
+                        </form>
 
-                        </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
+
+
+    </div>
     </div>
 </x-app-layout>
