@@ -41,7 +41,8 @@
                                     <h3 class="text-l text-gray-800 leading-tight m-3">{{ __('duplicate/index.duplicate') }} </h3>
                                     <input
                                         class="text-indigo-600 no-underline hover:underline hover:text-blue-900 cursor-pointer m-3 bg-transparent"
-                                        type="submit" value="{{ __('duplicate/index.mark_selected_as_not_duplicated') }}">
+                                        type="submit"
+                                        value="{{ __('duplicate/index.mark_selected_as_not_duplicated') }}">
                                 </div>
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <caption class="sr-only">{{ __('duplicate/index.possible_duplicate') }}</caption>
@@ -123,14 +124,11 @@
                                     <!-- More items... -->
                                     </tbody>
                                 </table>
+                            </div>
                         </form>
-
                     </div>
                 </div>
             </div>
         </div>
-
-
-    </div>
     </div>
 </x-app-layout>
