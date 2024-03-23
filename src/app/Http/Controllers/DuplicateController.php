@@ -148,11 +148,10 @@ class DuplicateController extends Controller
     public function multiple_resolve(UpdateDuplicatesRequest $request) {
         $input = $request->all();
         $input['rows'] = $request->input('rows');
+        $this->authorize("resolve", Duplicate::class);
 
         foreach ($input['rows'] as $duplicate_id) {
             $duplicate = Duplicate::find($duplicate_id);
-            $this->authorize("resolve",
-                $duplicate);
 
             $duplicate->resolved = true;
             $duplicate->save();
