@@ -200,6 +200,27 @@ class DuplicateTest extends PermissionsTest
             ->assertStatus(403);
     }
 
+public function test_authenticated_user_with_permission_can_mark_no_duplicates_as_resolved() {
+        // call the command to compute the duplicates
+        $this->test_duplicate_compute_command();
+
+        // store the unresolved duplicates
+        $duplicates = Duplicate::where('resolved', false)->orderByDesc("similarity")->get();
+
+        // check that the user can mark none as duplicated
+        $this->actingAs($this->admin)
+            ->get(route('duplicate.multiple_resolve', null))
+            ->assertStatus(302);
+
+        // check that no duplicates have been marked as resolved
+        foreach($duplicates as $duplicate) {
+            $this->assertDatabaseHas('duplicates', [
+                'id' => $duplicate->id,
+                'resolved' => false
+            ]);
+        }
+    }
+
     /**
      * @return void
      */
