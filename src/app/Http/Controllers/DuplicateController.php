@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateDuplicatesRequest;
 use App\Models\CommandRun;
 use App\Models\Duplicate;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -134,6 +136,27 @@ class DuplicateController extends Controller
 
         $duplicate->resolved = true;
         $duplicate->save();
+        return redirect()->route('duplicate.index');
+    }
+
+    /**
+     * This function is used to mark multiple duplicates as resolved
+     *
+     * @param UpdateDuplicatesRequest $request
+     * @return RedirectResponse
+     */
+    public function multiple_resolve(UpdateDuplicatesRequest $request) {
+        $input = $request->all();
+        $input['rows'] = $request->input('rows');
+        $this->authorize("resolve", Duplicate::class);
+
+        foreach ($input['rows'] as $duplicate_id) {
+            $duplicate = Duplicate::find($duplicate_id);
+
+            $duplicate->resolved = true;
+            $duplicate->save();
+        }
+
         return redirect()->route('duplicate.index');
     }
 }
