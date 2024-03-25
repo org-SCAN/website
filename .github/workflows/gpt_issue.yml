@@ -1,0 +1,41 @@
+name: Improve Issue Workflow
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  process-issue:
+    if: github.event.label.name == 'AI-issue'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+
+      # Assurez-vous que cette étape ci-dessous est conçue pour être exécutée correctement
+      # et produit un output 'result' au format JSON contenant un champ 'labels' si vous voulez l'utiliser.
+      # Si ce n'est pas le cas, supprimez la référence à cette étape dans la condition `if` de l'étape "Process Issue".
+      # - name: Check Labeled
+      #   id: check-labeled
+      #   run: |
+      #     echo "::set-output name=result::{\"labels\": [\"AI-issue\"]}"
+
+      - name: Process Issue
+        uses: ./
+        if: github.event.action == 'labeled' && contains(github.event.issue.labels.*.name, 'AI-issue')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.GPT_KEY }}
+        with:
+          ai_model: 'gpt-4-turbo-preview'
+          max_tokens: '1000'
