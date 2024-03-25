@@ -25,6 +25,7 @@ class Form extends Component
 
     public function render()
     {
+
         if($this->field instanceof Field){
             $this->title = $this->title ?? $this->field->title;
             $this->placeHolder = $this->placeHolder ?? $this->field->placeholder;

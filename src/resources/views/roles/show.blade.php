@@ -1,8 +1,8 @@
-@section('title',"View ".$role->name."'s details'")
+@section('title', __("roles/show.view_role_details", ['role' => $role->name]))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Details of the Role: <b> {{$role->name}}</b>
+            {{ __('roles/show.details_of_role') }} <b> {{$role->name}}</b>
         </h2>
     </x-slot>
 
@@ -12,10 +12,10 @@
                 <form action="{{route('roles.destroy', $role->id)}}" method="POST"
                       class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <a href="{{URL::previous() }}"
-                       class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
+                       class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">{{ __('common.back') }}</a>
                     @can('update', $role)
                         <a href="{{ route('roles.edit', $role) }}"
-                           class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">Edit</a>
+                           class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">{{ __('common.edit') }}</a>
                     @endcan
                     <form class="inline-block" action="{{ route('roles.destroy', $role->id) }}" method="POST"
                           onsubmit="return confirm('Are you sure you want to delete this role?');">
@@ -24,7 +24,7 @@
                         @can("delete", $role)
                         <button type="submit"
                                 class="flex-shrink-0 bg-red-200 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
-                            Delete
+                            {{ __('common.delete') }}
                         </button>
                         @endcan
                     </form>
@@ -39,7 +39,7 @@
                                 <tr class="border-b">
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        ID
+                                        {{ __('roles/show.id') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
                                         {{ $role->id }}
@@ -49,7 +49,7 @@
                                 <tr class="border-b">
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Name
+                                        {{ __('roles/show.name') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
                                         {{ $role->name }}
@@ -59,7 +59,7 @@
                                 <tr class="border-b">
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Permissions
+                                        {{ __('roles/show.permissions') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white divide-y divide-gray-200">
                                         @foreach( $role->permissions->sortBy("policy_route")->unique("policy_route") as $permission)
@@ -68,9 +68,7 @@
                                         @endforeach
                                     </td>
                                 </tr>
-
                             </table>
-
                         </div>
                     </div>
                 </div>

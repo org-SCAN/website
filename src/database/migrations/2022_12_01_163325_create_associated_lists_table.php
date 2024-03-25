@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('associated_lists', function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->timestamps();
-            $table->uuid("field_id");
-            $table->uuid("list_id");
+            $table->foreignUuid("field_id");
+            $table->foreignUuid("list_id");
         });
     }
 

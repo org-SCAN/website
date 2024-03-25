@@ -1,10 +1,91 @@
 # website
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=TC-netw4ppl_website&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=TC-netw4ppl_website)
 
-Site web du projet :)
-
+This repo contains the code of the website !
 
 # Start the project
+
+## Using SAIL (recommended)
+
+### Prerequisites
+To run the project, you must : 
+
+#### 1.Install the following :
+- [Docker](https://docs.docker.com/engine/install/)
+- [Composer](https://getcomposer.org/doc/00-intro.md)
+- [PHP](https://www.php.net/manual/fr/install.php)
+
+#### 2. Create the .env file :
+
+You need to create a `.env` file in the `src` directory based on the `.env.example` file.  
+> 💡 When you code you should switch the `APP_DEBUG` to `true` to see the errors.  
+
+```bash
+cp .env.example src/.env
+```
+#### 3. Docker and sail :
+
+You can now start Docker and follow the [laravel sail documentation](https://laravel.com/docs/10.x/sail#installing-sail-into-existing-applications)
+more specifically the installation part.  
+
+> 🐬 During the installation, you will be asked to choose the database you want to use. You must choose `mysql` for the database.
+
+Once the installation is done you can run the following command to start the project :
+
+### Install SCAN :
+> 📁Move to the `src` directory  
+
+Run this command to start the docker of the project
+```bash
+./vendor/bin/sail up -d #-d to detach the process, you can create an alias for sail later
+```
+
+Once the docker is running, access the docker container with the following command (replace `<container_name>` with the name of the container (not the db container, the one with the website code).
+
+```bash
+docker exec -it <container_name> /bin/bash
+```
+Once you are in the container, you can run the following commands to finish the installation ::
+
+```bash
+#Run these in the docker container
+npm update
+cd /var/www/html
+composer update
+php artisan cache:clear
+composer dump-autoload
+php artisan key:generate
+chmod -R 777 storage/
+php artisan migrate:refresh --seed
+php artisan queue:work
+```
+
+You can now access the website at [localhost:80](http://localhost:80).
+
+### Troubleshooting :
+
+You may encounter some issues while installing the project. Here are some common issues and their solutions :
+
+<hr>
+
+- On command composer require laravel/sail --dev during sail installation: error message saying
+
+```
+maatwebsite/excel[3.1.0, ..., 3.1.25] require php ^7.0 -> your php version (8.1.2) does not satisfy that requirement.
+```
+
+- **Fix:** ignore the system requirements with `composer require laravel/sail --dev --ignore-platform-reqs` instead of the original command
+<hr>
+
+- After launch, the tabs "Network graph", "Field management > Fields" and "User profile" aren't working and return an exception:
+```
+The /var/www/html/bootstrap/cache directory must be present and writable.
+```
+- **Fix**: change the permissions on the cache directory: `chmod -R 770 bootstrap/cache/`
+
+<hr>
+
+If you encounter any other issues, please raise an issue on the repository with the error message and the steps you followed.
 
 ## Using docker
 
@@ -163,7 +244,14 @@ chmod -R 777 storage/
 php artisan migrate:refresh --seed
 ```
 
-# N4P API
+# Configure your IDE
 
-You can find the API documentation
-here : [https://documenter.getpostman.com/view/15399454/2s83tJGAMW](https://documenter.getpostman.com/view/15399454/2s83tJGAMW)
+- We recommend using PHPStorm as IDE
+
+## Run tests with PHPStorm
+
+This configuration works if you have set up the project with sail.
+
+1. Go to `Run > Edit Configurations`
+2. Add a new cli configuration
+3. …

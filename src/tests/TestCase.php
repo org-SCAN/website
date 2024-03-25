@@ -29,7 +29,6 @@ abstract class TestCase extends BaseTestCase
         parent::tearDown();
         $this->clearProperties();
         gc_collect_cycles();
-        echo 'tearDown '.get_called_class().' : '.memory_get_usage().PHP_EOL;
     }
 
 }

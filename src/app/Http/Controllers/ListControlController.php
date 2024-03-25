@@ -249,7 +249,7 @@ class ListControlController extends Controller
     public function destroy(ListControl $lists_control)
     {
         if(Field::whereLinkedList($lists_control->id)->exists()){
-            return Redirect::back()->withErrors(["deleteList" => "You can't delete this element since it's used in at least one field."]);
+            return Redirect::back()->withErrors(["deleteList" => __('lists_control/controller.delete_list_error')]);
         }
         $lists_control->delete();
         return redirect()->route("lists_control.index");
@@ -268,7 +268,7 @@ class ListControlController extends Controller
 
         //cheks if the element is used in any field
         if (FieldRefugee::whereValue($element)->exists()) {
-            return Redirect::back()->withErrors(["delete." . $element => "You can't delete this element since it's used in at least one person."]);
+            return Redirect::back()->withErrors(["delete." . $element => __('lists_control/controller.delete_element_error')]);
         }
         $model = 'App\Models\\' . $listControl->name;
         $model::find($element)->delete();
@@ -287,7 +287,7 @@ class ListControlController extends Controller
             return response(json_encode($lists->makeHidden(['created_at', 'updated_at','deleted_at'] )), 200)->header("Content-Type", "application/json");
         }
         else {
-            return response("Your token can't be use to get datas",
+            return response("Your token can't be use to get data",
                 403);
         }
     }
@@ -321,7 +321,7 @@ class ListControlController extends Controller
                 200)->header("Content-Type",
                 "application/json");
         } else {
-            return response("Your token can't be use to get datas",
+            return response("Your token can't be use to get data",
                 403);
         }
     }

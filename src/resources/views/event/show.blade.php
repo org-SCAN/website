@@ -1,8 +1,8 @@
-@section('title',"View ".$event->name."'s details")
+@section('title', __('event/show.view_event_details', ['event_name' => $event->name]))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <strong>{{ $event->name }}</strong> details
+            {{ __('event/show.event_details', ['event_name' => $event->name]) }}
         </h2>
     </x-slot>
 
@@ -16,13 +16,12 @@
 
                         @can("viewAny", $event)
                             <a href="{{ route('event.index') }}"
-                               class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back to
-                                events</a>
+                               class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">{{ __('common.back') }}</a>
                         @endcan
 
                         @can("update", $event)
                             <a href="{{ route('event.edit', $event->id) }}"
-                               class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">Edit</a>
+                               class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">{{ __('common.edit') }}</a>
                         @endcan
 
 
@@ -32,7 +31,7 @@
                             <button type="submit"
                                     class="flex-shrink-0 bg-red-200 hover:bg-red-300
                                     text-black font-bold py-2 px-4 rounded">
-                                Delete
+                                {{ __('common.delete') }}
                             </button>
                     </form>
                 @endcan
@@ -42,12 +41,12 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200 w-full">
-                                <caption class="sr-only">Event detail</caption>
+                                <caption class="sr-only">{{ __('event/show.event_detail') }}</caption>
                                 <tr class="border-b">
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-500 uppercase tracking-wider">
-                                        Name
+                                        {{ __('event/show.name') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
                                     bg-white divide-y divide-gray-200">
@@ -58,7 +57,7 @@
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-500 uppercase tracking-wider">
-                                        Event Type
+                                        {{ __('event/show.event_type') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
                                     bg-white divide-y divide-gray-200">
@@ -69,18 +68,18 @@
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-500 uppercase tracking-wider">
-                                        Country
+                                        {{ __('event/show.country') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
                                     bg-white divide-y divide-gray-200">
-                                        {{ $event->country->displayed_value_content }}
+                                        {{ $event->country->displayed_value_content ?? "" }}
                                     </td>
                                 </tr>
                                 <tr class="border-b">
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-500 uppercase tracking-wider">
-                                        Location details
+                                        {{ __('event/show.location_details') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
                                     bg-white divide-y divide-gray-200">
@@ -91,7 +90,7 @@
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-500 uppercase tracking-wider">
-                                        Start date
+                                        {{ __('event/show.start_date') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
                                     bg-white divide-y divide-gray-200">
@@ -102,7 +101,7 @@
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-500 uppercase tracking-wider">
-                                        Stop date
+                                        {{ __('event/show.stop_date') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
                                     bg-white divide-y divide-gray-200">
@@ -113,7 +112,7 @@
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-500 uppercase tracking-wider">
-                                        Coordinates
+                                        {{ __('event/show.coordinates') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
                                     bg-white divide-y divide-gray-200">
@@ -122,12 +121,12 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <span>
-                                                    Lat : {{ json_decode($event->coordinates, true)['lat'] ?? ""}}
+                                                    {{ __('event/show.lat') }} : {{ json_decode($event->coordinates, true)['lat'] ?? ""}}
                                                 </span>
                                             </div>
                                             <div class="col-4">
                                                 <span>
-                                                    Long : {{ json_decode($event->coordinates, true)['long'] ?? ""}}
+                                                    {{ __('event/show.long') }} : {{ json_decode($event->coordinates, true)['long'] ?? ""}}
                                                 </span>
                                             </div>
                                         </div>
@@ -139,7 +138,7 @@
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-500 uppercase tracking-wider">
-                                        Description
+                                        {{ __('event/show.description') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
                                     bg-white divide-y divide-gray-200">
@@ -177,7 +176,7 @@
             <div class="block mt-8">
                 <a href="{{ route('event.index') }}"
                    class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
-                    Back to events
+                    {{ __('common.back') }}
                 </a>
             </div>
         </div>
