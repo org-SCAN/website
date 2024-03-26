@@ -1,0 +1,18 @@
+[
+    {
+        "name":  {
+            "eng": "Levenshtein",
+            "fra": "Levenshtein",
+            "spa": "Levenshtein"
+        },
+        "model": "\\App\\Http\\Models\\LevenshteinAlgorithm"
+    },
+    {
+        "name":  {
+            "eng": "Metaphone",
+            "fra": "Metaphone",
+            "spa": "Metaphone"
+        },
+        "model": "\\App\\Http\\Models\\MetaphoneAlgorithm"
+    }
+]
