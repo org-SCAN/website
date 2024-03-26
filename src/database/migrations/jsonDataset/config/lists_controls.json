@@ -312,5 +312,23 @@
             }
         ],
         "visible": false
+    },
+    "ListMatchingAlgorithm": {
+        "title": "Matching Algorithm",
+        "name": "ListMatchingAlgorithm",
+        "displayed_value": "name",
+        "key_value": "id",
+        "structure": [
+            {
+                "field": "name",
+                "data_type_id": "Short text",
+                "required": true
+            },
+            {
+                "field": "model",
+                "data_type_id": "Short text",
+                "required": true
+            }
+        ]
     }
 }
