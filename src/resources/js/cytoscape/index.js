@@ -324,14 +324,16 @@ function drawGraph(){
                     select: function(){
                         relation_details = !relation_details;
                         if (relation_details) {
-                            cy.style().selector('edge').style('label', 'data(label)').update();
-                        }else{
+                            cy.style().selector('edge').style('label', 'data(infos)').update();
+                        }
+                        else {
                             cy.style().selector("edge").style('label','').update()
                         }
                     }
-                }
+                },
             ]
         });
+
         cy.cxtmenu({
             selector: 'edge',
 
@@ -342,6 +344,14 @@ function drawGraph(){
                         ele.style("label", ele.data("detail"))
                     }
                 },
+
+                {
+                    content: 'Show dates',
+                    select: function(ele){
+                        ele.style("label", ele.data("date"))
+                    }
+                },
+
                 {
                     content: 'Hide detail',
                     select: function(ele){
