@@ -32,7 +32,9 @@ class PermissionsTest extends TestCase
         "index" => true,
         "show" => true,
         "create" => true,
+        "store" => true, // this is an implicitly linked permission, but it's useful to check if the user can create a resource
         "edit" => true,
+        "update" => true, // this is an implicitly linked permission, but it's useful to check if the user can update a resource
         "destroy" => true,
     ];
 
@@ -240,4 +242,84 @@ class PermissionsTest extends TestCase
         //check if the resource has been soft deleted
         $this->assertSoftDeleted($this->resource);
     }
+
+    /**
+     * @brief An authenticated user, with '*.create' permission can use the store route to create a resource
+     */
+
+    public function test_authenticated_user_with_permission_can_store_resource() {
+        if (!$this->run["store"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
+        if (get_called_class() == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
+        $this->actingAs($this->admin);
+        $new_item = $this->resource->factory()->make();
+        $response = $this->post($this->route, $new_item->toArray());
+        $response->assertStatus(302);
+        $this->assertDatabaseHas($this->resource->getTable(), $new_item->toArray());
+    }
+
+
+    /**
+     * @brief An authenticated user without the "create" permission can't use the store route to create a resource
+     */
+
+    public function test_authenticated_user_without_permission_cant_store_resource() {
+        if (!$this->run["store"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
+        if (get_called_class() == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
+        $this->actingAs($this->null);
+        $response = $this->post($this->route, $this->resource->toArray());
+        $response->assertStatus(403);
+    }
+
+
+    /**
+     * @brief An authenticated user, with '*.update' permission can use the update route to update a resource
+     */
+
+    public function test_authenticated_user_with_permission_can_update_resource() {
+        if (!$this->run["update"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
+        if (get_called_class() == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
+        $this->actingAs($this->admin);
+
+        // dump the resource to see if it's updated
+        // We need to create a new resource to update the old one
+        $new_resource = $this->resource->factory()->make();
+        // remove the id from the new resource
+        $new_resource->id = $this->resource->id;
+
+        $response = $this->put($this->route.'/'.$this->resource->id, $new_resource->toArray());
+        $response->assertStatus(302);
+        // check if the resource has been updated ($this->resource->id contains $new_resource content and not the old one)
+        $this->assertDatabaseHas($this->resource->getTable(), $new_resource->toArray());
+        $this->assertDatabaseMissing($this->resource->getTable(), $this->resource->toArray());
+
+    }
+
+    /**
+     * @brief An authenticated user without the "update" permission can't use the update route to update a resource
+     */
+
+    public function test_authenticated_user_without_permission_cant_update_resource() {
+        if (!$this->run["update"]) {
+            return $this->markTestSkipped('This test is not relevant for the given route.');
+        }
+        if (get_called_class() == 'Tests\Feature\PermissionsTest') {
+            return $this->markTestSkipped('This is the parent class. It should not be tested.');
+        }
+        $this->actingAs($this->null);
+        $response = $this->put($this->route.'/'.$this->resource->id, $this->resource->toArray());
+        $response->assertStatus(403);
+    }
+
 }

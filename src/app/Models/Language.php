@@ -6,6 +6,7 @@ use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Language extends Model
 {
@@ -41,5 +42,9 @@ class Language extends Model
     public static function otherLanguages()
     {
         return self::whereDefault(0)->get();
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id');
     }
 }

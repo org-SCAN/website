@@ -4,6 +4,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 class Localization
 {
     /**
@@ -15,9 +16,10 @@ class Localization
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Session::has('locale')) {
-            App::setLocale(Session::get('locale'));
+        if (Auth::user()){
+            App::setLocale(strtolower(Auth::user()->language->API_language_key ?? "en"));
         }
+
         return $next($request);
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\LinkController;
 use App\Http\Controllers\ListControlController;
 use App\Http\Controllers\ManageUsersController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\RefugeeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SourceController;
@@ -29,12 +30,6 @@ use Illuminate\Support\Facades\Storage;
 Route::get('/', function () {
     return view('dashboard');
 })->name("/")->middleware('auth');
-
-Route::get('language/{locale}', function ($locale) {
-    app()->setLocale($locale);
-    session()->put('locale', $locale);
-    return redirect()->back();
-})->middleware('auth');
 
 Route::get('/content.json',
     function () {
@@ -79,11 +74,21 @@ Route::post('user/request_role/{id}',
         'as' => 'user.request_role',
         'uses' => '\App\Http\Controllers\ManageUsersController@RequestRole',
     ])->middleware('auth');
+
+Route::post('user/change_language/{id}',
+    [
+        'as' => 'user.change_language',
+        'uses' => '\App\Http\Controllers\ManageUsersController@ChangeLanguage',
+    ])->middleware('auth');
+
 Route::post('user/change_team/{id}',
     [
         'as' => 'user.change_team',
         'uses' => '\App\Http\Controllers\ManageUsersController@ChangeTeam',
     ])->middleware('auth');
+
+
+
 Route::get('user/grant_role/{id}',
     [
         'as' => 'user.grant_role',
@@ -208,3 +213,5 @@ Route::resource("event",
     EventController::class)->middleware('auth');
 Route::resource("source",
     SourceController::class)->middleware('auth');
+Route::resource("place",
+    PlaceController::class)->middleware('auth');

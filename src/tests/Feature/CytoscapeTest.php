@@ -17,7 +17,9 @@ class CytoscapeTest extends PermissionsTest
             "show" => false,
             "create" => false,
             "edit" => false,
+            "update" => false,
             "destroy" => false,
+            "store" => false,
         ];
     }
 }
