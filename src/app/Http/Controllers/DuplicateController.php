@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateDuplicatesRequest;
 use App\Models\CommandRun;
+use App\Models\Crew;
 use App\Models\Duplicate;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
@@ -157,6 +158,18 @@ class DuplicateController extends Controller
             $duplicate->save();
         }
 
+        return redirect()->route('duplicate.index');
+    }
+
+    public function choose_algorithm(Request $request) {
+//        $this->authorize("choose_algorithm",
+//            Duplicate::class);
+
+        $matching_algorithm_id = $request->input('matching_algorithm_id');
+        $crew_id = Auth::user()->crew_id;
+        $crew = Crew::find($crew_id);
+        $crew->selected_duplicate_algorithm_id = $matching_algorithm_id;
+        $crew->save();
         return redirect()->route('duplicate.index');
     }
 }

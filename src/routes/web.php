@@ -203,6 +203,12 @@ Route::get('duplicate/multiple_resolve',
         "uses" => "\App\Http\Controllers\DuplicateController@multiple_resolve",
     ])->middleware('auth');
 
+Route::get('duplicate/choose_algorithm',
+    [
+        "as" => 'duplicate.choose_algorithm',
+        "uses" => "\App\Http\Controllers\DuplicateController@choose_algorithm",
+    ])->middleware('auth');
+
 
 Route::resource("duplicate",
     DuplicateController::class)->middleware('auth');

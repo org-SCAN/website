@@ -1,4 +1,6 @@
 @php use App\Models\Duplicate; @endphp
+@php use App\Models\ListMatchingAlgorithm; @endphp
+@php use App\Models\Crew; @endphp
 @section('title', __('duplicate/index.view_duplicates'))
 <x-app-layout>
     <x-slot name="header">
@@ -29,6 +31,26 @@
         </div>
     </div>
     <div class="py-12">
+        <form method="get" action="{{ route('duplicate.choose_algorithm') }}">
+        @csrf
+            {{ ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->selected_duplicate_algorithm_id)->name }}
+            <div class="m-2 flex justify-center">
+                @php($form_elem = "matching_algorithm_id")
+                @php($list = ListMatchingAlgorithm::list())
+                @livewire('forms.form', [
+                    'form_elem' => $form_elem,
+                    'type' => 'select-dropdown',
+                    'title' => 'Matching Algorithm',
+                    'associated_list' => $list,
+                    'placeHolder' => "Select Matching Algorithm",
+                    'previous' => ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->selected_duplicate_algorithm_id)->id
+                    ])
+            <input
+                class="text-indigo-600 no-underline hover:underline hover:text-blue-900 cursor-pointer m-3 bg-transparent"
+                type="submit"
+                value="Choose algorithm">
+            </div>
+        </form>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
