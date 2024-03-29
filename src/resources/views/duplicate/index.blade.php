@@ -33,7 +33,7 @@
     <div class="py-12">
         <form method="get" action="{{ route('duplicate.choose_algorithm') }}">
         @csrf
-            {{ ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->selected_duplicate_algorithm_id)->name }}
+            {{ ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->selected_duplicate_algorithm_id)->name ?? 'No algo' }}
             <div class="m-2 flex justify-center">
                 @php($form_elem = "matching_algorithm_id")
                 @php($list = ListMatchingAlgorithm::list())
@@ -43,7 +43,7 @@
                     'title' => 'Matching Algorithm',
                     'associated_list' => $list,
                     'placeHolder' => "Select Matching Algorithm",
-                    'previous' => ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->selected_duplicate_algorithm_id)->id
+                    'previous' => ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->selected_duplicate_algorithm_id)->id ?? null
                     ])
             <input
                 class="text-indigo-600 no-underline hover:underline hover:text-blue-900 cursor-pointer m-3 bg-transparent"

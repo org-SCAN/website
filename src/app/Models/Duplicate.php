@@ -50,12 +50,15 @@ class Duplicate extends Model
         $persons = $crew->persons;
         $similarities = [];
 
+        $selected_duplicate_algorithm = ListMatchingAlgorithm::find($crew->selected_duplicate_algorithm_id);
+        $algorithm_id = $selected_duplicate_algorithm->id;
+        $algorithm_model = $selected_duplicate_algorithm->model;
 
         $last_comparison = CommandRun::lastEnded('duplicate:compute');
         // foreach persons
 
         // get matching algorithm
-        $metaphoneAlgorithm = new MetaphoneAlgorithm();
+        $algorithm = $algorithm_model();
 
         foreach ($persons as $person) {
             //get the fields
@@ -86,7 +89,7 @@ class Duplicate extends Model
                         foreach ($person2_fields as $person2_field) {
                             if ($person_field->id == $person2_field->id) {
                                 if($person_field->best_descriptive_value == 1){
-                                    $similarity += $metaphoneAlgorithm->computeSimilarity($person,$person2,$person_field->importance/100);
+                                    $similarity += $algorithm->computeSimilarity($person, $person2, $person_field->importance / 100);
                                 }
                                 $count++;
                             }
@@ -97,7 +100,7 @@ class Duplicate extends Model
                 }
             }
         }
-        return $similarities;
+        return [$similarities, $algorithm_id];
     }
 
     /**
