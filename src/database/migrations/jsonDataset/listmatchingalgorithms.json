@@ -5,7 +5,7 @@
             "fra": "Levenshtein",
             "spa": "Levenshtein"
         },
-        "model": "\\App\\Http\\Models\\LevenshteinAlgorithm"
+        "model": "\\App\\Models\\LevenshteinAlgorithm"
     },
     {
         "name":  {
@@ -13,6 +13,6 @@
             "fra": "Metaphone",
             "spa": "Metaphone"
         },
-        "model": "\\App\\Http\\Models\\MetaphoneAlgorithm"
+        "model": "\\App\\Models\\MetaphoneAlgorithm"
     }
 ]
