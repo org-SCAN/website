@@ -122,7 +122,7 @@
                                                 {{ round($duplicate->similarity,2) }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                @if($duplicate->person1->updated_at > $commandRun->started_at || $duplicate->person2->updated_at > $commandRun->started_at)
+                                                @if($duplicate->person1->updated_at > $duplicate->updated_at || $duplicate->person2->updated_at > $duplicate->updated_at)
                                                     <button
                                                         class="btn btn-outline-danger">{{ __('duplicate/index.updated_since_last_run') }}</button>
                                                 @endif
