@@ -31,28 +31,38 @@
         </div>
     </div>
     <div class="py-12">
-        <form method="get" action="{{ route('duplicate.choose_algorithm') }}">
-        @csrf
-            {{ ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->selected_duplicate_algorithm_id)->name ?? 'No algo' }}
-            <div class="m-2 flex justify-center">
-                @php($form_elem = "matching_algorithm_id")
-                @php($list = ListMatchingAlgorithm::list())
-                @livewire('forms.form', [
-                    'form_elem' => $form_elem,
-                    'type' => 'select-dropdown',
-                    'title' => 'Matching Algorithm',
-                    'associated_list' => $list,
-                    'placeHolder' => "Select Matching Algorithm",
-                    'previous' => ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->selected_duplicate_algorithm_id)->id ?? null
-                    ])
-            <input
-                class="text-indigo-600 no-underline hover:underline hover:text-blue-900 cursor-pointer m-3 bg-transparent"
-                type="submit"
-                value="Choose algorithm">
-            </div>
-        </form>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex flex-col">
+            <div class="flex flex-col gap-4">
+                <div class="shadow border-gray-200 sm:rounded-lg py-2">
+                    <form method="get" action="{{ route('duplicate.choose_algorithm') }}" class="mb-0">
+                        @csrf
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-l text-gray-800 leading-tight m-3">Matching Algorithm</h3>
+                            <div>
+                                <p class="mb-0">
+                                    Current algorithm:
+                                    <span class="font-bold">{{ $matching_algorithm->name }}</span>
+                                </p>
+                            </div>
+                            <div class="flex justify-center">
+                                @php($form_elem = "matching_algorithm_id")
+                                @php($list = ListMatchingAlgorithm::list())
+                                @livewire('forms.form', [
+                                    'form_elem' => $form_elem,
+                                    'type' => 'select-dropdown',
+                                    'title' => 'Matching algorithm',
+                                    'associated_list' => $list,
+                                    'placeHolder' => "-- Select the algorithm --",
+                                    'previous' => ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->selected_duplicate_algorithm_id)->id ?? null
+                                    ])
+                                <input
+                                    class="text-indigo-600 no-underline hover:underline hover:text-blue-900 cursor-pointer m-3 bg-transparent"
+                                    type="submit"
+                                    value="Choose algorithm">
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <form method="get" action="{{route('duplicate.multiple_resolve')}}">
