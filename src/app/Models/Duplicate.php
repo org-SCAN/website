@@ -58,7 +58,7 @@ class Duplicate extends Model
         // foreach persons
 
         // get matching algorithm
-        $algorithm = $algorithm_model();
+        $algorithm =  new $algorithm_model();
 
         foreach ($persons as $person) {
             //get the fields
@@ -77,7 +77,15 @@ class Duplicate extends Model
 
                 $notSamePerson = $person->id != $person2->id;
                 $notAlreadyCompared = !isset($similarities[$person2->id][$person->id]);
-                $notUpdatedSinceLastComparison = ($last_comparison == null || ($last_comparison->started_at < $person->updated_at || $last_comparison->started_at < $person2->updated_at));
+                $existingDuplicate = Duplicate::where('person1_id',
+                    $person->id)->where('person2_id',
+                    $person2->id)->where('selected_duplicate_algorithm_id', $algorithm_id)->first();
+                if ($existingDuplicate == null) {
+                    $existingDuplicate = Duplicate::where('person1_id',
+                        $person2->id)->where('person2_id',
+                        $person->id)->where('selected_duplicate_algorithm_id', $algorithm_id)->first();
+                }
+                $notUpdatedSinceLastComparison = ($last_comparison == null || $existingDuplicate == null || ($existingDuplicate->updated_at < $person->updated_at || $existingDuplicate->updated_at < $person2->updated_at));
                 $notResolved = !self::isResolved($person,
                     $person2);
 
