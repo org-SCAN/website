@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChooseDuplicateAlgorithmRequest;
 use App\Http\Requests\UpdateDuplicatesRequest;
 use App\Models\CommandRun;
 use App\Models\Crew;
@@ -171,10 +172,10 @@ class DuplicateController extends Controller
     /**
      * This function is used to choose the matching algorithm of a crew
      *
-     * @param Request $request
+     * @param ChooseDuplicateAlgorithmRequest $request
      * @return RedirectResponse
      */
-    public function choose_algorithm(Request $request) {
+    public function choose_algorithm(ChooseDuplicateAlgorithmRequest $request) {
         $this->authorize("chooseAlgorithm",
             Duplicate::class);
 
