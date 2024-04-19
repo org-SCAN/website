@@ -37,10 +37,10 @@
                     <form method="get" action="{{ route('duplicate.choose_algorithm') }}" class="mb-0">
                         @csrf
                         <div class="flex justify-between items-center">
-                            <h3 class="text-l text-gray-800 leading-tight m-3">Matching Algorithm</h3>
+                            <h3 class="text-l text-gray-800 leading-tight m-3">{{ __('duplicate/index.matching_algorithm') }}</h3>
                             <div>
                                 <p class="mb-0">
-                                    Current algorithm:
+                                    {{ __('duplicate/index.current_algorithm') }}:
                                     <span class="font-bold">{{ $matching_algorithm->name }}</span>
                                 </p>
                             </div>
@@ -50,15 +50,15 @@
                                 @livewire('forms.form', [
                                     'form_elem' => $form_elem,
                                     'type' => 'select-dropdown',
-                                    'title' => 'Matching algorithm',
+                                    'title' => __('duplicate/index.matching_algorithm'),
                                     'associated_list' => $list,
-                                    'placeHolder' => "-- Select the algorithm --",
+                                    'placeHolder' => __('duplicate/index.select_matching_algorithm'),
                                     'previous' => ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->selected_duplicate_algorithm_id)->id ?? null
                                     ])
                                 <input
                                     class="text-indigo-600 no-underline hover:underline hover:text-blue-900 cursor-pointer m-3 bg-transparent"
                                     type="submit"
-                                    value="Choose algorithm">
+                                    value="{{ __('duplicate/index.choose_algorithm') }}">
                             </div>
                         </div>
                     </form>

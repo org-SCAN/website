@@ -17,4 +17,8 @@ return [
     'mark_selected_as_not_duplicated' => 'Mark selected fields as not duplicated',
     'updated_since_last_run' => 'Updated Since last run',
     'duplicate' => 'Duplicate',
+    'matching_algorithm' => 'Matching Algorithm',
+    'current_algorithm' => 'Current algorithm',
+    'select_matching_algorithm' => '-- Select the algorithm --',
+    'choose_algorithm' => 'Choose algorithm',
 ];
