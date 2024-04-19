@@ -8,6 +8,7 @@ use App\Models\Crew;
 use App\Models\Duplicate;
 use App\Models\ListMatchingAlgorithm;
 use Carbon\Carbon;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -30,10 +31,14 @@ class DuplicateController extends Controller
     public function index() {
         $this->authorize("viewAny", Duplicate::class);
 
-        $matching_algorithm = ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->selected_duplicate_algorithm_id) ?? ListMatchingAlgorithm::first();
+        $matching_algorithm = ListMatchingAlgorithm::find(
+            Crew::find(
+                Auth::user()->crew_id)->selected_duplicate_algorithm_id) ?? ListMatchingAlgorithm::first();
 
         $duplicates = Duplicate::where("crew_id",
-            Auth::user()->crew_id)->where('resolved', false)->where('selected_duplicate_algorithm_id', $matching_algorithm->id)->orderByDesc("similarity")->take(20)->get();
+            Auth::user()->crew_id)->where('resolved', false)
+            ->where('selected_duplicate_algorithm_id', $matching_algorithm->id)
+            ->orderByDesc("similarity")->take(20)->get();
 
         $commandRun = CommandRun::lastEnded('duplicate:compute');
 
@@ -163,9 +168,15 @@ class DuplicateController extends Controller
         return redirect()->route('duplicate.index');
     }
 
+    /**
+     * This function is used to choose the matching algorithm of a crew
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function choose_algorithm(Request $request) {
-//        $this->authorize("choose_algorithm",
-//            Duplicate::class);
+        $this->authorize("chooseAlgorithm",
+            Duplicate::class);
 
         $matching_algorithm_id = $request->input('matching_algorithm_id');
         $crew_id = Auth::user()->crew_id;
