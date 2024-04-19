@@ -51,6 +51,9 @@ class Duplicate extends Model
         $similarities = [];
 
         $selected_duplicate_algorithm = ListMatchingAlgorithm::find($crew->selected_duplicate_algorithm_id);
+        if ($selected_duplicate_algorithm == null) {
+            $selected_duplicate_algorithm = ListMatchingAlgorithm::where("name", "Levenshtein")->first();
+        }
         $algorithm_id = $selected_duplicate_algorithm->id;
         $algorithm_model = $selected_duplicate_algorithm->model;
 
