@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Duplicate;
 use App\Models\FieldRefugee;
+use App\Models\ListMatchingAlgorithm;
 use App\Models\Refugee;
 use Illuminate\Support\Facades\Queue;
 use App\Exceptions\Handler;
@@ -202,7 +203,7 @@ class DuplicateTest extends PermissionsTest
             ->assertStatus(403);
     }
 
-public function test_authenticated_user_with_permission_can_mark_no_duplicates_as_resolved() {
+    public function test_authenticated_user_with_permission_can_mark_no_duplicates_as_resolved() {
         // call the command to compute the duplicates
         $this->test_duplicate_compute_command();
 
@@ -329,5 +330,104 @@ public function test_authenticated_user_with_permission_can_mark_no_duplicates_a
 
         // Execute the artisan command
         $this->artisan('duplicate:compute');
+    }
+
+    public function test_authenticated_user_with_permission_can_choose_duplicate_algorithm() {
+        // Choose the matching algorithm
+        $algorithm = ListMatchingAlgorithm::first();
+
+        $this->actingAs($this->admin)
+            ->get(route('duplicate.choose_algorithm', ['matching_algorithm_id' => $algorithm->id]))
+            ->assertStatus(302);
+
+        // Check the algorithm has been correctly selected in the user's crew
+        $this->assertDatabaseHas('crews', [
+            'id' => $this->admin->crew->id,
+            'selected_duplicate_algorithm_id' => $algorithm->id
+        ]);
+    }
+
+    public function test_authenticated_user_with_permission_cant_choose_no_duplicate_algorithm() {
+        // select the algorithm
+        $algorithm = ListMatchingAlgorithm::first();
+
+        // Get the user's crew and set an algorithm
+        $crew = $this->admin->crew;
+        $crew->selected_duplicate_algorithm_id = $algorithm->id;
+        $crew->save();
+
+        // select a null algorithm
+        $this->actingAs($this->admin)
+            ->get(route('duplicate.choose_algorithm', ['matching_algorithm_id' => null]))
+            ->assertStatus(302);
+
+        // Check the algorithm has not been modified
+        $this->assertDatabaseHas('crews', [
+            'id' => $crew->id,
+            'selected_duplicate_algorithm_id' => $algorithm->id
+        ]);
+    }
+
+    public function test_user_without_permission_cant_choose_duplicate_algorithm() {
+        // Choose the matching algorithm
+        $algorithm = ListMatchingAlgorithm::first();
+
+        $this->actingAs($this->null)
+            ->get(route('duplicate.choose_algorithm', ['matching_algorithm_id' => $algorithm->id]))
+            ->assertStatus(403);
+    }
+
+    public function test_compute_command_runs_the_selected_algorithm() {
+        // Choose the matching algorithm
+        $algorithm = ListMatchingAlgorithm::first();
+
+        $this->actingAs($this->admin)
+            ->get(route('duplicate.choose_algorithm', ['matching_algorithm_id' => $algorithm->id]))
+            ->assertStatus(302);
+
+        // Execute the command to compute the duplicates
+        $this->test_duplicate_compute_command();
+
+        // Check that the duplicates are displayed with the selected algorithm
+        $duplicates = Duplicate::where('resolved', false)->orderByDesc("similarity")->get();
+
+        foreach($duplicates as $duplicate) {
+            $this->assertDatabaseHas('duplicates', [
+                'id' => $duplicate->id,
+                'resolved' => false,
+                'selected_duplicate_algorithm_id' => $algorithm->id
+            ]);
+        }
+    }
+
+    public function test_authenticated_user_with_permission_sees_duplicates_with_selected_algorithm() {
+        // Choose the matching algorithms
+        $first_algorithm = ListMatchingAlgorithm::all()->first();
+        $last_algorithm = ListMatchingAlgorithm::all()->last();
+
+        // set to the first algorithm
+        $this->actingAs($this->admin)
+            ->get(route('duplicate.choose_algorithm', ['matching_algorithm_id' => $first_algorithm->id]))
+            ->assertStatus(302);
+
+        // Execute the command to compute the duplicates
+        $this->test_duplicate_compute_command();
+
+        // set to the last algorithm
+        $this->actingAs($this->admin)
+            ->get(route('duplicate.choose_algorithm', ['matching_algorithm_id' => $last_algorithm->id]))
+            ->assertStatus(302);
+
+        $this->artisan('duplicate:compute');
+
+        $duplicates_first = Duplicate::where('resolved', false)->where('selected_duplicate_algorithm_id', $first_algorithm->id)->orderByDesc("similarity")->get();
+        $duplicates_last = Duplicate::where('resolved', false)->where('selected_duplicate_algorithm_id', $last_algorithm->id)->orderByDesc("similarity")->get();
+
+        // Check that the duplicates are displayed with the selected algorithm
+        $this->actingAs($this->admin)
+            ->get(route('duplicate.index'))
+            ->assertSee($duplicates_last->first()->id)
+            ->assertDontSee($duplicates_first->first()->id)
+            ->assertSee($first_algorithm->name);
     }
 }
