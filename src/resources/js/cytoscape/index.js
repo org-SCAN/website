@@ -155,7 +155,7 @@ function drawGraph(){
             style: {
                 'background-color': '#666',
                 'label': 'data(name)',
-                'font-size': 25
+                'font-size': 20,
             }
         })
 
@@ -321,10 +321,13 @@ function drawGraph(){
                 },
                 {
                     content: 'Relation details',
-                    select: function(){
+                    select: function(ele){
                         relation_details = !relation_details;
                         if (relation_details) {
-                            cy.style().selector('edge').style('label', 'data(infos)').update();
+                            cy.style().selector('edge').style('label', function(ele){
+                                return ele.data('date') + ' - ' + ele.data('detail');
+                            }).update();
+                            console.log((cy.elements('node[label = "Service"]')));
                         }
                         else {
                             cy.style().selector("edge").style('label','').update()
@@ -341,14 +344,8 @@ function drawGraph(){
                 {
                     content: 'Show detail',
                     select: function(ele){
-                        ele.style("label", ele.data("detail"))
-                    }
-                },
-
-                {
-                    content: 'Show dates',
-                    select: function(ele){
-                        ele.style("label", ele.data("date"))
+                        //show the detail and the date of the relation
+                        ele.style("label", ele.data("date")+ " - "+ele.data("detail"))
                     }
                 },
 
@@ -364,9 +361,10 @@ function drawGraph(){
                     select: function(ele){
                         window.location.replace("/links/"+ele.id()+"/edit");
                     }
-                }
+                },
             ]
         });
+
 
 
 
