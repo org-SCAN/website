@@ -6,6 +6,8 @@ use App\Models\Duplicate;
 use App\Models\FieldRefugee;
 use App\Models\Refugee;
 use Illuminate\Support\Facades\Queue;
+use App\Exceptions\Handler;
+use App\Models\Field;
 
 class DuplicateTest extends PermissionsTest
 {
@@ -157,6 +159,70 @@ class DuplicateTest extends PermissionsTest
             ->assertStatus(403);
     }
 
+    public function test_authenticated_user_with_permission_can_mark_multiple_duplicates_as_resolved() {
+        // call the command to compute the duplicates
+        $this->test_duplicate_compute_command();
+
+        // mark the first two duplicates as resolved
+        $duplicates = Duplicate::where('resolved', false)->orderByDesc("similarity")->limit(2)->get();
+
+        // check that the duplicates are no more shown in the list
+        $this->actingAs($this->admin)
+            ->get(route('duplicate.multiple_resolve', ['rows' => $duplicates->pluck('id')->toArray()]))
+            ->assertStatus(302);
+
+        //check that the duplicate as been marked as resolved in the database
+        $this->assertDatabaseHas('duplicates', [
+            'id' => $duplicates->first()->id,
+            'resolved' => true
+        ]);
+
+        $this->assertDatabaseHas('duplicates', [
+            'id' => $duplicates->last()->id,
+            'resolved' => true
+        ]);
+
+        //check that the duplicates are no more shown in the list
+        $this->actingAs($this->admin)
+            ->get(route('duplicate.index'))
+            ->assertDontSee($duplicates->first()->id)
+            ->assertDontSee($duplicates->last()->id);
+    }
+
+    public function test_authenticated_user_without_permission_cant_mark_multiple_duplicates_as_resolved() {
+        // call the command to compute the duplicates
+        $this->test_duplicate_compute_command();
+
+        // mark the first two duplicates as resolved
+        $duplicates = Duplicate::where('resolved', false)->orderByDesc("similarity")->limit(2)->get();
+
+        // check that the duplicates are no more shown in the list
+        $this->actingAs($this->null)
+            ->get(route('duplicate.multiple_resolve', ['rows' => $duplicates->pluck('id')->toArray()]))
+            ->assertStatus(403);
+    }
+
+public function test_authenticated_user_with_permission_can_mark_no_duplicates_as_resolved() {
+        // call the command to compute the duplicates
+        $this->test_duplicate_compute_command();
+
+        // store the unresolved duplicates
+        $duplicates = Duplicate::where('resolved', false)->orderByDesc("similarity")->get();
+
+        // check that the user can mark none as duplicated
+        $this->actingAs($this->admin)
+            ->get(route('duplicate.multiple_resolve', null))
+            ->assertStatus(302);
+
+        // check that no duplicates have been marked as resolved
+        foreach($duplicates as $duplicate) {
+            $this->assertDatabaseHas('duplicates', [
+                'id' => $duplicate->id,
+                'resolved' => false
+            ]);
+        }
+    }
+
     /**
      * @return void
      */
@@ -175,4 +241,93 @@ class DuplicateTest extends PermissionsTest
         Queue::assertPushed(\App\Jobs\DuplicateComputeJob::class);
     }
 
+    /*public function test_that_two_persons_with_same_best_descriptive_value_have_max_similarity() {
+
+       // create one person and replicate it
+        $person = Refugee::factory()->create();
+        $person->fields()->attach(FieldRefugee::random_fields());
+        $person2 = $person->replicate();
+        $person2->update(['id' => '49d63b05-36d7-40d7-b10c-7a8c23c41932']);
+        $person2->save();
+
+        // get parameters value
+        $importance = 0;
+        $count = count($person->fields);
+
+        foreach ($person->fields as $field) {
+            if ($field->best_descriptive_value == 1){
+                $importance = $field->importance;
+            }
+        }
+
+        // set max percentage
+        $perc = 100;
+        // compute similarity manually
+        $similarity = $perc/$count*$importance/100;
+        // call the command to compute the duplicates
+        $this->artisan('duplicate:compute');
+
+        // check that the similarity is maximum
+        $duplicate = Duplicate::where('resolved', false)->orderByDesc("similarity")->first();
+        $this->assertEquals($similarity,$duplicate->similarity);
+    }*/
+
+    public function test_that_two_persons_with_very_different_best_descriptive_value_have_low_similarity() {
+
+        //create some persons
+        $nbPersons = 2;
+
+        // set parameters value
+        $count = 0;
+        $importance = 0;
+
+        // add fields to these persons
+        foreach(Refugee::factory()->count($nbPersons)->create() as $person) {
+            $person->fields()->attach(FieldRefugee::random_fields());
+            foreach ($person->fields as $field) {
+                if ($field->best_descriptive_value == 1){
+                    $importance = $field->importance;
+                }
+            }
+            $count = count($person->fields);
+        }
+
+        // compute max similarity
+        $perc = 100;
+        $similarity = $perc/$count*$importance/100;
+
+        // call the command to compute the duplicates
+        $this->artisan('duplicate:compute');
+
+        // check that the similarity is lesser than maximum
+        $duplicate = Duplicate::where('resolved', false)->orderByDesc("similarity")->first();
+        $this->assertLessThan($similarity,$duplicate->similarity);
+    }
+
+    public function test_that_an_error_message_is_seen_when_wrong_field_importance_is_set() {
+
+        // Disable Laravel's exception handling for this test
+        $this->withoutExceptionHandling();
+
+        //create some persons
+        $nbPersons = 2;
+        // add fields to these persons
+        foreach(Refugee::factory()->count($nbPersons)->create() as $person) {
+            $person->fields()->attach(FieldRefugee::random_fields());
+            // change the importance of each field
+            foreach ($person->fields as $field) {
+                if ($field->best_descriptive_value == 1){
+                    $field->importance = 200;
+                    $field->save();
+                }
+            }
+        }
+
+        // Expect an exception to be thrown
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Field importance must be between 0 and 1');
+
+        // Execute the artisan command
+        $this->artisan('duplicate:compute');
+    }
 }

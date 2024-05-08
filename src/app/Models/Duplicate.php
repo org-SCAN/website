@@ -3,14 +3,13 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Duplicate extends Model
 {
-    use HasFactory, SoftDeletes, Uuids;
+    use SoftDeletes, Uuids;
 
     /**
      * Indicates if the model's ID is auto-incrementing.
@@ -54,6 +53,10 @@ class Duplicate extends Model
 
         $last_comparison = CommandRun::lastEnded('duplicate:compute');
         // foreach persons
+
+        // get matching algorithm
+        $metaphoneAlgorithm = new MetaphoneAlgorithm();
+
         foreach ($persons as $person) {
             //get the fields
             $person_fields = $person->fields;
@@ -82,11 +85,9 @@ class Duplicate extends Model
                     foreach ($person_fields as $person_field) {
                         foreach ($person2_fields as $person2_field) {
                             if ($person_field->id == $person2_field->id) {
-                                $perc = 0;
-                                similar_text($person_field->pivot->value,
-                                    $person2_field->pivot->value,
-                                    $perc);
-                                $similarity += $perc*($person_field->importance/100);
+                                if($person_field->best_descriptive_value == 1){
+                                    $similarity += $metaphoneAlgorithm->computeSimilarity($person,$person2,$person_field->importance/100);
+                                }
                                 $count++;
                             }
                         }

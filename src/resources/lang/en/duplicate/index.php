@@ -14,6 +14,7 @@ return [
     'similarity' => 'Similarity',
     'actions' => 'Actions',
     'mark_as_not_duplicated' => 'Mark as not duplicated',
+    'mark_selected_as_not_duplicated' => 'Mark selected fields as not duplicated',
     'updated_since_last_run' => 'Updated Since last run',
     'duplicate' => 'Duplicate',
 ];

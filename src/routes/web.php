@@ -197,6 +197,12 @@ Route::get('duplicate/resolve/{duplicate}',
         "uses" => "\App\Http\Controllers\DuplicateController@resolve",
     ])->middleware('auth');
 
+Route::get('duplicate/multiple_resolve',
+    [
+        "as" => 'duplicate.multiple_resolve',
+        "uses" => "\App\Http\Controllers\DuplicateController@multiple_resolve",
+    ])->middleware('auth');
+
 
 Route::resource("duplicate",
     DuplicateController::class)->middleware('auth');
