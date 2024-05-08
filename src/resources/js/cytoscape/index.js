@@ -324,9 +324,7 @@ function drawGraph(){
                     select: function(ele){
                         relation_details = !relation_details;
                         if (relation_details) {
-                            cy.style().selector('edge').style('label', function(ele){
-                                return ele.data('date') + ' - ' + ele.data('detail');
-                            }).update();
+                            cy.style().selector('edge').style({'label': 'data(infos)','font-size': '10px'}).update();
                             console.log((cy.elements('node[label = "Service"]')));
                         }
                         else {
@@ -344,8 +342,7 @@ function drawGraph(){
                 {
                     content: 'Show detail',
                     select: function(ele){
-                        //show the detail and the date of the relation
-                        ele.style("label", ele.data("date")+ " - "+ele.data("detail"))
+                    ele.style({"label": ele.data("infos"), 'font-size' : '14px'})
                     }
                 },
 
