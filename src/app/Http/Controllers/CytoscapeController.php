@@ -62,7 +62,7 @@ class CytoscapeController extends Controller
             $link["data"]["detail"] = $relation->detail;
             $link["data"]["date"] = date("Y-m-d", strtotime($relation->date));
             //Concatenate detail and date to display in the tooltip
-            $link["data"]["infos"] = ($relation->detail ? $relation->detail : "Ø") . " / " . date("Y-m-d", strtotime($relation->date));
+            $link["data"]["infos"] = ($relation->detail ? $relation->detail : "Ø") . "/" . date("Y-m-d", strtotime($relation->date));
             array_push($links, $link);
             $used_relations[$relation->relation->id] = $relation->relation;
 

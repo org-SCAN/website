@@ -324,13 +324,13 @@ function drawGraph(){
                     select: function(ele){
                         relation_details = !relation_details;
                         if (relation_details) {
-                            cy.style().selector('edge').style({'label': 'data(infos)','font-size': '10px'}).update();
-                            console.log((cy.elements('node[label = "Service"]')));
+                            cy.style().selector('edge').style('label' , 'data(infos)').update();
                         }
                         else {
                             cy.style().selector("edge").style('label','').update()
                         }
-                    }
+                        cy.fit(cy.edges().labels(),50)
+                    },
                 },
             ]
         });
@@ -342,7 +342,7 @@ function drawGraph(){
                 {
                     content: 'Show detail',
                     select: function(ele){
-                    ele.style({"label": ele.data("infos"), 'font-size' : '14px'})
+                    ele.style("label", ele.data("infos"))
                     }
                 },
 
