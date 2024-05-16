@@ -111,6 +111,15 @@
                                                 'showError' => false,
                                                 ])
                                             </div>
+                                            <div class="col-md-12" style="width:100%">
+                                                @livewire('forms.form', [
+                                                'type' => 'select-dropdown',
+                                                'form_elem' => 'relations',
+                                                'placeHolder' => __('cytoscape/index.select_type_of_relation'),
+                                                'associated_list' => ['Travelled with' => 'Travelled with', 'Saw' => 'Saw', 'Non-biological relationship' => 'Non-biological relationship', 'Service' => 'Service', 'Biological relationship' => 'Biological relationship'],
+                                                'showError' => false,
+                                                ])
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -150,4 +159,5 @@
             var persons = {!!  $persons!!};
             var field_list = {!! $field_list !!};
         </script>
+    </div>
 </x-app-layout>
