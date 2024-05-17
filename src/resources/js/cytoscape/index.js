@@ -408,10 +408,8 @@ function drawGraph(){
         // On relations dropdown change, we change the layout accordingly
         window.$("#relations").change(function() {
             let relation = $(this).val();
-            console.log(relation);
             if (relation) {
                 cy.filter('edge[label = "' + relation + '"]').hide();
-                cy.filter('edge[label != "' + relation + '"]').show();
             }
             $(this).blur();
         });
