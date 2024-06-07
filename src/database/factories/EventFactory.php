@@ -40,6 +40,27 @@ class EventFactory extends Factory
             "long" => $this->faker->longitude,
         ]);
 
+        $area = json_encode([
+            "listCoordinates" => [
+                [
+                    "lat" => $this->faker->latitude,
+                    "long" => $this->faker->longitude,
+                ],
+                [
+                    "lat" => $this->faker->latitude,
+                    "long" => $this->faker->longitude,
+                ],
+                [
+                    "lat" => $this->faker->latitude,
+                    "long" => $this->faker->longitude,
+                ],
+                [
+                    "lat" => $this->faker->latitude,
+                    "long" => $this->faker->longitude,
+                ],
+            ]
+        ]);
+
         return [
             "name" => $this->faker->unique()->name,
             "event_type_id" => ListEventType::inRandomOrder()->first()->id,
@@ -49,6 +70,7 @@ class EventFactory extends Factory
             "start_date" => $this->faker->dateTimeBetween('-10 week', '-5 week')->format('Y-m-d'),
             "stop_date" => $this->faker->dateTimeBetween('-4 week', '+1 week')->format('Y-m-d'),
             "coordinates" => $coordinates,
+            "area" => $area,
             "description" => $this->faker->realText,
             'api_log' => $log->id,
         ];

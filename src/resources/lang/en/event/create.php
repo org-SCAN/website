@@ -19,5 +19,7 @@ return [
     'stop_date_hint' => "The date when the event stops.",
     'coordinates' => "The coordinates of the event",
     'coordinates_hint' => "A latitude and longitude in decimal degree.",
+    'area' => "The area of the event",
+    'area_hint' => "The list of coordinates that define the area of the event.",
     'description' => "Event's description",
 ];
