@@ -83,6 +83,30 @@
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-500 uppercase tracking-wider">
+                                        {{ __('place/show.fields.area') }}
+                                    </th>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
+                                        <span>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <span>
+                                                    {{ __('place/show.fields.lat') }} : {{ json_decode($place->area, true)[1][1]['lat'] ?? ""}}
+                                                </span>
+                                            </div>
+                                            <div class="col-4">
+                                                <span>
+                                                    {{ __('place/show.fields.lon') }} : {{ json_decode($place->area, true)[1][1]['long'] ?? ""}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </span>
+                                    </td>
+                                </tr>
+                                <tr class="border-b">
+                                    <th scope="col"
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         {{ __('place/show.fields.description') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900

@@ -7,13 +7,13 @@ class Area implements DataTypeModel {
     public static function rules($fieldname = null):array{
         if($fieldname == null){
             return [
-                '*.*.lat' => 'null|numeric',
-                '*.*.long' => 'null|numeric',
+                '*.*.lat' => 'nullable|numeric',
+                '*.*.long' => 'nullable|numeric',
             ];
         }
         return [
-            '.*.*.lat' => 'numeric',
-            '.*.*.long' => 'numeric',
+            $fieldname.'.*.*.lat' => 'nullable|numeric',
+            $fieldname.'.*.*.long' => 'nullable|numeric',
         ];
     }
     public static function decode($previous){
@@ -23,11 +23,11 @@ class Area implements DataTypeModel {
         return json_encode($value);
     }
     public function __construct($listCoordinates = []) {
-        for($i = 0; $i < count($listCoordinates); $i++){
-            for($j = 0; $j < count($listCoordinates[$i]); $j++){
+        for($i = 1; $i <= count($listCoordinates); $i++){
+            for($j = 1; $j < count($listCoordinates[$i]); $j++){
                 $lat = $listCoordinates[$i][$j]['lat'] ?? null;
                 $long = $listCoordinates[$i][$j]['long'] ?? null;
-                $this->{'listCoordinates'.$i}[$j] = new Coordinates($lat, $long);
+                $this->{$i}[$j] = new Coordinates($lat, $long);
             }
         }
     }

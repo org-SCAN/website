@@ -37,7 +37,7 @@ class Place extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'coordinates', 'description'];
+    protected $fillable = ['name', 'coordinates', 'description', 'area'];
 
     /**
      * The attributes that should be mutated to dates.
