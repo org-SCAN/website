@@ -8,7 +8,7 @@ return [
         'coordinates' => "Coordinates",
         'actions' => 'Actions',
         'area' => 'Area',
-        'add_polygon' => 'Add a polygon ?',
+        'add_polygon' => 'Add a polygon',
     ],
     'placeholders' => [
         'name' => 'e.g. Lyon',
