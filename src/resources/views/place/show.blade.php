@@ -25,7 +25,6 @@
                                class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">{{ __('common.edit') }}</a>
                         @endcan
 
-
                         @can("delete", $place)
                             @method('DELETE')
                             @csrf
@@ -90,14 +89,14 @@
                                         <span>
                                         <div class="row">
                                             <div class="col-4">
-                                                <span>
-                                                    {{ __('place/show.fields.lat') }} : {{ json_decode($place->area, true)[1][1]['lat'] ?? ""}}
-                                                </span>
-                                            </div>
-                                            <div class="col-4">
-                                                <span>
-                                                    {{ __('place/show.fields.lon') }} : {{ json_decode($place->area, true)[1][1]['long'] ?? ""}}
-                                                </span>
+                                                @for ($i = 1; $i <= 4; $i++)
+                                                    <span>
+                                                        {{ __('place/show.fields.lat') }} : {{ json_decode($place->area, true)[$i]['lat'] ?? ""}}
+                                                    </span>
+                                                    <span>
+                                                        {{ __('place/show.fields.lon') }} : {{ json_decode($place->area, true)[$i]['long'] ?? ""}}
+                                                    </span>
+                                                @endfor
                                             </div>
                                         </div>
                                     </span>

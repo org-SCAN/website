@@ -22,6 +22,7 @@ class Form extends Component
     public $rangeable = null;
     public $field = null;
     public $dataType = null;
+    public $divs = [];
 
     public function render()
     {
@@ -54,5 +55,13 @@ class Form extends Component
             return false;
         }
     }
+    public function addPolygon()
+    {
+        $this->divs[] = count($this->divs) + 1;
+    }
 
+    public function deletePolygon()
+    {
+        $this->div[] = count($this->divs) - 1;
+    }
 }

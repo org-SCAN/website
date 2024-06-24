@@ -41,7 +41,7 @@
                                 ])
                         </div>
 
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-5 bg-white sm:p-6" id="area">
                             @php($form_elem = "area")
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,
@@ -49,12 +49,6 @@
                                 'title' => __('place/create.fields.area'),
                                 'hint' => __('place/create.placeholders.area')
                                 ])
-                        </div>
-                        <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
-                            <button type="submit"
-                                    class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
-                                {{ __('place/create.fields.add_polygon') }}
-                            </button>
                         </div>
 
                         <div class="px-4 py-5 bg-white sm:p-6">
