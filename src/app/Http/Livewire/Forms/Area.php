@@ -5,25 +5,25 @@ use App\Http\Livewire\Forms\Coordinates;
 
 class Area implements DataTypeModel
 {
-    public function __construct($listCoordinates = [])
+    public function __construct($polygons = [])
     {
-        for ($i = 0; $i < count($listCoordinates); $i++) {
-            $lat = $listCoordinates[$i]['lat'];
-            $long = $listCoordinates[$i]['long'];
-            $this->listCoordinates[] = new Coordinates($lat, $long);
+        for ($i = 0; $i < count($polygons); $i++) {
+            for ($j = 0; $j < count($polygons[$i]); $j++) {
+                $this->polygons[$i][$j][] = new Coordinates($polygons[$i][$j]['lat'], $polygons[$i][$j]['long']);
+            }
         }
     }
     public static function rules($fieldname = null): array
     {
         if ($fieldname == null) {
             return [
-                'listCoordinates.*.lat' => 'nullable|numeric',
-                'listCoordinates.*.long' => 'nullable|numeric',
+                'polygons.*.*.*.lat' => 'nullable|numeric',
+                'polygons.*.*.*.long' => 'nullable|numeric',
             ];
         }
         return [
-            $fieldname.'.*.lat' => 'nullable|numeric',
-            $fieldname.'.*.long' => 'nullable|numeric',
+            $fieldname.'.*.*.*.lat' => 'nullable|numeric',
+            $fieldname.'.*.*.*.long' => 'nullable|numeric',
         ];
     }
 

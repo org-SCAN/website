@@ -55,13 +55,8 @@ class Form extends Component
             return false;
         }
     }
-    public function addPolygon()
+    public function addField()
     {
         $this->divs[] = count($this->divs) + 1;
-    }
-
-    public function deletePolygon()
-    {
-        $this->div[] = count($this->divs) - 1;
     }
 }

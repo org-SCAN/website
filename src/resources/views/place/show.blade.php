@@ -89,14 +89,11 @@
                                         <span>
                                         <div class="row">
                                             <div class="col-4">
-                                                @for ($i = 1; $i <= 4; $i++)
+                                                @if($place->area)
                                                     <span>
-                                                        {{ __('place/show.fields.lat') }} : {{ json_decode($place->area, true)[$i]['lat'] ?? ""}}
+                                                        {{ __('place/show.fields.number_of_polygons') }} : {{ count(json_decode($place->area, true)['polygons']) ?? ""}}
                                                     </span>
-                                                    <span>
-                                                        {{ __('place/show.fields.lon') }} : {{ json_decode($place->area, true)[$i]['long'] ?? ""}}
-                                                    </span>
-                                                @endfor
+                                                @endif
                                             </div>
                                         </div>
                                     </span>
@@ -126,13 +123,13 @@
                         <div style="height: 400px"
                              class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             @map([
-                                'lat' => json_decode($place->coordinates, true)['lat'],
-                                'lng' => json_decode($place->coordinates, true)['long'],
-                                'zoom' => 10,
-                                'markers' => [
-                                    ['lat' => json_decode($place->coordinates, true)['lat'],
-                                    'lng' => json_decode($place->coordinates, true)['long'],]
-                                ]
+                            'lat' => json_decode($place->coordinates, true)['lat'],
+                            'lng' => json_decode($place->coordinates, true)['long'],
+                            'zoom' => 10,
+                            'markers' => [
+                            ['lat' => json_decode($place->coordinates, true)['lat'],
+                            'lng' => json_decode($place->coordinates, true)['long'],]
+                            ]
                             ])
                             @mapscripts
                         </div>
