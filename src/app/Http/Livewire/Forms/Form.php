@@ -9,7 +9,6 @@ use Throwable;
 
 class Form extends Component
 {
-
     public $form_elem = null;
     public $title = null;
     public $placeHolder = null;
@@ -22,8 +21,8 @@ class Form extends Component
     public $rangeable = null;
     public $field = null;
     public $dataType = null;
-    public $divs = [];
-
+    public $fieldCount = 0;
+    public $showForm = false;
     public function render()
     {
 
@@ -57,6 +56,10 @@ class Form extends Component
     }
     public function addField()
     {
-        $this->divs[] = count($this->divs) + 1;
+        $this->fieldCount++;
+    }
+    public function removeField()
+    {
+        $this->fieldCount--;
     }
 }

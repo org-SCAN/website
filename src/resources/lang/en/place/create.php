@@ -9,6 +9,7 @@ return [
         'actions' => 'Actions',
         'area' => 'Area',
         'add_polygon' => 'Add a polygon',
+        'remove_polygon' => 'Remove the last polygon',
     ],
     'placeholders' => [
         'name' => 'e.g. Lyon',

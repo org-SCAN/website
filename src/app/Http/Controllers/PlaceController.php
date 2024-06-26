@@ -50,6 +50,7 @@ class PlaceController extends Controller
     public function show(Place $place)
     {
         // Your show logic here
+        dd($place->toArray());
         return view('place.show', ['place' => $place]);
     }
 

@@ -5,11 +5,14 @@ use App\Http\Livewire\Forms\Coordinates;
 
 class Area implements DataTypeModel
 {
+    public $divs = [];
     public function __construct($polygons = [])
     {
         for ($i = 0; $i < count($polygons); $i++) {
             for ($j = 0; $j < count($polygons[$i]); $j++) {
-                $this->polygons[$i][$j][] = new Coordinates($polygons[$i][$j]['lat'], $polygons[$i][$j]['long']);
+                $lat = $polygons[$i][$j]['lat'];
+                $long = $polygons[$i][$j]['long'];
+                $this->polygons[$i][$j] = new Coordinates($lat, $long);
             }
         }
     }
@@ -36,4 +39,5 @@ class Area implements DataTypeModel
     {
         return json_encode($value);
     }
+
 }
