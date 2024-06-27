@@ -52,7 +52,6 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-        dd($request->all());
         $log = ApiLog::createFromRequest($request, 'Event');
         $event = $request->validated();
         $event["api_log"] = $log->id;

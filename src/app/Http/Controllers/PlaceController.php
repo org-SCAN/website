@@ -38,10 +38,8 @@ class PlaceController extends Controller
     public function store(StorePlaceRequest $request)
     {
         $place = $request->validated();
-        if ($request->has('coordinates'))
-            $place['coordinates'] = Coordinates::encode($place['coordinates']);
-        if($request->has('area'))
-            $place['area'] = Area::encode($place['area']);
+        $place['coordinates'] = Coordinates::encode($place['coordinates']);
+        $place['area'] = Area::encode($place['area']);
         $place = Place::create($place);
         $place->save();
         return redirect('place');
@@ -60,10 +58,8 @@ class PlaceController extends Controller
 
     public function update(UpdatePlaceRequest $request, Place $place)
     {
-        if ($request->has('coordinates'))
-            $place['coordinates'] = Coordinates::encode($place['coordinates']);
-        if($request->has('area'))
-            $place['area'] = Area::encode($place['area']);
+        $place['coordinates'] = Coordinates::encode($place['coordinates']);
+        $place['area'] = Area::encode($place['area']);
         $place->update($request->validated());
 
         return redirect()->route('place.index');

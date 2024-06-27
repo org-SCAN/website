@@ -21,7 +21,7 @@ class Form extends Component
     public $rangeable = null;
     public $field = null;
     public $dataType = null;
-    public $fieldCount = 0;
+    public $fieldCount = 1;
 
     public function render()
     {

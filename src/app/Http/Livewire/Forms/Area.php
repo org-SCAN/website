@@ -10,8 +10,8 @@ class Area implements DataTypeModel
     {
         for ($i = 0; $i < count($polygons); $i++) {
             for ($j = 0; $j < count($polygons[$i]); $j++) {
-                $lat = $polygons[$i][$j]['lat'];
-                $long = $polygons[$i][$j]['long'];
+                $lat = $polygons[$i][$j]["lat"];
+                $long = $polygons[$i][$j]["long"];
                 $this->polygons[$i][$j] = new Coordinates($lat, $long);
             }
         }
@@ -20,13 +20,13 @@ class Area implements DataTypeModel
     {
         if ($fieldname == null) {
             return [
-                'polygons.*.*.*.lat' => 'nullable|numeric',
-                'polygons.*.*.*.long' => 'nullable|numeric',
+                "polygons.*.*.lat" => "nullable|numeric",
+                "polygons.*.*.long" => "nullable|numeric",
             ];
         }
         return [
-            $fieldname.'.*.*.*.lat' => 'nullable|numeric',
-            $fieldname.'.*.*.*.long' => 'nullable|numeric',
+            $fieldname.'.polygons.*.*.lat' => 'nullable|numeric',
+            $fieldname.'.polygons.*.*.long' => 'nullable|numeric',
         ];
     }
 

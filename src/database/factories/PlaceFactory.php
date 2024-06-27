@@ -18,7 +18,7 @@ class PlaceFactory extends Factory
         ]);
 
         $area = json_encode([
-            "polygons" => [
+            "polygons" => [[
                 [
                     "lat" => $this->faker->latitude,
                     "long" => $this->faker->longitude,
@@ -35,7 +35,7 @@ class PlaceFactory extends Factory
                     "lat" => $this->faker->latitude,
                     "long" => $this->faker->longitude,
                 ],
-            ]
+            ]]
         ]);
 
         return [
