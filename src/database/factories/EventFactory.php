@@ -41,7 +41,7 @@ class EventFactory extends Factory
         ]);
 
         $area = json_encode([
-            "listCoordinates" => [
+            "polygons" => [
                 [
                     "lat" => $this->faker->latitude,
                     "long" => $this->faker->longitude,

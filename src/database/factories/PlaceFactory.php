@@ -17,6 +17,27 @@ class PlaceFactory extends Factory
             "long" => $this->faker->longitude,
         ]);
 
+        $area = json_encode([
+            "polygons" => [
+                [
+                    "lat" => $this->faker->latitude,
+                    "long" => $this->faker->longitude,
+                ],
+                [
+                    "lat" => $this->faker->latitude,
+                    "long" => $this->faker->longitude,
+                ],
+                [
+                    "lat" => $this->faker->latitude,
+                    "long" => $this->faker->longitude,
+                ],
+                [
+                    "lat" => $this->faker->latitude,
+                    "long" => $this->faker->longitude,
+                ],
+            ]
+        ]);
+
         return [
             "name" => $this->faker->unique()->name,
             "coordinates" => $coordinates,
