@@ -26,7 +26,7 @@
                                 'form_elem' => $form_elem,
                                 'type' => "text",
                                 'title' => __("event/create.event_name"),
-                                'hint' => __("event/create.event_name_hint")
+                                'hint' => __("event/create.event_name_hint"),
                                 ])
                         </div>
 

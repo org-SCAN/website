@@ -52,7 +52,6 @@
                                 'type' => "area",
                                 'title' => __('place/create.fields.area'),
                                 'hint' => __('place/create.placeholders.area'),
-                                'previous' => $place->{$form_elem},
                                 'dataType' => \App\Models\ListDataType::where('name', 'Area')->first()
                             ])
                         </div>
