@@ -42,6 +42,7 @@ class PlaceFactory extends Factory
             "name" => $this->faker->unique()->name,
             "coordinates" => $coordinates,
             "description" => $this->faker->realText,
+            "area" => $area,
         ];
     }
 }
