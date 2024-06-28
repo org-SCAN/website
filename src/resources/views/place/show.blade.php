@@ -126,7 +126,7 @@
                             'zoom' => 10,
                             'markers' => [
                             ['lat' => json_decode($place->coordinates, true)['lat'],
-                            'lng' => json_decode($place->coordinates, true)['long'],]
+                            'lng' => json_decode($place->coordinates, true)['long'],],
                             ]
                             ])
                             @mapscripts

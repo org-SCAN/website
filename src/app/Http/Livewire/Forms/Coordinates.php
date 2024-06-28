@@ -88,13 +88,13 @@ class Coordinates implements DataTypeModel {
     public static function rules($fieldname = null) : array {
         if($fieldname == null) {
             return [
-                "lat" => "nullable|numeric",
-                "long" => "nullable|numeric"
+                "lat" => "nullable|numeric|between:-90,90",
+                "long" => "nullable|numeric|between:-180,180"
             ];
         }
         return [
-            $fieldname.'.lat' => 'nullable|numeric',
-            $fieldname.'.long' => 'nullable|numeric',
+            $fieldname.'.lat' => 'nullable|numeric|between:-90,90',
+            $fieldname.'.long' => 'nullable|numeric|between:-180,180',
         ];
     }
     public static function decode($previous){

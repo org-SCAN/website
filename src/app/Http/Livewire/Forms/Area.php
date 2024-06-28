@@ -20,13 +20,13 @@ class Area implements DataTypeModel
     {
         if ($fieldname == null) {
             return [
-                "polygons.*.*.lat" => "nullable|numeric",
-                "polygons.*.*.long" => "nullable|numeric",
+                "polygons.*.*.lat" => "nullable|numeric|between:-90,90",
+                "polygons.*.*.long" => "nullable|numeric|between:-180,180",
             ];
         }
         return [
-            $fieldname.'.polygons.*.*.lat' => 'nullable|numeric',
-            $fieldname.'.polygons.*.*.long' => 'nullable|numeric',
+            $fieldname.'.polygons.*.*.lat' => 'nullable|numeric|between:-90,90',
+            $fieldname.'.polygons.*.*.long' => 'nullable|numeric|between:-180,180',
         ];
     }
 

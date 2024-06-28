@@ -27,8 +27,7 @@ trait ResourceWithCoordinatesTrait
 
         $new_item["coordinates"]["lat"] = "10.42";
         $new_item["coordinates"]["long"] = "-5.3";
-        $new_item["area"]["polygons"] = [
-            [
+        $new_item["area"] = ["polygons" =>[[
                 [
                     "lat" => "10.42",
                     "long" => "-5.3",
@@ -45,7 +44,7 @@ trait ResourceWithCoordinatesTrait
                     "lat" => "10.42",
                     "long" => "-5.3",
                 ],
-            ],
+            ]]
         ];
 
         $response = $this->post($this->route, $new_item);
@@ -87,8 +86,7 @@ trait ResourceWithCoordinatesTrait
 
         $new_item["coordinates"]["lat"] = "10.42";
         $new_item["coordinates"]["long"] = "-5.3";
-        $new_item["area"]["polygons"] = [
-            [
+        $new_item["area"] = ["polygons" => [[
                 [
                     "lat" => "10.42",
                     "long" => "-5.3",
@@ -105,7 +103,7 @@ trait ResourceWithCoordinatesTrait
                     "lat" => "10.42",
                     "long" => "-5.3",
                 ],
-            ]
+            ]]
         ];
 
         $new_item["id"] = $this->resource->id;

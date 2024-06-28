@@ -58,9 +58,10 @@ class PlaceController extends Controller
 
     public function update(UpdatePlaceRequest $request, Place $place)
     {
-        $place['coordinates'] = Coordinates::encode($place['coordinates']);
-        $place['area'] = Area::encode($place['area']);
-        $place->update($request->validated());
+        $new_place = $request->validated();
+        $place['coordinates'] = Coordinates::encode($new_place['coordinates']);
+        $place['area'] = Area::encode($new_place['area']);
+        $place->update($new_place);
 
         return redirect()->route('place.index');
     }

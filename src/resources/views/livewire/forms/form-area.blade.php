@@ -6,14 +6,14 @@
             @for($column_index = 0; $column_index < 4; $column_index++)
                 <div class="flex">
                     <div class="flex-auto pr-4">
-                        <em class="text-sm">Latitude :</em>
+                        <em class="text-sm"><em class="text-sm">{{ __("livewire/forms/form-area.latitude") }}</em></em>
                         <input type="text" name="{{ $form_elem }}[polygons][{{ $row_index }}][{{ $column_index }}][lat]" id="lat{{ $row_index }}{{ $column_index }}"
                                class="form-input rounded-md shadow-sm mt-1 block w-full"
                                value="{{ old($form_elem.'.polygons.'.$row_index.'.'.$column_index.'.lat') ?? '' }}"
                                placeholder="{{ $placeHolder }}"/>
                     </div>
                     <div class="flex-auto pr-4">
-                        <em class="text-sm">Longitude :</em>
+                        <em class="text-sm"><em class="text-sm">{{ __("livewire/forms/form-area.longitude") }}</em></em>
                         <input type="text" name="{{ $form_elem }}[polygons][{{ $row_index }}][{{ $column_index }}][long]" id="long{{ $row_index }}{{ $column_index }}"
                                class="form-input rounded-md shadow-sm mt-1 block w-full"
                                value="{{ old($form_elem.'.polygons.'.$row_index.'.'.$column_index.'.lat') ?? '' }}"
