@@ -17,25 +17,16 @@ class PlaceFactory extends Factory
             "long" => $this->faker->longitude,
         ]);
 
+        $polygon = [];
+
+        for ($i = 0; $i < 4; $i++)
+            // create a polygon with 4 points
+            $polygon[$i] = [
+                "lat" => $this->faker->latitude,
+                "long" => $this->faker->longitude,
+            ];
         $area = json_encode([
-            "polygons" => [[
-                [
-                    "lat" => $this->faker->latitude,
-                    "long" => $this->faker->longitude,
-                ],
-                [
-                    "lat" => $this->faker->latitude,
-                    "long" => $this->faker->longitude,
-                ],
-                [
-                    "lat" => $this->faker->latitude,
-                    "long" => $this->faker->longitude,
-                ],
-                [
-                    "lat" => $this->faker->latitude,
-                    "long" => $this->faker->longitude,
-                ],
-            ]]
+            "polygons" => [[$polygon]]
         ]);
 
         return [
