@@ -54,7 +54,7 @@
 
     function generateMarker(data, index) {
         return L.marker([data.lat, data.lng], {
-            draggable: true
+            draggable: false
         })
             .on('click', (event) => markerClicked(event, index))
             .on('dragend', (event) => markerDragEnd(event, index));
