@@ -46,6 +46,8 @@
         const initialMarkers = <?php echo json_encode($initialMarkers); ?>;
 
         initialMarkers.forEach((data, index) => {
+            if (!data.lat || !data.lng) return;
+
             const marker = generateMarker(data, index);
             marker.addTo(map).bindPopup(`<b>${data.lat}, ${data.lng}</b>`);
             markers.push(marker);
@@ -59,6 +61,7 @@
             .on('click', (event) => markerClicked(event, index))
             .on('dragend', (event) => markerDragEnd(event, index));
     }
+
 
     /* --------------------------- Initialize Area --------------------------- */
     function initArea() {
