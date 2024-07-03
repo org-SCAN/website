@@ -1,32 +1,28 @@
-<!DOCTYPE html>
-<html>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<style>
+    .text-center {
+        text-align: center;
+    }
 
-<head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <style>
-        .text-center {
-            text-align: center;
-        }
-
-        #map {
-            width: 100%;
-            height: 400px;
-        }
-    </style>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-</head>
-
+    #map {
+        width: 100%;
+        height: 400px;
+    }
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <body>
 <div id='map'></div>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
     let map, markers = [];
 
     /* ----------------------------- Initialize Map ----------------------------- */
     function initMap() {
         map = L.map('map', {
-            center: [0,0],
+            center: [0, 0],
             zoom: 1
         });
 
@@ -38,6 +34,7 @@
         initMarkers();
         initArea();
     }
+
     initMap();
 
     /* --------------------------- Initialize Markers --------------------------- */
@@ -70,10 +67,11 @@
             polygonCoords.forEach(coords => {
                 coords = sortByDistance(coords);
                 const latLngs = coords.map(coord => [coord.lat, coord.long]);
-                const polygon = L.polygon(latLngs, { color: 'green' }).addTo(map);
+                const polygon = L.polygon(latLngs, {color: 'green'}).addTo(map);
             })
         });
     }
+
     /* ------------------------- Handle Map Click Event ------------------------- */
     function mapClicked(event) {
         console.log(map);
@@ -91,10 +89,12 @@
         console.log(map);
         console.log(event.target.getLatLng());
     }
+
     /* ----------------------- Sort list of coordinates ---------------------- */
     function deg2rad(deg) {
         return deg * (Math.PI / 180)
     }
+
     function distance(lat1, lon1, lat2, lon2) {
         var R = 6371; // Radius of the earth in km
         var dLat = deg2rad(lat2 - lat1);  // deg2rad below
@@ -103,16 +103,16 @@
             Math.sin(dLat / 2) * Math.sin(dLat / 2) +
             Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
             Math.sin(dLon / 2) * Math.sin(dLon / 2)
-            ;
+        ;
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         var d = R * c; // Distance in km
         return d;
     }
-    function sortByDistance($coordinates){
+
+    function sortByDistance($coordinates) {
         return $coordinates.sort((a, b) => distance(a.lat, a.long, 0, 0) - distance(b.lat, b.long, 0, 0));
     }
 
 </script>
 </body>
 
-</html>
