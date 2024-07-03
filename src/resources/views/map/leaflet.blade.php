@@ -37,7 +37,7 @@
 
         map.on('click', mapClicked);
         initMarkers();
-        initPolygon();
+        initArea();
     }
     initMap();
 
@@ -60,12 +60,13 @@
             .on('dragend', (event) => markerDragEnd(event, index));
     }
 
-    /* --------------------------- Initialize Polygon --------------------------- */
-    function initPolygon() {
+    /* --------------------------- Initialize Area --------------------------- */
+    function initArea() {
         const initialArea = <?php echo json_encode($initialArea); ?>;
 
         initialArea.forEach(polygonCoords => {
             polygonCoords.forEach(coords => {
+                coords = sortByDistance(coords);
                 const latLngs = coords.map(coord => [coord.lat, coord.long]);
                 const polygon = L.polygon(latLngs, { color: 'green' }).addTo(map);
             })
@@ -88,6 +89,27 @@
         console.log(map);
         console.log(event.target.getLatLng());
     }
+    /* ----------------------- Sort list of coordinates ---------------------- */
+    function deg2rad(deg) {
+        return deg * (Math.PI / 180)
+    }
+    function distance(lat1, lon1, lat2, lon2) {
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2 - lat1);  // deg2rad below
+        var dLon = deg2rad(lon2 - lon1);
+        var a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2)
+            ;
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c; // Distance in km
+        return d;
+    }
+    function sortByDistance($coordinates){
+        return $coordinates.sort((a, b) => distance(a.lat, a.long, 0, 0) - distance(b.lat, b.long, 0, 0));
+    }
+
 </script>
 </body>
 
