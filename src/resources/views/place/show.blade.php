@@ -1,4 +1,5 @@
-@php use App\Models\Place @endphp
+@php use App\Models\Place
+@endphp
 @section('title', __('place/show.view_place_details', ['place_name' => $place->name]))
 
 <x-app-layout>
@@ -120,16 +121,12 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div style="height: 400px"
                              class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                            @map([
-                            'lat' => json_decode($place->coordinates, true)['lat'],
-                            'lng' => json_decode($place->coordinates, true)['long'],
-                            'zoom' => 10,
-                            'markers' => [
-                            ['lat' => json_decode($place->coordinates, true)['lat'],
-                            'lng' => json_decode($place->coordinates, true)['long'],],
-                            ]
-                            ])
-                            @mapscripts
+                            @include('map.leaflet', [
+                                        'initialMarkers' => [
+                                            ['lat' => json_decode($place->coordinates, true)['lat'], 'lng' => json_decode($place->coordinates, true)['long']]
+                                        ],
+                                        'initialArea' => [json_decode($place->area, true)['polygons']
+                                    ]])
                         </div>
                     </div>
                 </div>
