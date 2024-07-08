@@ -10,7 +10,8 @@
                         <input type="text" name="{{ $form_elem }}[polygons][{{ $row_index }}][{{ $column_index }}][lat]"
                                id="lat{{ $row_index }}{{ $column_index }}"
                                class="form-input rounded-md shadow-sm mt-1 block w-full"
-                               value="{{ old($form_elem.'.polygons.'.$row_index.'.'.$column_index.'.lat') ?? '' }}"
+                               value="{{ old($form_elem.'.polygons.'.$row_index.'.'.$column_index.'.long',
+                                        $previous['polygons'][$row_index][$column_index]['lat'] ?? '') }}"
                                placeholder="{{ $placeHolder }}"/>
                     </div>
                     <div class="flex-auto pr-4">
@@ -19,7 +20,8 @@
                                name="{{ $form_elem }}[polygons][{{ $row_index }}][{{ $column_index }}][long]"
                                id="long{{ $row_index }}{{ $column_index }}"
                                class="form-input rounded-md shadow-sm mt-1 block w-full"
-                               value="{{ old($form_elem.'.polygons.'.$row_index.'.'.$column_index.'.long') ?? '' }}"
+                               value="{{ old($form_elem.'.polygons.'.$row_index.'.'.$column_index.'.long',
+                                        $previous['polygons'][$row_index][$column_index]['long'] ?? '') }}"
                                placeholder="{{ $placeHolder }}"/>
                     </div>
                 </div>

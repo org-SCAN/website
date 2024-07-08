@@ -52,6 +52,8 @@
                                 'type' => "area",
                                 'title' => __('place/create.fields.area'),
                                 'hint' => __('place/create.placeholders.area'),
+                                'previous' => $place->{$form_elem},
+                                'fieldCount' => count(json_decode($place->{$form_elem}, true)['polygons']),
                                 'dataType' => \App\Models\ListDataType::where('name', 'Area')->first()
                             ])
                         </div>

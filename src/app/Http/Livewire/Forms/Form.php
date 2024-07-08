@@ -54,12 +54,20 @@ class Form extends Component
             return false;
         }
     }
+    public function mount()
+    {
+        if (session()->has('errors')) {
+            $this->fieldCount = session()->get('fieldCount', 1);
+        }
+    }
     public function addField()
     {
         $this->fieldCount++;
+        session()->put('fieldCount', $this->fieldCount);
     }
     public function removeField()
     {
         $this->fieldCount--;
+        session()->put('fieldCount', $this->fieldCount);
     }
 }

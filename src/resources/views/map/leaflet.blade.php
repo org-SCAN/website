@@ -46,6 +46,8 @@
             const marker = generateMarker(data, index);
             marker.addTo(map).bindPopup(`<b>${data.lat}, ${data.lng}</b>`);
             markers.push(marker);
+            map.fitBounds(markers.map(marker => marker.getLatLng()), {padding: [50, 50]
+            });
         });
     }
 
@@ -67,6 +69,8 @@
                 const sortedCoords = sortClockwise(coords);
                 const latLngs = sortedCoords.map(coord => [coord.lat, coord.long]);
                 const polygon = L.polygon(latLngs, { color: 'green' }).addTo(map);
+                map.fitBounds(polygon.getBounds(), {padding: [50, 50]
+                });
             })
         });
     }
