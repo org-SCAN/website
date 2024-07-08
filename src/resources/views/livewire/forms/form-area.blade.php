@@ -7,26 +7,31 @@
                 <div class="flex">
                     <div class="flex-auto pr-4">
                         <em class="text-sm"><em class="text-sm">{{ __("livewire/forms/form-area.latitude") }}</em></em>
-                        <input type="text" name="{{ $form_elem }}[polygons][{{ $row_index }}][{{ $column_index }}][lat]" id="lat{{ $row_index }}{{ $column_index }}"
+                        <input type="text" name="{{ $form_elem }}[polygons][{{ $row_index }}][{{ $column_index }}][lat]"
+                               id="lat{{ $row_index }}{{ $column_index }}"
                                class="form-input rounded-md shadow-sm mt-1 block w-full"
                                value="{{ old($form_elem.'.polygons.'.$row_index.'.'.$column_index.'.lat') ?? '' }}"
                                placeholder="{{ $placeHolder }}"/>
                     </div>
                     <div class="flex-auto pr-4">
                         <em class="text-sm"><em class="text-sm">{{ __("livewire/forms/form-area.longitude") }}</em></em>
-                        <input type="text" name="{{ $form_elem }}[polygons][{{ $row_index }}][{{ $column_index }}][long]" id="long{{ $row_index }}{{ $column_index }}"
+                        <input type="text"
+                               name="{{ $form_elem }}[polygons][{{ $row_index }}][{{ $column_index }}][long]"
+                               id="long{{ $row_index }}{{ $column_index }}"
                                class="form-input rounded-md shadow-sm mt-1 block w-full"
-                               value="{{ old($form_elem.'.polygons.'.$row_index.'.'.$column_index.'.lat') ?? '' }}"
+                               value="{{ old($form_elem.'.polygons.'.$row_index.'.'.$column_index.'.long') ?? '' }}"
                                placeholder="{{ $placeHolder }}"/>
                     </div>
                 </div>
             @endfor
+            @error($form_elem.'.polygons.*.*.lat')
+            <p class="text-sm text-red-600">{{ Str::replace($form_elem.'.polygons.0.0.lat', $this->title.' (latitudes)', $message) }}</p>
+            @enderror
+            @error($form_elem.'.polygons.*.*.long')
+            <p class="text-sm text-red-600">{{ Str::replace($form_elem.'.polygons.0.0.long', $this->title.' (longitudes)', $message) }}</p>
+            @enderror
         </jet-div>
     @endfor
-
-    @error($form_elem.'.polygons')
-    <p class="text-sm text-red-600">{{ Str::replace($form_elem.'.polygons', $this->title.' (polygons)', $message) }}</p>
-    @enderror
 
     <small id="{{ $form_elem }}Help" class="block font-medium text-sm text-gray-500">
         {{ $hint }} <em class="text-sm text-red-600">{{ $warning }}</em>
