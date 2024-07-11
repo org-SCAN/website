@@ -66,12 +66,15 @@
 
         initialArea.forEach(polygonCoords => {
             polygonCoords.forEach(coords => {
-                const sortedCoords = sortClockwise(coords);
-                const latLngs = sortedCoords.map(coord => [coord.lat, coord.long]);
-                const polygon = L.polygon(latLngs, { color: 'green' }).addTo(map);
-                map.fitBounds(polygon.getBounds(), {padding: [50, 50]
-                });
-            })
+                const validCoords = coords.filter(coord => coord.lat !== null && coord.long !== null);
+
+                if (validCoords.length > 0) {
+                    const sortedCoords = sortClockwise(validCoords);
+                    const latLngs = sortedCoords.map(coord => [coord.lat, coord.long]);
+                    const polygon = L.polygon(latLngs, { color: 'green' }).addTo(map);
+                    map.fitBounds(polygon.getBounds(), { padding: [50, 50] });
+                }
+            });
         });
     }
     /* ------------------------- Handle Map Click Event ------------------------- */

@@ -33,9 +33,6 @@
             @error($form_elem.'.polygons.*.*.long')
             <p class="text-sm text-red-600">{{ Str::replace($form_elem.'.polygons.', $this->title.' (longitudes)', $message) }}</p>
             @enderror
-                @error($form_elem.'.polygons.*.*.')
-                <p class="text-sm text-red-600">{{ Str::replace($form_elem.'.polygons.', $this->title.' (latitudes)', $message) }}</p>
-                @enderror
         </jet-div>
     @endfor
 
