@@ -29,6 +29,7 @@
                                     <th class="toFilter">{{__('place/index.fields.lat')}}</th>
                                     <th class="toFilter">{{__('place/index.fields.lon')}}</th>
                                     <th class="toFilter">{{__('place/index.fields.description')}}</th>
+                                    <th class="toFilter">{{__('place/index.fields.area')}}</th>
                                     @can('update', $places->first())
                                         <th></th>
                                     @endcan
@@ -43,6 +44,7 @@
                                         <td>{{ json_decode($place->coordinates, true)['lat'] }}</td>
                                         <td>{{ json_decode($place->coordinates, true)['long'] }}</td>
                                         <td>{{ $place->description }}</td>
+                                        <td>{{ count(json_decode($place->area, true)['polygons']) }}</td>
                                         @can('update', $place)
                                             <td><a href="{{ route('place.edit', $place->id) }}">{{__('common.edit')}}</a></td>
                                         @endcan

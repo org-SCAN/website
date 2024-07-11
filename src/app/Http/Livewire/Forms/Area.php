@@ -32,6 +32,9 @@ class Area implements DataTypeModel
 
     public static function decode($previous)
     {
+        if (is_array($previous)) {
+            return $previous;
+        }
         return json_decode($previous, true);
     }
 

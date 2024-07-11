@@ -2,6 +2,7 @@
     <label for="{{ $form_elem }}" class="block font-medium text-md text-gray-700">{{ $title }}</label>
     @for($row_index = 0; $row_index < $fieldCount; $row_index++)
         <br>
+        <div>{{__("livewire/forms/form-area.polygon")}} {{$row_index + 1}}</div>
         <jet-div wire:key="div-{{ $row_index }}" class="mt-4">
             @for($column_index = 0; $column_index < 4; $column_index++)
                 <div class="flex">
@@ -10,7 +11,7 @@
                         <input type="text" name="{{ $form_elem }}[polygons][{{ $row_index }}][{{ $column_index }}][lat]"
                                id="lat{{ $row_index }}{{ $column_index }}"
                                class="form-input rounded-md shadow-sm mt-1 block w-full"
-                               value="{{ old($form_elem.'.polygons.'.$row_index.'.'.$column_index.'.long',
+                               value="{{ old($form_elem.'.polygons.'.$row_index.'.'.$column_index.'.lat',
                                         $previous['polygons'][$row_index][$column_index]['lat'] ?? '') }}"
                                placeholder="{{ $placeHolder }}"/>
                     </div>
@@ -27,11 +28,14 @@
                 </div>
             @endfor
             @error($form_elem.'.polygons.*.*.lat')
-            <p class="text-sm text-red-600">{{ Str::replace($form_elem.'.polygons.0.0.lat', $this->title.' (latitudes)', $message) }}</p>
+            <p class="text-sm text-red-600">{{ Str::replace($form_elem.'.polygons.', $this->title.' (latitudes)', $message) }}</p>
             @enderror
             @error($form_elem.'.polygons.*.*.long')
-            <p class="text-sm text-red-600">{{ Str::replace($form_elem.'.polygons.0.0.long', $this->title.' (longitudes)', $message) }}</p>
+            <p class="text-sm text-red-600">{{ Str::replace($form_elem.'.polygons.', $this->title.' (longitudes)', $message) }}</p>
             @enderror
+                @error($form_elem.'.polygons.*.*.')
+                <p class="text-sm text-red-600">{{ Str::replace($form_elem.'.polygons.', $this->title.' (latitudes)', $message) }}</p>
+                @enderror
         </jet-div>
     @endfor
 
