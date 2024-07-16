@@ -138,6 +138,27 @@
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-500 uppercase tracking-wider">
+                                        {{ __('event/show.area') }}
+                                    </th>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
+                                        @if($event->area)
+                                            <span>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <span>
+                                                    {{ __('event/show.listCoordinates') }} : {{ json_decode($event->area, true)['listCoordinates'] ?? ""}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr class="border-b">
+                                    <th scope="col"
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         {{ __('event/show.description') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900

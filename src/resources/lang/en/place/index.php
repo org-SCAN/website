@@ -11,6 +11,7 @@ return [
         'lat' => 'Latitude',
         'lon' => 'Longitude',
         'actions' => 'Actions',
+        'area' => 'Polygons',
     ],
     'delete_confirm' => 'Are you sure you want to delete this place?',
 ];

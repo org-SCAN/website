@@ -46,6 +46,19 @@
                         </div>
 
                         <div class="px-4 py-5 bg-white sm:p-6">
+                            @php($form_elem = "area")
+                            @livewire("forms.form", [
+                                'form_elem' => $form_elem,
+                                'type' => "area",
+                                'title' => __('place/create.fields.area'),
+                                'hint' => __('place/create.placeholders.area'),
+                                'previous' => $place->{$form_elem},
+                                'fieldCount' => count(json_decode($place->{$form_elem}, true)['polygons']),
+                                'dataType' => \App\Models\ListDataType::where('name', 'Area')->first()
+                            ])
+                        </div>
+
+                        <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "description")
                             @livewire("forms.form", [
                                 'form_elem' => $form_elem,

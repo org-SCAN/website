@@ -234,6 +234,11 @@
                 "required": false
             },
             {
+                "field": "area",
+                "data_type_id": "area",
+                "required": false
+            },
+            {
                 "field": "description",
                 "data_type_id": "Long text",
                 "required": false

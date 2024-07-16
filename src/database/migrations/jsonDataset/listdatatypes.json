@@ -114,5 +114,18 @@
         "java_type": "coordinates",
         "validation": "",
         "rangeable": false
+    },
+    {
+        "name": {
+            "eng": "Area",
+            "fra": "Zone",
+            "spa": "Area"
+        },
+        "model": "\\App\\Http\\Livewire\\Forms\\Area",
+        "database_type": "Array",
+        "html_type": "area",
+        "java_type": "area",
+        "validation": "",
+        "rangeable": false
     }
 ]
