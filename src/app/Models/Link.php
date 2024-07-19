@@ -122,6 +122,25 @@ class Link extends Pivot
             "to");
     }
 
+    public function eventFrom() {
+        return $this->belongsTo(Event::class,
+            "from");
+    }
+    public function eventTo() {
+        return $this->belongsTo(Event::class,
+            "to");
+    }
+
+    public function placeFrom() {
+        return $this->belongsTo(Place::class,
+            "from");
+    }
+
+    public function placeTo() {
+        return $this->belongsTo(Place::class,
+            "to");
+    }
+
     /**
      * @return BelongsTo
      */
@@ -136,8 +155,6 @@ class Link extends Pivot
             "api_log",
             "crew_id");
     }
-
-
 
     /**
      * Get from Id
@@ -182,5 +199,5 @@ class Link extends Pivot
     public function getDateAttribute() {
         return Carbon::parse($this->attributes['date']);
     }
-    
+
 }

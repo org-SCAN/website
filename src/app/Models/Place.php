@@ -45,4 +45,20 @@ class Place extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    public static function getAllPlacesNames() {
+        $places = self::all();
+        $places_names = [];
+        foreach ($places as $place) {
+            $places_names[$place->id] = $place->name;
+        }
+        return $places_names;
+    }
+    public function crew() {
+        return $this->hasOneThrough(Crew::class,
+            ApiLog::class,
+            "id", "id",
+            "api_log",
+            "crew_id");
+    }
 }

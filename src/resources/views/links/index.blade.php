@@ -48,19 +48,36 @@
                                 </thead>
                                 <tbody>
                                 @foreach($links as $link)
-                                    <tr>
-                                        <td>
-                                            <a href="{{route('person.show',  $link->refugeeFrom->id)}}"> {{ $link->refugeeFrom->best_descriptive_value }}</a>
-                                        </td>
-                                        <td>{{ $link->relation->displayed_value_content }}</td>
-                                        <td>
-                                            <a href="{{route('person.show',  $link->refugeeTo->id)}}"> {{ $link->refugeeTo->best_descriptive_value }}</a>
-                                        </td>
-                                        <td>{{ $link->date->format('d/m/Y') }}</td>
-                                        @can('update', $link)
-                                            <td><a href="{{route('links.edit',  $link->id)}}">{{ __('common.edit') }}</a></td>
-                                        @endcan
-                                    </tr>
+                                    @if (($link->refugeeFrom) && ($link->refugeeTo))
+                                        <tr>
+                                            <td>
+                                                <a href="{{route('person.show',  $link->refugeeFrom->id)}}"> {{ $link->refugeeFrom->best_descriptive_value }}</a>
+                                            </td>
+                                            <td>{{ $link->relation->displayed_value_content }}</td>
+                                            <td>
+                                                <a href="{{route('person.show',  $link->refugeeTo->id)}}"> {{ $link->refugeeTo->best_descriptive_value }}</a>
+                                            </td>
+                                            <td>{{ $link->date->format('d/m/Y') }}</td>
+                                            @can('update', $link)
+                                                <td><a href="{{route('links.edit',  $link->id)}}">{{ __('common.edit') }}</a></td>
+                                            @endcan
+                                        </tr>
+                                    @endif
+                                    @if (($link->refugeeFrom) && ($link->EventTo))
+                                        <tr>
+                                            <td>
+                                                <a href="{{route('person.show',  $link->refugeeFrom->id)}}"> {{ $link->refugeeFrom->best_descriptive_value }}</a>
+                                            </td>
+                                            <td>{{ $link->relation->displayed_value_content }}</td>
+                                            <td>
+                                                <a href="{{route('person.show',  $link->EventTo->id)}}"> {{ $link->EventTo->name }}</a>
+                                            </td>
+                                            <td>{{ $link->date->format('d/m/Y') }}</td>
+                                            @can('update', $link)
+                                                <td><a href="{{route('links.edit',  $link->id)}}">{{ __('common.edit') }}</a></td>
+                                            @endcan
+                                        </tr>
+                                    @endif
                                 @endforeach
                                 </tbody>
                             </table>

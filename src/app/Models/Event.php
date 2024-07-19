@@ -61,4 +61,20 @@ class Event extends ListControl
         }
         return $persons_in_event;
     }
+
+    public static function getAllEventsNames(){
+        $events = Event::all();
+        $events_name = [];
+        foreach ($events as $event){
+            $events_name[$event->id] = $event->name;
+        }
+        return $events_name;
+    }
+    public function crew() {
+        return $this->hasOneThrough(Crew::class,
+            ApiLog::class,
+            "id", "id",
+            "api_log",
+            "crew_id");
+    }
 }

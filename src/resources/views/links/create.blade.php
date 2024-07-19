@@ -28,7 +28,7 @@
                             'type' => 'select-dropdown',
                             'title' => __('links/create.item_1'),
                             'placeHolder' => __('links/create.select_item_1'),
-                            'associated_list' => $lists["refugees"],
+                            'associated_list' => $lists["all"],
                             'previous' => old($form_elem, $selected_value = (!empty($refugee) && !empty($origin) &&
                             $origin == "from") ? $refugee->id : $form_elem),
                             ])
@@ -81,7 +81,7 @@
                             'type' => 'select-dropdown',
                             'title' => __('links/create.item_2'),
                             'placeHolder' => __('links/create.select_item_2'),
-                            'associated_list' => $lists["refugees"],
+                            'associated_list' => $lists["all"],
                             'previous' => old($form_elem, (!empty($refugee) && !empty($origin) && $origin == "to") ?
                             $refugee->id : $form_elem ),
                             ])
