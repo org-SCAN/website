@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePlaceRequest;
 use App\Models\Place;
 use \App\Http\Livewire\Forms\Coordinates;
 use \App\Http\Livewire\Forms\Area;
+use App\Models\ApiLog;
 
 class PlaceController extends Controller
 {
@@ -37,7 +38,9 @@ class PlaceController extends Controller
 
     public function store(StorePlaceRequest $request)
     {
+        $log = ApiLog::createFromRequest($request, 'Place');
         $place = $request->validated();
+        $place['api_log'] = $log->id;
         $place['coordinates'] = Coordinates::encode($place['coordinates']);
         $place['area'] = Area::encode($place['area']);
         $place = Place::create($place);

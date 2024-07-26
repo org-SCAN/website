@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 
 class Link extends Pivot
@@ -139,6 +140,12 @@ class Link extends Pivot
     public function placeTo() {
         return $this->belongsTo(Place::class,
             "to");
+    }
+
+    public static function createLinks($relationFrom, $relationTo) {
+        return self::whereRelation("$relationFrom.crew", 'crews.id', Auth::user()->crew->id)
+            ->whereRelation("$relationTo.crew", 'crews.id', Auth::user()->crew->id)
+            ->get();
     }
 
     /**

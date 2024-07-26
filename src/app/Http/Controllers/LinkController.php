@@ -56,7 +56,7 @@ class LinkController extends Controller
                     $link = Link::firstOrCreate($link, ["api_log" => $log->id]);
 
                 }
-                array_push($responseArray, $link->id);
+                array_push ($responseArray, $link->id);
             }
             return response(json_encode($responseArray),
                 201,
@@ -90,32 +90,32 @@ class LinkController extends Controller
      *
      * @return Response
      */
+
     public function index() {
-        $links_refugee_to_refugee = Link::whereRelation('RefugeeFrom.crew',
-            'crews.id',
-            Auth::user()->crew->id)->whereRelation('RefugeeTo.crew',
-            'crews.id',
-            Auth::user()->crew->id)->get();
-        $links_refugee_to_event = Link::whereRelation('RefugeeFrom.crew',
-            'crews.id',
-            Auth::user()->crew->id)->whereRelation('EventTo.crew',
-            'crews.id',
-            Auth::user()->crew->id)->get();
-        $links_event_to_refugee = Link::whereRelation('EventFrom.crew',
-            'crews.id',
-            Auth::user()->crew->id)->whereRelation('RefugeeTo.crew',
-            'crews.id',
-            Auth::user()->crew->id)->get();
-        $links_event_to_event = Link::whereRelation('EventFrom.crew',
-            'crews.id',
-            Auth::user()->crew->id)->whereRelation('EventTo.crew',
-            'crews.id',
-            Auth::user()->crew->id)->get();
+
+        $links_refugee_to_refugee = Link::createLinks('RefugeeFrom', 'RefugeeTo');
+        $links_refugee_to_event = Link::createLinks('RefugeeFrom', 'EventTo');
+        $links_refugee_to_place = Link::createLinks('RefugeeFrom', 'PlaceTo');
+        $links_event_to_refugee = Link::createLinks('EventFrom', 'RefugeeTo');
+        $links_event_to_event = Link::createLinks('EventFrom', 'EventTo');
+        $links_event_to_place = Link::createLinks('EventFrom', 'PlaceTo');
+        $links_place_to_place = Link::createLinks('PlaceFrom', 'PlaceTo');
+        $links_place_to_refugee = Link::createLinks('PlaceFrom', 'RefugeeTo');
+        $links_place_to_event = Link::createLinks('PlaceFrom', 'EventTo');
+
 
         // merge all links
-        $links = $links_refugee_to_refugee->merge($links_refugee_to_event)->merge($links_event_to_refugee)->merge($links_event_to_event);
-        return view("links.index",
-            compact('links'));
+        $links = $links_refugee_to_refugee
+            ->merge($links_refugee_to_event)
+            ->merge($links_refugee_to_place)
+            ->merge($links_event_to_refugee)
+            ->merge($links_event_to_event)
+            ->merge($links_event_to_place)
+            ->merge($links_place_to_place)
+            ->merge($links_place_to_refugee)
+            ->merge($links_place_to_event);
+
+        return view("links.index", compact('links'));
     }
 
     /**

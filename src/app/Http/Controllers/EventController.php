@@ -71,6 +71,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+        dd($event);
         return view("event.show", compact("event"));
     }
 

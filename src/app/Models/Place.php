@@ -37,7 +37,7 @@ class Place extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'coordinates', 'description', 'area'];
+    protected $fillable = ['name', 'coordinates', 'description', 'area', 'api_log'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -45,6 +45,11 @@ class Place extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    public function api_log()
+    {
+        return $this->hasOne(ApiLog::class, 'id', 'apiLog_id');
+    }
 
     public static function getAllPlacesNames() {
         $places = self::all();
