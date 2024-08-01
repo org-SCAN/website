@@ -77,4 +77,11 @@ class Event extends ListControl
             "api_log",
             "crew_id");
     }
+    public function user() {
+        return $this->hasOneThrough(User::class,
+            ApiLog::class,
+            "id", "id",
+            "api_log",
+            "user_id");
+    }
 }

@@ -26,32 +26,77 @@ class CytoscapeController extends Controller
         $lists = Field::whereCrewId(Auth::user()->crew_id)->whereRelation('dataType','name', 'List')->get();
         $lists_name = $lists->pluck('title', 'id');
         $field_list = json_encode($lists->pluck('linked_list','id'));
-        $relations = Link::whereRelation('RefugeeFrom.crew', 'crews.id', Auth::user()->crew->id)
+        $refugee_to_event_relations = Link::whereRelation('RefugeeFrom.crew', 'crews.id', Auth::user()->crew->id)
+            ->whereRelation('EventTo.crew', 'crews.id', Auth::user()->crew->id)
+            ->get();
+        $refugee_to_place_relations = Link::whereRelation('RefugeeFrom.crew', 'crews.id', Auth::user()->crew->id)
+            ->whereRelation('PlaceTo.crew', 'crews.id', Auth::user()->crew->id)
+            ->get();
+        $refugee_to_refugee_relations = Link::whereRelation('RefugeeFrom.crew', 'crews.id', Auth::user()->crew->id)
             ->whereRelation('RefugeeTo.crew', 'crews.id', Auth::user()->crew->id)
             ->get();
+        $event_to_event_relations = Link::whereRelation('EventFrom.crew', 'crews.id', Auth::user()->crew->id)
+            ->whereRelation('EventTo.crew', 'crews.id', Auth::user()->crew->id)
+            ->get();
+        $event_to_place_relations = Link::whereRelation('EventFrom.crew', 'crews.id', Auth::user()->crew->id)
+            ->whereRelation('PlaceTo.crew', 'crews.id', Auth::user()->crew->id)
+            ->get();
+        $event_to_refugee_relations = Link::whereRelation('EventFrom.crew', 'crews.id', Auth::user()->crew->id)
+            ->whereRelation('RefugeeTo.crew', 'crews.id', Auth::user()->crew->id)
+            ->get();
+        $place_to_place_relations = Link::whereRelation('PlaceFrom.crew', 'crews.id', Auth::user()->crew->id)
+            ->whereRelation('PlaceTo.crew', 'crews.id', Auth::user()->crew->id)
+            ->get();
+        $place_to_refugee_relations = Link::whereRelation('PlaceFrom.crew', 'crews.id', Auth::user()->crew->id)
+            ->whereRelation('RefugeeTo.crew', 'crews.id', Auth::user()->crew->id)
+            ->get();
+        $place_to_event_relations = Link::whereRelation('PlaceFrom.crew', 'crews.id', Auth::user()->crew->id)
+            ->whereRelation('EventTo.crew', 'crews.id', Auth::user()->crew->id)
+            ->get();
+        $relations = $refugee_to_event_relations
+            ->merge($refugee_to_place_relations)
+            ->merge($refugee_to_refugee_relations)
+            ->merge($event_to_event_relations)
+            ->merge($event_to_place_relations)
+            ->merge($event_to_refugee_relations)
+            ->merge($place_to_place_relations)
+            ->merge($place_to_refugee_relations)
+            ->merge($place_to_event_relations);
 
         //get the role field
 
         $links = array();
         $nodes = array();
         $refugees = array();
+        $events = array();
+        $places = array();
         $used_relations = array();
         foreach ($relations as $relation) {
 
             $node["data"] = array();
             $node["data"]["id"] = $relation->getFromId();
-            $node["data"]["name"] = $relation->refugeeFrom->best_descriptive_value;
+            $node["data"]["name"] = $relation->refugeeFrom?->best_descriptive_value
+                ?? $relation->eventFrom?->name
+                ?? $relation->placeFrom?->name
+                ?? "Ø";
 
             array_push($nodes, $node);
 
             $node["data"] = array();
             $node["data"]["id"] = $relation->getToId();
-            $node["data"]["name"] = $relation->refugeeTo->best_descriptive_value;
+            $node["data"]["name"] = $relation->refugeeTo?->best_descriptive_value
+                ?? $relation->eventTo?->name
+                ?? $relation->placeTo?->name
+                ?? "Ø";
 
             array_push($nodes, $node);
 
-            $refugees[$relation->getToId()] = $relation->refugeeTo->best_descriptive_value;
-            $refugees[$relation->getFromId()] = $relation->refugeeFrom->best_descriptive_value;
+            $refugees[$relation->getToId()] = $relation->refugeeTo->best_descriptive_value ?? "Ø";
+            $refugees[$relation->getFromId()] = $relation->refugeeFrom->best_descriptive_value ?? "Ø";
+            $events[$relation->getToId()] = $relation->eventTo->name ?? "Ø";
+            $events[$relation->getFromId()] = $relation->eventFrom->name ?? "Ø";
+            $places[$relation->getToId()] = $relation->placeTo->name ?? "Ø";
+            $places[$relation->getFromId()] = $relation->placeFrom->name ?? "Ø";
 
             $link["data"] = array();
             $link["data"]["id"] = $relation->id;
@@ -103,6 +148,6 @@ class CytoscapeController extends Controller
 
         // file_put_contents("js/cytoscape/content.json",json_encode(array_merge($nodes, $links)));
         Storage::disk('public')->put('content.json', $cytoscape_data);
-        return view("cytoscape.index", compact("relations", "refugees", "lists_name", "field_list", "persons", "used_relations"));
+        return view("cytoscape.index", compact("relations", "refugees", "events", "places","lists_name", "field_list", "persons", "used_relations"));
     }
 }
