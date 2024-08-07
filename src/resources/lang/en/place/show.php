@@ -12,4 +12,13 @@ return [
         'area' => 'Area',
         'number_of_polygons' => 'Number of polygons',
     ],
+    'item_relations' => 'Item relations',
+    'relations' => ':name relations',
+    'view_relations_in_graph' => 'View relations in graph',
+    'from' => 'From',
+    'relation' => 'Relation',
+    'to' => 'To',
+    'add_to' => 'Add To',
+    'add_from' => 'Add from',
+    'edit'=> 'Edit',
 ];

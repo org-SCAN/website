@@ -60,16 +60,17 @@ class Link extends Pivot
     protected $encryptable = [
     ];
 
-    public static function handleApiRequest($relation) {
+    public static function handleApiRequest($relation)
+    {
 
         //update or create relation
 
         $link = Link::updateOrCreate(
             [
                 "from" => $relation["from"],
-                "to" =>  $relation["to"],
+                "to" => $relation["to"],
                 "relation_id" => $relation["relation_id"],
-                "application_id"=>$relation["application_id"]
+                "application_id" => $relation["application_id"]
             ],
             [
                 "date" => request("date"),
@@ -93,8 +94,9 @@ class Link extends Pivot
     }
 
     public static function relationExists($from,
-        $to, $relation_type,
-        $application_id) {
+                                          $to, $relation_type,
+                                          $application_id)
+    {
         $potential_link = self::where("application_id",
             $application_id)->where("from",
             $from)->where("to",
@@ -109,40 +111,67 @@ class Link extends Pivot
      *
      * @return mixed
      */
-    public function getBestDescriptiveValueAttribute() {
-        return $this->refugeeFrom->bestDescriptiveValue." <-> ".$this->refugeeTo->bestDescriptiveValue;
+    public function getBestDescriptiveValueAttribute()
+    {
+        $fromValue = $this->refugeeFrom->bestDescriptiveValue
+            ?? $this->placeFrom->name
+            ?? $this->eventFrom->name
+            ?? null;
+        $toValue = $this->refugeeTo->bestDescriptiveValue
+            ?? $this->placeTo->name
+            ?? $this->eventTo->name
+            ?? null;
+
+        if ($fromValue !== null && $toValue !== null) {
+            return "{$fromValue} <-> {$toValue}";
+        }
     }
 
-    public function refugeeFrom() {
+    public
+    function refugeeFrom()
+    {
         return $this->belongsTo(Refugee::class,
             "from");
     }
 
-    public function refugeeTo() {
+    public
+    function refugeeTo()
+    {
         return $this->belongsTo(Refugee::class,
             "to");
     }
 
-    public function eventFrom() {
+    public
+    function eventFrom()
+    {
         return $this->belongsTo(Event::class,
             "from");
     }
-    public function eventTo() {
+
+    public
+    function eventTo()
+    {
         return $this->belongsTo(Event::class,
             "to");
     }
 
-    public function placeFrom() {
+    public
+    function placeFrom()
+    {
         return $this->belongsTo(Place::class,
             "from");
     }
 
-    public function placeTo() {
+    public
+    function placeTo()
+    {
         return $this->belongsTo(Place::class,
             "to");
     }
 
-    public static function createLinks($relationFrom, $relationTo) {
+    public
+    static function createLinks($relationFrom, $relationTo)
+    {
         return self::whereRelation("$relationFrom.crew", 'crews.id', Auth::user()->crew->id)
             ->whereRelation("$relationTo.crew", 'crews.id', Auth::user()->crew->id)
             ->get();
@@ -151,11 +180,15 @@ class Link extends Pivot
     /**
      * @return BelongsTo
      */
-    public function relation() {
+    public
+    function relation()
+    {
         return $this->belongsTo(ListRelation::class);
     }
 
-    public function crew() {
+    public
+    function crew()
+    {
         return $this->hasOneThrough(Crew::class,
             ApiLog::class,
             "id", "id",
@@ -167,7 +200,9 @@ class Link extends Pivot
      * Get from Id
      * @return mixed
      */
-    public function getFromId() {
+    public
+    function getFromId()
+    {
         return $this->attributes["from"];
     }
 
@@ -175,11 +210,15 @@ class Link extends Pivot
      * Get to Id
      * @return mixed
      */
-    public function getToId() {
+    public
+    function getToId()
+    {
         return $this->attributes["to"];
     }
 
-    public function getRelationWeight() {
+    public
+    function getRelationWeight()
+    {
         return ListRelation::find($this->getRelationId())->importance;
     }
 
@@ -190,7 +229,9 @@ class Link extends Pivot
      * @param $relation
      * @return mixed
      */
-    public function getRelationId() {
+    public
+    function getRelationId()
+    {
         return $this->attributes["relation"];
     }
 
@@ -198,12 +239,14 @@ class Link extends Pivot
      * Store the relation id accorting its key or its code
      * @param $value
      */
-/*
-    public function setRelationAttribute($value) {
-        $this->attributes["relation"] = ListRelation::getIdFromValue($value);
-    }*/
+    /*
+        public function setRelationAttribute($value) {
+            $this->attributes["relation"] = ListRelation::getIdFromValue($value);
+        }*/
 
-    public function getDateAttribute() {
+    public
+    function getDateAttribute()
+    {
         return Carbon::parse($this->attributes['date']);
     }
 

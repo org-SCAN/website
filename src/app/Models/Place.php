@@ -66,4 +66,15 @@ class Place extends Model
             "api_log",
             "crew_id");
     }
+    public function toRelation() {
+        return $this->belongsToMany(ListRelation::class,
+            "links", "to",
+            "relation_id")->using(Link::class)->wherePivotNull("deleted_at")->withPivot("from")->withPivot("id");
+    }
+
+    public function fromRelation() {
+        return $this->belongsToMany(ListRelation::class,
+            "links", "from",
+            "relation_id")->using(Link::class)->wherePivotNull("deleted_at")->withPivot("to")->withPivot("id");
+    }
 }

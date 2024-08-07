@@ -9,6 +9,8 @@ use App\Models\Event;
 use App\Models\Language;
 use App\Models\ListControl;
 use App\Models\Translation;
+use App\Models\Link;
+use App\Models\Crew;
 use Illuminate\View\View;
 
 class EventController extends Controller
@@ -71,7 +73,6 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        dd($event);
         return view("event.show", compact("event"));
     }
 

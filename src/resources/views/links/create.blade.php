@@ -83,7 +83,7 @@
                             'title' => __('links/create.item_2'),
                             'placeHolder' => __('links/create.select_item_2'),
                             'associated_list' => $lists["all"],
-                            'previous' => old($form_elem, (!empty($refugee) && !empty($origin) && $origin == "to") ?
+                            'previous' => old($form_elem, (!empty($refugee) && !empty($event) && !empty($place) && !empty($origin) && $origin == "to") ?
                             $refugee->id : $form_elem ),
                             ])
 
