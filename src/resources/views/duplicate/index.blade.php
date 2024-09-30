@@ -53,7 +53,7 @@
                                     'title' => __('duplicate/index.matching_algorithm'),
                                     'associated_list' => $list,
                                     'placeHolder' => __('duplicate/index.select_matching_algorithm'),
-                                    'previous' => ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->selected_duplicate_algorithm_id)->id ?? null
+                                    'previous' => ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->duplicate_algorithm_id)->id ?? null
                                     ])
                                 <input
                                     class="text-indigo-600 no-underline hover:underline hover:text-blue-900 cursor-pointer m-3 bg-transparent"

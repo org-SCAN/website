@@ -34,11 +34,11 @@ class DuplicateController extends Controller
 
         $matching_algorithm = ListMatchingAlgorithm::find(
             Crew::find(
-                Auth::user()->crew_id)->selected_duplicate_algorithm_id) ?? ListMatchingAlgorithm::where("name", "Levenshtein")->first();
+                Auth::user()->crew_id)->duplicate_algorithm_id) ?? ListMatchingAlgorithm::where("name", "Levenshtein")->first();
 
         $duplicates = Duplicate::where("crew_id",
             Auth::user()->crew_id)->where('resolved', false)
-            ->where('selected_duplicate_algorithm_id', $matching_algorithm->id)
+            ->where('duplicate_algorithm_id', $matching_algorithm->id)
             ->orderByDesc("similarity")->take(20)->get();
 
         $commandRun = CommandRun::lastEnded('duplicate:compute');
@@ -182,7 +182,7 @@ class DuplicateController extends Controller
         $matching_algorithm_id = $request->input('matching_algorithm_id');
         $crew_id = Auth::user()->crew_id;
         $crew = Crew::find($crew_id);
-        $crew->selected_duplicate_algorithm_id = $matching_algorithm_id;
+        $crew->duplicate_algorithm_id = $matching_algorithm_id;
         $crew->save();
         return redirect()->route('duplicate.index');
     }

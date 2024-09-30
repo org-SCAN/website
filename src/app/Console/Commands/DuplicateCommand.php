@@ -57,7 +57,7 @@ class DuplicateCommand extends Command
                         "person1_id" => $person,
                         "person2_id" => $person2,
                         "crew_id" => $crew->id,
-                        "selected_duplicate_algorithm_id" => $algorithm_id,
+                        "duplicate_algorithm_id" => $algorithm_id,
                     ]);
                     $duplicate->similarity = $similarity;
                     $duplicate->command_run_id = $command->id;

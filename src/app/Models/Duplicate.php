@@ -50,7 +50,7 @@ class Duplicate extends Model
         $persons = $crew->persons;
         $similarities = [];
 
-        $selected_duplicate_algorithm = ListMatchingAlgorithm::find($crew->selected_duplicate_algorithm_id);
+        $selected_duplicate_algorithm = ListMatchingAlgorithm::find($crew->duplicate_algorithm_id);
         if ($selected_duplicate_algorithm == null) {
             $selected_duplicate_algorithm = ListMatchingAlgorithm::where("name", "Levenshtein")->first();
         }
@@ -82,11 +82,11 @@ class Duplicate extends Model
                 $notAlreadyCompared = !isset($similarities[$person2->id][$person->id]);
                 $existingDuplicate = Duplicate::where('person1_id',
                     $person->id)->where('person2_id',
-                    $person2->id)->where('selected_duplicate_algorithm_id', $algorithm_id)->first();
+                    $person2->id)->where('duplicate_algorithm_id', $algorithm_id)->first();
                 if ($existingDuplicate == null) {
                     $existingDuplicate = Duplicate::where('person1_id',
                         $person2->id)->where('person2_id',
-                        $person->id)->where('selected_duplicate_algorithm_id', $algorithm_id)->first();
+                        $person->id)->where('duplicate_algorithm_id', $algorithm_id)->first();
                 }
                 $notUpdatedSinceLastComparison = ($last_comparison == null || $existingDuplicate == null || ($existingDuplicate->updated_at < $person->updated_at || $existingDuplicate->updated_at < $person2->updated_at));
                 $notResolved = !self::isResolved($person,

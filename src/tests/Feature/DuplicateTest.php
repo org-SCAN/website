@@ -343,7 +343,7 @@ class DuplicateTest extends PermissionsTest
         // Check the algorithm has been correctly selected in the user's crew
         $this->assertDatabaseHas('crews', [
             'id' => $this->admin->crew->id,
-            'selected_duplicate_algorithm_id' => $algorithm->id
+            'duplicate_algorithm_id' => $algorithm->id
         ]);
     }
 
@@ -353,7 +353,7 @@ class DuplicateTest extends PermissionsTest
 
         // Get the user's crew and set an algorithm
         $crew = $this->admin->crew;
-        $crew->selected_duplicate_algorithm_id = $algorithm->id;
+        $crew->duplicate_algorithm_id = $algorithm->id;
         $crew->save();
 
         // select a null algorithm
@@ -364,7 +364,7 @@ class DuplicateTest extends PermissionsTest
         // Check the algorithm has not been modified
         $this->assertDatabaseHas('crews', [
             'id' => $crew->id,
-            'selected_duplicate_algorithm_id' => $algorithm->id
+            'duplicate_algorithm_id' => $algorithm->id
         ]);
     }
 
@@ -395,7 +395,7 @@ class DuplicateTest extends PermissionsTest
             $this->assertDatabaseHas('duplicates', [
                 'id' => $duplicate->id,
                 'resolved' => false,
-                'selected_duplicate_algorithm_id' => $algorithm->id
+                'duplicate_algorithm_id' => $algorithm->id
             ]);
         }
     }
@@ -420,8 +420,8 @@ class DuplicateTest extends PermissionsTest
 
         $this->artisan('duplicate:compute');
 
-        $duplicates_first = Duplicate::where('resolved', false)->where('selected_duplicate_algorithm_id', $first_algorithm->id)->orderByDesc("similarity")->get();
-        $duplicates_last = Duplicate::where('resolved', false)->where('selected_duplicate_algorithm_id', $last_algorithm->id)->orderByDesc("similarity")->get();
+        $duplicates_first = Duplicate::where('resolved', false)->where('duplicate_algorithm_id', $first_algorithm->id)->orderByDesc("similarity")->get();
+        $duplicates_last = Duplicate::where('resolved', false)->where('duplicate_algorithm_id', $last_algorithm->id)->orderByDesc("similarity")->get();
 
         // Check that the duplicates are displayed with the selected algorithm
         $this->actingAs($this->admin)

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('duplicates', function (Blueprint $table) {
-            $table->foreignUuid('selected_duplicate_algorithm_id')->nullable();
+            $table->foreignUuid('duplicate_algorithm_id')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('duplicates', function (Blueprint $table) {
-            $table->dropColumn('selected_duplicate_algorithm_id');
+            $table->dropColumn('duplicate_algorithm_id');
         });
     }
 };
