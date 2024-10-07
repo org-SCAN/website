@@ -38,19 +38,13 @@
                         @csrf
                         <div class="flex justify-between items-center">
                             <h3 class="text-l text-gray-800 leading-tight m-3">{{ __('duplicate/index.matching_algorithm') }}</h3>
-                            <div>
-                                <p class="mb-0">
-                                    {{ __('duplicate/index.current_algorithm') }}:
-                                    <span class="font-bold">{{ $matching_algorithm->name }}</span>
-                                </p>
-                            </div>
-                            <div class="flex justify-center">
+                            <div class="flex justify-center align-items-center">
                                 @php($form_elem = "matching_algorithm_id")
                                 @php($list = ListMatchingAlgorithm::list())
                                 @livewire('forms.form', [
                                     'form_elem' => $form_elem,
                                     'type' => 'select-dropdown',
-                                    'title' => __('duplicate/index.matching_algorithm'),
+                                    'title' => null,
                                     'associated_list' => $list,
                                     'placeHolder' => __('duplicate/index.select_matching_algorithm'),
                                     'previous' => ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->duplicate_algorithm_id)->id ?? null
@@ -68,9 +62,13 @@
                         <form method="get" action="{{route('duplicate.multiple_resolve')}}">
                             @csrf
                             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                                <div class="flex justify-between">
+                                <div class="flex justify-between align-items-center">
                                     <h3 class="text-l text-gray-800 leading-tight m-3">{{ __('duplicate/index.duplicate') }} </h3>
-                                    <input
+                                        <span class="h-auto">
+                                            {{ __('duplicate/index.matching_algorithm') }}:
+                                            <span class="font-bold">{{ $matching_algorithm->name }}</span>
+                                        </span>
+                                        <input
                                         class="text-indigo-600 no-underline hover:underline hover:text-blue-900 cursor-pointer m-3 bg-transparent"
                                         type="submit"
                                         value="{{ __('duplicate/index.mark_selected_as_not_duplicated') }}">
