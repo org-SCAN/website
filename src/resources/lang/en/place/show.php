@@ -9,5 +9,7 @@ return [
         'coordinates' => 'Coordinates',
         'lat' => 'Latitude',
         'lon' => 'Longitude',
+        'area' => 'Area',
+        'number_of_polygons' => 'Number of polygons',
     ],
 ];

@@ -1,5 +1,6 @@
 @php use App\Models\ListEventType; @endphp
 @php use App\Models\ListCountry; @endphp
+
 @section('title', __('event/create.add_new_event'))
 <x-app-layout>
     <x-slot name="header">
@@ -25,7 +26,7 @@
                                 'form_elem' => $form_elem,
                                 'type' => "text",
                                 'title' => __("event/create.event_name"),
-                                'hint' => __("event/create.event_name_hint")
+                                'hint' => __("event/create.event_name_hint"),
                                 ])
                         </div>
 
@@ -102,6 +103,16 @@
                                 ])
                         </div>
 
+                        <!--  area SECTION  -->
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            @php($form_elem = "area")
+                            @livewire("forms.form", [
+                                'form_elem' => $form_elem,
+                                'type' => "area",
+                                'title' => __('event/create.area'),
+                                'hint' => __('event/create.area_hint'),
+                                ])
+                        </div>
                         <!--  description SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "description")

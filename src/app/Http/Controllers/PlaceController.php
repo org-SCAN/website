@@ -6,6 +6,7 @@ use App\Http\Requests\StorePlaceRequest;
 use App\Http\Requests\UpdatePlaceRequest;
 use App\Models\Place;
 use \App\Http\Livewire\Forms\Coordinates;
+use \App\Http\Livewire\Forms\Area;
 
 class PlaceController extends Controller
 {
@@ -38,9 +39,9 @@ class PlaceController extends Controller
     {
         $place = $request->validated();
         $place['coordinates'] = Coordinates::encode($place['coordinates']);
+        $place['area'] = Area::encode($place['area']);
         $place = Place::create($place);
         $place->save();
-
         return redirect('place');
     }
 
@@ -57,8 +58,10 @@ class PlaceController extends Controller
 
     public function update(UpdatePlaceRequest $request, Place $place)
     {
-        $place['coordinates'] = Coordinates::encode($place['coordinates']);
-        $place->update($request->validated());
+        $new_place = $request->validated();
+        $place['coordinates'] = Coordinates::encode($new_place['coordinates']);
+        $place['area'] = Area::encode($new_place['area']);
+        $place->update($new_place);
 
         return redirect()->route('place.index');
     }

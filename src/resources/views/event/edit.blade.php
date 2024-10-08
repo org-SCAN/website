@@ -109,6 +109,19 @@
                                 ])
                         </div>
 
+                        <!--  area SECTION  -->
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            @php($form_elem = "area")
+                            @livewire("forms.form", [
+                                'form_elem' => $form_elem,
+                                'type' => "area",
+                                'title' => __('event/create.area'),
+                                'hint' => __('event/create.area_hint'),
+                                'previous' => $event->{$form_elem},
+                                'dataType' => \App\Models\ListDataType::where('name', 'Area')->first()
+                                ])
+                        </div>
+
                         <!--  description SECTION  -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "description")

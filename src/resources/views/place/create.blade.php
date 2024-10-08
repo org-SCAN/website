@@ -41,6 +41,16 @@
                                 ])
                         </div>
 
+                        <div class="px-4 py-5 bg-white sm:p-6" id="area">
+                            @php($form_elem = "area")
+                            @livewire("forms.form", [
+                                'form_elem' => $form_elem,
+                                'type' => "area",
+                                'title' => __('place/create.fields.area'),
+                                'hint' => __('place/create.placeholders.area')
+                                ])
+                        </div>
+
                         <div class="px-4 py-5 bg-white sm:p-6">
                             @php($form_elem = "description")
                             @livewire("forms.form", [

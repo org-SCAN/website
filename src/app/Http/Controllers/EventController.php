@@ -56,6 +56,7 @@ class EventController extends Controller
         $event = $request->validated();
         $event["api_log"] = $log->id;
         $event["coordinates"] = \App\Http\Livewire\Forms\Coordinates::encode($event["coordinates"]);
+        $event["area"] = \App\Http\Livewire\Forms\Area::encode($event["area"]);
         $event = Event::create($event);
         $listControl = ListControl::where("name", "Event")->first();
         Translation::handleTranslation($listControl, $event->{$listControl->key_value}, $event->{$listControl->displayed_value}, Language::defaultLanguage()->id);
@@ -94,6 +95,7 @@ class EventController extends Controller
     public function update(UpdateEventRequest $request, Event $event)
     {
         $event["coordinates"] = \App\Http\Livewire\Forms\Coordinates::encode($event["coordinates"]);
+        $event["area"] = \App\Http\Livewire\Forms\Area::encode($event["area"]);
         $event->update($request->validated());
         return redirect()->route('event.index');
     }
