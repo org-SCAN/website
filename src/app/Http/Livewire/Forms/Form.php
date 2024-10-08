@@ -9,7 +9,6 @@ use Throwable;
 
 class Form extends Component
 {
-
     public $form_elem = null;
     public $title = null;
     public $placeHolder = null;
@@ -22,11 +21,12 @@ class Form extends Component
     public $rangeable = null;
     public $field = null;
     public $dataType = null;
+    public $fieldCount = 1;
 
     public function render()
     {
 
-        if($this->field instanceof Field){
+        if ($this->field instanceof Field) {
             $this->title = $this->title ?? $this->field->title;
             $this->placeHolder = $this->placeHolder ?? $this->field->placeholder;
             $this->type = $this->type ?? $this->field->dataType->html_type;
@@ -34,7 +34,7 @@ class Form extends Component
             $this->rangeable = $this->rangeable ?? $this->field->range;
             $this->dataType = $this->dataType ?? $this->field->dataType;
         }
-        if($this->previous && $this->dataType && $this->dataType->model){
+        if ($this->previous && $this->dataType && $this->dataType->model) {
             $this->previous = $this->dataType->model::decode($this->previous);
         }
         // check if associated list is set and if it is an uuid
@@ -54,5 +54,20 @@ class Form extends Component
             return false;
         }
     }
-
+    public function mount()
+    {
+        if (session()->has('errors')) {
+            $this->fieldCount = session()->get('fieldCount', 1);
+        }
+    }
+    public function addField()
+    {
+        $this->fieldCount++;
+        session()->put('fieldCount', $this->fieldCount);
+    }
+    public function removeField()
+    {
+        $this->fieldCount--;
+        session()->put('fieldCount', $this->fieldCount);
+    }
 }

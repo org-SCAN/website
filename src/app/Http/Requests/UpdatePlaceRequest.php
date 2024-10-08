@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Livewire\Forms\Coordinates;
+use App\Http\Livewire\Forms\Area;
 
 class UpdatePlaceRequest extends FormRequest
 {
@@ -27,6 +28,6 @@ class UpdatePlaceRequest extends FormRequest
         return [
                 "name" => "required|unique:places,name," . $this->route('place')->id . "|string",
                 'description' => 'nullable|string',
-        ] + Coordinates::rules('coordinates');
+        ] + Coordinates::rules('coordinates') + Area::rules('area');
     }
 }

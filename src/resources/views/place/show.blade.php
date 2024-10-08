@@ -1,4 +1,5 @@
-@php use App\Models\Place @endphp
+@php use App\Models\Place
+@endphp
 @section('title', __('place/show.view_place_details', ['place_name' => $place->name]))
 
 <x-app-layout>
@@ -24,7 +25,6 @@
                             <a href="{{ route('place.edit', $place->id) }}"
                                class="bg-blue-200 hover:bg-blue-300 text-black font-bold py-2 px-4 rounded">{{ __('common.edit') }}</a>
                         @endcan
-
 
                         @can("delete", $place)
                             @method('DELETE')
@@ -83,6 +83,27 @@
                                     <th scope="col"
                                         class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
                                         text-gray-500 uppercase tracking-wider">
+                                        {{ __('place/show.fields.area') }}
+                                    </th>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                    bg-white divide-y divide-gray-200">
+                                        <span>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                @if($place->area)
+                                                    <span>
+                                                        {{ __('place/show.fields.number_of_polygons') }} : {{ count(json_decode($place->area, true)['polygons']) ?? ""}}
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </span>
+                                    </td>
+                                </tr>
+                                <tr class="border-b">
+                                    <th scope="col"
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                        text-gray-500 uppercase tracking-wider">
                                         {{ __('place/show.fields.description') }}
                                     </th>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
@@ -95,23 +116,17 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="block mb-8 mt-3">
                 <div class="-my-2 sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div style="height: 400px"
                              class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                            @map([
-                                'lat' => json_decode($place->coordinates, true)['lat'],
-                                'lng' => json_decode($place->coordinates, true)['long'],
-                                'zoom' => 10,
-                                'markers' => [
-                                    ['lat' => json_decode($place->coordinates, true)['lat'],
-                                    'lng' => json_decode($place->coordinates, true)['long'],]
-                                ]
-                            ])
-                            @mapscripts
+                            @include('map.leaflet', [
+                                        'initialMarkers' => [
+                                            ['lat' => json_decode($place->coordinates, true)['lat'], 'lng' => json_decode($place->coordinates, true)['long']]
+                                        ],
+                                        'initialArea' => [json_decode($place->area, true)['polygons']
+                                    ]])
                         </div>
                     </div>
                 </div>

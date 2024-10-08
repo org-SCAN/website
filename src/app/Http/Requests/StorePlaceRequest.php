@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Livewire\Forms\Coordinates;
+use App\Http\Livewire\Forms\Area;
 
 class StorePlaceRequest extends FormRequest
 {
@@ -27,6 +28,6 @@ class StorePlaceRequest extends FormRequest
         return [
             'name' => 'required|string|max:255|unique:places,name',
             'description' => 'nullable|string',
-        ] + Coordinates::rules('coordinates');
+        ] + Coordinates::rules('coordinates') + Area::rules('area');
     }
 }

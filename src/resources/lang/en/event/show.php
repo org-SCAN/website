@@ -12,6 +12,8 @@ return [
     'start_date' => 'Start date',
     'stop_date' => 'Stop date',
     'coordinates' => 'Coordinates',
+    'area' => 'Area',
+    'listCoordinates' => 'List of coordinates',
     'description' => 'Description',
     'lat' => 'Latitude',
     'long' => 'Longitude',

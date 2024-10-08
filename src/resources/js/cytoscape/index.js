@@ -155,7 +155,7 @@ function drawGraph(){
             style: {
                 'background-color': '#666',
                 'label': 'data(name)',
-                'font-size': 25
+                'font-size': 20,
             }
         })
 
@@ -321,17 +321,20 @@ function drawGraph(){
                 },
                 {
                     content: 'Relation details',
-                    select: function(){
+                    select: function(ele){
                         relation_details = !relation_details;
                         if (relation_details) {
-                            cy.style().selector('edge').style('label', 'data(label)').update();
-                        }else{
+                            cy.style().selector('edge').style('label' , 'data(infos)').update();
+                        }
+                        else {
                             cy.style().selector("edge").style('label','').update()
                         }
-                    }
-                }
+                        cy.fit(cy.edges().labels(),50)
+                    },
+                },
             ]
         });
+
         cy.cxtmenu({
             selector: 'edge',
 
@@ -339,9 +342,10 @@ function drawGraph(){
                 {
                     content: 'Show detail',
                     select: function(ele){
-                        ele.style("label", ele.data("detail"))
+                    ele.style("label", ele.data("infos"))
                     }
                 },
+
                 {
                     content: 'Hide detail',
                     select: function(ele){
@@ -354,9 +358,10 @@ function drawGraph(){
                     select: function(ele){
                         window.location.replace("/links/"+ele.id()+"/edit");
                     }
-                }
+                },
             ]
         });
+
 
 
 

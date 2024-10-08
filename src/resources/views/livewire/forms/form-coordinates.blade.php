@@ -2,13 +2,13 @@
     <label for="{{$form_elem}}" class="block font-medium text-md text-gray-700">{{$title}}</label>
     <div class="flex">
         <div class="flex-auto pr-4">
-            <em class="text-sm">Latitude :</em>
+            <em class="text-sm">{{ __("livewire/forms/form-coordinates.latitude") }}</em>
             <input type="text" name="{{$form_elem}}[lat]" id="lat" value="{{(old($form_elem, $previous ?? ""))['lat'] ?? ""}}"
                 class="form-input rounded-md shadow-sm mt-1 block w-full"
                 placeholder="{{$placeHolder}}"/>
         </div>
         <div class="flex-auto pr-4">
-            <em class="text-sm">Longitude :</em>
+            <em class="text-sm">{{ __("livewire/forms/form-coordinates.longitude") }}</em>
             <input type="text" name="{{$form_elem}}[long]" id="long" value="{{(old($form_elem, $previous ?? ""))['long'] ?? ""}}"
                 class="form-input rounded-md shadow-sm mt-1 block w-full"
                 placeholder="{{$placeHolder}}"/>
