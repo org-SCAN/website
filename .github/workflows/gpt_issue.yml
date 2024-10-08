@@ -37,5 +37,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.GPT_KEY }}
         with:
-          ai_model: 'gpt-4-turbo-preview'
-          max_tokens: '1000'
+          ai_model: 'gpt-4o'
+          max_tokens: '1500'

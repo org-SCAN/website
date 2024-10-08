@@ -13,6 +13,7 @@ return [
     'filters' => 'Filters',
     'select_first_item' => '-- Select the first Item --',
     'select_second_item' => '-- Select the second Item --',
+    'select_type_of_relation' => '-- Select relations to hide --',
     'actions' => 'Actions',
     'clear' => 'Clear',
     'show_centrality' => 'Show centrality',
