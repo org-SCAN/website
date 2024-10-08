@@ -1,10 +1,10 @@
 @php use App\Models\Source; @endphp
-@section('title',"View all sources")
+@section('title', __("sources/index.title"))
 @livewireStyles
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Sources') }}
+            {{ __('sources/index.sources') }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
             <div class="block mb-8">
                 @can('create', Source::class)
                     <a href="{{ route("source.create", []) }}"
-                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add source</a>
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">{{ __('sources/index.add_source') }}</a>
                 @endcan
             </div>
             <div class="flex flex-col">
@@ -24,9 +24,9 @@
                                 <caption class="sr-only">Sources</caption>
                                 <thead>
                                 <tr>
-                                    <th class="toFilter">Name</th>
-                                    <th class="toFilter">Type</th>
-                                    <th class="toFilter">Trust</th>
+                                    <th class="toFilter">{{ __('sources/index.name') }}</th>
+                                    <th class="toFilter">{{ __('sources/index.type') }}</th>
+                                    <th class="toFilter">{{ __('sources/index.trust') }}</th>
                                     @can('update', $sources->first())
                                         <th></th>
                                     @endcan
@@ -41,7 +41,7 @@
                                         <td>{{ $source->type->displayed_value_content ?? "" }}</td>
                                         <td>{{ $source->trust }}</td>
                                         @can('update', $source)
-                                            <td><a href="{{route('source.edit',  $source->id)}}">Edit</a></td>
+                                            <td><a href="{{route('source.edit',  $source->id)}}">{{ __('common.edit') }}</a></td>
                                         @endcan
                                     </tr>
                                 @endforeach

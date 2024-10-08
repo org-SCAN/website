@@ -20,6 +20,7 @@
         "laravel/jetstream": "^2.12",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.5",
+        "larswiegers/laravel-maps": "^0.18.0",
         "livewire/livewire": "^2.0",
         "maatwebsite/excel": "^3.1",
         "mediconesystems/livewire-datatables": "dev-master",
@@ -29,7 +30,7 @@
     "require-dev": {
         "brianium/paratest": "*",
         "fakerphp/faker": "^1.9.1",
-        "laravel/sail": "^1.0.1",
+        "laravel/sail": "^1.26",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^6.3",
         "phpunit/phpunit": "^9.3.3",

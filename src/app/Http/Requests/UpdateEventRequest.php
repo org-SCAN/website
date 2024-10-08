@@ -27,10 +27,10 @@ class UpdateEventRequest extends FormRequest
             "name" => "required|unique:events,name," . $this->route('event')->id . "|string",
             "event_type_id" => "required|exists:list_event_types,id",
             "country_id" => "nullable|exists:list_countries,id",
-            "location_detail" => "nullable|string",
+            "location_details" => "nullable|string",
             "start_date" => "nullable|date",
             "stop_date" => "nullable|date|after_or_equal:start_date",
             "description" => "nullable|string"
-        ]  + \App\Http\Livewire\Forms\Coordinates::rules("coordinates");
+        ]  + \App\Http\Livewire\Forms\Coordinates::rules("coordinates") + \App\Http\Livewire\Forms\Area::rules("area");
     }
 }

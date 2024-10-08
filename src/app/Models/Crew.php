@@ -69,5 +69,13 @@ class Crew extends Model
         return $this->hasMany(Field::class);
     }
 
+    public static function list() {
+        // order by displayed value and pluck it
+        $displayed_value = "name";
+
+        return self::orderBy($displayed_value)->pluck($displayed_value,
+            'id');
+    }
+
 
 }

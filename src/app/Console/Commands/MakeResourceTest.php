@@ -70,7 +70,10 @@ class MakeResourceTest extends Command
         //create the test file
         //call function defined in parent class
 
-
+        if ($route == '' || $model == '') {
+            $this->info("Invalid arguments");
+            return Command::FAILURE;
+        }
         $path = MakeCommandSet::getSourceFilePath("tests/Feature",
             "{$model}Test"); //get the path to witch the model has to be created
 
