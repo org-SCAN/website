@@ -410,6 +410,15 @@ function drawGraph(){
             $(this).blur();
         }) ;
 
+        // On relations dropdown change, we change the layout accordingly
+        window.$("#relations").change(function() {
+            let relation = $(this).val();
+            if (relation) {
+                cy.filter('edge[label = "' + relation + '"]').hide();
+            }
+            $(this).blur();
+        });
+
         // On layout dropdown change, we change the layout accordingly
         window.$("#list").change(function() {
             if($(this).val() == "") {

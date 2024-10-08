@@ -111,6 +111,19 @@
                                                 'showError' => false,
                                                 ])
                                             </div>
+                                            <div class="col-md-12" style="width:100%">
+                                                @php
+                                                    $relations_list = array_column($used_relations, 'name');
+                                                    $relations = array_combine($relations_list, $relations_list);
+                                                @endphp
+                                                @livewire('forms.form', [
+                                                'type' => 'select-dropdown',
+                                                'form_elem' => 'relations',
+                                                'placeHolder' => __('cytoscape/index.select_type_of_relation'),
+                                                'associated_list' => $relations,
+                                                'showError' => false,
+                                                ])
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -150,4 +163,5 @@
             var persons = {!!  $persons!!};
             var field_list = {!! $field_list !!};
         </script>
+    </div>
 </x-app-layout>
