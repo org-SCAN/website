@@ -61,4 +61,43 @@ class Event extends ListControl
         }
         return $persons_in_event;
     }
+
+    public static function getAllEventsNames(){
+        $events = Event::all();
+        $events_name = [];
+        foreach ($events as $event){
+            $events_name[$event->id] = $event->name;
+        }
+        return $events_name;
+    }
+    public function crew() {
+        return $this->hasOneThrough(Crew::class,
+            ApiLog::class,
+            "id", "id",
+            "api_log",
+            "crew_id");
+    }
+    public function user() {
+        return $this->hasOneThrough(User::class,
+            ApiLog::class,
+            "id", "id",
+            "api_log",
+            "user_id");
+    }
+    public function getRelationsAttribute() {
+        return [
+            $this->fromRelation,
+            $this->toRelation,
+        ];
+    }
+    public function toRelation() {
+        return $this->belongsToMany(ListRelation::class,
+            "links", "to",
+            "relation_id")->using(Link::class)->wherePivotNull("deleted_at")->withPivot("from")->withPivot("id");
+    }
+    public function fromRelation() {
+        return $this->belongsToMany(ListRelation::class,
+            "links", "from",
+            "relation_id")->using(Link::class)->wherePivotNull("deleted_at")->withPivot("to")->withPivot("id");
+    }
 }

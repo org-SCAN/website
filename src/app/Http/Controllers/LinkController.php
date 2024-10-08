@@ -13,6 +13,8 @@ use App\Models\ListControl;
 use App\Models\ListRelation;
 use App\Models\ListRelationType;
 use App\Models\Refugee;
+use App\Models\Event;
+use App\Models\Place;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -54,7 +56,7 @@ class LinkController extends Controller
                     $link = Link::firstOrCreate($link, ["api_log" => $log->id]);
 
                 }
-                array_push($responseArray, $link->id);
+                array_push ($responseArray, $link->id);
             }
             return response(json_encode($responseArray),
                 201,
@@ -88,14 +90,32 @@ class LinkController extends Controller
      *
      * @return Response
      */
+
     public function index() {
-        $links = Link::whereRelation('RefugeeFrom.crew',
-            'crews.id',
-            Auth::user()->crew->id)->whereRelation('RefugeeTo.crew',
-            'crews.id',
-            Auth::user()->crew->id)->get();
-        return view("links.index",
-            compact('links'));
+
+        $links_refugee_to_refugee = Link::createLinks('RefugeeFrom', 'RefugeeTo');
+        $links_refugee_to_event = Link::createLinks('RefugeeFrom', 'EventTo');
+        $links_refugee_to_place = Link::createLinks('RefugeeFrom', 'PlaceTo');
+        $links_event_to_refugee = Link::createLinks('EventFrom', 'RefugeeTo');
+        $links_event_to_event = Link::createLinks('EventFrom', 'EventTo');
+        $links_event_to_place = Link::createLinks('EventFrom', 'PlaceTo');
+        $links_place_to_place = Link::createLinks('PlaceFrom', 'PlaceTo');
+        $links_place_to_refugee = Link::createLinks('PlaceFrom', 'RefugeeTo');
+        $links_place_to_event = Link::createLinks('PlaceFrom', 'EventTo');
+
+
+        // merge all links
+        $links = $links_refugee_to_refugee
+            ->merge($links_refugee_to_event)
+            ->merge($links_refugee_to_place)
+            ->merge($links_event_to_refugee)
+            ->merge($links_event_to_event)
+            ->merge($links_event_to_place)
+            ->merge($links_place_to_place)
+            ->merge($links_place_to_refugee)
+            ->merge($links_place_to_event);
+
+        return view("links.index", compact('links'));
     }
 
     /**
@@ -172,8 +192,11 @@ class LinkController extends Controller
      * @return Response
      */
     public function create($origin = null,
-        Refugee $refugee = null) {
+        Refugee $refugee = null, Event $event = null, Place $place = null) {
         $lists["refugees"] = Refugee::getAllBestDescriptiveValues();
+        $lists["events"] = Event::getAllEventsNames();
+        $lists["places"] = Place::getAllPlacesNames();
+        $lists["all"] = $lists["refugees"] + $lists["events"] + $lists["places"];
         $lists["relations"] = array_column(ListRelation::all()->toArray(),
             ListControl::where('name',
                 "ListRelation")->first()->displayed_value,
@@ -181,7 +204,9 @@ class LinkController extends Controller
         return view("links.create",
             compact("lists",
                 'origin',
-                'refugee'));
+                'refugee',
+            'event',
+            'place'));
     }
 
     /**

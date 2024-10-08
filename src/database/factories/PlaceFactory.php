@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Place;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\ApiLog;
+use App\Models\User;
 
 class PlaceFactory extends Factory
 {
@@ -11,6 +13,15 @@ class PlaceFactory extends Factory
 
     public function definition(): array
     {
+        $log["user_id"] = User::where("email", env("DEFAULT_EMAIL"))->first()->id;
+        $log["application_id"] = "seeder";
+        $log["api_type"] = "seeder";
+        $log["http_method"] = "POST";
+        $log["model"] = "Event";
+        $log["ip"] = "127.0.0.1";
+        $log["crew_id"] = User::where("email", env("DEFAULT_EMAIL"))->first()->crew->id;
+
+        $log = ApiLog::create($log);
 
         $coordinates = json_encode([
             "lat" => $this->faker->latitude,
@@ -34,6 +45,7 @@ class PlaceFactory extends Factory
             "coordinates" => $coordinates,
             "description" => $this->faker->realText,
             "area" => $area,
+            "api_log" => $log->id,
         ];
     }
 }

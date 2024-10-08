@@ -115,7 +115,13 @@
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
                                                 bg-white divide-y divide-gray-200">
                                                     <a href="{{route("person.show", $link->pivot->from)}}">
-                                                        {{$link->pivot->refugeeFrom->best_descriptive_value }}
+                                                        @if($link->pivot->refugeeFrom)
+                                                            {{$link->pivot->refugeeFrom->best_descriptive_value }}
+                                                            @elseif($link->pivot->eventFrom)
+                                                            {{$link->pivot->eventFrom->name}}
+                                                            @elseif($link->pivot->placeFrom)
+                                                            {{$link->pivot->placeFrom->name}}
+                                                        @endif
                                                     </a>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm
@@ -126,7 +132,13 @@
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm
                                                 text-gray-900 bg-white divide-y divide-gray-200">
                                                     <a href="{{route("person.show", $link->pivot->to)}}">
-                                                        {{ $link->pivot->refugeeTo->best_descriptive_value }}
+                                                        @if($link->pivot->refugeeTo)
+                                                            {{$link->pivot->refugeeTo->best_descriptive_value }}
+                                                            @elseif($link->pivot->eventTo)
+                                                            {{$link->pivot->eventTo->name}}
+                                                            @elseif($link->pivot->placeTo)
+                                                            {{$link->pivot->placeTo->name}}
+                                                        @endif
                                                     </a>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm

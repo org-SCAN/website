@@ -13,4 +13,5 @@ return [
     'to' => 'To',
     'add_to' => 'Add To',
     'add_from' => 'Add from',
+    'edit'=> 'Edit',
 ];

@@ -48,19 +48,46 @@
                                 </thead>
                                 <tbody>
                                 @foreach($links as $link)
-                                    <tr>
-                                        <td>
-                                            <a href="{{route('person.show',  $link->refugeeFrom->id)}}"> {{ $link->refugeeFrom->best_descriptive_value }}</a>
-                                        </td>
-                                        <td>{{ $link->relation->displayed_value_content }}</td>
-                                        <td>
-                                            <a href="{{route('person.show',  $link->refugeeTo->id)}}"> {{ $link->refugeeTo->best_descriptive_value }}</a>
-                                        </td>
-                                        <td>{{ $link->date->format('d/m/Y') }}</td>
-                                        @can('update', $link)
-                                            <td><a href="{{route('links.edit',  $link->id)}}">{{ __('common.edit') }}</a></td>
-                                        @endcan
-                                    </tr>
+                                    @php
+                                        $types = [
+                                            'refugeeFrom' => 'person',
+                                            'refugeeTo' => 'person',
+                                            'eventFrom' => 'event',
+                                            'eventTo' => 'event',
+                                            'placeFrom' => 'place',
+                                            'placeTo' => 'place',
+                                        ];
+                                        $fromType = null;
+                                        $toType = null;
+                                        $from = null;
+                                        $to = null;
+
+                                        foreach ($types as $relation => $route) {
+                                            if ($link->$relation && !$from) {
+                                                $from = $link->$relation;
+                                                $fromType = $route;
+                                            } elseif ($link->$relation && !$to) {
+                                                $to = $link->$relation;
+                                                $toType = $route;
+                                            }
+                                        }
+                                    @endphp
+
+                                    @if ($from && $to)
+                                        <tr>
+                                            <td>
+                                                <a href="{{ route($fromType . '.show', $from->id) }}">{{ $from->best_descriptive_value ?? $from->name }}</a>
+                                            </td>
+                                            <td>{{ $link->relation->displayed_value_content }}</td>
+                                            <td>
+                                                <a href="{{ route($toType . '.show', $to->id) }}">{{ $to->best_descriptive_value ?? $to->name }}</a>
+                                            </td>
+                                            <td>{{ $link->date->format('d/m/Y') }}</td>
+                                            @can('update', $link)
+                                                <td><a href="{{ route('links.edit', $link->id) }}">{{ __('common.edit') }}</a></td>
+                                            @endcan
+                                        </tr>
+                                    @endif
                                 @endforeach
                                 </tbody>
                             </table>

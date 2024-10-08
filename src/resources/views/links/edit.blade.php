@@ -1,9 +1,13 @@
 @php use App\Models\ListRelation; @endphp
-@section('title', __('links/edit.edit_relation_between', ['item' => $link->refugeeFrom->best_descriptive_value, 'item2' => $link->refugeeTo->best_descriptive_value]))
+@section('title', __('links/edit.edit_relation_between', [
+    'item' => $link->refugeeFrom->best_descriptive_value ?? $link->eventFrom->name ?? $link->placeFrom->name,
+    'item2' => $link->refugeeTo->best_descriptive_value ?? $link->eventTo->name ?? $link->placeTo->name
+]))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('links/edit.edit_relation_between', ['item' => $link->refugeeFrom->best_descriptive_value, 'item2' => $link->refugeeTo->best_descriptive_value]) }}
+            {{ __('links/edit.edit_relation_between', ['item' => $link->refugeeFrom->best_descriptive_value ?? $link->eventFrom->name ?? $link->placeFrom->name,
+    'item2' => $link->refugeeTo->best_descriptive_value ?? $link->eventTo->name ?? $link->placeTo->name]) }}
         </h2>
     </x-slot>
 
