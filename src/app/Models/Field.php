@@ -220,20 +220,24 @@ class Field extends Model
     }
 
     public function getValue(){
-
-        if($this->range){
-            return json_decode($this->pivot->value, true);
+        try{
+            if($this->range){
+                return json_decode($this->pivot->value, true);
+            }
+            if($this->dataType->model){
+                return $this->dataType->model::decode($this->pivot->value);
+            }
+            if(empty(($this->linked_list))) {
+                return $this->pivot->value;
+            }
+            $model = 'App\Models\\' . $this->linkedList->name;
+            $id = $this->pivot->value;
+            $displayed_value = $this->linkedList->displayed_value;
+            return $model::find($id)->$displayed_value;
         }
-        if($this->dataType->model){
-            return $this->dataType->model::decode($this->pivot->value);
+        catch (\Exception $e){
+            return "";
         }
-        if(empty(($this->linked_list))) {
-            return $this->pivot->value;
-        }
-        $model = 'App\Models\\' . $this->linkedList->name;
-        $id = $this->pivot->value;
-        $displayed_value = $this->linkedList->displayed_value;
-        return $model::find($id)->$displayed_value;
     }
 
     public function linkedList(){

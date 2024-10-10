@@ -20,4 +20,5 @@ return [
 
     "add_more_fields" => "Add more fields",
 
-    ];
+    "select_datatype" => "Select a data type",
+];

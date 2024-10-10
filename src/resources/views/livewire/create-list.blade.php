@@ -31,7 +31,7 @@
                     <label for="{{$form_elem}}" class="font-medium text-md text-gray-700">{{ __("lists_control/create_fields.field_type") }}</label>
                     <div class="switch-toggle switch-3 switch-candy">
                         @livewire("select-dropdown", ['label' => $form_elem,
-                            'placeholder' => "-- ".__('crew/show.select_user')." --",
+                            'placeholder' => "-- ".__('lists_control/create_fields.select_datatype')." --",
                             'datas' => $this->data_types,
                             "selected_value"=>"id"])
                         @stack('scripts')

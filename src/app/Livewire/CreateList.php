@@ -23,7 +23,7 @@ class CreateList extends Component
             // Initialize with one empty field
         ];
         // Fetch the available data types from the database
-        $this->data_types = ListDataType::all(); // Use ::all() to retrieve all data types
+        $this->data_types = ListDataType::list();
     }
 
     public function render(): \Illuminate\View\View {
