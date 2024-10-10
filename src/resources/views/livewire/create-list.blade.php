@@ -29,8 +29,15 @@
                 <div class="sm:p-6 col-md-8 col-12">
                     @php($form_elem = "fields[$index][data_type_id]")
                     <label for="{{$form_elem}}" class="font-medium text-md text-gray-700">{{ __("lists_control/create_fields.field_type") }}</label>
-                    @php( $list = $this->data_types )
-                    <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}" class="form-input rounded-md shadow-sm w-full"/>
+                    <div class="switch-toggle switch-3 switch-candy">
+                        @livewire("select-dropdown", ['label' => $form_elem,
+                            'placeholder' => "-- ".__('crew/show.select_user')." --",
+                            'datas' => $this->data_types,
+                            "selected_value"=>"id"])
+                        @stack('scripts')
+                    </div>
+
+
                     <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">
                         {{ __("lists_control/create_fields.field_type_hint") }}
                         <em class="text-sm text-red-600">
