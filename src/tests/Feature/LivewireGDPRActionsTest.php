@@ -23,12 +23,6 @@ class LivewireGDPRActionsTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        // Create the 'zip/' directory if it doesn't exist
-        if (!file_exists('zip')) {
-            mkdir('zip', 0777, true);
-        }
-
         // Generate a field
         $field = Field::factory()->create(['best_descriptive_value' => 1, 'status' => 2]);
 
@@ -75,12 +69,7 @@ class LivewireGDPRActionsTest extends TestCase
         $this->assertCount(0, $links);
     }
 
-    /**
-     * Test that the export method creates a zip file with personal details and links
-     * @return void
-     */
-    public function test_export_creates_zip_with_personal_details_and_links()
-    {
+    protected function prepareZipTest(){
         $refugee = $this->refugee1;
 
         // Créer un lien associé au réfugié
@@ -92,12 +81,29 @@ class LivewireGDPRActionsTest extends TestCase
             ->call('export');
 
         // Vérifie que le fichier zip a bien été créé avec le bon nom
-        $zipFileName = 'zip/' . Str::snake($refugee->best_descriptive_value) . '.zip';
+        return $zipFileName = 'zip/' . Str::snake($refugee->best_descriptive_value) . '.zip';
+    }
+
+    /**
+     * Test that the export method creates a zip file with personal details and links
+     * @return void
+     */
+    public function test_export_creates_zip_with_personal_details_and_links()
+    {
+        $zipFileName = $this->prepareZipTest();
         $this->assertFileExists($zipFileName);
 
         // Clean up: supprime le fichier zip après le test
         if (file_exists($zipFileName)) {
             unlink($zipFileName);
         }
+    }
+
+    public function test_export_delete_zip_after_download(){
+        // change the env from testing to local to test the deleteFileAfterSend method
+        $this->app['env'] = 'local';
+        // call the test_export_creates_zip_with_personal_details_and_links method
+        $zipFileName = $this->prepareZipTest();
+        $this->assertFileDoesNotExist($zipFileName);
     }
 }

@@ -52,18 +52,27 @@ class GdprActions extends Component
      */
     public function export(ZipService $zipService)
     {
+
         $links = Link::withTrashed()->where('from', $this->person->id)
             ->orWhere('to', $this->person->id)
             ->get();
 
-        $zipFileName = 'zip/' . Str::snake($this->person->best_descriptive_value) . '.zip';
+        //make sure the zip directory exists
+        if (!file_exists('zip')) {
+            mkdir('zip', 0777, true);
+        }
 
+        $zipFileName = 'zip/' . Str::snake($this->person->best_descriptive_value) . '.zip';
         // Utiliser le service Zip
         $zipService->open($zipFileName, ZipArchive::CREATE);
         $zipService->addFromString('personal_details.txt', $this->person->toJson());
         $zipService->addFromString('links.txt', $links->toJson());
         $zipService->close();
 
-        return response()->download($zipFileName);
+        $response = response()->download($zipFileName);
+        if (app()->environment() !== 'testing') {
+            $response->deleteFileAfterSend(true);
+        }
+        return $response;
     }
 }
