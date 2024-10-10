@@ -5,7 +5,7 @@
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('auth/forgot_password.forgot_password') }}
+            {{ __('auth/forgot-password.forgot_password') }}
         </div>
 
         @if (session('status'))
@@ -20,13 +20,13 @@
             @csrf
 
             <div class="block">
-                <x-label for="email" value="{{ __('auth/forgot_password.email') }}" />
+                <x-label for="email" value="{{ __('auth/forgot-password.email') }}" />
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
 
             <div class="flex items-center justify-end mt-4">
                 <x-button>
-                    {{ __('auth/forgot_password.email_password_reset_link') }}
+                    {{ __('auth/forgot-password.email_password_reset_link') }}
                 </x-button>
             </div>
         </form>
