@@ -1,4 +1,4 @@
-<x-jet-action-section>
+<x-action-section>
     <x-slot name="title">
         {{ __('livewire/change_crew.change_team') }}
     </x-slot>
@@ -32,4 +32,4 @@
                 </form>
         </div>
     </x-slot>
-</x-jet-action-section>
+</x-action-section>

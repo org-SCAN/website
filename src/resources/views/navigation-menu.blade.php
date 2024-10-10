@@ -6,72 +6,72 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-jet-application-mark class="block h-9 w-auto"/>
+                        <x-application-mark class="block h-9 w-auto"/>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 @can('viewMenu', \App\Models\Cytoscape::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('cytoscape.index') }}"
+                        <x-nav-link href="{{ route('cytoscape.index') }}"
                                         :active="request()->routeIs('cytoscape.*')">
                             {{ __('navigation-menu.network_graph') }}
-                        </x-jet-nav-link>
+                        </x-nav-link>
                     </div>
                 @endcan
                 @can('viewMenu', \App\Models\Refugee::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('person.index') }}"
+                        <x-nav-link href="{{ route('person.index') }}"
                                         :active="request()->routeIs('person.*')">
                             {{ __('navigation-menu.items') }}
-                        </x-jet-nav-link>
+                        </x-nav-link>
                     </div>
                 @endcan
                 @can('viewMenu', \App\Models\Event::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('event.index') }}"
+                        <x-nav-link href="{{ route('event.index') }}"
                                         :active="request()->routeIs('event.*')">
                             {{ __('navigation-menu.events') }}
-                        </x-jet-nav-link>
+                        </x-nav-link>
                     </div>
                 @endcan
                 @can('viewMenu', \App\Models\Place::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('place.index') }}"
+                        <x-nav-link href="{{ route('place.index') }}"
                                         :active="request()->routeIs('place.*')">
                             {{ __('navigation-menu.place') }}
-                        </x-jet-nav-link>
+                        </x-nav-link>
                     </div>
                 @endcan
                 @can('viewMenu', \App\Models\Source::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('source.index') }}"
+                        <x-nav-link href="{{ route('source.index') }}"
                                         :active="request()->routeIs('source.*')">
                             {{ __('navigation-menu.sources') }}
-                        </x-jet-nav-link>
+                        </x-nav-link>
                     </div>
                 @endcan
                 @can('viewMenu', \App\Models\Link::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.*')">
+                        <x-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.*')">
                             {{ __('navigation-menu.relations') }}
-                        </x-jet-nav-link>
+                        </x-nav-link>
                     </div>
                 @endcan
 
                 @can('viewMenu', \App\Models\Duplicate::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('duplicate.index') }}"
+                        <x-nav-link href="{{ route('duplicate.index') }}"
                                         :active="request()->routeIs('duplicate.*')">
                             {{ __('navigation-menu.duplicates') }}
-                        </x-jet-nav-link>
+                        </x-nav-link>
                     </div>
                 @endcan
 
                 <!-- Fields Management Dropdown -->
                 @if ( Auth::user()->can('viewMenu', \App\Models\Field::class) || Auth::user()->can('viewMenu',  \App\Models\ListControl::class))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-dropdown align="right" width="48"
+                        <x-dropdown align="right" width="48"
                                         :active="request()->routeIs('fields.*')||request()->routeIs('lists_control.*')">
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md pt-4">
@@ -89,20 +89,20 @@
                                     {{ __('navigation-menu.field_management') }}
                                 </div>
                                 @can('viewMenu', \App\Models\Field::class)
-                                    <x-jet-dropdown-link href="{{ route('fields.index') }}"
+                                    <x-dropdown-link href="{{ route('fields.index') }}"
                                                          :active="request()->routeIs('fields.*')">
                                         {{ __('navigation-menu.fields') }}
-                                    </x-jet-dropdown-link>
+                                    </x-dropdown-link>
                                 @endcan
                                 @can("viewMenu", \App\Models\ListControl::class)
-                                    <x-jet-dropdown-link href="{{ route('lists_control.index') }}"
+                                    <x-dropdown-link href="{{ route('lists_control.index') }}"
                                                          :active="request()->routeIs('lists_control.*')">
                                         {{ __('navigation-menu.lists') }}
-                                    </x-jet-dropdown-link>
+                                    </x-dropdown-link>
                                 @endcan
 
                             </x-slot>
-                        </x-jet-dropdown>
+                        </x-dropdown>
                     </div>
                 @endif
 
@@ -110,7 +110,7 @@
                 <!-- User Management Dropdown -->
                 @if ( Auth::user()->can('viewMenu', \App\Models\User::class) || Auth::user()->can('viewMenu',  \App\Models\Crew::class)|| Auth::user()->can('viewMenu',  \App\Models\Role::class) )
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-dropdown align="right" width="48"
+                        <x-dropdown align="right" width="48"
                                         :active="request()->routeIs('user.*')||request()->routeIs('crew.*')||request()->routeIs('roles.*')">
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md pt-4">
@@ -128,44 +128,44 @@
                                     {{ __('navigation-menu.user_management') }}
                                 </div>
                                 @can('viewMenu', \App\Models\User::class)
-                                    <x-jet-dropdown-link href="{{ route('user.index') }}"
+                                    <x-dropdown-link href="{{ route('user.index') }}"
                                                          :active="request()->routeIs('user.*')">
                                         {{ __('navigation-menu.users') }}
-                                    </x-jet-dropdown-link>
+                                    </x-dropdown-link>
                                 @endcan
                                 @can('viewMenu', \App\Models\Crew::class)
-                                    <x-jet-dropdown-link href="{{ route('crew.index') }}"
+                                    <x-dropdown-link href="{{ route('crew.index') }}"
                                                          :active="request()->routeIs('crew.*')">
                                         {{ __('navigation-menu.teams') }}
-                                    </x-jet-dropdown-link>
+                                    </x-dropdown-link>
                                 @endcan
                                 @can('viewMenu', \App\Models\Role::class)
-                                    <x-jet-dropdown-link href="{{ route('roles.index') }}"
+                                    <x-dropdown-link href="{{ route('roles.index') }}"
                                                          :active="request()->routeIs('roles.*')">
                                         {{ __('navigation-menu.roles') }}
-                                    </x-jet-dropdown-link>
+                                    </x-dropdown-link>
                                 @endcan
 
                             </x-slot>
-                        </x-jet-dropdown>
+                        </x-dropdown>
                     </div>
                 @endif
 
                 @can('viewMenu', \App\Models\ApiLog::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('api_logs.index') }}"
+                        <x-nav-link href="{{ route('api_logs.index') }}"
                                         :active="request()->routeIs('api_logs.*')">
                             {{ __('navigation-menu.api_logs') }}
-                        </x-jet-nav-link>
+                        </x-nav-link>
                     </div>
                 @endcan
 
 
                 <!--
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('lists_control.index') }}" :active="request()->routeIs('lists_control.index')">
+                    <x-nav-link href="{{ route('lists_control.index') }}" :active="request()->routeIs('lists_control.index')">
                         {{ __('navigation-menu.manage_list') }}
-                </x-jet-nav-link>
+                </x-nav-link>
             </div>
 -->
             </div>
@@ -174,7 +174,7 @@
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                     <div class="ml-3 relative">
-                        <x-jet-dropdown align="right" width="60">
+                        <x-dropdown align="right" width="60">
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md">
                                     <button type="button"
@@ -199,15 +199,15 @@
                                     </div>
 
                                     /*<!-- Team Settings -->
-                                    <x-jet-dropdown-link
+                                    <x-dropdown-link
                                             href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                                         {{ __('navigation-menu.team_settings') }}
-                                    </x-jet-dropdown-link>
+                                    </x-dropdown-link>
 
                                     @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                        <x-jet-dropdown-link href="{{ route('teams.create') }}">
+                                        <x-dropdown-link href="{{ route('teams.create') }}">
                                             {{ __('navigation-menu.create_new_team') }}
-                                        </x-jet-dropdown-link>
+                                        </x-dropdown-link>
                                     @endcan
 
                                     <div class="border-t border-gray-100"></div>
@@ -218,17 +218,17 @@
                                     </div>
 
                                     @foreach (Auth::user()->allTeams() as $team)
-                                        <x-jet-switchable-team :team="$team"/>
+                                        <x-switchable-team :team="$team"/>
                                     @endforeach
                                 </div>
                             </x-slot>
-                        </x-jet-dropdown>
+                        </x-dropdown>
                     </div>
                 @endif
 
                 <!-- Settings Dropdown -->
                 <div class="ml-3 relative">
-                    <x-jet-dropdown align="right" width="48">
+                    <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                 <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
@@ -258,14 +258,14 @@
                                 {{ __('navigation-menu.manage_account') }}
                             </div>
 
-                            <x-jet-dropdown-link href="{{ route('profile.show') }}">
+                            <x-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('navigation-menu.profile') }}
-                            </x-jet-dropdown-link>
+                            </x-dropdown-link>
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                                <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
+                                <x-dropdown-link href="{{ route('api-tokens.index') }}">
                                     {{ __('navigation-menu.api_tokens') }}
-                                </x-jet-dropdown-link>
+                                </x-dropdown-link>
                             @endif
 
                             <div class="border-t border-gray-100"></div>
@@ -274,14 +274,14 @@
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
 
-                                <x-jet-dropdown-link href="{{ route('logout') }}"
+                                <x-dropdown-link href="{{ route('logout') }}"
                                                      onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                     {{ __('navigation-menu.log_out') }}
-                                </x-jet-dropdown-link>
+                                </x-dropdown-link>
                             </form>
                         </x-slot>
-                    </x-jet-dropdown>
+                    </x-dropdown>
                 </div>
             </div>
 
@@ -304,82 +304,82 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('cytoscape.index') }}"
+            <x-responsive-nav-link href="{{ route('cytoscape.index') }}"
                                        :active="request()->routeIs('cytoscape.*')">
                 {{ __('navigation-menu.network_graph') }}
-            </x-jet-responsive-nav-link>
+            </x-responsive-nav-link>
             @can('viewMenu',\App\Models\Refugee::class)
-                <x-jet-responsive-nav-link href="{{ route('person.index') }}"
+                <x-responsive-nav-link href="{{ route('person.index') }}"
                                            :active="request()->routeIs('person.*')">
                     {{ __('navigation-menu.items') }}
-                </x-jet-responsive-nav-link>
+                </x-responsive-nav-link>
             @endcan
             @can('viewMenu', \App\Models\Event::class)
-                <x-jet-responsive-nav-link href="{{ route('event.index') }}"
+                <x-responsive-nav-link href="{{ route('event.index') }}"
                                            :active="request()->routeIs('event.*')">
                     {{ __('navigation-menu.events') }}
-                </x-jet-responsive-nav-link>
+                </x-responsive-nav-link>
             @endcan
             @can('viewMenu', \App\Models\Source::class)
-                <x-jet-responsive-nav-link href="{{ route('source.index') }}"
+                <x-responsive-nav-link href="{{ route('source.index') }}"
                                            :active="request()->routeIs('source.*')">
                     {{ __('navigation-menu.sources') }}
-                </x-jet-responsive-nav-link>
+                </x-responsive-nav-link>
             @endcan
             @can('viewMenu',\App\Models\Link::class)
-                <x-jet-responsive-nav-link href="{{ route('links.index') }}"
+                <x-responsive-nav-link href="{{ route('links.index') }}"
                                            :active="request()->routeIs('links.*')">
                     {{ __('navigation-menu.relations') }}
-                </x-jet-responsive-nav-link>
+                </x-responsive-nav-link>
             @endcan
             @can('viewMenu',\App\Models\Duplicate::class)
-                <x-jet-responsive-nav-link href="{{ route('duplicate.index') }}"
+                <x-responsive-nav-link href="{{ route('duplicate.index') }}"
                                            :active="request()->routeIs('duplicate.*')">
                     {{ __('navigation-menu.duplicates') }}
-                </x-jet-responsive-nav-link>
+                </x-responsive-nav-link>
             @endcan
             <div class="pt-2 pb-1 border-t border-gray-200">
                 <div class="font-medium text-base text-gray-400 px-2">Field Management</div>
                 @can('viewMenu',\App\Models\Field::class)
-                    <x-jet-responsive-nav-link href="{{ route('fields.index') }}"
+                    <x-responsive-nav-link href="{{ route('fields.index') }}"
                                                :active="request()->routeIs('fields.*')">
                         {{ __('navigation-menu.fields') }}
-                    </x-jet-responsive-nav-link>
+                    </x-responsive-nav-link>
                 @endcan
                 @can('viewMenu',\App\Models\ListControl::class)
-                    <x-jet-responsive-nav-link href="{{ route('lists_control.index') }}"
+                    <x-responsive-nav-link href="{{ route('lists_control.index') }}"
                                                :active="request()->routeIs('lists_control.*')">
                         {{ __('navigation-menu.lists') }}
-                    </x-jet-responsive-nav-link>
+                    </x-responsive-nav-link>
                 @endcan
             </div>
             <div class="pt-2 pb-1 border-t border-gray-200">
                 <div class="font-medium text-base text-gray-400 px-2">User Management</div>
                 @can('viewMenu',\App\Models\User::class)
-                    <x-jet-responsive-nav-link href="{{ route('user.index') }}"
+                    <x-responsive-nav-link href="{{ route('user.index') }}"
                                                :active="request()->routeIs('user.*')">
                         {{ __('navigation-menu.users') }}
-                    </x-jet-responsive-nav-link>
+                    </x-responsive-nav-link>
                 @endcan
                 @can('viewMenu',\App\Models\Crew::class)
-                    <x-jet-responsive-nav-link href="{{ route('crew.index') }}"
+                    <x-responsive-nav-link href="{{ route('crew.index') }}"
                                                :active="request()->routeIs('crew.*')">
                         {{ __('navigation-menu.teams') }}
-                    </x-jet-responsive-nav-link>
+                    </x-responsive-nav-link>
                 @endcan
                 @can('viewMenu',\App\Models\Role::class)
-                    <x-jet-responsive-nav-link href="{{ route('roles.index') }}"
+                    <x-responsive-nav-link href="{{ route('roles.index') }}"
                                                :active="request()->routeIs('roles.*')">
                         {{ __('navigation-menu.roles') }}
-                    </x-jet-responsive-nav-link>
+                    </x-responsive-nav-link>
                 @endcan
             </div>
             <div class="pt-2 pb-1 border-t border-gray-200">
                 @can('viewMenu',\App\Models\ApiLog::class)
-                    <x-jet-responsive-nav-link href="{{ route('api_logs.index') }}"
+                    <x-responsive-nav-link href="{{ route('api_logs.index') }}"
                                                :active="request()->routeIs('api_logs.*')">
                         {{ __('navigation-menu.api_logs') }}
-                    </x-jet-responsive-nav-link>
+                    </x-responsive-nav-link>
                 @endif
             </div>
 
@@ -401,20 +401,20 @@
 
                 <div class="mt-3 space-y-1">
                     <!-- Account Management -->
-                    <x-jet-responsive-nav-link href="{{ route('profile.show') }}"
+                    <x-responsive-nav-link href="{{ route('profile.show') }}"
                                                :active="request()->routeIs('profile.show')">
                         {{ __('navigation-menu.profile') }}
-                    </x-jet-responsive-nav-link>
+                    </x-responsive-nav-link>
 
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
 
-                        <x-jet-responsive-nav-link href="{{ route('logout') }}"
+                        <x-responsive-nav-link href="{{ route('logout') }}"
                                                    onclick="event.preventDefault();
                                         this.closest('form').submit();">
                             {{ __('navigation-menu.log_out') }}
-                        </x-jet-responsive-nav-link>
+                        </x-responsive-nav-link>
                     </form>
 
                     <!-- Team Management -->
@@ -426,16 +426,16 @@
                         </div>
 
                         <!-- Team Settings -->
-                        <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
+                        <x-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
                                                    :active="request()->routeIs('teams.show')">
                             {{ __('navigation-menu.team_settings') }}
-                        </x-jet-responsive-nav-link>
+                        </x-responsive-nav-link>
 
                         @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                            <x-jet-responsive-nav-link href="{{ route('teams.create') }}"
+                            <x-responsive-nav-link href="{{ route('teams.create') }}"
                                                        :active="request()->routeIs('teams.create')">
                                 {{ __('navigation-menu.create_new_team') }}
-                            </x-jet-responsive-nav-link>
+                            </x-responsive-nav-link>
                         @endcan
 
                         <div class="border-t border-gray-200"></div>
@@ -446,7 +446,7 @@
                         </div>
 
                         @foreach (Auth::user()->allTeams() as $team)
-                            <x-jet-switchable-team :team="$team" component="jet-responsive-nav-link"/>
+                            <x-switchable-team :team="$team" component="jet-responsive-nav-link"/>
                         @endforeach
                     @endif
                 </div>

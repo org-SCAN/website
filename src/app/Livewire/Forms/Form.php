@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Forms;
+namespace App\Livewire\Forms;
 use App\Models\Field;
 use App\Models\ListControl;
 use Illuminate\Support\Str;

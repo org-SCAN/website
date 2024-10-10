@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use Livewire\Component;
 
-class SelectDropdown extends Component
+class LinkSelectDropdown extends Component
 {
 
     public $selected = '';
@@ -20,6 +20,6 @@ class SelectDropdown extends Component
         $label = $this->label;
         $placeholder = $this->placeholder;
         $selected_value = $this->selected_value;
-        return view('livewire.select-dropdown', compact('datas', "label", "placeholder", "selected_value"))->extends('layouts.app');
+        return view('livewire.link-select-dropdown', compact('datas', "label", "placeholder", "selected_value"))->extends('layouts.app');
     }
 }

@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Livewire\Forms\Coordinates;
-use App\Http\Livewire\Forms\Area;
+use App\Livewire\Forms\Coordinates;
+use App\Livewire\Forms\Area;
 
 class UpdatePlaceRequest extends FormRequest
 {

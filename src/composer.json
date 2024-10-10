@@ -10,18 +10,15 @@
     "require": {
         "php": "^8.2",
         "ext-zip": "*",
-        "doctrine/dbal": "^3.9",
         "elgibor-solution/laravel-database-encryption": "^1.1",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^10.0",
-        "laravel/jetstream": "^2.12",
-        "laravel/sanctum": "^3.2",
+        "laravel/framework": "^v11.27",
+        "laravel/jetstream": "^v5.2.1",
+        "laravel/sanctum": "^v4",
         "laravel/tinker": "^2.5",
         "larswiegers/laravel-maps": "^0.18.0",
-        "livewire/livewire": "^2.0",
+        "livewire/livewire": "^v3.5",
         "maatwebsite/excel": "^3.1",
-        "mediconesystems/livewire-datatables": "dev-master",
-        "protonemedia/laravel-form-components": "^3.6",
         "psr/simple-cache": "^2.0"
     },
     "require-dev": {
@@ -29,7 +26,7 @@
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^7.0",
+        "nunomaduro/collision": "^v8.4.0",
         "phpunit/phpunit": "^10.0",
         "spatie/laravel-ignition": "^2.0"
     },

@@ -1,4 +1,4 @@
-<x-jet-action-section>
+<x-action-section>
     <x-slot name="title">
         {{ __('profile/logout-other-browser-sessions-form.browser_sessions') }}
     </x-slot>
@@ -54,17 +54,17 @@
         @endif
 
         <div class="flex items-center mt-5">
-            <x-jet-button wire:click="confirmLogout" wire:loading.attr="disabled">
+            <x-button wire:click="confirmLogout" wire:loading.attr="disabled">
                 {{ __('profile/logout-other-browser-sessions-form.log_out_other_sessions') }}
-            </x-jet-button>
+            </x-button>
 
-            <x-jet-action-message class="ml-3" on="loggedOut">
+            <x-action-message class="ml-3" on="loggedOut">
                 {{ __('profile/logout-other-browser-sessions-form.done') }}
-            </x-jet-action-message>
+            </x-action-message>
         </div>
 
         <!-- Log Out Other Devices Confirmation Modal -->
-        <x-jet-dialog-modal wire:model="confirmingLogout">
+        <x-dialog-modal wire:model.live="confirmingLogout">
             <x-slot name="title">
                 {{ __('profile/logout-other-browser-sessions-form.log_out_other_sessions') }}
             </x-slot>
@@ -72,27 +72,27 @@
             <x-slot name="content">
                 {{ __('profile/logout-other-browser-sessions-form.log_out_confirmation') }}
                 <div class="mt-4" x-data="{}" x-on:confirming-logout-other-browser-sessions.window="setTimeout(() => $refs.password.focus(), 250)">
-                    <x-jet-input type="password" class="mt-1 block w-3/4"
+                    <x-input type="password" class="mt-1 block w-3/4"
                                 placeholder=" {{ __('profile/logout-other-browser-sessions-form.password') }}"
                                 x-ref="password"
-                                wire:model.defer="password"
+                                wire:model="password"
                                 wire:keydown.enter="logoutOtherBrowserSessions" />
 
-                    <x-jet-input-error for="password" class="mt-2" />
+                    <x-input-error for="password" class="mt-2" />
                 </div>
             </x-slot>
 
             <x-slot name="footer">
-                <x-jet-secondary-button wire:click="$toggle('confirmingLogout')" wire:loading.attr="disabled">
+                <x-secondary-button wire:click="$toggle('confirmingLogout')" wire:loading.attr="disabled">
                     {{ __('profile/logout-other-browser-sessions-form.cancel') }}
-                </x-jet-secondary-button>
+                </x-secondary-button>
 
-                <x-jet-button class="ml-2"
+                <x-button class="ml-2"
                             wire:click="logoutOtherBrowserSessions"
                             wire:loading.attr="disabled">
                     {{ __('profile/logout-other-browser-sessions-form.log_out_other_sessions') }}
-                </x-jet-button>
+                </x-button>
             </x-slot>
-        </x-jet-dialog-modal>
+        </x-dialog-modal>
     </x-slot>
-</x-jet-action-section>
+</x-action-section>
