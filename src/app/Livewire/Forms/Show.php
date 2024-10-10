@@ -12,10 +12,10 @@ class Show extends Component
     public function render()
     {
         try {
-
             return view('livewire.forms.show.'.$this->field->dataType->html_type)->extends('layouts.app');
         } catch (Throwable $th) {
-            return view('.text')->extends('layouts.app');
+            //dd($th);
+            return view('livewire.forms.show.text')->extends('layouts.app');
         }
     }
 }
