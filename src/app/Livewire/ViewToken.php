@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Carbon;
@@ -40,7 +40,7 @@ class ViewToken extends Component
     {
         $this->password = '';
 
-        $this->dispatchBrowserEvent('confirming-ViewToken');
+        $this->dispatch('confirming-ViewToken');
 
         $this->confirmingViewToken = true;
     }

@@ -41,17 +41,17 @@
     </small>
 
     <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
-        <x-jet-button type="button"
+        <x-button type="button"
                       wire:click="addField"
                       class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
             {{ __('place/create.fields.add_polygon') }}
-        </x-jet-button>
+        </x-button>
         @if($fieldCount > 1)
-            <x-jet-button type="button"
+            <x-button type="button"
                           wire:click="removeField"
                           class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
                 {{ __('place/create.fields.remove_polygon') }}
-            </x-jet-button>
+            </x-button>
         @endif
     </div>
 </div>

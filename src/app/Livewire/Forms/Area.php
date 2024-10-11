@@ -1,7 +1,7 @@
 <?php
-namespace App\Http\Livewire\Forms;
+namespace App\Livewire\Forms;
 use App\Interface\DataTypeModel;
-use App\Http\Livewire\Forms\Coordinates;
+use App\Livewire\Forms\Coordinates;
 
 class Area implements DataTypeModel
 {

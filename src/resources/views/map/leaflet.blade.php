@@ -23,7 +23,7 @@
     function initMap() {
         map = L.map('map', {
             center: [0,0],
-            zoom: 1
+            zoom: 2
         });
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

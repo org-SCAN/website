@@ -31,6 +31,6 @@ class UpdateEventRequest extends FormRequest
             "start_date" => "nullable|date",
             "stop_date" => "nullable|date|after_or_equal:start_date",
             "description" => "nullable|string"
-        ]  + \App\Http\Livewire\Forms\Coordinates::rules("coordinates") + \App\Http\Livewire\Forms\Area::rules("area");
+        ]  + \App\Livewire\Forms\Coordinates::rules("coordinates") + \App\Livewire\Forms\Area::rules("area");
     }
 }

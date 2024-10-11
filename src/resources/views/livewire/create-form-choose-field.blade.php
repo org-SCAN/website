@@ -1,7 +1,7 @@
 <div>
     <div>
         <label for="{{ $form_elem }}" class="block font-medium text-md text-gray-700"> {!! $title !!}</label>
-        <select wire:model="selectedField" class="form-input rounded-md shadow-sm mt-1 block w-full" id="{{ $form_elem }}" name="{{ $form_elem }}">
+        <select wire:model.live="selectedField" class="form-input rounded-md shadow-sm mt-1 block w-full" id="{{ $form_elem }}" name="{{ $form_elem }}">
             <option value="">{{ $placeHolder }}</option>
             @foreach($associated_list as $key => $value)
                 <option value="{{ $key }}" @selected($previous == $key)}>{{ $value }}</option>

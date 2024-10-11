@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Link;
 use App\Models\Refugee;
 use Illuminate\Http\RedirectResponse;
+use App\Services\ZipService;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use ZipArchive;
@@ -15,11 +16,9 @@ class GdprActions extends Component
     public $selected = null;
     public $person = null;
     //boot
-    public function mount()
-    {
+    public function mount(): void {
         $this->persons = Refugee::withTrashed()->get();
     }
-
     public function render()
     {
         return view('livewire.gdpr-actions');
@@ -30,7 +29,6 @@ class GdprActions extends Component
         $this->person = Refugee::withTrashed()->find($value);
     }
 
-
     /**
      * This function is used to delete a person and all his related data (logs, relations, personal details, ...)
      * @param $id
@@ -38,13 +36,12 @@ class GdprActions extends Component
      */
     public function delete(){
 
-        $this->person->forceDelete();
-
         // Search in links
         $links = Link::withTrashed()->where('from', $this->person->id)->orWhere('to', $this->person->id)->get();
         foreach($links as $link){
             $link->forceDelete();
         }
+        $this->person->forceDelete();
 
         return redirect()->to('/user/profile');
     }
@@ -53,28 +50,29 @@ class GdprActions extends Component
      * This function is used to get all the personal details of a person and return them in a zip folder
      * There is one file for personal detail, one file for relations (link)
      */
-    public function export() {
+    public function export(ZipService $zipService)
+    {
+
         $links = Link::withTrashed()->where('from', $this->person->id)
             ->orWhere('to', $this->person->id)
             ->get();
 
-        // Create a zip file
-        $zip = new ZipArchive();
-        $zip->open('zip/'.Str::snake($this->person->best_descriptive_value).'.zip',
-            ZipArchive::CREATE);
+        //make sure the zip directory exists
+        if (!file_exists('zip')) {
+            mkdir('zip', 0777, true);
+        }
 
-        // Add personal details
-        $zip->addFromString('personal_details.txt',
-            $this->person->toJson());
+        $zipFileName = 'zip/' . Str::snake($this->person->best_descriptive_value) . '.zip';
+        // Utiliser le service Zip
+        $zipService->open($zipFileName, ZipArchive::CREATE);
+        $zipService->addFromString('personal_details.txt', $this->person->toJson());
+        $zipService->addFromString('links.txt', $links->toJson());
+        $zipService->close();
 
-        // Add links
-        $zip->addFromString('links.txt',
-            $links->toJson());
-
-        // Close the zip file
-        $zip->close();
-
-        // Download the zip file
-        return response()->download('zip/'.Str::snake($this->person->best_descriptive_value).'.zip');
+        $response = response()->download($zipFileName);
+        if (app()->environment() !== 'testing') {
+            $response->deleteFileAfterSend(true);
+        }
+        return $response;
     }
 }

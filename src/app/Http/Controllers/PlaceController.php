@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePlaceRequest;
 use App\Http\Requests\UpdatePlaceRequest;
 use App\Models\Place;
-use \App\Http\Livewire\Forms\Coordinates;
-use \App\Http\Livewire\Forms\Area;
+use \App\Livewire\Forms\Coordinates;
+use \App\Livewire\Forms\Area;
 
 class PlaceController extends Controller
 {

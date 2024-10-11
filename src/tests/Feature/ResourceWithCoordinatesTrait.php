@@ -51,9 +51,9 @@ trait ResourceWithCoordinatesTrait
         $response->assertStatus(302);
 
         // encode coordinates
-        $new_item["coordinates"] = \App\Http\Livewire\Forms\Coordinates::encode($new_item["coordinates"]);
+        $new_item["coordinates"] = \App\Livewire\Forms\Coordinates::encode($new_item["coordinates"]);
         // encode area
-        $new_item["area"] = \App\Http\Livewire\Forms\Area::encode($new_item["area"]);
+        $new_item["area"] = \App\Livewire\Forms\Area::encode($new_item["area"]);
         $this->assertDatabaseHas($this->resource->getTable(), $new_item);
     }
 
@@ -113,8 +113,8 @@ trait ResourceWithCoordinatesTrait
         $response = $this->put($this->route . '/' . $this->resource->id, $new_item);
         $response->assertStatus(302);
         // check if the resource has been updated ($this->resource->id contains $new_resource content and not the old one)
-        $new_item["coordinates"] = \App\Http\Livewire\Forms\Coordinates::encode($new_item["coordinates"]);
-        $new_item["area"] = \App\Http\Livewire\Forms\Area::encode($new_item["area"]);
+        $new_item["coordinates"] = \App\Livewire\Forms\Coordinates::encode($new_item["coordinates"]);
+        $new_item["area"] = \App\Livewire\Forms\Area::encode($new_item["area"]);
 
         $this->assertDatabaseHas($this->resource->getTable(), $new_item);
         $this->assertDatabaseMissing($this->resource->getTable(), $this->resource->toArray());

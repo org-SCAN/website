@@ -1,4 +1,4 @@
-<x-jet-action-section>
+<x-action-section>
     <x-slot name="title">
         {{ __("livewire/gdpr-actions.gdpr_actions")  }}
     </x-slot>
@@ -10,9 +10,9 @@
     <x-slot name="content">
         <div>
             @if(!$this->person)
-                {{-- Display a dropdown with all the registered Items, this dropdown is wired to Item --}}
-                <x-jet-label for="person" value="{{ __("livewire/gdpr-actions.form_title")  }}"/>
-                <select wire:model="person" class="form-input rounded-md shadow-sm mt-1 block w-full" id="person"
+                {{-- Afficher un menu déroulant avec tous les éléments enregistrés, connecté à la personne --}}
+                <x-label for="person" value="{{ __("livewire/gdpr-actions.form_title")  }}"/>
+                <select wire:model.live="person" class="form-input rounded-md shadow-sm mt-1 block w-full" id="person"
                         name="person">
                     <option value="">{{ __("livewire/gdpr-actions.form_placeholder")  }}</option>
                     @foreach($this->persons as $person)
@@ -20,17 +20,18 @@
                     @endforeach
                 </select>
             @else
-                {{-- Display the Item's informations --}}
-                <strong>{{ $this->person->best_descriptive_value }}</strong>
+                {{-- Afficher les informations de la personne --}}
+                {{ $this->person->best_descriptive_value }}
                 <div class="mt-2">
-                    <x-jet-button wire:click="export" wire:loading.attr="disabled">
+                    {{-- Les boutons Exporter et Supprimer apparaîtront si une personne est sélectionnée --}}
+                    <x-button wire:click="export" wire:loading.attr="disabled">
                         {{ __("livewire/gdpr-actions.export")  }}
-                    </x-jet-button>
-                    <x-jet-button wire:click="delete" wire:loading.attr="disabled">
+                    </x-button>
+                    <x-button wire:click="delete" wire:loading.attr="disabled">
                         {{ __("livewire/gdpr-actions.delete")  }}
-                    </x-jet-button>
+                    </x-button>
                 </div>
             @endif
         </div>
     </x-slot>
-</x-jet-action-section>
+</x-action-section>
