@@ -34,7 +34,7 @@ class DuplicateController extends Controller
 
         $matching_algorithm = ListMatchingAlgorithm::find(
             Crew::find(
-                Auth::user()->crew_id)->duplicate_algorithm_id) ?? ListMatchingAlgorithm::where("name", "Levenshtein")->first();
+                Auth::user()->crew_id)->duplicate_algorithm_id) ?? ListMatchingAlgorithm::where("is_default", "1")->first();
 
         $duplicates = Duplicate::where("crew_id",
             Auth::user()->crew_id)->where('resolved', false)

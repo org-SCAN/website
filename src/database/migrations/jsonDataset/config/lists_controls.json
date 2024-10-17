@@ -333,6 +333,11 @@
                 "field": "model",
                 "data_type_id": "Short text",
                 "required": true
+            },
+            {
+                "field": "is_default",
+                "data_type_id": "Yes / No",
+                "required": true
             }
         ]
     }
