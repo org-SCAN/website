@@ -24,7 +24,8 @@ class StoreCrewRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "string|required|unique:crews,name"
+            "name" => "string|required|unique:crews,name",
+            "duplicate_algorithm_id" => "string|exists:list_matching_algorithms,id",
         ];
     }
 }
