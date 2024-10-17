@@ -47,7 +47,7 @@ class DuplicateCommand extends Command
             // Do not compute the similarity with the same refugee,
             // Do not compute the similarity with a refugee that has already been compared and not edited since.
             //Do not compute the similarity with refugees that has been marked as resolve.
-            $crewSimilarities = Duplicate::compute($crew);
+            [$crewSimilarities, $algorithm_id] = Duplicate::compute($crew);
             $this->info(count($crewSimilarities)." persons computed for crew ".$crew->name);
 
             // Step 3 : Add the similarities to the duplicates table
@@ -57,6 +57,7 @@ class DuplicateCommand extends Command
                         "person1_id" => $person,
                         "person2_id" => $person2,
                         "crew_id" => $crew->id,
+                        "duplicate_algorithm_id" => $algorithm_id,
                     ]);
                     $duplicate->similarity = $similarity;
                     $duplicate->command_run_id = $command->id;

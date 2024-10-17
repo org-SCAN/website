@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\ListMatchingAlgorithm;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,7 @@ class CrewFactory extends Factory
     {
         return [
             'name' => $this->faker->unique()->name,
+            'duplicate_algorithm_id' => ListMatchingAlgorithm::where('is_default', 1)->first()->id,
         ];
     }
 }

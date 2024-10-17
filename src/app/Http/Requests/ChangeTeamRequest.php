@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCrewRequest extends FormRequest
+class ChangeTeamRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class UpdateCrewRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "string|required|unique:crews,name," . $this->route('crew')->id,
-            "duplicate_algorithm_id" => "string|exists:list_matching_algorithms,id",
+            "name" => "string|required|unique:crews,name"
         ];
     }
 }

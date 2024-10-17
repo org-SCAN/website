@@ -1,4 +1,6 @@
 @php use App\Models\Duplicate; @endphp
+@php use App\Models\ListMatchingAlgorithm; @endphp
+@php use App\Models\Crew; @endphp
 @section('title', __('duplicate/index.view_duplicates'))
 <x-app-layout>
     <x-slot name="header">
@@ -30,15 +32,43 @@
     </div>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex flex-col">
+            <div class="flex flex-col gap-4">
+                <div class="shadow border-gray-200 sm:rounded-lg py-2">
+                    <form method="get" action="{{ route('duplicate.choose_algorithm') }}" class="mb-0">
+                        @csrf
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-l text-gray-800 leading-tight m-3">{{ __('duplicate/index.matching_algorithm') }}</h3>
+                            <div class="flex justify-center align-items-center">
+                                @php($form_elem = "matching_algorithm_id")
+                                @php($list = ListMatchingAlgorithm::list())
+                                @livewire('forms.form', [
+                                    'form_elem' => $form_elem,
+                                    'type' => 'select-dropdown',
+                                    'title' => null,
+                                    'associated_list' => $list,
+                                    'placeHolder' => __('duplicate/index.select_matching_algorithm'),
+                                    'previous' => ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->duplicate_algorithm_id)->id ?? null
+                                    ])
+                                <input
+                                    class="text-indigo-600 no-underline hover:underline hover:text-blue-900 cursor-pointer m-3 bg-transparent"
+                                    type="submit"
+                                    value="{{ __('duplicate/index.choose_algorithm') }}">
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <form method="get" action="{{route('duplicate.multiple_resolve')}}">
                             @csrf
                             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                                <div class="flex justify-between">
+                                <div class="flex justify-between align-items-center">
                                     <h3 class="text-l text-gray-800 leading-tight m-3">{{ __('duplicate/index.duplicate') }} </h3>
-                                    <input
+                                        <span class="h-auto">
+                                            {{ __('duplicate/index.matching_algorithm') }}:
+                                            <span class="font-bold">{{ $matching_algorithm->name }}</span>
+                                        </span>
+                                        <input
                                         class="text-indigo-600 no-underline hover:underline hover:text-blue-900 cursor-pointer m-3 bg-transparent"
                                         type="submit"
                                         value="{{ __('duplicate/index.mark_selected_as_not_duplicated') }}">
@@ -100,7 +130,7 @@
                                                 {{ round($duplicate->similarity,2) }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                @if($duplicate->person1->updated_at > $commandRun->started_at || $duplicate->person2->updated_at > $commandRun->started_at)
+                                                @if($duplicate->person1->updated_at > $duplicate->updated_at || $duplicate->person2->updated_at > $duplicate->updated_at)
                                                     <button
                                                         class="btn btn-outline-danger">{{ __('duplicate/index.updated_since_last_run') }}</button>
                                                 @endif

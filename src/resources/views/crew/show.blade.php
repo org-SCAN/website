@@ -1,4 +1,5 @@
 @php use App\Models\Crew; @endphp
+@php use App\Models\ListMatchingAlgorithm; @endphp
 @section('title', __('crew/show.view_team_details', ['team_name' => $crew->name]))
 <x-app-layout>
     <x-slot name="header">
@@ -59,6 +60,17 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white
                                     divide-y divide-gray-200">
                                         {{ $crew->name }}
+                                    </td>
+                                </tr>
+                                <tr class="border-b">
+                                    <th scope="col"
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500
+                                        uppercase tracking-wider">
+                                        {{ __('crew/show.duplicate_algorithm') }}
+                                    </th>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 bg-white
+                                    divide-y divide-gray-200">
+                                        {{ ListMatchingAlgorithm::find($crew->duplicate_algorithm_id)->name ?? null }}
                                     </td>
                                 </tr>
                             </table>

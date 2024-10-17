@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCrewRequest extends FormRequest
+class ChooseDuplicateAlgorithmRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,13 +19,12 @@ class UpdateCrewRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function rules()
     {
         return [
-            "name" => "string|required|unique:crews,name," . $this->route('crew')->id,
-            "duplicate_algorithm_id" => "string|exists:list_matching_algorithms,id",
+            'matching_algorithm_id' => 'required|exists:list_matching_algorithms,id',
         ];
     }
 }

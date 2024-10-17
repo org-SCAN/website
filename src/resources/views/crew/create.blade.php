@@ -1,3 +1,6 @@
+@php use App\Models\ListMatchingAlgorithm; @endphp
+@php use App\Models\Crew; @endphp
+
 @section('title', __('crew/create.create_new_team'))
 
 <x-app-layout>
@@ -27,7 +30,17 @@
                                 'previous' => old($form_elem),
                             ])
                         </div>
-
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            @php($form_elem = "duplicate_algorithm_id")
+                            @php($list = ListMatchingAlgorithm::list())
+                            @livewire("forms.form", [
+                                'form_elem' => $form_elem,
+                                'type' => "select-dropdown",
+                                'associated_list' => $list,
+                                'title' => __("crew/create.duplicate_algorithm"),
+                                'previous' => ListMatchingAlgorithm::where('is_default', '1')->first()->id ?? null
+                            ])
+                        </div>
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
                                 {{ __('common.save') }}
