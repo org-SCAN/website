@@ -24,9 +24,12 @@
                                 {{ __("lists_control/define_displayed_value.displayed_value") }}
                             </label>
 
-                            @php( $list = array_column($fields->toArray(), 'field', 'id'))
-                            <x-form-select name="{{$form_elem}}" :options="$list" id="{{$form_elem}}"
-                                           class="form-input rounded-md shadow-sm mt-1 block w-full"/>
+                            @livewire("select-dropdown", ['label' => $form_elem,
+                                'placeholder' => "-- ".__('crew/show.select_user')." --",
+                                'datas' => $list = array_column($fields->toArray(), 'field', 'id'),
+                                "selected_value"=>"id"])
+                            @stack('scripts')
+
                             <small id="{{$form_elem}}Help" class="block font-medium text-sm text-gray-500 ">
                                 {{ __("lists_control/define_displayed_value.displayed_value_hint") }}
                             </small>

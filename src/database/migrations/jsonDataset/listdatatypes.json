@@ -108,7 +108,7 @@
             "fra": "Coordonnées",
             "spa": "Coordenadas"
         },
-        "model": "\\App\\Http\\Livewire\\Forms\\Coordinates",
+        "model": "\\App\\Livewire\\Forms\\Coordinates",
         "database_type": "Array",
         "html_type": "coordinates",
         "java_type": "coordinates",
@@ -121,7 +121,7 @@
             "fra": "Zone",
             "spa": "Area"
         },
-        "model": "\\App\\Http\\Livewire\\Forms\\Area",
+        "model": "\\App\\Livewire\\Forms\\Area",
         "database_type": "Array",
         "html_type": "area",
         "java_type": "area",

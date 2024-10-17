@@ -1,4 +1,4 @@
-<x-jet-action-section>
+<x-action-section>
     <x-slot name="title">
         {{ __('livewire/change_language.change_language') }}
     </x-slot>
@@ -29,4 +29,4 @@
             </form>
         </div>
     </x-slot>
-</x-jet-action-section>
+</x-action-section>
