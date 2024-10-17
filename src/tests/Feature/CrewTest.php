@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Crew;
+use App\Models\ListMatchingAlgorithm;
 
 class CrewTest extends PermissionsTest
 {
@@ -30,8 +31,10 @@ class CrewTest extends PermissionsTest
     public function test_store(){
 
         $this->actingAs($this->admin);
+        $default_matching_algorithm_id = ListMatchingAlgorithm::where('is_default', 1)->first()->id;
         $response = $this->post(route($this->route.'.store'), [
             'name' => 'test team',
+            'duplicate_algorithm_id' => $default_matching_algorithm_id,
         ]);
 
         // check that it redirects to the index page
@@ -40,6 +43,7 @@ class CrewTest extends PermissionsTest
         $this->get(route($this->route.'.index'))->assertSee('test team');
         $this->assertDatabaseHas('crews', [
             'name' => 'test team',
+            'duplicate_algorithm_id' => $default_matching_algorithm_id,
         ]);
         $this->assertDatabaseHas('users', [
             'crew_id' => Crew::where('name', 'test team')->first()->id,
@@ -61,11 +65,13 @@ class CrewTest extends PermissionsTest
 
         $old_name = $this->resource->name;
         $new_name = 'test team2';
+        $new_matching_algorithm_id = ListMatchingAlgorithm::where('is_default', 0)->first()->id;
 
         $response = $this->put(route($this->route.'.update',
             $this->resource->id),
             [
                 'name' => $new_name,
+                'duplicate_algorithm_id' => $new_matching_algorithm_id,
             ]);
 
         // check that it redirects to the index page
@@ -75,6 +81,7 @@ class CrewTest extends PermissionsTest
         $this->assertDatabaseHas('crews',
             [
                 'name' => $new_name,
+                'duplicate_algorithm_id' => $new_matching_algorithm_id,
             ]);
         $this->assertDatabaseMissing('crews',
             [
