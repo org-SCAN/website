@@ -25,7 +25,7 @@ class UpdateCrewRequest extends FormRequest
     {
         return [
             "name" => "string|required|unique:crews,name," . $this->route('crew')->id,
-            "duplicate_algorithm_id" => "string|exists:list_matching_algorithms,id",
+            "duplicate_algorithm_id" => "string|required|exists:list_matching_algorithms,id",
         ];
     }
 }

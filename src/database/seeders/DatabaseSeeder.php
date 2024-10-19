@@ -14,11 +14,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(PermissionSeeder::class);
+        $this->call(LanguageSeeder::class);
         $this->call(RoleSeeder::class);
+        $this->call(ListControlSeeder::class);
+        $this->call(ListMatchingAlgorithmSeeder::class);
         $this->call(CrewSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(LanguageSeeder::class);
-        $this->call(ListControlSeeder::class);
         $this->call(FieldSeeder::class);
         $this->call(ListCountrySeeder::class);
         $this->call(ListRoleSeeder::class);
@@ -28,7 +29,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ListRelationSeeder::class);
         $this->call(ListEventTypeSeeder::class);
         $this->call(ListSourceTypeSeeder::class);
-        $this->call(ListMatchingAlgorithmSeeder::class);
         if (env('APP_DEBUG') && env('APP_ENV') == 'local') {
             $this->call(EventSeeder::class);
             $this->call(SourceSeeder::class);

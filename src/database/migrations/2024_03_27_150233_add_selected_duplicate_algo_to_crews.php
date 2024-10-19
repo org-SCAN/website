@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('crews', function (Blueprint $table) {
-            $table->foreignUuid('duplicate_algorithm_id')->nullable();
+            $table->foreignUuid('duplicate_algorithm_id');
         });
     }
 
