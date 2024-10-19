@@ -19,7 +19,7 @@ class CrewFactory extends Factory
     {
         return [
             'name' => $this->faker->unique()->name,
-            'duplicate_algorithm_id' => ListMatchingAlgorithm::where('is_default', 1)->first()->id,
+            'duplicate_algorithm_id' => ListMatchingAlgorithm::getDefault()->id,
         ];
     }
 }

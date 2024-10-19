@@ -77,5 +77,10 @@ class Crew extends Model
             'id');
     }
 
+    public function duplicate_algorithm() {
+        return $this->belongsTo(ListMatchingAlgorithm::class,
+            'duplicate_algorithm_id');
+    }
+
 
 }

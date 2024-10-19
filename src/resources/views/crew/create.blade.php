@@ -38,7 +38,7 @@
                                 'type' => "select-dropdown",
                                 'associated_list' => $list,
                                 'title' => __("crew/create.duplicate_algorithm"),
-                                'previous' => ListMatchingAlgorithm::where('is_default', '1')->first()->id ?? null
+                                'previous' => ListMatchingAlgorithm::getDefault()->id ?? null
                             ])
                         </div>
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">

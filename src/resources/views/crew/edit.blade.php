@@ -50,7 +50,7 @@
                                 'type' => "select-dropdown",
                                 'associated_list' => $list,
                                 'title' => __("crew/edit.duplicate_algorithm"),
-                                'previous' => ListMatchingAlgorithm::find(Crew::find(Auth::user()->crew_id)->duplicate_algorithm_id)->id ?? null
+                                'previous' => Crew::find(Auth::user()->crew_id)->duplicate_algorithm->id ?? null
                             ])
                         </div>
 

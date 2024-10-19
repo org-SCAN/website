@@ -9,7 +9,6 @@ use App\Models\Crew;
 use App\Models\Duplicate;
 use App\Models\ListMatchingAlgorithm;
 use Carbon\Carbon;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -32,9 +31,7 @@ class DuplicateController extends Controller
     public function index() {
         $this->authorize("viewAny", Duplicate::class);
 
-        $matching_algorithm = ListMatchingAlgorithm::find(
-            Crew::find(
-                Auth::user()->crew_id)->duplicate_algorithm_id) ?? ListMatchingAlgorithm::where("is_default", "1")->first();
+        $matching_algorithm = Crew::find(Auth::user()->crew_id)->duplicate_algorithm ?? ListMatchingAlgorithm::getDefault();
 
         $duplicates = Duplicate::where("crew_id",
             Auth::user()->crew_id)->where('resolved', false)
