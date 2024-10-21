@@ -1,3 +1,6 @@
+@php use App\Models\ListMatchingAlgorithm; @endphp
+@php use App\Models\Crew; @endphp
+
 @section('title', __('crew/edit.edit_team_details', ['team_name' => $crew->name]))
 
 <x-app-layout>
@@ -37,6 +40,17 @@
                                 'type' => "text",
                                 'title' => __("crew/edit.name"),
                                 'previous' => old($form_elem, $crew->name),
+                            ])
+                        </div>
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            @php($form_elem = "duplicate_algorithm_id")
+                            @php($list = ListMatchingAlgorithm::list())
+                            @livewire("forms.form", [
+                                'form_elem' => $form_elem,
+                                'type' => "select-dropdown",
+                                'associated_list' => $list,
+                                'title' => __("crew/edit.duplicate_algorithm"),
+                                'previous' => Crew::find(Auth::user()->crew_id)->duplicate_algorithm->id ?? null
                             ])
                         </div>
 

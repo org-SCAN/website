@@ -1,5 +1,5 @@
 <div>
-    <label for="{{ $form_elem }}" class="block font-medium text-md text-gray-700"> {!! $title !!}</label>
+    @if($title)<label for="{{ $form_elem }}" class="block font-medium text-md text-gray-700"> {!! $title !!}</label>@endif
         @livewire("select-dropdown", [
         'label' => $form_elem,
         'placeholder' => $placeHolder,

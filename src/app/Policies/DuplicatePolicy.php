@@ -41,4 +41,17 @@ class DuplicatePolicy extends GlobalPolicy
             ? Response::allow()
             : Response::deny('You do not have the right to do this.');
     }
+
+    /**
+     * Determine whether the user can choose a different algorithm.
+     *
+     * @param User $user
+     * @return Response
+     */
+    public function chooseAlgorithm(User $user)
+    {
+        return $this->hasPermission($user, __FUNCTION__)
+            ? Response::allow()
+            : Response::deny('You do not have the right to do this.');
+    }
 }

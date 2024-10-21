@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChooseDuplicateAlgorithmRequest;
 use App\Http\Requests\UpdateDuplicatesRequest;
 use App\Models\CommandRun;
+use App\Models\Crew;
 use App\Models\Duplicate;
+use App\Models\ListMatchingAlgorithm;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,10 +31,12 @@ class DuplicateController extends Controller
     public function index() {
         $this->authorize("viewAny", Duplicate::class);
 
+        $matching_algorithm = Crew::find(Auth::user()->crew_id)->duplicate_algorithm ?? ListMatchingAlgorithm::getDefault();
 
         $duplicates = Duplicate::where("crew_id",
-            Auth::user()->crew_id)->where('resolved',false)->orderByDesc("similarity")->take(20)->get();
-
+            Auth::user()->crew_id)->where('resolved', false)
+            ->where('duplicate_algorithm_id', $matching_algorithm->id)
+            ->orderByDesc("similarity")->take(20)->get();
 
         $commandRun = CommandRun::lastEnded('duplicate:compute');
 
@@ -47,6 +52,7 @@ class DuplicateController extends Controller
 
         return view("duplicate.index",
             compact("duplicates",
+                "matching_algorithm",
                 "commandRun",
                 'nextDue',
                 'lastRun'));
@@ -157,6 +163,24 @@ class DuplicateController extends Controller
             $duplicate->save();
         }
 
+        return redirect()->route('duplicate.index');
+    }
+
+    /**
+     * This function is used to choose the matching algorithm of a crew
+     *
+     * @param ChooseDuplicateAlgorithmRequest $request
+     * @return RedirectResponse
+     */
+    public function choose_algorithm(ChooseDuplicateAlgorithmRequest $request) {
+        $this->authorize("chooseAlgorithm",
+            Duplicate::class);
+
+        $matching_algorithm_id = $request->input('matching_algorithm_id');
+        $crew_id = Auth::user()->crew_id;
+        $crew = Crew::find($crew_id);
+        $crew->duplicate_algorithm_id = $matching_algorithm_id;
+        $crew->save();
         return redirect()->route('duplicate.index');
     }
 }

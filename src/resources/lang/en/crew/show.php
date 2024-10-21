@@ -14,4 +14,5 @@ return [
     'add_user_to_team' => 'Add a user to the team',
     'members_in_team' => 'Members in the team',
     'select_user' => 'Select a user',
+    'duplicate_algorithm' => 'Duplicate algorithm',
 ];

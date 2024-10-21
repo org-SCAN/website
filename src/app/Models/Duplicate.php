@@ -50,12 +50,18 @@ class Duplicate extends Model
         $persons = $crew->persons;
         $similarities = [];
 
+        $selected_duplicate_algorithm = ListMatchingAlgorithm::find($crew->duplicate_algorithm_id);
+        if ($selected_duplicate_algorithm == null) {
+            $selected_duplicate_algorithm = ListMatchingAlgorithm::getDefault();
+        }
+        $algorithm_id = $selected_duplicate_algorithm->id;
+        $algorithm_model = $selected_duplicate_algorithm->model;
 
         $last_comparison = CommandRun::lastEnded('duplicate:compute');
         // foreach persons
 
         // get matching algorithm
-        $metaphoneAlgorithm = new MetaphoneAlgorithm();
+        $algorithm =  new $algorithm_model();
 
         foreach ($persons as $person) {
             //get the fields
@@ -74,7 +80,15 @@ class Duplicate extends Model
 
                 $notSamePerson = $person->id != $person2->id;
                 $notAlreadyCompared = !isset($similarities[$person2->id][$person->id]);
-                $notUpdatedSinceLastComparison = ($last_comparison == null || ($last_comparison->started_at < $person->updated_at || $last_comparison->started_at < $person2->updated_at));
+                $existingDuplicate = Duplicate::where('person1_id',
+                    $person->id)->where('person2_id',
+                    $person2->id)->where('duplicate_algorithm_id', $algorithm_id)->first();
+                if ($existingDuplicate == null) {
+                    $existingDuplicate = Duplicate::where('person1_id',
+                        $person2->id)->where('person2_id',
+                        $person->id)->where('duplicate_algorithm_id', $algorithm_id)->first();
+                }
+                $notUpdatedSinceLastComparison = ($last_comparison == null || $existingDuplicate == null || ($existingDuplicate->updated_at < $person->updated_at || $existingDuplicate->updated_at < $person2->updated_at));
                 $notResolved = !self::isResolved($person,
                     $person2);
 
@@ -86,7 +100,7 @@ class Duplicate extends Model
                         foreach ($person2_fields as $person2_field) {
                             if ($person_field->id == $person2_field->id) {
                                 if($person_field->best_descriptive_value == 1){
-                                    $similarity += $metaphoneAlgorithm->computeSimilarity($person,$person2,$person_field->importance/100);
+                                    $similarity += $algorithm->computeSimilarity($person, $person2, $person_field->importance / 100);
                                 }
                                 $count++;
                             }
@@ -97,7 +111,7 @@ class Duplicate extends Model
                 }
             }
         }
-        return $similarities;
+        return [$similarities, $algorithm_id];
     }
 
     /**

@@ -7,4 +7,5 @@ return [
     'back_to_list' => 'Back to list',
     'delete_confirm' => 'Are you sure you want to delete this crew?',
     'name' => 'Name',
+    'duplicate_algorithm' => 'Duplicate algorithm',
 ];
