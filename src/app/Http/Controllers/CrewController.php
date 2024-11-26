@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\addUserToCrewRequest;
 use App\Http\Requests\StoreCrewRequest;
 use App\Http\Requests\UpdateCrewRequest;
-use App\Models\ApiLog;
 use App\Models\Crew;
 use App\Models\Field;
 use App\Models\ListControl;
@@ -67,7 +66,6 @@ class CrewController extends Controller
             "validation_laravel" => ListDataType::firstWhere('name', 'Yes / No')->validation.'|accepted|required',
             "crew_id" => $crew->id,
             "order" => 1,
-            "api_log" =>  ApiLog::createFromRequest($request,'Field')->id
         ]);
 
 

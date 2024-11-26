@@ -8,7 +8,6 @@ use App\Http\Requests\StoreRefugeeApiRequest;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
 use App\Imports\RefugeesImport;
-use App\Models\ApiLog;
 use App\Models\Crew;
 use App\Models\Duplicate;
 use App\Models\Field;
@@ -19,6 +18,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -44,14 +44,13 @@ class RefugeeController extends Controller
      * The person must have get permission to be returned.
      *
      * @param  Request  $request
-     * @param  Crew  $crew
+     * @param  Crew|null  $crew
      * @return Response
      */
 
     public static function apiGetPerson(Request $request,
         Crew $crew = null) {
-        $log = ApiLog::createFromRequest($request,
-            "Refugee");
+
         if ($request->user()->tokenCan("read")) {
             if ($crew == null) {
                 $crew = $request->user()->crew;
@@ -65,7 +64,10 @@ class RefugeeController extends Controller
                 200,
                 ['Content-type' => 'application/json']);
         }
-        $log->update(["response" => "Bad token access"]);
+
+        Log::channel('api')->info("Bad access token",
+            ['user' => $request->user()]);
+
         return response("Your token can't be use to get data",
             403);
     }
@@ -120,11 +122,7 @@ class RefugeeController extends Controller
         }
         //$refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i', time()));
 
-        $log = ApiLog::createFromRequest($request,
-            "Refugee");
         $refugee = [];
-        $refugee["api_log"] = $log->id;
-
         $person->update($refugee);
         return redirect()->route("person.index");
     }
@@ -231,14 +229,8 @@ class RefugeeController extends Controller
         //
         $refugee["date"] = date('Y-m-d H:i',
             time());
-        $log = ApiLog::createFromRequest($request,
-            "Refugee");
-        $refugee["api_log"] = $log->id;
         $new_ref = Refugee::create($refugee);
         $new_ref->fields()->attach($ref);
-        if ($new_ref == null) {
-            $log->update(["response" => "Error in creation"]);
-        }
 
         return redirect()->route("person.index");
     }
@@ -343,20 +335,12 @@ class RefugeeController extends Controller
     public function storeFromJson(Request $request) {
 
 
-        //remove _token from the request
-        //$request->request->remove('_token');
-        $log = ApiLog::createFromRequest($request,"Refugee");
-
-
         $validator = Validator::make(json_decode($request->import_person_file->getContent(), true), (new JsonFileRefugeeRequest())->rules());
 
         foreach ($validator->validated() as $refugee) {
-            $refugee["date"] = ((isset($refugee["date"]) && !empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i', time()));
-            $refugee["api_log"] = $log->id;
+            $refugee["date"] = ((!empty($refugee["date"])) ? $refugee["date"] : date('Y-m-d H:i',
+                time()));
             $stored_ref = Refugee::handleApiRequest($refugee);
-            if ($stored_ref == null) {
-                $log->update(["response" => "Error while creating a refugee"]);
-            }
         }
         return redirect()->route("person.index");
     }
@@ -369,24 +353,23 @@ class RefugeeController extends Controller
      */
     public static function handleApiRequest(StoreRefugeeApiRequest $request) {
         $responseArray = [];
-        $log = ApiLog::createFromRequest($request,"Refugee");
         if ($request->user()->tokenCan("update")) {
             foreach ($request->validated() as $person) {
-                $person["api_log"] = $log->id;
-                $person["application_id"] = $log->application_id;
+                $person["application_id"] = $request->header('Application-id') ?? $request->validated()[0]['application_id'] ?? 'website';
 
                 $stored_person = Refugee::handleApiRequest($person);
 
                 if ($stored_person instanceof Response) {
                     return $stored_person;
                 } elseif ($stored_person instanceof Refugee) {
-                    array_push($responseArray, $stored_person->id);
+                    $responseArray[] = $stored_person->id;
                 }
 
             }
             return response(json_encode($responseArray),201,['Content-type' => 'application/json']);
         }
-        $log->update(["response" => "Bad token access"]);
+        Log::channel('api')->info("Bad access token",
+            ['user' => $request->user()]);
         return response("Your token can't be use to send data", 403);
     }
 }

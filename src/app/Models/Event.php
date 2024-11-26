@@ -41,11 +41,6 @@ class Event extends ListControl
         return $this->hasOne(ListEventType::class, 'id', 'event_type_id');
     }
 
-    public function api_log()
-    {
-        return $this->hasOne(ApiLog::class, 'id', 'apiLog_id');
-    }
-
     public function persons()
     {
         $persons_in_event = [];

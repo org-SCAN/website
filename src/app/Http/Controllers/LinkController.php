@@ -6,16 +6,18 @@ use App\Http\Requests\FileLinkRequest;
 use App\Http\Requests\StoreLinkApiRequest;
 use App\Http\Requests\StoreLinkRequest;
 use App\Http\Requests\UpdateLinkRequest;
-use App\Models\ApiLog;
 use App\Models\Crew;
 use App\Models\Link;
 use App\Models\ListControl;
 use App\Models\ListRelation;
 use App\Models\ListRelationType;
 use App\Models\Refugee;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 
 class LinkController extends Controller
 {
@@ -24,7 +26,9 @@ class LinkController extends Controller
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct(
+    )
+    {
         $this->authorizeResource(Link::class,
             'link');
     }
@@ -33,34 +37,35 @@ class LinkController extends Controller
      * Handle the API request
      *
      * @param  StoreLinkApiRequest  $request
-     * @return array
+     * @return Response
      */
-    public static function handleApiRequest(StoreLinkApiRequest $request) {
-        $log = ApiLog::createFromRequest($request,
-            "Link");
+    public static function handleApiRequest(
+        StoreLinkApiRequest $request
+    ) {
 
         if ($request->user()->tokenCan("update")) {
             $responseArray = [];
             foreach ($request->validated() as $link) {
-                $link["application_id"] = $log->application_id;
+                $link["application_id"] = $request->header('Application-id') ?? $request->validated()[0]['application_id'] ?? 'website';
                 //check
-                if (key_exists("id", $link)) { // update
+                if (key_exists("id",
+                    $link)) { // update
                     $linkUpdate = Link::find($link["id"]);
-                    $link["api_log"] = $log->id;
                     $linkUpdate->update($link);
                     $link = $linkUpdate;
                 } else {
                     //find or create
-                    $link = Link::firstOrCreate($link, ["api_log" => $log->id]);
+                    $link = Link::firstOrCreate($link);
 
                 }
-                array_push($responseArray, $link->id);
+                $responseArray[] = $link->id;
             }
             return response(json_encode($responseArray),
                 201,
                 ['Content-Type' => "application/json"]);
         }
-        $log->update(["response" => "Bad token access"]);
+        Log::channel('api')->info("Bad access token",
+            ['user' => $request->user()]);
         return response("Your token can't be use to send datas",
             403);
     }
@@ -68,17 +73,16 @@ class LinkController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
+     * @param  UpdateLinkRequest  $request
      * @param  Link  $link
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(UpdateLinkRequest $request,Link $link) {
+    public function update(
+        UpdateLinkRequest $request,
+        Link $link
+    ) {
 
-        $log = ApiLog::createFromRequest($request,
-            "Link");
-        $linkv = $request->validated();
-        $linkv["api_log"] = $log->id;
-        $link->update($linkv);
+        $link->update($request->validated());
 
         return redirect()->route("links.index");
     }
@@ -86,9 +90,10 @@ class LinkController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
-    public function index() {
+    public function index()
+    {
         $links = Link::whereRelation('RefugeeFrom.crew',
             'crews.id',
             Auth::user()->crew->id)->whereRelation('RefugeeTo.crew',
@@ -101,9 +106,11 @@ class LinkController extends Controller
     /**
      * Show the form for creating a new resource from a json file.
      *
-     * @return Response
+     * @return View
      */
-    public function createFromJson() {
+    public function createFromJson(
+    )
+    {
         //abort_if(Gate::denies('person_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view("links.create_from_json");
     }
@@ -111,17 +118,18 @@ class LinkController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
-     * @return Response
+     * @param  StoreLinkRequest  $request
+     * @return RedirectResponse
      */
-    public function store(StoreLinkRequest $request) {
+    public function store(
+        StoreLinkRequest $request
+    ) {
         $link = $request->validated();
-        $link["date"] = ((isset($link["date"]) && !empty($link["date"])) ? $link["date"] : date('Y-m-d H:i',
+        $link["date"] = ((!empty($link["date"])) ? $link["date"] : date('Y-m-d H:i',
             time()));
-        $link["api_log"] = ApiLog::createFromRequest($request,
-            "Link")->id;
 
-        $relation_type = ListRelationType::all()->pluck('type','id')->toArray();
+        $relation_type = ListRelationType::all()->pluck('type',
+            'id')->toArray();
 
         if (isset($link["everyoneFrom"]) || isset($link["everyoneTo"])) {
 
@@ -135,19 +143,21 @@ class LinkController extends Controller
             $person = Refugee::find($link[$origin]);
             if ($person->hasEvent()) {
                 $associatedPersonsThroughEvent = $person->event->persons();
-               // dd($person->event);
+                // dd($person->event);
             }
             unset($link["everyoneFrom"]);
             unset($link["everyoneTo"]);
         }
 
-        if (isset($associatedPersonsThroughEvent) && !empty($associatedPersonsThroughEvent) && isset($direction)) {
+        if (!empty($associatedPersonsThroughEvent) && isset($direction)) {
             foreach ($associatedPersonsThroughEvent as $associatedPerson) {
-                if($associatedPerson->id == $person->id) continue;
+                if ($associatedPerson->id == $person->id) {
+                    continue;
+                }
                 $link[$origin] = $person->id;
                 $link[$direction] = $associatedPerson->id;
                 $new_link = Link::create($link);
-                if((isset($link["type"]) && $relation_type[$link["type"]] == "bilateral")){
+                if ((isset($link["type"]) && $relation_type[$link["type"]] == "bilateral")) {
                     $link[$origin] = $associatedPerson->id;
                     $link[$direction] = $person->id;
                     Link::create($link);
@@ -157,7 +167,7 @@ class LinkController extends Controller
         }
 
         $new_link = Link::create($link);
-        if((isset($link["type"]) && $relation_type[$link["type"]] == "bilateral")){
+        if ((isset($link["type"]) && $relation_type[$link["type"]] == "bilateral")) {
             $old_from = $link["from"];
             $link['from'] = $link['to'];
             $link['to'] = $old_from;
@@ -169,10 +179,12 @@ class LinkController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
-    public function create($origin = null,
-        Refugee $refugee = null) {
+    public function create(
+        $origin = null,
+        Refugee $refugee = null
+    ) {
         $lists["refugees"] = Refugee::getAllBestDescriptiveValues();
         $lists["relations"] = array_column(ListRelation::all()->toArray(),
             ListControl::where('name',
@@ -187,21 +199,21 @@ class LinkController extends Controller
     /**
      * Store a newly created resource from json file in storage.
      *
-     * @param  Request  $request
+     * @param  FileLinkRequest  $request
      * @return Response
      */
-    public function storeFromJson(FileLinkRequest $request) {
-        $log = ApiLog::createFromRequest($request,
-            "Link");
+    public function storeFromJson(
+        FileLinkRequest $request
+    ) {
+
         foreach ($request->validated() as $link) {
             //from there handle API request relation
-            $link = Link::findOrCreate($link, [
-                "api_log" => $log->id,
-                "application_id" => $log->application_id,
-            ]);
+            $link = Link::findOrCreate($link,
+                [
+                    "application_id" => $request->header('Application-id') ?? $request->validated()[0]['application_id'] ?? 'website',
+                ]);
             if (!$link) {
-                $log->update(["response" => "Error while creating a relation"]);
-                return response("Error while creating this refugee :".json_encode($link),
+                return response("Error while creating this item :".json_encode($link),
                     500);
             }
         }
@@ -212,10 +224,11 @@ class LinkController extends Controller
      * Display the specified resource.
      *
      * @param  Link  $link
-     * @return Response
+     * @return RedirectResponse
      */
-    public function show(Link $link) {
-        //return view("links.show", compact("links"));
+    public function show(
+        Link $link
+    ) {
         return redirect()->route("links.edit",
             compact("link"));
     }
@@ -224,9 +237,11 @@ class LinkController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  Link  $link
-     * @return Response
+     * @return View
      */
-    public function edit(Link $link) {
+    public function edit(
+        Link $link
+    ) {
         $lists["relations"] = [$link->relation->id => $link->relation->displayed_value_content] + array_column(ListRelation::all()->toArray(),
                 ListControl::where('name',
                     "ListRelation")->first()->displayed_value,
@@ -241,9 +256,11 @@ class LinkController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  Link  $link
-     * @return Response
+     * @return RedirectResponse
      */
-    public function destroy(Link $link) {
+    public function destroy(
+        Link $link
+    ) {
         $link->delete();
         return redirect()->route("links.index");
     }
@@ -251,11 +268,13 @@ class LinkController extends Controller
     /**
      * Get relations API. It returns all the relations in a specific crew
      * @param  Request  $request
-     * @param  Crew  $crew
+     * @param  Crew|null  $crew
      * @return Response
      */
-    public function apiGetRelations(Request $request,
-        Crew $crew = null) {
+    public function apiGetRelations(
+        Request $request,
+        Crew $crew = null
+    ) {
         if ($request->user()->tokenCan("read")) {
             if ($crew == null) {
                 $crew = $request->user()->crew;
@@ -263,7 +282,6 @@ class LinkController extends Controller
             return response(json_encode($crew->relations->makeHidden([
                 "created_at",
                 'updated_at',
-                'api_log',
                 'application_id',
                 'laravel_through_key',
                 "deleted_at",

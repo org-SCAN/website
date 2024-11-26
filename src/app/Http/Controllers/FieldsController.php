@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFieldRequest;
 use App\Http\Requests\UpdateFieldRequest;
-use App\Models\ApiLog;
 use App\Models\Field;
 use App\Models\ListControl;
 use App\Models\ListDataType;
@@ -15,6 +14,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class FieldsController extends Controller
@@ -45,9 +45,7 @@ class FieldsController extends Controller
      * @return RedirectResponse
      */
     public function store(StoreFieldRequest $request) {
-        $apiLog = ApiLog::createFromRequest($request,'Field');
         $field = $request->validated();
-        $field["api_log"] = $apiLog->id;
 
 
         // compute the order
@@ -88,9 +86,6 @@ class FieldsController extends Controller
             $field->{$listField->key_value},
             $field->{$listField->displayed_value});
 
-
-        $apiLog->response = "success";
-        $apiLog->save();
         return redirect()->route("fields.index");
     }
 
@@ -187,8 +182,6 @@ class FieldsController extends Controller
      * @param  Request  $request
      */
     public function handleApiRequest(Request $request) {
-        $log = ApiLog::createFromRequest($request,
-            "Refugee");
         if ($request->user()->tokenCan("read")) {
             $datas = [];
             $crew = $request->user()->crew;
@@ -210,7 +203,8 @@ class FieldsController extends Controller
                 200)->header('Content-Type',
                 'application/json');
         }
-        $log->update(["response" => "Bad token access"]);
+        Log::channel('api')->info("Bad access token",
+            ['user' => $request->user()]);
         return response("Your token can't be use to read datas",
             403);
 
@@ -224,9 +218,6 @@ class FieldsController extends Controller
      * @return RedirectResponse
      */
     public function update(UpdateFieldRequest $request, Field $field) {
-        $apiLog = ApiLog::createFromRequest($request,
-            'Field');
-
         $to_update = $request->validated();
         if (!$request->has('descriptive_value')) {
             $to_update['descriptive_value'] = 0;
@@ -234,8 +225,6 @@ class FieldsController extends Controller
         if (!$request->has('best_descriptive_value')) {
             $to_update['best_descriptive_value'] = 0;
         }
-
-        $to_update["api_log"] = $apiLog->id;
         $to_update["validation_laravel"] = $to_update["validation_rules"];
         unset($to_update["validation_rules"]);
         $field->update($to_update);
@@ -246,8 +235,6 @@ class FieldsController extends Controller
             $field->{$listField->key_value},
             $field->{$listField->displayed_value});
 
-        $apiLog->response = "success";
-        $apiLog->save();
         return redirect()->route("fields.index");
     }
 }
