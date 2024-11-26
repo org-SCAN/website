@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Crew;
 use App\Models\Link;
 use App\Models\ListRelation;
 use App\Models\Refugee;
@@ -30,6 +31,7 @@ class LinkFactory extends Factory
             'relation_id' => ListRelation::inRandomOrder()->first()->id,
             'from' => Refugee::inRandomOrder()->first()->id,
             'to' => Refugee::inRandomOrder()->first()->id,
+            'crew_id' => Crew::getDefaultCrewId(),
         ];
     }
 }

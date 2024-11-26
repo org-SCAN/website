@@ -47,7 +47,8 @@ class LinkController extends Controller
             $responseArray = [];
             foreach ($request->validated() as $link) {
                 $link["application_id"] = $request->header('Application-id') ?? $request->validated()[0]['application_id'] ?? 'website';
-                //check
+                $link["crew_id"] = $request->user()->crew->id;
+
                 if (key_exists("id",
                     $link)) { // update
                     $linkUpdate = Link::find($link["id"]);
@@ -111,7 +112,6 @@ class LinkController extends Controller
     public function createFromJson(
     )
     {
-        //abort_if(Gate::denies('person_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view("links.create_from_json");
     }
 
@@ -127,6 +127,7 @@ class LinkController extends Controller
         $link = $request->validated();
         $link["date"] = ((!empty($link["date"])) ? $link["date"] : date('Y-m-d H:i',
             time()));
+        $link["crew_id"] = Auth::user()->crew->id;
 
         $relation_type = ListRelationType::all()->pluck('type',
             'id')->toArray();
@@ -156,10 +157,12 @@ class LinkController extends Controller
                 }
                 $link[$origin] = $person->id;
                 $link[$direction] = $associatedPerson->id;
+                $link["crew_id"] = Auth::user()->crew->id;
                 $new_link = Link::create($link);
                 if ((isset($link["type"]) && $relation_type[$link["type"]] == "bilateral")) {
                     $link[$origin] = $associatedPerson->id;
                     $link[$direction] = $person->id;
+                    $link["crew_id"] = Auth::user()->crew->id;
                     Link::create($link);
                 }
             }
@@ -167,10 +170,12 @@ class LinkController extends Controller
         }
 
         $new_link = Link::create($link);
+
         if ((isset($link["type"]) && $relation_type[$link["type"]] == "bilateral")) {
             $old_from = $link["from"];
             $link['from'] = $link['to'];
             $link['to'] = $old_from;
+            $link["crew_id"] = Auth::user()->crew->id;
             Link::create($link);
         }
         return redirect()->route("links.index");
@@ -211,6 +216,7 @@ class LinkController extends Controller
             $link = Link::findOrCreate($link,
                 [
                     "application_id" => $request->header('Application-id') ?? $request->validated()[0]['application_id'] ?? 'website',
+                    "crew_id" => Auth::user()->crew->id,
                 ]);
             if (!$link) {
                 return response("Error while creating this item :".json_encode($link),

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 
+use App\Models\Crew;
 use App\Models\Refugee;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -25,6 +26,7 @@ class RefugeeFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid,
+            'crew_id' => Crew::getDefaultCrewId(),
             'date' => $this->faker->date("Y-m-d",
                 $max = 'now',
                 $min = '- 2 months'),

@@ -51,35 +51,6 @@ class Refugee extends Model
         return $best_descriptive_values;
     }
 
-    /**
-     * The user to which the refugee is associated.
-     */
-    public function user() {
-        return $this->hasOneThrough(User::class,
-            ApiLog::class,
-            "id", "id",
-            "api_log",
-            "user_id");
-    }
-
-    /**
-     * The Api log to which the refugee is associated.
-     **/
-    /*
-     public function api_log()
-     {
-         return $this->belongsTo(ApiLog::class, "api_log");
-     }*/
-
-    /*
-    public static function getRefugeeIdFromReference($reference,
-        $application_id) {
-        $refugee = self::where("application_id",
-            $application_id)->where('unique_id',
-            $reference)->first();
-
-        return !empty($refugee) ? $refugee->id : null;
-    }*/
 
     /**
      * This function is used to handle the API request. If a person exists (id is in the request) update all changed fields, else create the person and return his/her ID.
@@ -104,7 +75,6 @@ class Refugee extends Model
         if ($storedPerson instanceof Refugee) {
             //delete useless information (in the update case)
             $keys = [
-                "api_log",
                 "date",
                 "application_id",
             ];
@@ -138,7 +108,6 @@ class Refugee extends Model
 
         } else { //should create the person
             $keys = [
-                "api_log",
                 "date",
                 "application_id",
             ];
@@ -147,6 +116,7 @@ class Refugee extends Model
                 $personContent[$key] = $person[$key];
                 unset($person[$key]);
             }
+            $personContent["crew_id"] = Auth::user()->crew->id;
             $storedPerson = Refugee::create($personContent);
         }
 
@@ -256,12 +226,9 @@ class Refugee extends Model
     /**
      * The crew to which the refugee is associated.
      */
-    public function crew() {
-        return $this->hasOneThrough(Crew::class,
-            ApiLog::class,
-            "id", "id",
-            "api_log",
-            "crew_id");
+    public function crew()
+    {
+        return $this->belongsTo(Crew::class);
     }
 
     public function getRepresentativeValuesAttribute() {

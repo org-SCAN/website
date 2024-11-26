@@ -35,6 +35,7 @@ class CreateRefugeesTable extends Migration
             $table->date("date")
                 ->useCurrent()
                 ->nullable();
+            $table->foreignUuid("crew_id");
             $table->softDeletes();
             $table->timestamps();
             $table->string("application_id")->default("website");
