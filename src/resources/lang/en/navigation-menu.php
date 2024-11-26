@@ -16,7 +16,6 @@ return [
     'users' => 'Users',
     'teams' => 'Teams',
     'roles' => 'Roles',
-    'api_logs' => 'Api logs',
     'manage_account' => 'Manage Account',
     'profile' => 'Profile',
     'log_out' => 'Log Out',

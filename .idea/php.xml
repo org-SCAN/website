@@ -165,8 +165,30 @@
       <path value="$PROJECT_DIR$/src/vendor/fidry/cpu-core-counter" />
       <path value="$PROJECT_DIR$/src/vendor/gonoware/laravel-maps" />
       <path value="$PROJECT_DIR$/src/vendor/psy/psysh_compare" />
-      <path value="$PROJECT_DIR$/src/vendor/spatie/laravel-package-tools" />
-      <path value="$PROJECT_DIR$/src/vendor/spatie/laravel-query-builder" />
+      <path value="$PROJECT_DIR$/src/vendor/symfony/polyfill-php83" />
+      <path value="$PROJECT_DIR$/src/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/src/vendor/guzzlehttp/uri-template" />
+      <path value="$PROJECT_DIR$/src/vendor/league/flysystem-local" />
+      <path value="$PROJECT_DIR$/src/vendor/_laravel_idea" />
+      <path value="$PROJECT_DIR$/src/vendor/carbonphp/carbon-doctrine-types" />
+      <path value="$PROJECT_DIR$/src/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/src/vendor/gajus/dindent" />
+      <path value="$PROJECT_DIR$/src/vendor/larswiegers/laravel-maps" />
+      <path value="$PROJECT_DIR$/src/vendor/spatie/flare-client-php" />
+      <path value="$PROJECT_DIR$/src/vendor/spatie/backtrace" />
+      <path value="$PROJECT_DIR$/src/vendor/spatie/ignition" />
+      <path value="$PROJECT_DIR$/src/vendor/spatie/laravel-ignition" />
+      <path value="$PROJECT_DIR$/src/vendor/spatie/error-solutions" />
+      <path value="$PROJECT_DIR$/src/vendor/symfony/clock" />
+      <path value="$PROJECT_DIR$/src/vendor/laravel/prompts" />
+      <path value="$PROJECT_DIR$/src/vendor/elastic/transport" />
+      <path value="$PROJECT_DIR$/src/vendor/open-telemetry/context" />
+      <path value="$PROJECT_DIR$/src/vendor/open-telemetry/api" />
+      <path value="$PROJECT_DIR$/src/vendor/symfony/polyfill-php82" />
+      <path value="$PROJECT_DIR$/src/vendor/elasticsearch/elasticsearch" />
+      <path value="$PROJECT_DIR$/src/vendor/php-http/discovery" />
+      <path value="$PROJECT_DIR$/src/vendor/php-http/httplug" />
+      <path value="$PROJECT_DIR$/src/vendor/php-http/promise" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1">

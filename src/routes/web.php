@@ -212,17 +212,6 @@ Route::get('duplicate/choose_algorithm',
 
 Route::resource("duplicate",
     DuplicateController::class)->middleware('auth');
-
-Route::get('api_logs', [
-    ApiLogController::class,
-    'index',
-])->name('api_logs.index')->middleware('auth');
-Route::get('api_logs/{fileIndex}/{lineIndex}',
-    [
-        ApiLogController::class,
-        'show',
-    ])->name('api_logs.show')->middleware('auth');
-
 Route::resource("crew",
     CrewController::class)->middleware('auth');
 Route::resource("roles",

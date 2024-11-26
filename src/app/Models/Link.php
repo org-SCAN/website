@@ -15,11 +15,7 @@ class Link extends Pivot
 {
     use HasFactory, Uuids, SoftDeletes, EncryptedAttribute;
 
-    /**
-     * Give the route pattern, used in api log
-     * @var string
-     */
-    const route_base = "links";
+
     /**
      *
      * This parameter allows to display the Add from and Add to section in Person.show (relation part)
@@ -140,16 +136,12 @@ class Link extends Pivot
     }
 
     /**
-     * Store the relation id accorting its key or its code
-     * @param $value
+     * Parse date to Carbon
+     * @return Carbon
      */
-/*
-    public function setRelationAttribute($value) {
-        $this->attributes["relation"] = ListRelation::getIdFromValue($value);
-    }*/
-
-    public function getDateAttribute() {
+    public function getDateAttribute(
+    )
+    {
         return Carbon::parse($this->attributes['date']);
     }
-
 }

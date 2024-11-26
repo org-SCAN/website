@@ -16,11 +16,7 @@ class Refugee extends Model
 {
     use HasFactory, Uuids, SoftDeletes;
 
-    /**
-     * Give the route pattern, used in api log
-     * @var string
-     */
-    const route_base = "person";
+
     /**
      * Indicates if the model's ID is auto-incrementing.
      *

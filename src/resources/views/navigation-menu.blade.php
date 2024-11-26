@@ -1,3 +1,14 @@
+@php use App\Models\Cytoscape; @endphp
+@php use App\Models\Place; @endphp
+@php use App\Models\Refugee; @endphp
+@php use App\Models\Source; @endphp
+@php use App\Models\Link; @endphp
+@php use App\Models\Duplicate; @endphp
+@php use App\Models\Field; @endphp
+@php use App\Models\ListControl; @endphp
+@php use App\Models\User; @endphp
+@php use App\Models\Crew; @endphp
+@php use App\Models\Role; @endphp
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,18 +22,18 @@
                 </div>
 
                 <!-- Navigation Links -->
-                @can('viewMenu', \App\Models\Cytoscape::class)
+                @can('viewMenu', Cytoscape::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('cytoscape.index') }}"
-                                        :active="request()->routeIs('cytoscape.*')">
+                                    :active="request()->routeIs('cytoscape.*')">
                             {{ __('navigation-menu.network_graph') }}
                         </x-nav-link>
                     </div>
                 @endcan
-                @can('viewMenu', \App\Models\Refugee::class)
+                @can('viewMenu', Refugee::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('person.index') }}"
-                                        :active="request()->routeIs('person.*')">
+                                    :active="request()->routeIs('person.*')">
                             {{ __('navigation-menu.items') }}
                         </x-nav-link>
                     </div>
@@ -30,28 +41,28 @@
                 @can('viewMenu', \App\Models\Event::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('event.index') }}"
-                                        :active="request()->routeIs('event.*')">
+                                    :active="request()->routeIs('event.*')">
                             {{ __('navigation-menu.events') }}
                         </x-nav-link>
                     </div>
                 @endcan
-                @can('viewMenu', \App\Models\Place::class)
+                @can('viewMenu', Place::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('place.index') }}"
-                                        :active="request()->routeIs('place.*')">
+                                    :active="request()->routeIs('place.*')">
                             {{ __('navigation-menu.place') }}
                         </x-nav-link>
                     </div>
                 @endcan
-                @can('viewMenu', \App\Models\Source::class)
+                @can('viewMenu', Source::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('source.index') }}"
-                                        :active="request()->routeIs('source.*')">
+                                    :active="request()->routeIs('source.*')">
                             {{ __('navigation-menu.sources') }}
                         </x-nav-link>
                     </div>
                 @endcan
-                @can('viewMenu', \App\Models\Link::class)
+                @can('viewMenu', Link::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('links.index') }}" :active="request()->routeIs('links.*')">
                             {{ __('navigation-menu.relations') }}
@@ -59,20 +70,20 @@
                     </div>
                 @endcan
 
-                @can('viewMenu', \App\Models\Duplicate::class)
+                @can('viewMenu', Duplicate::class)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link href="{{ route('duplicate.index') }}"
-                                        :active="request()->routeIs('duplicate.*')">
+                                    :active="request()->routeIs('duplicate.*')">
                             {{ __('navigation-menu.duplicates') }}
                         </x-nav-link>
                     </div>
                 @endcan
 
                 <!-- Fields Management Dropdown -->
-                @if ( Auth::user()->can('viewMenu', \App\Models\Field::class) || Auth::user()->can('viewMenu',  \App\Models\ListControl::class))
+                @if ( Auth::user()->can('viewMenu', Field::class) || Auth::user()->can('viewMenu',  ListControl::class))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-dropdown align="right" width="48"
-                                        :active="request()->routeIs('fields.*')||request()->routeIs('lists_control.*')">
+                                    :active="request()->routeIs('fields.*')||request()->routeIs('lists_control.*')">
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md pt-4">
                                     <button type="button"
@@ -88,15 +99,15 @@
                                 <div class="block px-4 py-2 text-xs text-gray-400">
                                     {{ __('navigation-menu.field_management') }}
                                 </div>
-                                @can('viewMenu', \App\Models\Field::class)
+                                @can('viewMenu', Field::class)
                                     <x-dropdown-link href="{{ route('fields.index') }}"
-                                                         :active="request()->routeIs('fields.*')">
+                                                     :active="request()->routeIs('fields.*')">
                                         {{ __('navigation-menu.fields') }}
                                     </x-dropdown-link>
                                 @endcan
-                                @can("viewMenu", \App\Models\ListControl::class)
+                                @can("viewMenu", ListControl::class)
                                     <x-dropdown-link href="{{ route('lists_control.index') }}"
-                                                         :active="request()->routeIs('lists_control.*')">
+                                                     :active="request()->routeIs('lists_control.*')">
                                         {{ __('navigation-menu.lists') }}
                                     </x-dropdown-link>
                                 @endcan
@@ -108,14 +119,14 @@
 
 
                 <!-- User Management Dropdown -->
-                @if ( Auth::user()->can('viewMenu', \App\Models\User::class) || Auth::user()->can('viewMenu',  \App\Models\Crew::class)|| Auth::user()->can('viewMenu',  \App\Models\Role::class) )
+                @if ( Auth::user()->can('viewMenu', User::class) || Auth::user()->can('viewMenu',  Crew::class)|| Auth::user()->can('viewMenu',  Role::class) )
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-dropdown align="right" width="48"
-                                        :active="request()->routeIs('user.*')||request()->routeIs('crew.*')||request()->routeIs('roles.*')">
+                                    :active="request()->routeIs('user.*')||request()->routeIs('crew.*')||request()->routeIs('roles.*')">
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md pt-4">
                                     <button
-                                            class="inline-flex items-center text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                        class="inline-flex items-center text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
                                         {{ __('navigation-menu.user_management')}}
 
                                     </button>
@@ -127,21 +138,21 @@
                                 <div class="block px-4 py-2 text-xs text-gray-400">
                                     {{ __('navigation-menu.user_management') }}
                                 </div>
-                                @can('viewMenu', \App\Models\User::class)
+                                @can('viewMenu', User::class)
                                     <x-dropdown-link href="{{ route('user.index') }}"
-                                                         :active="request()->routeIs('user.*')">
+                                                     :active="request()->routeIs('user.*')">
                                         {{ __('navigation-menu.users') }}
                                     </x-dropdown-link>
                                 @endcan
-                                @can('viewMenu', \App\Models\Crew::class)
+                                @can('viewMenu', Crew::class)
                                     <x-dropdown-link href="{{ route('crew.index') }}"
-                                                         :active="request()->routeIs('crew.*')">
+                                                     :active="request()->routeIs('crew.*')">
                                         {{ __('navigation-menu.teams') }}
                                     </x-dropdown-link>
                                 @endcan
-                                @can('viewMenu', \App\Models\Role::class)
+                                @can('viewMenu', Role::class)
                                     <x-dropdown-link href="{{ route('roles.index') }}"
-                                                         :active="request()->routeIs('roles.*')">
+                                                     :active="request()->routeIs('roles.*')">
                                         {{ __('navigation-menu.roles') }}
                                     </x-dropdown-link>
                                 @endcan
@@ -151,23 +162,6 @@
                     </div>
                 @endif
 
-                @can('viewMenu', \App\Models\ApiLog::class)
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link href="{{ route('api_logs.index') }}"
-                                        :active="request()->routeIs('api_logs.*')">
-                            {{ __('navigation-menu.api_logs') }}
-                        </x-nav-link>
-                    </div>
-                @endcan
-
-
-                <!--
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="{{ route('lists_control.index') }}" :active="request()->routeIs('lists_control.index')">
-                        {{ __('navigation-menu.manage_list') }}
-                </x-nav-link>
-            </div>
--->
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -200,7 +194,7 @@
 
                                     /*<!-- Team Settings -->
                                     <x-dropdown-link
-                                            href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
+                                        href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                                         {{ __('navigation-menu.team_settings') }}
                                     </x-dropdown-link>
 
@@ -231,7 +225,8 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                                <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                <button
+                                    class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
                                     <img class="h-8 w-8 rounded-full object-cover"
                                          src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}"/>
                                 </button>
@@ -275,7 +270,7 @@
                                 @csrf
 
                                 <x-dropdown-link href="{{ route('logout') }}"
-                                                     onclick="event.preventDefault();
+                                                 onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                     {{ __('navigation-menu.log_out') }}
                                 </x-dropdown-link>
@@ -305,82 +300,74 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('cytoscape.index') }}"
-                                       :active="request()->routeIs('cytoscape.*')">
+                                   :active="request()->routeIs('cytoscape.*')">
                 {{ __('navigation-menu.network_graph') }}
             </x-responsive-nav-link>
-            @can('viewMenu',\App\Models\Refugee::class)
+            @can('viewMenu',Refugee::class)
                 <x-responsive-nav-link href="{{ route('person.index') }}"
-                                           :active="request()->routeIs('person.*')">
+                                       :active="request()->routeIs('person.*')">
                     {{ __('navigation-menu.items') }}
                 </x-responsive-nav-link>
             @endcan
             @can('viewMenu', \App\Models\Event::class)
                 <x-responsive-nav-link href="{{ route('event.index') }}"
-                                           :active="request()->routeIs('event.*')">
+                                       :active="request()->routeIs('event.*')">
                     {{ __('navigation-menu.events') }}
                 </x-responsive-nav-link>
             @endcan
-            @can('viewMenu', \App\Models\Source::class)
+            @can('viewMenu', Source::class)
                 <x-responsive-nav-link href="{{ route('source.index') }}"
-                                           :active="request()->routeIs('source.*')">
+                                       :active="request()->routeIs('source.*')">
                     {{ __('navigation-menu.sources') }}
                 </x-responsive-nav-link>
             @endcan
-            @can('viewMenu',\App\Models\Link::class)
+            @can('viewMenu',Link::class)
                 <x-responsive-nav-link href="{{ route('links.index') }}"
-                                           :active="request()->routeIs('links.*')">
+                                       :active="request()->routeIs('links.*')">
                     {{ __('navigation-menu.relations') }}
                 </x-responsive-nav-link>
             @endcan
-            @can('viewMenu',\App\Models\Duplicate::class)
+            @can('viewMenu',Duplicate::class)
                 <x-responsive-nav-link href="{{ route('duplicate.index') }}"
-                                           :active="request()->routeIs('duplicate.*')">
+                                       :active="request()->routeIs('duplicate.*')">
                     {{ __('navigation-menu.duplicates') }}
                 </x-responsive-nav-link>
             @endcan
             <div class="pt-2 pb-1 border-t border-gray-200">
                 <div class="font-medium text-base text-gray-400 px-2">Field Management</div>
-                @can('viewMenu',\App\Models\Field::class)
+                @can('viewMenu',Field::class)
                     <x-responsive-nav-link href="{{ route('fields.index') }}"
-                                               :active="request()->routeIs('fields.*')">
+                                           :active="request()->routeIs('fields.*')">
                         {{ __('navigation-menu.fields') }}
                     </x-responsive-nav-link>
                 @endcan
-                @can('viewMenu',\App\Models\ListControl::class)
+                @can('viewMenu',ListControl::class)
                     <x-responsive-nav-link href="{{ route('lists_control.index') }}"
-                                               :active="request()->routeIs('lists_control.*')">
+                                           :active="request()->routeIs('lists_control.*')">
                         {{ __('navigation-menu.lists') }}
                     </x-responsive-nav-link>
                 @endcan
             </div>
             <div class="pt-2 pb-1 border-t border-gray-200">
                 <div class="font-medium text-base text-gray-400 px-2">User Management</div>
-                @can('viewMenu',\App\Models\User::class)
+                @can('viewMenu',User::class)
                     <x-responsive-nav-link href="{{ route('user.index') }}"
-                                               :active="request()->routeIs('user.*')">
+                                           :active="request()->routeIs('user.*')">
                         {{ __('navigation-menu.users') }}
                     </x-responsive-nav-link>
                 @endcan
-                @can('viewMenu',\App\Models\Crew::class)
+                @can('viewMenu',Crew::class)
                     <x-responsive-nav-link href="{{ route('crew.index') }}"
-                                               :active="request()->routeIs('crew.*')">
+                                           :active="request()->routeIs('crew.*')">
                         {{ __('navigation-menu.teams') }}
                     </x-responsive-nav-link>
                 @endcan
-                @can('viewMenu',\App\Models\Role::class)
+                @can('viewMenu',Role::class)
                     <x-responsive-nav-link href="{{ route('roles.index') }}"
-                                               :active="request()->routeIs('roles.*')">
+                                           :active="request()->routeIs('roles.*')">
                         {{ __('navigation-menu.roles') }}
                     </x-responsive-nav-link>
                 @endcan
-            </div>
-            <div class="pt-2 pb-1 border-t border-gray-200">
-                @can('viewMenu',\App\Models\ApiLog::class)
-                    <x-responsive-nav-link href="{{ route('api_logs.index') }}"
-                                               :active="request()->routeIs('api_logs.*')">
-                        {{ __('navigation-menu.api_logs') }}
-                    </x-responsive-nav-link>
-                @endif
             </div>
 
             <!-- Responsive Settings Options -->
@@ -402,7 +389,7 @@
                 <div class="mt-3 space-y-1">
                     <!-- Account Management -->
                     <x-responsive-nav-link href="{{ route('profile.show') }}"
-                                               :active="request()->routeIs('profile.show')">
+                                           :active="request()->routeIs('profile.show')">
                         {{ __('navigation-menu.profile') }}
                     </x-responsive-nav-link>
 
@@ -411,7 +398,7 @@
                         @csrf
 
                         <x-responsive-nav-link href="{{ route('logout') }}"
-                                                   onclick="event.preventDefault();
+                                               onclick="event.preventDefault();
                                         this.closest('form').submit();">
                             {{ __('navigation-menu.log_out') }}
                         </x-responsive-nav-link>
@@ -427,13 +414,13 @@
 
                         <!-- Team Settings -->
                         <x-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
-                                                   :active="request()->routeIs('teams.show')">
+                                               :active="request()->routeIs('teams.show')">
                             {{ __('navigation-menu.team_settings') }}
                         </x-responsive-nav-link>
 
                         @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                             <x-responsive-nav-link href="{{ route('teams.create') }}"
-                                                       :active="request()->routeIs('teams.create')">
+                                                   :active="request()->routeIs('teams.create')">
                                 {{ __('navigation-menu.create_new_team') }}
                             </x-responsive-nav-link>
                         @endcan

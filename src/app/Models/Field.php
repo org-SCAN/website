@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\Uuids;
 use ESolution\DBEncryption\Traits\EncryptedAttribute;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -61,7 +62,16 @@ class Field extends Model
      *
      * @var array
      */
-    protected $hidden = ['deleted_at', "created_at", "updated_at", "status", "html_data_type", "validation_laravel", "attribute", "order", "api_log", "crew_id"];
+    protected $hidden = [
+        'deleted_at',
+        "created_at",
+        "updated_at",
+        "status",
+        "html_data_type",
+        "validation_laravel",
+        "attribute", "order",
+        "crew_id",
+    ];
 
     /**
      * The attributes that should be encrypted on save.
@@ -234,8 +244,7 @@ class Field extends Model
             $id = $this->pivot->value;
             $displayed_value = $this->linkedList->displayed_value;
             return $model::find($id)->$displayed_value;
-        }
-        catch (\Exception $e){
+        } catch (Exception $e) {
             return "";
         }
     }

@@ -2,6 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Livewire\Forms\Area;
+use App\Livewire\Forms\Coordinates;
+
 trait ResourceWithCoordinatesTrait
 {
 
@@ -21,7 +24,6 @@ trait ResourceWithCoordinatesTrait
         $new_item = $this->resource->factory()->make()->toArray();
         unset($new_item["coordinates"]);
         unset($new_item["area"]);
-        unset($new_item["api_log"]); // this will be set by the controller
 
         $new_item = $this->customizeStoreTest($new_item);
 
@@ -51,9 +53,9 @@ trait ResourceWithCoordinatesTrait
         $response->assertStatus(302);
 
         // encode coordinates
-        $new_item["coordinates"] = \App\Livewire\Forms\Coordinates::encode($new_item["coordinates"]);
+        $new_item["coordinates"] = Coordinates::encode($new_item["coordinates"]);
         // encode area
-        $new_item["area"] = \App\Livewire\Forms\Area::encode($new_item["area"]);
+        $new_item["area"] = Area::encode($new_item["area"]);
         $this->assertDatabaseHas($this->resource->getTable(), $new_item);
     }
 
@@ -82,7 +84,6 @@ trait ResourceWithCoordinatesTrait
         $new_item = $this->resource->factory()->make()->toArray();
         unset($new_item["coordinates"]);
         unset($new_item["area"]);
-        unset($new_item["api_log"]); // this will be set by the controller
 
         $new_item["coordinates"]["lat"] = "10.42";
         $new_item["coordinates"]["long"] = "-5.3";
@@ -113,8 +114,8 @@ trait ResourceWithCoordinatesTrait
         $response = $this->put($this->route . '/' . $this->resource->id, $new_item);
         $response->assertStatus(302);
         // check if the resource has been updated ($this->resource->id contains $new_resource content and not the old one)
-        $new_item["coordinates"] = \App\Livewire\Forms\Coordinates::encode($new_item["coordinates"]);
-        $new_item["area"] = \App\Livewire\Forms\Area::encode($new_item["area"]);
+        $new_item["coordinates"] = Coordinates::encode($new_item["coordinates"]);
+        $new_item["area"] = Area::encode($new_item["area"]);
 
         $this->assertDatabaseHas($this->resource->getTable(), $new_item);
         $this->assertDatabaseMissing($this->resource->getTable(), $this->resource->toArray());
