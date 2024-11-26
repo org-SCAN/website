@@ -24,7 +24,6 @@ class CreateEventsTable extends Migration
             $table->date("stop_date")->nullable();
             $table->string("coordinates")->nullable();
             $table->longText("description")->nullable();
-            $table->foreignUuid("api_log");
             $table->timestamps();
             $table->softDeletes();
         });
