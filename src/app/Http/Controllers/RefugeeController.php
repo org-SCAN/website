@@ -69,7 +69,7 @@ class RefugeeController extends Controller
                 ['Content-type' => 'application/json']);
         }
 
-        Log::channel('api')->info("Bad access token",
+        Log::info("Bad access token",
             ['user' => $request->user()]);
 
         return response("Your token can't be use to get data",
@@ -422,7 +422,7 @@ class RefugeeController extends Controller
                 201,
                 ['Content-type' => 'application/json']);
         }
-        Log::channel('api')->info("Bad access token",
+        Log::info("Bad access token",
             ['user' => $request->user()]);
         return response("Your token can't be use to send data",
             403);

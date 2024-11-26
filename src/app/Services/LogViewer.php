@@ -12,70 +12,60 @@ class LogViewer
     public function __construct(
     )
     {
-        $this->logPath = storage_path('logs');
+        $this->logPath = storage_path('logs/api');
     }
 
-    public function getLogs(
-        $date = null
-    ) {
-        if ($date) {
-            $filename = "api-{$date}.log";
-        } else {
-            $filename = "api-".now()->format("Y-m-d").".log";
+    public function getLogs()
+    {
+        $logFiles = File::files($this->logPath);
+
+        $logs = collect();
+
+        foreach ($logFiles as $fileIndex => $file) {
+            // Vérifier que le fichier est un log API
+            if (strpos($file->getFilename(),
+                    'api') === false) {
+                continue;
+            }
+
+            $lines = file($file->getRealPath());
+
+            foreach ($lines as $index => $line) {
+                $logEntry = $this->getLine($line);
+                if ($logEntry) {
+                    $logEntry['index'] = $index;
+                    $logEntry['file_index'] = $fileIndex;
+                    $logEntry['file_name'] = $file->getFilename();
+                    $logs->push($logEntry);
+                }
+            }
         }
-
-        $path = $this->logPath.DIRECTORY_SEPARATOR.$filename;
-
-        if (!File::exists($path)) {
-            return collect();
-        }
-
-        $logs = collect(file($path))->map(function (
-            $line
-        ) {
-            return $this->parseLine($line);
-        })->filter();
 
         return $logs->sortByDesc('datetime');
     }
 
-    public function getAvailableDates(
-    )
-    {
-        return collect(File::files($this->logPath))->map(function (
-            $file
-        ) {
-            return str_replace('api-',
-                '',
-                str_replace('.log',
-                    '',
-                    $file->getFilename()));
-        })->sort()->reverse();
-
-    }
-
     protected function getLine(
         $line
-    ) {
-
+    )
+    {
         if (empty($line)) {
             return null;
         }
 
+        // Décoder directement la ligne en JSON
         $json = json_decode($line,
             true);
-
         if (!$json) {
+            // Si le JSON n'est pas valide, gérer l'erreur ici
             return null;
         }
 
+        // Extraire les informations nécessaires
         return [
-            'datetime' => Carbon::parse($json['datetime'] ?? ''),
-            'level' => $json['level'] ?? '',
+            'datetime' => Carbon::parse($json['datetime'] ?? $json['time'] ?? ''),
+            'level' => $json['level_name'] ?? $json['level'] ?? '',
             'message' => $json['message'] ?? '',
             'context' => $json['context'] ?? [],
         ];
-
     }
-
 }

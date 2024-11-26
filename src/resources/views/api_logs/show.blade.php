@@ -1,71 +1,102 @@
+@section('title', __('api_logs/show.show_details', ['id' => $log['index']]))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Log Details') }}
+            {{ __('api_logs/show.detail_of_push') }}
+            <strong> {{ $log['index'] }}</strong>
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                <div class="mb-4">
-                    <a href="{{ route('logs.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded">
-                        Back to Logs
-                    </a>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <h3 class="text-lg font-semibold mb-2">Basic Information</h3>
-                        <dl>
-                            <dt class="font-medium">Time</dt>
-                            <dd class="mb-2">{{ $log['datetime']->format('Y-m-d H:i:s') }}</dd>
-
-                            <dt class="font-medium">Level</dt>
-                            <dd class="mb-2">{{ $log['level'] }}</dd>
-
-                            <dt class="font-medium">Message</dt>
-                            <dd class="mb-2">{{ $log['message'] }}</dd>
-                        </dl>
-                    </div>
-
-                    <div>
-                        <h3 class="text-lg font-semibold mb-2">Request Details</h3>
-                        <dl>
-                            <dt class="font-medium">Method</dt>
-                            <dd class="mb-2">{{ $log['context']['method'] ?? 'N/A' }}</dd>
-
-                            <dt class="font-medium">Path</dt>
-                            <dd class="mb-2">{{ $log['context']['path'] ?? 'N/A' }}</dd>
-
-                            <dt class="font-medium">IP</dt>
-                            <dd class="mb-2">{{ $log['context']['ip'] ?? 'N/A' }}</dd>
-
-                            <dt class="font-medium">User ID</dt>
-                            <dd class="mb-2">{{ $log['context']['user_id'] ?? 'N/A' }}</dd>
-
-                            <dt class="font-medium">Status</dt>
-                            <dd class="mb-2">{{ $log['context']['status'] ?? 'N/A' }}</dd>
-                        </dl>
-                    </div>
-                </div>
-
-                @if(!empty($log['context']['request_body']))
-                    <div class="mt-4">
-                        <h3 class="text-lg font-semibold mb-2">Request Body</h3>
-                        <pre
-                            class="bg-gray-100 p-4 rounded">{{ json_encode($log['context']['request_body'], JSON_PRETTY_PRINT) }}</pre>
-                    </div>
-                @endif
-
-                @if(!empty($log['context']['response']))
-                    <div class="mt-4">
-                        <h3 class="text-lg font-semibold mb-2">Response</h3>
-                        <pre
-                            class="bg-gray-100 p-4 rounded">{{ json_encode($log['context']['response'], JSON_PRETTY_PRINT) }}</pre>
-                    </div>
-                @endif
+    <div>
+        <div class="max-w-6xl mx-auto py-10 sm:px-6 lg:px-8">
+            <div class="block mb-8">
+                <a href="{{ route('api_logs.index') }}"
+                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
+                    {{ __('api_logs/show.back_to_list') }}
+                </a>
             </div>
+            <div class="block mt-8 flex flex-col">
+                <!-- ... (le reste de votre code reste inchangé) ... -->
+                <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <!-- ... -->
+                    <table class="min-w-full divide-y divide-gray-200 w-full">
+                        <caption class="sr-only">
+                            {{ __('api_logs/show.api_log_detail') }}
+                        </caption>
+                        <tr class="border-b">
+                            <th scope="col"
+                                class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                text-gray-500 uppercase tracking-wider">
+                                {{ __('api_logs/show.date') }}
+                            </th>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                            bg-white divide-y divide-gray-200">
+                                {{ $log['datetime'] }}
+                            </td>
+                        </tr>
+
+                        <tr class="border-b">
+                            <th scope="col"
+                                class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                text-gray-500 uppercase tracking-wider">
+                                {{ __('api_logs/show.user') }}
+                            </th>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                            bg-white divide-y divide-gray-200">
+                                @php
+                                    $userId = $log['context']['user_id'] ?? null;
+                                    $userEmail = $log['context']['user_email'] ?? 'N/A';
+                                @endphp
+                                @can('view', [User::class, $userId])
+                                    <a href="{{ route("user.show", $userId) }}"
+                                       class="text-indigo-600 hover:text-blue-900">{{ $userEmail }}
+                                    </a>
+                                @else
+                                    {{ $userEmail }}
+                                @endcan
+                            </td>
+                        </tr>
+                        <!-- Autres champs comme IP, application_id, api_type, etc. -->
+                        <tr class="border-b">
+                            <th scope="col"
+                                class="px-6 py-3 bg-gray-50 text-left text-xs font-medium
+                                text-gray-500 uppercase tracking-wider">
+                                {{ __('api_logs/show.ip_address') }}
+                            </th>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                            bg-white divide-y divide-gray-200">
+                                {{ $log['context']['ip'] ?? 'N/A' }}
+                            </td>
+                        </tr>
+                        <!-- Ajoutez d'autres champs si nécessaire -->
+                    </table>
+                </div>
+            </div>
+            <!-- Si vous avez des données poussées, vous pouvez les afficher ici -->
+            @if(isset($log['context']['pushed_datas']) && !empty($log['context']['pushed_datas']))
+                <div class="block mt-8 flex flex-col">
+                    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                            <h3>Pushed datas</h3>
+                            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                <table class="min-w-full divide-y divide-gray-200 w-full">
+                                    <caption class="sr-only">{{ __('api_logs/show.api_log_pushed_data') }}</caption>
+                                    @foreach($log['context']['pushed_datas'] as $pushed_dataID => $pushed_data)
+                                        <tr class="border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900
+                                            bg-white divide-y divide-gray-200">
+                                                <a href="{{ route('route_name.show', $pushed_dataID) }}">
+                                                    {{ $pushed_data }}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </x-app-layout>

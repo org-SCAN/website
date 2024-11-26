@@ -37,7 +37,10 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => [
+                'single',
+                'elasticsearch',
+            ],
             'ignore_exceptions' => false,
         ],
 
@@ -45,6 +48,7 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
+            'formatter' => Monolog\Formatter\JsonFormatter::class,
         ],
 
         'daily' => [
@@ -104,8 +108,15 @@ return [
         'api' => [
             'driver' => 'daily',
             'path' => storage_path('logs/api/api.log'),
-            'level' => 'debug',
+            'level' => 'info',
             'days' => 28,
+            'tap' => [App\Logging\CustomizeFormatter::class],
+        ],
+
+        'elasticsearch' => [
+            'driver' => 'custom',
+            'via' => App\Logging\CreateElasticsearchLogger::class,
+            'level' => 'debug',
         ],
     ],
 

@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
 class ApiLogger
@@ -11,9 +13,9 @@ class ApiLogger
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @param  Request  $request
+     * @param  Closure(Request): (Response|RedirectResponse)  $next
+     * @return Response|RedirectResponse
      */
     public function handle(Request $request, Closure $next)
     {
@@ -23,9 +25,12 @@ class ApiLogger
 
         $duration = microtime(true) - $startTime;
 
-        Log::channel('api')->info('API Request', [
+        Log::info('API Request',
+            [
+                'datetime' => now()->toDateTimeString(),
             'user_id' => $request->user()->id ?? null,
-            'application_id' => $request->header('Application-id') ?? $request->validated()[0]['application_id'] ?? 'website',
+                'application_id' => $request->header('Application-id') ?? $request->input('application_id',
+                        'website'),
             'api_type' => $request->path(),
             'http_method' => $request->method(),
             'model' => null,
@@ -34,9 +39,10 @@ class ApiLogger
             'duration' => $duration,
             'status' => $response->status(),
             'request' => $request->all(),
-            'response' => $response->getContent(),
-
+                'response_content' => $response->getContent(),
+                'response' => $response->status() >= 400 ? 'error' : 'success',
         ]);
+
         return $response;
     }
 

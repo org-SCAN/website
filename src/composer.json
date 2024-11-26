@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.2",
         "ext-zip": "*",
+        "elasticsearch/elasticsearch": "^8.16",
         "elgibor-solution/laravel-database-encryption": "^1.1",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^v11.27",
@@ -63,7 +64,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "prefer-stable": true
 }

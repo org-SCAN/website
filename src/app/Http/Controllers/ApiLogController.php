@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ApiLog;
 use App\Services\LogViewer;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class ApiLogController extends Controller
 {
@@ -25,48 +25,41 @@ class ApiLogController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     * @param  Request  $request
+     * Display a listing of the logs.
      *
-     * @return View
+     * @return Response
      */
-    public function index(
-        Request $request
-    )
+    public function index()
     {
-        $dates = $this->logViewer->getAvailableDates();
-        $selectedDate = $request->get("date");
-        $logs = $this->logViewer->getLogs($selectedDate);
-
-        return view("api_logs.index",
-            compact("logs",
-                "dates",
-                "selectedDate"));
+        $logs = $this->logViewer->getLogs();
+        Log::info('Test log');
+        return view('api_logs.index',
+            compact('logs'));
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified log.
      *
-     * @param  string  $date
-     * @param  string  $id
-     *
-     * @return View
+     * @param  int  $fileIndex
+     * @param  int  $lineIndex
+     * @return Response
      */
     public function show(
-        $date,
-        $id
+        $fileIndex,
+        $lineIndex
     )
     {
+        $logs = $this->logViewer->getLogs();
+        $log = $logs->where('file_index',
+            $fileIndex)->where('index',
+            $lineIndex)->first();
 
-        $api_log = $this->logViewer->getLogs($date);
-        $api_log = $api_log->firstWhere('context.request_id',
-            $id);
-
-        if (!$api_log) {
+        if (!$log) {
             abort(404);
         }
 
-        return view("api_logs.show", compact("api_log"));
+        return view('api_logs.show',
+            compact('log'));
     }
 
 }
