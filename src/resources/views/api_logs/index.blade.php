@@ -1,94 +1,60 @@
-@php use App\Models\User; @endphp
-@section('title', __('api_logs/index.view_api_logs'))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('api_logs/index.api_logs') }}
+            {{ __('API Logs') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex flex-col">
-                <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <caption class="sr-only">{{ __('api_logs/index.api_logs') }}</caption>
-                                <thead class="bg-gray-50">
-                                <tr>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
-                                        uppercase tracking-wider">
-                                        {{ __('api_logs/index.status') }}
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
-                                        uppercase tracking-wider">
-                                        {{ __('api_logs/index.date') }}
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
-                                        uppercase tracking-wider">
-                                        {{ __('api_logs/index.user') }}
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
-                                        uppercase tracking-wider">
-                                        {{ __('api_logs/index.type') }}
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500
-                                        uppercase tracking-wider">
-                                        {{ __('api_logs/index.action') }}
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                @foreach($logs as $log)
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            @if($log->response == "success")
-                                                <em class="fas fa-check-circle  text-green-500"></em>
-                                            @else
-                                                <em class="fas fa-times-circle text-red-500"></em>
-                                            @endif
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            {{$log->created_at}}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            @can('view', $log->user, User::class)
-                                                <a href="{{ route("user.show", $log->user->id) }}"
-                                                   class="text-indigo-600 hover:text-blue-900">{{ $log->user->email }}
-                                                </a>
-                                            @endcan()
-                                            @cannot('view', $log->user,User::class)
-                                                {{ $log->user->email }}
-                                            @endcannot
-
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            {{$log->api_type}}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            @can('view', $log)
-                                                <a href="{{ route("api_logs.show", $log->id) }}"
-                                                   class="text-indigo-600 hover:text-blue-900">{{ __('api_logs/index.view_detail') }}
-                                                </a>
-                                            @endcan
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                <!-- More items... -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+                <div class="mb-4">
+                    <select onchange="window.location.href='?date=' + this.value">
+                        @foreach($dates as $date)
+                            <option value="{{ $date }}" {{ $selectedDate === $date ? 'selected' : '' }}>
+                                {{ $date }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                    <tr>
+                        <th class="px-6 py-3 bg-gray-50 text-left">Time</th>
+                        <th class="px-6 py-3 bg-gray-50 text-left">Level</th>
+                        <th class="px-6 py-3 bg-gray-50 text-left">User</th>
+                        <th class="px-6 py-3 bg-gray-50 text-left">Path</th>
+                        <th class="px-6 py-3 bg-gray-50 text-left">Status</th>
+                        <th class="px-6 py-3 bg-gray-50 text-left">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach($logs as $log)
+                        <tr>
+                            <td class="px-6 py-4">{{ $log['datetime']->format('H:i:s') }}</td>
+                            <td class="px-6 py-4">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                        {{ $log['level'] === 'error' ? 'bg-red-100 text-red-800' :
+                                           ($log['level'] === 'warning' ? 'bg-yellow-100 text-yellow-800' :
+                                            'bg-green-100 text-green-800') }}">
+                                        {{ $log['level'] }}
+                                    </span>
+                            </td>
+                            <td class="px-6 py-4">{{ $log['context']['user_id'] ?? 'N/A' }}</td>
+                            <td class="px-6 py-4">{{ $log['context']['path'] ?? '' }}</td>
+                            <td class="px-6 py-4">{{ $log['context']['status'] ?? '' }}</td>
+                            <td class="px-6 py-4">
+                                <a href="{{ route('logs.show', ['date' => $selectedDate, 'id' => $log['context']['request_id'] ?? '']) }}"
+                                   class="text-indigo-600 hover:text-indigo-900">
+                                    View Details
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
-
-
         </div>
     </div>
 </x-app-layout>
