@@ -1,5 +1,5 @@
 # Dockerfile
-FROM php:8.1-apache
+FROM php:8.4-apache
 
 USER root
 
