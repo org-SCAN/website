@@ -1,5 +1,8 @@
 <?php
 
+use Elastic\Elasticsearch\ClientBuilder;
+use Monolog\Formatter\ElasticsearchFormatter;
+use Monolog\Handler\ElasticsearchHandler;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -18,7 +21,6 @@ return [
     */
 
     'default' => env('LOG_CHANNEL', 'stack'),
-
     /*
     |--------------------------------------------------------------------------
     | Log Channels
@@ -114,10 +116,24 @@ return [
         ],
 
         'elasticsearch' => [
-            'driver' => 'custom',
-            'via' => App\Logging\CreateElasticsearchLogger::class,
+            'driver' => 'monolog',
             'level' => 'debug',
+            'handler' => ElasticsearchHandler::class,
+            'formatter' => ElasticsearchFormatter::class,
+            'formatter_with' => [
+                'index' => sprintf('%s_%s',
+                    env('APP_ENV',
+                        'local'),
+                    env("ELASTICSEARCH_INDEX_PREFIX",
+                        "scan_logs"),),
+                'type' => '_doc',
+            ],
+            'handler_with' => [
+                'client' => ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOST')])->setBasicAuthentication(env('ELASTICSEARCH_USERNAME',
+                    ""),
+                    env('ELASTICSEARCH_PASSWORD',
+                        ""))->build(),
+            ],
         ],
     ],
-
 ];
