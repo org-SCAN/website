@@ -3,7 +3,6 @@
 namespace App\Imports;
 
 use App\Http\Requests\StoreRefugeeRequest;
-use App\Models\ApiLog;
 use App\Models\Field;
 use App\Models\Refugee;
 use Illuminate\Support\Collection;
@@ -35,22 +34,11 @@ class RefugeesImport  implements ToCollection, WithHeadingRow, WithValidation
 
     public function collection(Collection $rows)
     {
-        // create an API log
-        $log = ApiLog::create([
-            'user_id' => auth()->user()->id,
-            'application_id' => 'website',
-            'api_type' => 'refugees',
-            'http_method' => 'POST',
-            'model' => 'Refugee',
-            'ip' => "127.0.0.1",
-            'crew_id' => auth()->user()->crew->id,
-        ]);
 
         foreach ($rows as $row)
         {
             $person = Refugee::create([
                 'date' => $row["date"] ?? date('Y-m-d H:i',time()),
-                "api_log" => $log->id,
             ]);
 
             $ref = [];

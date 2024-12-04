@@ -212,9 +212,6 @@ Route::get('duplicate/choose_algorithm',
 
 Route::resource("duplicate",
     DuplicateController::class)->middleware('auth');
-
-Route::resource("api_logs",
-    ApiLogController::class)->middleware('auth');
 Route::resource("crew",
     CrewController::class)->middleware('auth');
 Route::resource("roles",

@@ -61,6 +61,7 @@ class LinkTest extends PermissionsTest
                 'relation_id' => $relation->id,
                 'type' => $relation->type->id,
                 'detail' => 'test',
+                "crew_id" => $this->admin->crew->id,
             ]);
         $response->assertRedirect($this->route);
         $this->assertDatabaseHas('links',

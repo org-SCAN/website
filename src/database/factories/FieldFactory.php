@@ -28,7 +28,6 @@ class FieldFactory extends Factory
             "required" => $this->faker->numberBetween(0, 3),
             "status" => $this->faker->numberBetween(0, 2),
             "order" => $this->faker->numberBetween(1, 50),
-            "api_log" => $this->faker->uuid,
         ];
     }
 }

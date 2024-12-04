@@ -15,7 +15,6 @@ return [
     'users' => 'Utilisateurs',
     'teams' => 'Teams', // Nom de fonctionnalité, reste inchangé
     'roles' => 'Rôles',
-    'api_logs' => 'Journaux API',
     'manage_account' => 'Gérer le compte',
     'profile' => 'Profil',
     'log_out' => 'Se déconnecter',

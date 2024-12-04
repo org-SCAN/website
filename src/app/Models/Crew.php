@@ -27,17 +27,13 @@ class Crew extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var array
+     * @var string
      */
     protected $guarded = [];
 
     public static function getDefaultCrewId() {
-        $id = self::where("name",
+        return self::where("name",
             env("DEFAULT_TEAM"))->get()->first()->id;
-        if (empty($id)) {
-            die("No default team");
-        }
-        return $id;
     }
 
     public function users() {
@@ -45,19 +41,13 @@ class Crew extends Model
     }
 
     public function persons() {
-        return $this->hasManyThrough(Refugee::class,
-            ApiLog::class,
-            "crew_id",
-            "api_log", "id",
-            "id");
+        return $this->hasMany(Refugee::class,
+            'crew_id');
     }
 
     public function relations() {
-        return $this->hasManyThrough(Link::class,
-            ApiLog::class,
-            "crew_id",
-            "api_log", "id",
-            "id");
+        return $this->hasMany(Link::class,
+            'crew_id');
     }
 
     public function hasEvent() {
@@ -81,6 +71,5 @@ class Crew extends Model
         return $this->belongsTo(ListMatchingAlgorithm::class,
             'duplicate_algorithm_id');
     }
-
 
 }
