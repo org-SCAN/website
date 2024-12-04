@@ -76,16 +76,6 @@ services:
       - elasticsearch
     networks:
       - sail
-  logstash:
-    image: 'docker.elastic.co/logstash/logstash:8.9.0'
-    ports:
-      - '5044:5044'
-    volumes:
-      - './logstash/pipeline:/usr/share/logstash/pipeline'
-    depends_on:
-      - elasticsearch
-    networks:
-      - sail
 
 networks:
   sail:
