@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Jobs\DuplicateComputeJob;
+use Illuminate\Support\Facades\Log;
 
 class DuplicateController extends Controller
 {
@@ -30,6 +31,8 @@ class DuplicateController extends Controller
      */
     public function index() {
         $this->authorize("viewAny", Duplicate::class);
+
+        Log::debug("dup Index");
 
         $matching_algorithm = Crew::find(Auth::user()->crew_id)->duplicate_algorithm ?? ListMatchingAlgorithm::getDefault();
 

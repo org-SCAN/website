@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEventsLogs;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Support\Str;
 
 class ListControl extends Model
 {
-    use Uuids, SoftDeletes, hasFactory;
+    use Uuids, SoftDeletes, hasFactory, ModelEventsLogs;
 
     /**
      * Indicates if the model's ID is auto-incrementing.
