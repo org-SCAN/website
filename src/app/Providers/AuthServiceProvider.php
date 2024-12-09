@@ -24,7 +24,13 @@ use App\Policies\RefugeePolicy;
 use App\Policies\RolePolicy;
 use App\Policies\SourcePolicy;
 use App\Policies\UserPolicy;
+use Illuminate\Auth\Events\Attempting;
+use Illuminate\Auth\Events\Failed;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
+use Illuminate\Support\Facades\Event as EventFacade;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Log;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -56,6 +62,33 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+
+        EventFacade::listen(function (Login $event) {
+            Log::info("User login", [
+                "tag" => "user_event",
+                "type" => "login",
+                "user_id" => $event->user->getAuthIdentifier(),
+                "crew_id" => $event->user->crew->id ?? null,
+                "ip" => request()->ip(),
+            ]);
+        });
+        EventFacade::listen(function (Logout $event) {
+            Log::info("User logout", [
+                "tag" => "user_event",
+                "type" => "logout",
+                "user_id" => $event->user->getAuthIdentifier(),
+                "crew_id" => $event->user->crew->id ?? null,
+                "ip" => request()->ip(),
+            ]);
+        });
+        EventFacade::listen(function (Failed $event) {
+            Log::info("User login fail", [
+                "tag" => "user_event",
+                "type" => "failed",
+                "user_id" => $event->user?->getAuthIdentifier(),
+                "crew_id" => $event->user?->crew->id ?? null,
+                "ip" => request()->ip(),
+            ]);
+        });
     }
 }
