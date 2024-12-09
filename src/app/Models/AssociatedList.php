@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEventsLogs;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class AssociatedList extends Pivot
 {
-    use HasFactory, Uuids;
+    use HasFactory, Uuids, ModelEventsLogs;
     /**
      * Indicates if the model's ID is auto-incrementing.
      *

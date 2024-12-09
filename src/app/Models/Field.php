@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEventsLogs;
 use App\Traits\Uuids;
 use ESolution\DBEncryption\Traits\EncryptedAttribute;
 use Exception;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Field extends Model
 {
-    use Uuids, SoftDeletes, hasFactory, EncryptedAttribute;
+    use Uuids, SoftDeletes, hasFactory, EncryptedAttribute, ModelEventsLogs;
 
     /**
      * The requirement of the field.

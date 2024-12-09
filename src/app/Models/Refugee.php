@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEventsLogs;
 use App\Traits\Uuids;
 use http\Env\Response;
 use Illuminate\Contracts\Foundation\Application;
@@ -10,11 +11,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class Refugee extends Model
 {
-    use HasFactory, Uuids, SoftDeletes;
+    use HasFactory, Uuids, SoftDeletes, ModelEventsLogs;
 
 
     /**
@@ -36,6 +38,13 @@ class Refugee extends Model
      * @var array
      */
     protected $guarded = [];
+
+//    protected static function booted(): void
+//    {
+//        static::created(function (Refugee $refugee) {
+//            Log::info("Refugee was created " . $refugee);
+//        });
+//    }
 
     public static function getAllBestDescriptiveValues() {
         $best_descriptive_values = [];

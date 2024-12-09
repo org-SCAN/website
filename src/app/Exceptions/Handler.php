@@ -38,4 +38,14 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    protected function context(): array
+    {
+        return array_merge(parent::context(), [
+            "tag" => "error",
+            "user_id" => auth()?->id(),
+            "crew_id" => auth()?->user()->crew->id,
+            "ip" => request()->ip(),
+        ]);
+    }
 }
