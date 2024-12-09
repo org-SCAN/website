@@ -15,8 +15,8 @@ trait ModelEventsLogs
                     "type" => "create",
                     "attributes" => $model->getAttributes(),
                     "model" => get_class($model),
-                    "user_id" => auth()->id(),
-                    "crew_id" => auth()->user()->crew->id,
+                    "user_id" => auth()?->id(),
+                    "crew_id" => auth()?->user()->crew->id ?? null,
                     "ip" => request()->ip(),
                 ]);
             }
@@ -29,8 +29,8 @@ trait ModelEventsLogs
                     "attributes" => $model->getAttributes(),
                     "model" => get_class($model),
                     "changes" => $model->getChanges(),
-                    "user_id" => auth()->id(),
-                    "crew_id" => auth()->user()->crew->id,
+                    "user_id" => auth()?->id(),
+                    "crew_id" => auth()?->user()->crew->id ?? null,
                     "ip" => request()->ip(),
                 ]);
             }
@@ -42,8 +42,8 @@ trait ModelEventsLogs
                     "type" => "delete",
                     "attributes" => $model->getAttributes(),
                     "model" => get_class($model),
-                    "user_id" => auth()->id(),
-                    "crew_id" => auth()->user()->crew->id,
+                    "user_id" => auth()?->id(),
+                    "crew_id" => auth()?->user()->crew->id ?? null,
                     "ip" => request()->ip(),
                 ]);
             }
@@ -55,8 +55,8 @@ trait ModelEventsLogs
                     "type" => "retrieve",
                     "attributes" => $model->getAttributes(),
                     "model" => get_class($model),
-                    "user_id" => auth()->id(),
-                    "crew_id" => auth()->user()->crew->id ?? null,
+                    "user_id" => auth()?->id(),
+                    "crew_id" => auth()?->user()->crew->id ?? null,
                     "ip" => request()->ip(),
                 ]);
             }

@@ -24,7 +24,6 @@ use App\Policies\RefugeePolicy;
 use App\Policies\RolePolicy;
 use App\Policies\SourcePolicy;
 use App\Policies\UserPolicy;
-use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
