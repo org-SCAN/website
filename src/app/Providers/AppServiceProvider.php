@@ -25,6 +25,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (ENV('LOG_DATABASE_QUERIES',
+            default: false)) {
+            $this->logDatabaseQueries();
+        }
+
+    }
+
+    private function logDatabaseQueries(
+    )
+    {
         DB::listen(function (
             $query
         ) {
@@ -46,5 +56,6 @@ class AppServiceProvider extends ServiceProvider
                 ]);
         });
     }
+
 
 }

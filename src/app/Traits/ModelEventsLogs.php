@@ -16,8 +16,8 @@ trait ModelEventsLogs
                     "type" => "create",
                     "attribute_id" => $model->getKey(),
                     "model" => get_class($model),
-                    "user_id" => auth()->id(),
-                    "crew_id" => auth()->user()->crew_id,
+                    "user_id" => auth()->id() ?? "unknown",
+                    "crew_id" => auth()->user()->crew_id ?? "unknown",
                     "request_id" => request()->header("X-Request-ID",
                         "unknown"),
                 ]);
@@ -32,8 +32,8 @@ trait ModelEventsLogs
                     "attribute_id" => $model->getKey(),
                     "model" => get_class($model),
                     "changes" => $model->getChanges(),
-                    "user_id" => auth()->id(),
-                    "crew_id" => auth()->user()->crew_id,
+                    "user_id" => auth()->id() ?? "unknown",
+                    "crew_id" => auth()->user()->crew_id ?? "unknown",
                     "request_id" => request()->header("X-Request-ID",
                         "unknown"),
                 ]);
@@ -47,8 +47,8 @@ trait ModelEventsLogs
                     "type" => "delete",
                     "attribute_id" => $model->getKey(),
                     "model" => get_class($model),
-                    "user_id" => auth()->id(),
-                    "crew_id" => auth()->user()->crew_id,
+                    "user_id" => auth()->id() ?? "unknown",
+                    "crew_id" => auth()->user()->crew_id ?? "unknown",
                     "request_id" => request()->header("X-Request-ID",
                         "unknown"),
                 ]);
@@ -62,8 +62,8 @@ trait ModelEventsLogs
                     "type" => "retrieve",
                     "attribute_id" => $model->getKey(),
                     "model" => get_class($model),
-                    "user_id" => auth()->id(),
-                    "crew_id" => auth()->user()->crew_id,
+                    "user_id" => auth()->id() ?? "unknown",
+                    "crew_id" => auth()->user()->crew_id ?? "unknown",
                     "request_id" => request()->header("X-Request-ID",
                         "unknown"),
                 ]);
