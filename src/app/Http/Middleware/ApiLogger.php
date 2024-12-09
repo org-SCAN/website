@@ -27,7 +27,6 @@ class ApiLogger
 
         Log::info('API Request',
             [
-                'datetime' => now()->toDateTimeString(),
             'user_id' => $request->user()->id ?? null,
                 'application_id' => $request->header('Application-id') ?? $request->input('application_id',
                         'website'),
@@ -39,7 +38,6 @@ class ApiLogger
             'duration' => $duration,
             'status' => $response->status(),
             'request' => $request->all(),
-                'response_content' => $response->getContent(),
                 'response' => $response->status() >= 400 ? 'error' : 'success',
         ]);
 
