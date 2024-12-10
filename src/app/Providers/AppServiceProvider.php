@@ -25,15 +25,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (ENV('LOG_DATABASE_QUERIES',
-            default: false)) {
+        if (ENV('LOG_DATABASE_QUERIES', default: false)) {
             $this->logDatabaseQueries();
         }
 
     }
 
-    private function logDatabaseQueries(
-    )
+    private function logDatabaseQueries(): void
     {
         DB::listen(function (
             $query
@@ -42,7 +40,6 @@ class AppServiceProvider extends ServiceProvider
             $routeName = optional(request()->route())->getName();
             $url = request()->fullUrl();
 
-            // Log des informations
             Log::info('Database Query Executed',
                 [
                     'tag' => 'database_event',
@@ -51,8 +48,7 @@ class AppServiceProvider extends ServiceProvider
                     'time_ms' => $query->time,
                     'route_name' => $routeName ?? 'unknown',
                     'url' => $url,
-                    'request_id' => request()->header('X-Request-ID',
-                        'unknown'),
+                    'request_id' => request()->header('X-Request-ID', 'unknown'),
                 ]);
         });
     }
