@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Services\LogHelper;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -39,13 +40,13 @@ class Handler extends ExceptionHandler
         });
     }
 
+    /**
+     * Generates the context for error logs and adds it to logs automatically
+     *
+     * @return array
+     */
     protected function context(): array
     {
-        return array_merge(parent::context(), [
-            "tag" => "error",
-            "user_id" => auth()?->id() ?? "unknown",
-            "crew_id" => auth()?->user()->crew->id ?? "unknown",
-            "ip" => request()->ip(),
-        ]);
+        return array_merge(parent::context(), LogHelper::getLogContext('error', 'error', true));
     }
 }

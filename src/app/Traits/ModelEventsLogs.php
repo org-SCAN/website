@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
+use App\Services\LogHelper;
 
 trait ModelEventsLogs
 {
@@ -41,21 +42,16 @@ trait ModelEventsLogs
      */
     protected static function logDetails($model, string $event): array
     {
+        $logContext = LogHelper::getLogContext('model_event', $event, true);
         $details = [
-            'tag' => 'model_event',
-            'type' => $event,
             'attribute_id' => $model->getKey(),
             'model' => get_class($model),
-            'user_id' => auth()->id() ?? 'unknown',
-            'crew_id' => optional(auth()->user())->crew_id ?? 'unknown',
-            'request_id' => request()->header('X-Request-ID', 'unknown'),
-            'ip' => request()->ip(),
         ];
 
         if ($event === 'updated') {
             $details['changes'] = $model->getChanges();
         }
 
-        return $details;
+        return array_merge($logContext, $details);
     }
 }

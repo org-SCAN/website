@@ -24,6 +24,7 @@ use App\Policies\RefugeePolicy;
 use App\Policies\RolePolicy;
 use App\Policies\SourcePolicy;
 use App\Policies\UserPolicy;
+use App\Services\LogHelper;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
@@ -61,33 +62,30 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-
+        // Logging user logins/logout
         EventFacade::listen(function (Login $event) {
-            Log::info("User login", [
-                "tag" => "user_event",
-                "type" => "login",
+            $logContext = LogHelper::getLogContext('user_event', 'login', false);
+            $logDetails = [
                 "user_id" => $event->user->getAuthIdentifier() ?? "unknown",
                 "crew_id" => $event->user->crew->id ?? "unknown",
-                "ip" => request()->ip(),
-            ]);
+            ];
+            Log::info("User login", array_merge($logContext, $logDetails));
         });
         EventFacade::listen(function (Logout $event) {
-            Log::info("User logout", [
-                "tag" => "user_event",
-                "type" => "logout",
+            $logContext = LogHelper::getLogContext('user_event', 'logout', false);
+            $logDetails = [
                 "user_id" => $event->user->getAuthIdentifier() ?? "unknown",
                 "crew_id" => $event->user->crew->id ?? "unknown",
-                "ip" => request()->ip(),
-            ]);
+            ];
+            Log::info("User logout", array_merge($logContext, $logDetails));
         });
         EventFacade::listen(function (Failed $event) {
-            Log::info("User login fail", [
-                "tag" => "user_event",
-                "type" => "failed",
+            $logContext = LogHelper::getLogContext('user_event', 'logout', false);
+            $logDetails = [
                 "user_id" => $event->user?->getAuthIdentifier() ?? "unknown",
                 "crew_id" => $event->user?->crew->id ?? "unknown",
-                "ip" => request()->ip(),
-            ]);
+            ];
+            Log::info("User login fail", array_merge($logContext, $logDetails));
         });
     }
 }

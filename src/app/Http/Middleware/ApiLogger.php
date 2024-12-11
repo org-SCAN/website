@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\LogHelper;
 use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,21 +26,18 @@ class ApiLogger
 
         $duration = microtime(true) - $startTime;
 
-        Log::info('API Request',
-            [
-            'user_id' => $request->user()->id ?? null,
-                'application_id' => $request->header('Application-id') ?? $request->input('application_id',
-                        'website'),
+        $logContext = LogHelper::getLogContext('api_request', 'api_request', true);
+        $logDetails = [
+            'application_id' => $request->header('Application-id') ?? $request->input('application_id',
+                    'website'),
             'api_type' => $request->path(),
             'http_method' => $request->method(),
-            'model' => null,
-            'ip' => $request->ip(),
-            'crew_id' => $request->user()->crew->id ?? null,
             'duration' => $duration,
             'status' => $response->status(),
             'request' => $request->all(),
-                'response' => $response->status() >= 400 ? 'error' : 'success',
-        ]);
+            'response' => $response->status() >= 400 ? 'error' : 'success',
+        ];
+        Log::info('API Request', array_merge($logContext, $logDetails));
 
         return $response;
     }
