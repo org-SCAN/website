@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Console\Kernel;
+use App\Traits\ModelEventsLogs;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
@@ -15,7 +16,7 @@ use Illuminate\Support\Str;
 
 class CommandRun extends Model
 {
-    use HasFactory, Uuids, SoftDeletes;
+    use HasFactory, Uuids, SoftDeletes, ModelEventsLogs;
 
     /**
      * Indicates if the model's ID is auto-incrementing.

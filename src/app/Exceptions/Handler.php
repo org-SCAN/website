@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Services\LogHelper;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -37,5 +38,15 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * Generates the context for error logs and adds it to logs automatically
+     *
+     * @return array
+     */
+    protected function context(): array
+    {
+        return array_merge(parent::context(), LogHelper::getLogContext('error', 'error', true));
     }
 }

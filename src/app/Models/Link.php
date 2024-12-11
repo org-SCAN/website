@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEventsLogs;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use ESolution\DBEncryption\Traits\EncryptedAttribute;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Link extends Pivot
 {
-    use HasFactory, Uuids, SoftDeletes, EncryptedAttribute;
+    use HasFactory, Uuids, SoftDeletes, EncryptedAttribute, ModelEventsLogs;
 
 
     /**

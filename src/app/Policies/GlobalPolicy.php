@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class GlobalPolicy
 {
@@ -39,11 +38,14 @@ class GlobalPolicy
      * @param $route_name
      * @return boolean
      */
-    public function hasPermission($user,
-        $function) {
+    public function hasPermission(
+        $user,
+        $function
+    ) {
         $route_name = $this->route_name;
         $route_base = explode(".",
             $route_name)[0];
+
         if (in_array($route_base,
             Permission::$alwaysAuthorizedRoute)) {
             return true;
@@ -57,29 +59,26 @@ class GlobalPolicy
      * Determine whether the user can view any models.
      *
      * @param  User  $user
-     * @return Response|bool
+     * @return Response
      */
     public function viewMenu(User $user) {
         $child_class = explode("\\",
             get_class($this));
         $child_class = end($child_class);
-        $fake_route = Str::snake(Str::replace("Policy",
-                "",
-                $child_class))."."."index";
         return $this->hasPermission($user,
-            "viewAny",
-            $this->route_name) ? Response::allow() : Response::deny(self::ERROR_MESSAGE);
+            "viewAny") ? Response::allow() : Response::deny(self::ERROR_MESSAGE);
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  User  $user
-     * @param  Model  $model
-     * @return Response|bool
+     * @return Response
      */
-    public function view(User $user,
-        Model $model) {
+    public function view(
+        User $user,
+        Model $model
+    ) {
         return $this->hasPermission($user,
             __FUNCTION__) ? Response::allow() : Response::deny(self::ERROR_MESSAGE);
     }
@@ -88,7 +87,7 @@ class GlobalPolicy
      * Determine whether the user can create models.
      *
      * @param  User  $user
-     * @return Response|bool
+     * @return Response
      */
     public function create(User $user) {
         return $this->hasPermission($user,
@@ -99,7 +98,7 @@ class GlobalPolicy
      * Determine whether the user can create models using a Json
      *
      * @param  User  $user
-     * @return Response|bool
+     * @return Response
      */
     public function createFromJson(User $user) {
         return $this->hasPermission($user,
@@ -113,8 +112,10 @@ class GlobalPolicy
      * @param  Model  $model
      * @return Response|bool
      */
-    public function update(User $user,
-        Model $model) {
+    public function update(
+        User $user,
+        Model $model
+    ) {
         return $this->hasPermission($user,
             __FUNCTION__) ? Response::allow() : Response::deny(self::ERROR_MESSAGE);
     }
@@ -124,10 +125,12 @@ class GlobalPolicy
      *
      * @param  User  $user
      * @param  Model  $model
-     * @return Response|bool
+     * @return Response
      */
-    public function delete(User $user,
-        Model $model) {
+    public function delete(
+        User $user,
+        Model $model
+    ) {
         return $this->hasPermission($user,
             __FUNCTION__) ? Response::allow() : Response::deny(self::ERROR_MESSAGE);
     }
@@ -137,10 +140,12 @@ class GlobalPolicy
      *
      * @param  User  $user
      * @param  Model  $model
-     * @return Response|bool
+     * @return Response
      */
-    public function restore(User $user,
-        Model $model) {
+    public function restore(
+        User $user,
+        Model $model
+    ) {
         return $this->hasPermission($user,
             __FUNCTION__) ? Response::allow() : Response::deny(self::ERROR_MESSAGE);
     }
@@ -150,10 +155,12 @@ class GlobalPolicy
      *
      * @param  User  $user
      * @param  Model  $model
-     * @return Response|bool
+     * @return Response
      */
-    public function forceDelete(User $user,
-        Model $model) {
+    public function forceDelete(
+        User $user,
+        Model $model
+    ) {
         return $this->hasPermission($user,
             __FUNCTION__) ? Response::allow() : Response::deny(self::ERROR_MESSAGE);
     }

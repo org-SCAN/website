@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Traits;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
+use App\Services\LogHelper;
+
+trait ModelEventsLogs
+{
+    /**
+     * Boot the trait and register model event listeners.
+     */
+    protected static function booted()
+    {
+        foreach (['created', 'updated', 'deleted', 'retrieved'] as $event) {
+            static::$event(function ($model) use ($event) {
+                if (self::shouldLog($event)) {
+                    Log::info("Model $event", self::logDetails($model, $event));
+                }
+            });
+        }
+    }
+
+    /**
+     * Determine if the given event should be logged based on environment configuration.
+     *
+     * @param string $event
+     * @return bool
+     */
+    protected static function shouldLog(string $event): bool
+    {
+        return ENV("LOG_" . strtoupper($event), !($event === 'retrieved'));
+    }
+
+    /**
+     * Generate the log details for a given model and event.
+     *
+     * @param Model $model
+     * @param string $event
+     * @return array
+     */
+    protected static function logDetails($model, string $event): array
+    {
+        $logContext = LogHelper::getLogContext('model_event', $event, true);
+        $details = [
+            'attribute_id' => $model->getKey(),
+            'model' => get_class($model),
+        ];
+
+        if ($event === 'updated') {
+            $details['changes'] = $model->getChanges();
+        }
+
+        return array_merge($logContext, $details);
+    }
+}

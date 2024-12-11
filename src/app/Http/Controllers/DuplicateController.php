@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ChooseDuplicateAlgorithmRequest;
 use App\Http\Requests\UpdateDuplicatesRequest;
+use App\Jobs\DuplicateComputeJob;
 use App\Models\CommandRun;
 use App\Models\Crew;
 use App\Models\Duplicate;
@@ -13,7 +14,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use App\Jobs\DuplicateComputeJob;
 
 class DuplicateController extends Controller
 {
@@ -30,6 +30,7 @@ class DuplicateController extends Controller
      */
     public function index() {
         $this->authorize("viewAny", Duplicate::class);
+
 
         $matching_algorithm = Crew::find(Auth::user()->crew_id)->duplicate_algorithm ?? ListMatchingAlgorithm::getDefault();
 
