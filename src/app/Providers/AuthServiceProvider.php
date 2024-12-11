@@ -66,8 +66,8 @@ class AuthServiceProvider extends ServiceProvider
             Log::info("User login", [
                 "tag" => "user_event",
                 "type" => "login",
-                "user_id" => $event->user->getAuthIdentifier(),
-                "crew_id" => $event->user->crew->id ?? null,
+                "user_id" => $event->user->getAuthIdentifier() ?? "unknown",
+                "crew_id" => $event->user->crew->id ?? "unknown",
                 "ip" => request()->ip(),
             ]);
         });
@@ -75,8 +75,8 @@ class AuthServiceProvider extends ServiceProvider
             Log::info("User logout", [
                 "tag" => "user_event",
                 "type" => "logout",
-                "user_id" => $event->user->getAuthIdentifier(),
-                "crew_id" => $event->user->crew->id ?? null,
+                "user_id" => $event->user->getAuthIdentifier() ?? "unknown",
+                "crew_id" => $event->user->crew->id ?? "unknown",
                 "ip" => request()->ip(),
             ]);
         });
@@ -84,8 +84,8 @@ class AuthServiceProvider extends ServiceProvider
             Log::info("User login fail", [
                 "tag" => "user_event",
                 "type" => "failed",
-                "user_id" => $event->user?->getAuthIdentifier(),
-                "crew_id" => $event->user?->crew->id ?? null,
+                "user_id" => $event->user?->getAuthIdentifier() ?? "unknown",
+                "crew_id" => $event->user?->crew->id ?? "unknown",
                 "ip" => request()->ip(),
             ]);
         });

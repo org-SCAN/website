@@ -43,8 +43,8 @@ class Handler extends ExceptionHandler
     {
         return array_merge(parent::context(), [
             "tag" => "error",
-            "user_id" => auth()?->id(),
-            "crew_id" => auth()?->user()->crew->id,
+            "user_id" => auth()?->id() ?? "unknown",
+            "crew_id" => auth()?->user()->crew->id ?? "unknown",
             "ip" => request()->ip(),
         ]);
     }
