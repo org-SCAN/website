@@ -2,7 +2,6 @@
 
 namespace App\Exceptions;
 
-use App\Services\LogHelper;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -47,6 +46,6 @@ class Handler extends ExceptionHandler
      */
     protected function context(): array
     {
-        return array_merge(parent::context(), LogHelper::getLogContext('error', 'error', true));
+        return array_merge(parent::context(), ['tag' => 'error', 'type' => 'error']);
     }
 }

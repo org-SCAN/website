@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Services\LogHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
@@ -41,15 +40,16 @@ class AppServiceProvider extends ServiceProvider
             $routeName = optional(request()->route())->getName();
             $url = request()->fullUrl();
 
-            $logContext = LogHelper::getLogContext('database_event', 'query_executed', false);
-            $logDetails = [
+            $logContext = [
+                'tag' => 'database_event',
+                'type' => 'query_executed',
                 'sql' => $query->sql,
                 'time_ms' => $query->time,
                 'route_name' => $routeName ?? 'unknown',
                 'url' => $url,
             ];
 
-            Log::info('Database Query Executed', array_merge($logContext, $logDetails));
+            Log::info('Database Query Executed', $logContext);
         });
     }
 

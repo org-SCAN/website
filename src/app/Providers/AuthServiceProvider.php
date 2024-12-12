@@ -24,7 +24,6 @@ use App\Policies\RefugeePolicy;
 use App\Policies\RolePolicy;
 use App\Policies\SourcePolicy;
 use App\Policies\UserPolicy;
-use App\Services\LogHelper;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
@@ -64,28 +63,31 @@ class AuthServiceProvider extends ServiceProvider
 
         // Logging user logins/logout
         EventFacade::listen(function (Login $event) {
-            $logContext = LogHelper::getLogContext('user_event', 'login', false);
-            $logDetails = [
+            $logContext = [
+                "tag" => "user_event",
+                "type" => "login",
                 "user_id" => $event->user->getAuthIdentifier() ?? "unknown",
                 "crew_id" => $event->user->crew->id ?? "unknown",
             ];
-            Log::info("User login", array_merge($logContext, $logDetails));
+            Log::info("User login", $logContext);
         });
         EventFacade::listen(function (Logout $event) {
-            $logContext = LogHelper::getLogContext('user_event', 'logout', false);
-            $logDetails = [
+            $logContext = [
+                "tag" => "user_event",
+                "type" => "logout",
                 "user_id" => $event->user->getAuthIdentifier() ?? "unknown",
                 "crew_id" => $event->user->crew->id ?? "unknown",
             ];
-            Log::info("User logout", array_merge($logContext, $logDetails));
+            Log::info("User logout", $logContext);
         });
         EventFacade::listen(function (Failed $event) {
-            $logContext = LogHelper::getLogContext('user_event', 'logout', false);
-            $logDetails = [
+            $logContext = [
+                "tag" => "user_event",
+                "type" => "failed",
                 "user_id" => $event->user?->getAuthIdentifier() ?? "unknown",
                 "crew_id" => $event->user?->crew->id ?? "unknown",
             ];
-            Log::info("User login fail", array_merge($logContext, $logDetails));
+            Log::info("User login fail", $logContext);
         });
     }
 }

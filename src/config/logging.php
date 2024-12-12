@@ -39,6 +39,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
+            'tap' => [\App\Logging\LogContext::class],
             'channels' => [
                 'single',
                 'elasticsearch',
