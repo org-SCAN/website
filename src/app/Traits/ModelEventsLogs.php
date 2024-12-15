@@ -29,7 +29,7 @@ trait ModelEventsLogs
      */
     protected static function shouldLog(string $event): bool
     {
-        return ENV("LOG_" . strtoupper($event), !($event === 'retrieved'));
+        return config("app.log_" . $event);
     }
 
     /**
@@ -39,7 +39,7 @@ trait ModelEventsLogs
      * @param string $event
      * @return array
      */
-    protected static function logDetails($model, string $event): array
+    protected static function logDetails(Model $model, string $event): array
     {
         $logContext = [
             "tag" => "model_event",

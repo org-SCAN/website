@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (ENV('LOG_DATABASE_QUERIES', default: false)) {
+        if (config('app.log_database_queries')) {
             $this->logDatabaseQueries();
         }
 
