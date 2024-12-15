@@ -25,23 +25,19 @@ class ApiLogger
 
         $duration = microtime(true) - $startTime;
 
-        Log::info('API Request',
-            [
-                'datetime' => now()->toDateTimeString(),
-            'user_id' => $request->user()->id ?? null,
-                'application_id' => $request->header('Application-id') ?? $request->input('application_id',
-                        'website'),
+        $logContext = [
+            'tag' => 'api_request',
+            'type' => 'api_request',
+            'application_id' => $request->header('Application-id') ?? $request->input('application_id',
+                    'website'),
             'api_type' => $request->path(),
             'http_method' => $request->method(),
-            'model' => null,
-            'ip' => $request->ip(),
-            'crew_id' => $request->user()->crew->id ?? null,
             'duration' => $duration,
             'status' => $response->status(),
             'request' => $request->all(),
-                'response_content' => $response->getContent(),
-                'response' => $response->status() >= 400 ? 'error' : 'success',
-        ]);
+            'response' => $response->status() >= 400 ? 'error' : 'success',
+        ];
+        Log::info('API Request', $logContext);
 
         return $response;
     }

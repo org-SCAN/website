@@ -39,6 +39,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
+            'tap' => [\App\Logging\LogContext::class],
             'channels' => [
                 'single',
                 'elasticsearch',
@@ -129,10 +130,10 @@ return [
                 'type' => '_doc',
             ],
             'handler_with' => [
-                'client' => ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOST')])->setBasicAuthentication(env('ELASTICSEARCH_USERNAME',
-                    ""),
-                    env('ELASTICSEARCH_PASSWORD',
-                        ""))->build(),
+                'client' => ClientBuilder::create()
+                    ->setHosts([env('ELASTICSEARCH_HOST')])
+                    ->setBasicAuthentication(env('ELASTICSEARCH_USERNAME', ""), env('ELASTICSEARCH_PASSWORD', ""))
+                    ->build(),
             ],
         ],
     ],

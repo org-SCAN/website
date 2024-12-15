@@ -38,4 +38,14 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    /**
+     * Generates the context for error logs and adds it to logs automatically
+     *
+     * @return array
+     */
+    protected function context(): array
+    {
+        return array_merge(parent::context(), ['tag' => 'error', 'type' => 'error']);
+    }
 }

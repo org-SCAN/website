@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEventsLogs;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Duplicate extends Model
 {
-    use SoftDeletes, Uuids;
+    use SoftDeletes, Uuids, ModelEventsLogs;
 
     /**
      * Indicates if the model's ID is auto-incrementing.

@@ -138,6 +138,12 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'log_created' => env('LOG_CREATED', false),
+    'log_updated' => env('LOG_UPDATED', false),
+    'log_deleted' => env('LOG_DELETED', false),
+    'log_retrieved' => env('LOG_RETRIEVED', false),
+    'log_database_queries' => env('LOG_DATABASE_QUERIES', false),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
