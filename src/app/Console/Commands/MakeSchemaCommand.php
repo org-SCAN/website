@@ -6,10 +6,9 @@ use App\Models\Crew;
 use App\Models\Schema;
 use Illuminate\Console\Command;
 use Illuminate\Database\Schema\Builder;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
-use PDO;
+use Illuminate\Support\Facades\File;
 
 class MakeSchemaCommand extends Command
 {
@@ -25,7 +24,7 @@ class MakeSchemaCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Generates a schema for a team in the database if the schema doesn\'t already exist';
+    protected $description = 'Generates a schema for a team in the database and creates the associated migration folder if the schema doesn\'t already exist';
 
     protected Builder $builder;
 
@@ -54,17 +53,20 @@ class MakeSchemaCommand extends Command
                 return Command::FAILURE;
             }
 
+            $migrationFolderPath = Config::get('database.migration_path');
+            File::ensureDirectoryExists($migrationFolderPath . DIRECTORY_SEPARATOR . $crew_id);
+
             $dbName = Schema::getSchemaName($crew_id);
             $schema = Schema::where('name', $dbName)->first();
 
             if(!$schema) {
-                $this->info("Creating database " . $dbName);
                 $schema['name'] = $dbName;
                 $schema['crew_id'] = $crew_id;
                 Schema::Create($schema);
                 $this->builder->createDatabase($dbName);
+                $this->info("Created database: " . $dbName);
             } else {
-                $this->info("Database already exists for this team");
+                $this->info("Database already exists for this team  ");
             }
 
             return Command::SUCCESS;
