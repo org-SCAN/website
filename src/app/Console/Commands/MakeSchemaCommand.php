@@ -66,7 +66,7 @@ class MakeSchemaCommand extends Command
                 $this->builder->createDatabase($dbName);
                 $this->info("Created database: " . $dbName);
             } else {
-                $this->info("Database already exists for this team  ");
+                $this->info("Database already exists for this team");
             }
 
             return Command::SUCCESS;
