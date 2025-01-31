@@ -50,7 +50,12 @@ class MigrateCustomSchemaCommand extends Command
         $schema->openDatabaseConnection();
         $path = $this->option('path') ?? config('database.migration_path');
 
-        $this->call('migrate', ['--database' => $dbName, '--path' => $path]);
+        $migrationResult = $this->call('migrate', ['--database' => $dbName, '--path' => $path]);
+
+        if ($migrationResult !== Command::SUCCESS) {
+            $this->warn("Something went wrong during the migration. Aborting.");
+            return Command::FAILURE;
+        }
         return Command::SUCCESS;
     }
 }
