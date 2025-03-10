@@ -1,8 +1,8 @@
-@section('title','Edit '.$person->best_descriptive_value)
+@section('title', __('person/edit.edit_title', ['name' => $person->best_descriptive_value]))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit : <strong>{{$person->best_descriptive_value}}</strong>
+            {{ __('person/edit.edit_title', ['name' => $person->best_descriptive_value]) }}
         </h2>
     </x-slot>
 
@@ -10,7 +10,9 @@
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
                 <a href="{{ route('person.index')  }}"
-                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Back</a>
+                   class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
+                    {{ __('common.back') }}
+                </a>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <form method="post" action="{{ route('person.update', $person) }}">
@@ -44,7 +46,7 @@
                                 rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700
                                 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray
                                 disabled:opacity-25 transition ease-in-out duration-150">
-                                Save
+                                {{ __('common.save') }}
                             </button>
                         </div>
                     </div>

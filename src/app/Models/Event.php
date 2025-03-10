@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEventsLogs;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Event extends ListControl
 {
-    use HasFactory, Uuids, SoftDeletes;
+    use HasFactory, Uuids, SoftDeletes, ModelEventsLogs;
 
     /**
      * Indicates if the model's ID is auto-incrementing.
@@ -39,11 +40,6 @@ class Event extends ListControl
     public function type()
     {
         return $this->hasOne(ListEventType::class, 'id', 'event_type_id');
-    }
-
-    public function api_log()
-    {
-        return $this->hasOne(ApiLog::class, 'id', 'apiLog_id');
     }
 
     public function persons()

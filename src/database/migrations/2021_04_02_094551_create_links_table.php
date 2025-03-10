@@ -31,11 +31,11 @@ class CreateLinksTable extends Migration
                 ->useCurrent();
 
             $table->softDeletes();
+            $table->foreignUuid("crew_id");
             $table->foreignUuid("relation");
-            $table->string("from");
-            $table->string("to");
+            $table->foreignUuid("from");
+            $table->foreignUuid("to");
             $table->String("detail")->nullable();
-            $table->foreignUuid("api_log");
             $table->string("application_id")->default("website");
             $table->timestamps();
         });

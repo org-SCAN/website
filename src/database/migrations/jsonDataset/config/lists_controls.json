@@ -234,6 +234,11 @@
                 "required": false
             },
             {
+                "field": "area",
+                "data_type_id": "area",
+                "required": false
+            },
+            {
                 "field": "description",
                 "data_type_id": "Long text",
                 "required": false
@@ -312,5 +317,28 @@
             }
         ],
         "visible": false
+    },
+    "ListMatchingAlgorithm": {
+        "title": "Matching Algorithm",
+        "name": "ListMatchingAlgorithm",
+        "displayed_value": "name",
+        "key_value": "id",
+        "structure": [
+            {
+                "field": "name",
+                "data_type_id": "Short text",
+                "required": true
+            },
+            {
+                "field": "model",
+                "data_type_id": "Short text",
+                "required": true
+            },
+            {
+                "field": "is_default",
+                "data_type_id": "Yes / No",
+                "required": true
+            }
+        ]
     }
 }

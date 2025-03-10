@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEventsLogs;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 
 class Translation extends Model
 {
-    use HasFactory, Uuids, SoftDeletes;
+    use HasFactory, Uuids, SoftDeletes, ModelEventsLogs;
     /**
      * The data type of the auto-incrementing ID.
      *
@@ -58,16 +59,22 @@ class Translation extends Model
     public function autoTranslate()
     {
         foreach (Language::otherLanguages() as $language) {
-            // create post request to deepl
-            $response = Http::withHeaders([
-                'Authorization' => "DeepL-Auth-Key " . env("TRANSLATION_API_TOKEN")
-            ])->withBody(http_build_query([
-                //'source_lang' => Language::defaultLanguage()->API_language_key,
-                'target_lang' => $language->API_language_key,
-                'text' => utf8_encode($this->translation)
-            ]), "application/x-www-form-urlencoded")->post(env("TRANSLATION_API_URL"));
-            $content = $response->json()["translations"][0]["text"];
-            Translation::handleTranslation(ListControl::find($this->list), $this->field_key, $content, $language->id);
+            // check that the API token and url are set and if not use the default translation
+            try{
+                $response = Http::withHeaders([
+                    'Authorization' => "DeepL-Auth-Key " . env("TRANSLATION_API_TOKEN")
+                ])->withBody(http_build_query([
+                    //'source_lang' => Language::defaultLanguage()->API_language_key,
+                    'target_lang' => $language->API_language_key,
+                    'text' => utf8_encode($this->translation)
+                ]), "application/x-www-form-urlencoded")->post(env("TRANSLATION_API_URL"));
+                $content = $response->json()["translations"][0]["text"];
+                Translation::handleTranslation(ListControl::find($this->list), $this->field_key, $content, $language->id);
+            }
+            catch(\Exception $e){
+                // if the translation fails, use the default translation
+               Translation::handleTranslation(ListControl::find($this->list), $this->field_key, $this->translation, $language->id);
+            }
         }
     }
 

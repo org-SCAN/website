@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEventsLogs;
 use App\Traits\Uuids;
 use ESolution\DBEncryption\Traits\EncryptedAttribute;
 use Faker\Factory as Faker;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class FieldRefugee extends Pivot
 {
-    use HasFactory, Uuids, EncryptedAttribute;
+    use HasFactory, Uuids, EncryptedAttribute, ModelEventsLogs;
 
 
     /**

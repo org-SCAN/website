@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEventsLogs;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Support\Str;
 
 class Permission extends Model
 {
-    use HasFactory, Uuids, SoftDeletes;
+    use HasFactory, Uuids, SoftDeletes, ModelEventsLogs;
 
     public static $alwaysAuthorizedRoute = ["livewire"];
 
@@ -76,8 +77,18 @@ class Permission extends Model
 
     public static function getRoutesWithPermission()
     {
-        $routes_with_permissions = ["user", "person", "links", "cytoscape", "fields", "lists_control", "duplicate", "api_logs", "crew", "roles", "event", "source"];
-        if (env('APP_DEBUG')) {
+        $routes_with_permissions = [
+            "user", "person",
+            "links",
+            "cytoscape",
+            "fields",
+            "lists_control",
+            "duplicate",
+            "crew", "roles",
+            "event", "source",
+            "place",
+        ];
+        if (env('APP_DEBUG') or env('APP_ENV') == "testing"){
             array_push($routes_with_permissions, "permissions");
         }
         return $routes_with_permissions;

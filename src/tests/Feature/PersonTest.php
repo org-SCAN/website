@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Crew;
 use App\Models\Refugee;
+use App\Models\FieldRefugee;
 
 class PersonTest extends PermissionsTest
 {
@@ -15,6 +16,15 @@ class PersonTest extends PermissionsTest
         parent::setUp();
         $this->route = "person";
         $this->resource = Refugee::factory()->create();
+        $this->run = [
+            "index" => true,
+            "show" => true,
+            "create" => true,
+            "store" => false,
+            "edit" => true,
+            "update" => false,
+            "destroy" => true,
+        ];
     }
 
     /**
@@ -31,9 +41,9 @@ class PersonTest extends PermissionsTest
         // create 10 persons (associated to the default team)
         $refugees = Refugee::factory()->count(10)->create();
         // add content to these persons
-        /*foreach ($refugees as $refugee) {
+        foreach ($refugees as $refugee) {
             $refugee->fields()->attach(FieldRefugee::random_fields());
-        }*/
+        }
 
         // call the API
         $response = $this->withHeader('Authorization',

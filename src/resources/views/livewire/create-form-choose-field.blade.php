@@ -1,7 +1,7 @@
 <div>
     <div>
         <label for="{{ $form_elem }}" class="block font-medium text-md text-gray-700"> {!! $title !!}</label>
-        <select wire:model="selectedField" class="form-input rounded-md shadow-sm mt-1 block w-full" id="{{ $form_elem }}" name="{{ $form_elem }}">
+        <select wire:model.live="selectedField" class="form-input rounded-md shadow-sm mt-1 block w-full" id="{{ $form_elem }}" name="{{ $form_elem }}">
             <option value="">{{ $placeHolder }}</option>
             @foreach($associated_list as $key => $value)
                 <option value="{{ $key }}" @selected($previous == $key)}>{{ $value }}</option>
@@ -21,8 +21,8 @@
                 @livewire('forms.form', [
                     'form_elem' => 'range',
                     'type' => 'checkbox',
-                    'title' => 'Add a range to this field ?',
-                    'hint' => 'If checked, you will be able to define a range for this field. Example : Age => Min : 18, Current : 20, Max : 25',
+                    'title' => __("livewire/create-form-choose-field.rangeable.title"),
+                    'hint' => __("livewire/create-form-choose-field.rangeable.hint"),
                 ])
             </div>
         @endif
@@ -35,11 +35,11 @@
             @livewire('forms.form', [
                 'form_elem' => $form_elem,
                 'type' => 'select-dropdown',
-                'title' => 'Field\'s associated list',
-                'help' => 'Define a list which is associated with this field.',
+                'title' => __("livewire/create-form-choose-field.associated_list.title"),
+                'hint' => __("livewire/create-form-choose-field.associated_list.hint"),
                 'associated_list' => \App\Models\ListControl::where('visible', true)->orderBy('title')->get()->pluck('title', 'id'),
                 'previous' => old($form_elem),
-                'placeHolder' => '-- Select a list --',
+                'placeHolder' => __("livewire/create-form-choose-field.associated_list.placeholder"),
             ])
             @stack('scripts')
         </div>

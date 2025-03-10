@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangeTeamRequest;
 use App\Http\Requests\StoreRequestRoleRequest;
 use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateCrewRequest;
 use App\Http\Requests\UpdateUsersRequest;
+use App\Http\Requests\UpdateLanguageRequest;
 use App\Models\Role;
 use App\Models\RoleRequest;
 use App\Models\User;
@@ -233,13 +234,31 @@ class ManageUsersController extends Controller
      * @param  User  $user
      * @return RedirectResponse
      */
-    public function ChangeTeam(UpdateCrewRequest $request) {
+    public function ChangeTeam(ChangeTeamRequest $request) {
         $this->authorize('changeTeam',
             $request->user());
         $crew = $request->input('name');
         $user = $request->user();
         $user->crew_id = $crew;
         $user->save();
+        return redirect()->back();
+    }
+
+    /**
+     * Change user language
+     *
+     * @param  Request  $request
+     * @param  User  $user
+     * @return RedirectResponse
+     */
+    public function ChangeLanguage(UpdateLanguageRequest $request) {
+        $this->authorize('changeLanguage',
+            $request->user());
+        $language = $request->input('language_id');
+        $user = $request->user();
+        $user->language_id = $language;
+        $user->save();
+        $user->refresh();
         return redirect()->back();
     }
 

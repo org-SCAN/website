@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEventsLogs;
 use App\Traits\Uuids;
 use ESolution\DBEncryption\Traits\EncryptedAttribute;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Field extends Model
 {
-    use Uuids, SoftDeletes, hasFactory, EncryptedAttribute;
+    use Uuids, SoftDeletes, hasFactory, EncryptedAttribute, ModelEventsLogs;
 
     /**
      * The requirement of the field.
@@ -61,7 +63,16 @@ class Field extends Model
      *
      * @var array
      */
-    protected $hidden = ['deleted_at', "created_at", "updated_at", "status", "html_data_type", "validation_laravel", "attribute", "order", "api_log", "crew_id"];
+    protected $hidden = [
+        'deleted_at',
+        "created_at",
+        "updated_at",
+        "status",
+        "html_data_type",
+        "validation_laravel",
+        "attribute", "order",
+        "crew_id",
+    ];
 
     /**
      * The attributes that should be encrypted on save.
@@ -220,20 +231,23 @@ class Field extends Model
     }
 
     public function getValue(){
-
-        if($this->range){
-            return json_decode($this->pivot->value, true);
+        try{
+            if($this->range){
+                return json_decode($this->pivot->value, true);
+            }
+            if($this->dataType->model){
+                return $this->dataType->model::decode($this->pivot->value);
+            }
+            if(empty(($this->linked_list))) {
+                return $this->pivot->value;
+            }
+            $model = 'App\Models\\' . $this->linkedList->name;
+            $id = $this->pivot->value;
+            $displayed_value = $this->linkedList->displayed_value;
+            return $model::find($id)->$displayed_value;
+        } catch (Exception $e) {
+            return "";
         }
-        if($this->dataType->model){
-            return $this->dataType->model::decode($this->pivot->value);
-        }
-        if(empty(($this->linked_list))) {
-            return $this->pivot->value;
-        }
-        $model = 'App\Models\\' . $this->linkedList->name;
-        $id = $this->pivot->value;
-        $displayed_value = $this->linkedList->displayed_value;
-        return $model::find($id)->$displayed_value;
     }
 
     public function linkedList(){

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 
 use App\Models\Crew;
+use App\Models\ListMatchingAlgorithm;
 use Illuminate\Database\Seeder;
 
 
@@ -32,6 +33,6 @@ class CrewSeeder extends Seeder
         }
         */
 
-        Crew::create(["name" => env("DEFAULT_TEAM")]);
+        Crew::create(["name" => env("DEFAULT_TEAM"), "duplicate_algorithm_id" => ListMatchingAlgorithm::getDefault()->id]);
     }
 }

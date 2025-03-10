@@ -24,6 +24,15 @@ class LinkTest extends PermissionsTest
         // Create 5 refugees
         Refugee::factory()->count(5)->create();
         $this->resource = Link::factory()->create();
+        $this->run = [
+            "index" => true,
+            "show" => true,
+            "create" => true,
+            "store" => false,
+            "edit" => true,
+            "update" => false,
+            "destroy" => true,
+        ];
     }
 
     /**
@@ -52,6 +61,7 @@ class LinkTest extends PermissionsTest
                 'relation_id' => $relation->id,
                 'type' => $relation->type->id,
                 'detail' => 'test',
+                "crew_id" => $this->admin->crew->id,
             ]);
         $response->assertRedirect($this->route);
         $this->assertDatabaseHas('links',
@@ -167,7 +177,7 @@ class LinkTest extends PermissionsTest
 
         //pass this test for now beacause event leaks
 
-        return $this->markTestSkipped('This test is skipped because of Event memory leak.');
+        return $this->markTestSkipped('This test is skipped because of Event encrypted values.');
 
         // Add event to fields
 
@@ -179,6 +189,8 @@ class LinkTest extends PermissionsTest
             "linked_list" => ListControl::getListFromLinkedListName('event')->id,
         ]);
         $response->assertStatus(302);
+
+
 
 
         //check that the field is correctly added
@@ -231,8 +243,6 @@ class LinkTest extends PermissionsTest
                     ]);
             }
         }
-
-
     }
 
     /**

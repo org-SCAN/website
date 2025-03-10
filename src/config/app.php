@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Scan'),
 
     /*
     |--------------------------------------------------------------------------
@@ -99,6 +99,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Available locales
+    |--------------------------------------------------------------------------
+    |
+    | List all locales that your application works with
+    |
+    */
+    'available_locales' => [
+        'English' => 'en',
+        'Français' => 'fr',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Faker Locale
     |--------------------------------------------------------------------------
     |
@@ -124,6 +137,12 @@ return [
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
+
+    'log_created' => env('LOG_CREATED', false),
+    'log_updated' => env('LOG_UPDATED', false),
+    'log_deleted' => env('LOG_DELETED', false),
+    'log_retrieved' => env('LOG_RETRIEVED', false),
+    'log_database_queries' => env('LOG_DATABASE_QUERIES', false),
 
     /*
     |--------------------------------------------------------------------------

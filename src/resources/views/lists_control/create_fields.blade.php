@@ -1,16 +1,15 @@
-@section('title',"Create the list's fields")
+@section('title', __("lists_control/create_fields.title"))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Create the {{ $listControl->title }} list's fields
+            {{ __("lists_control/create_fields.create_field", ["list_title" => $listControl->title]) }}
         </h2>
     </x-slot>
     <div>
         <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
                 <p>
-                    In this section, you may define all the fields that are required to describe your list.
-                    As an example you can create 'name', 'inhabitants' if you want to create a list related to Cities.
+                    {{ __("lists_control/create_fields.process_description") }}
                 </p>
             </div>
             @if ($errors->any())
@@ -30,15 +29,12 @@
 
                         @livewire('create-list')
 
-
-
-
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button
                                 class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700
                                  active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150"
                             type="submit">
-                                Next
+                                {{ __('lists_control/create.next') }}
                             </button>
                         </div>
                     </div>

@@ -3,9 +3,8 @@
 namespace Database\Factories;
 
 
-use App\Models\ApiLog;
+use App\Models\Crew;
 use App\Models\Refugee;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RefugeeFactory extends Factory
@@ -22,23 +21,15 @@ class RefugeeFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(
+    ): array
     {
-
-        $log["user_id"] = User::where("email", env("DEFAULT_EMAIL"))->first()->id;
-        $log["application_id"] = "seeder";
-        $log["api_type"] = "seeder";
-        $log["http_method"] = "POST";
-        $log["model"] = "Refugee";
-        $log["ip"] = "127.0.0.1";
-        $log["crew_id"] = User::where("email", env("DEFAULT_EMAIL"))->first()->crew->id;
-
-        $log = ApiLog::create($log);
-
         return [
             'id' => $this->faker->uuid,
-            'date' => $this->faker->date("Y-m-d", $max = 'now', $min = '- 2 months'),
-            'api_log' => $log->id,
+            'crew_id' => Crew::getDefaultCrewId(),
+            'date' => $this->faker->date("Y-m-d",
+                $max = 'now',
+                $min = '- 2 months'),
         ];
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\LinkController;
 use App\Http\Controllers\ListControlController;
 use App\Http\Controllers\ManageUsersController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\RefugeeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SourceController;
@@ -73,11 +74,21 @@ Route::post('user/request_role/{id}',
         'as' => 'user.request_role',
         'uses' => '\App\Http\Controllers\ManageUsersController@RequestRole',
     ])->middleware('auth');
+
+Route::post('user/change_language/{id}',
+    [
+        'as' => 'user.change_language',
+        'uses' => '\App\Http\Controllers\ManageUsersController@ChangeLanguage',
+    ])->middleware('auth');
+
 Route::post('user/change_team/{id}',
     [
         'as' => 'user.change_team',
         'uses' => '\App\Http\Controllers\ManageUsersController@ChangeTeam',
     ])->middleware('auth');
+
+
+
 Route::get('user/grant_role/{id}',
     [
         'as' => 'user.grant_role',
@@ -186,12 +197,21 @@ Route::get('duplicate/resolve/{duplicate}',
         "uses" => "\App\Http\Controllers\DuplicateController@resolve",
     ])->middleware('auth');
 
+Route::get('duplicate/multiple_resolve',
+    [
+        "as" => 'duplicate.multiple_resolve',
+        "uses" => "\App\Http\Controllers\DuplicateController@multiple_resolve",
+    ])->middleware('auth');
+
+Route::get('duplicate/choose_algorithm',
+    [
+        "as" => 'duplicate.choose_algorithm',
+        "uses" => "\App\Http\Controllers\DuplicateController@choose_algorithm",
+    ])->middleware('auth');
+
 
 Route::resource("duplicate",
     DuplicateController::class)->middleware('auth');
-
-Route::resource("api_logs",
-    ApiLogController::class)->middleware('auth');
 Route::resource("crew",
     CrewController::class)->middleware('auth');
 Route::resource("roles",
@@ -202,3 +222,5 @@ Route::resource("event",
     EventController::class)->middleware('auth');
 Route::resource("source",
     SourceController::class)->middleware('auth');
+Route::resource("place",
+    PlaceController::class)->middleware('auth');

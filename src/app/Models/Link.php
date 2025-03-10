@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEventsLogs;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use ESolution\DBEncryption\Traits\EncryptedAttribute;
@@ -13,13 +14,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Link extends Pivot
 {
-    use HasFactory, Uuids, SoftDeletes, EncryptedAttribute;
+    use HasFactory, Uuids, SoftDeletes, EncryptedAttribute, ModelEventsLogs;
 
-    /**
-     * Give the route pattern, used in api log
-     * @var string
-     */
-    const route_base = "links";
+
     /**
      *
      * This parameter allows to display the Add from and Add to section in Person.show (relation part)
@@ -49,7 +46,11 @@ class Link extends Pivot
      *
      * @var array
      */
-    protected $fillable = ["from", "to", "relation_id", "date", "detail", 'api_log'];
+    protected $fillable = [
+        "from", "to",
+        "relation_id", "date",
+        "detail", 'crew_id',
+    ];
 
     /**
      * The attributes that should be encrypted on save.
@@ -59,37 +60,6 @@ class Link extends Pivot
     protected $encryptable = [
     ];
 
-    public static function handleApiRequest($relation) {
-
-        //update or create relation
-
-        $link = Link::updateOrCreate(
-            [
-                "from" => $relation["from"],
-                "to" =>  $relation["to"],
-                "relation_id" => $relation["relation_id"],
-                "application_id"=>$relation["application_id"]
-            ],
-            [
-                "date" => request("date"),
-                "detail" => request("detail"),
-                "api_log" => request("api_log"),
-            ]
-        );
-
-        /*
-        $potential_link = Link::relationExists($relation["from"],
-            $relation["to"],
-            $relation["relation_id"],
-            $relation["application_id"]);
-
-        if ($potential_link != null) {
-            $ref = $potential_link->update($relation);
-        } else {
-            $ref = Link::create($relation);
-        }*/
-        return $link;
-    }
 
     public static function relationExists($from,
         $to, $relation_type,
@@ -130,11 +100,7 @@ class Link extends Pivot
     }
 
     public function crew() {
-        return $this->hasOneThrough(Crew::class,
-            ApiLog::class,
-            "id", "id",
-            "api_log",
-            "crew_id");
+        return $this->belongsTo(Crew::class);
     }
 
 
@@ -171,16 +137,12 @@ class Link extends Pivot
     }
 
     /**
-     * Store the relation id accorting its key or its code
-     * @param $value
+     * Parse date to Carbon
+     * @return Carbon
      */
-/*
-    public function setRelationAttribute($value) {
-        $this->attributes["relation"] = ListRelation::getIdFromValue($value);
-    }*/
-
-    public function getDateAttribute() {
+    public function getDateAttribute(
+    )
+    {
         return Carbon::parse($this->attributes['date']);
     }
-    
 }

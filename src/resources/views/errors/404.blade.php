@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Forbidden</title>
+    <title>{{ __('errors/errors.forbidden') }}</title>
 
     <style>
         /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -514,12 +514,12 @@
     <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
         <div class="flex items-center pt-8 sm:justify-start sm:pt-0">
             <div class="px-4 text-lg text-gray-500 border-r border-gray-400 tracking-wider">
-                404 - Page not found
+                {{ __('errors/errors.404') }}
             </div>
 
             <div class="ml-4 text-lg text-gray-500 uppercase tracking-wider">
                 {{ $exception->getMessage() }} <a href="{{ route('/') }}"
-                                                  style="text-decoration: underline"> Home Page</a></div>
+                                                  style="text-decoration: underline"> {{ __('errors/errors.home_page') }}</a></div>
         </div>
     </div>
 </div>

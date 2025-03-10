@@ -1,14 +1,13 @@
 @php use App\Models\ListRelation; @endphp
 @php use App\Models\ListRole; @endphp
-@section('title',"View network graph")
+@section('title', __('cytoscape/index.view_network_graph'))
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Network graph') }}
+            {{ __('cytoscape/index.network_graph') }}
         </h2>
     </x-slot>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
             integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
@@ -38,11 +37,11 @@
                             <div class="col-xl-3 col-md-12">
                                 <div class="row">
                                     <div class="col-12">
-                                        <h3>Legend</h3>
+                                        <h3>{{ __('cytoscape/index.legend') }}</h3>
                                     </div>
                                     <div class="rounded-lg px-2 col-12">
                                         <span class="legendRelation" id="">
-                                            Relations :
+                                            {{ __('cytoscape/index.relations') }} :
                                         </span>
                                         <div class="legendRelation">
                                             @foreach($used_relations as $relation)
@@ -52,7 +51,7 @@
                                     </div>
                                     <div class="rounded-lg px-2 col-12">
                                         <span class="legendList">
-                                            Nodes :
+                                            {{ __('cytoscape/index.nodes') }} :
                                         </span>
                                         <div class="legendList" id="legendList">
                                         </div>
@@ -64,14 +63,14 @@
                                     <div class="col-md-6 p-2">
                                         <div class="row">
                                             <div class="col-12">
-                                                <h3>Options</h3>
+                                                <h3>{{ __('cytoscape/index.options') }}</h3>
                                             </div>
 
                                             <div class="col-md-12" style="width:100%">
                                                 @livewire('forms.form', [
                                                 'type' => 'select-dropdown',
                                                 'form_elem' => 'layout',
-                                                'placeHolder' => '-- Select the layout --',
+                                                'placeHolder' =>  __('cytoscape/index.select_layout'),
                                                 'associated_list' => ['fcose' => 'fcose', 'breadthfirst' => 'breadthfirst', 'dagre' => 'dagre', 'avsdf' => 'avsdf', 'cise' => 'cise'],
                                                 'showError' => false,
                                                 ])
@@ -81,7 +80,7 @@
                                                 @livewire('forms.form', [
                                                 'type' => 'select-dropdown',
                                                 'form_elem' => 'list',
-                                                'placeHolder' => '-- Select the list --',
+                                                'placeHolder' => __('cytoscape/index.select_list'),
                                                 'associated_list' => $lists_name,
                                                 'showError' => false,
                                                 ])
@@ -98,7 +97,7 @@
                                                 @livewire('forms.form', [
                                                 'type' => 'select-dropdown',
                                                 'form_elem' => 'from',
-                                                'placeHolder' => '-- Select the first Item --',
+                                                'placeHolder' => __('cytoscape/index.select_first_item'),
                                                 'associated_list' => $refugees,
                                                 'showError' => false,
                                                 ])
@@ -107,8 +106,21 @@
                                                 @livewire('forms.form', [
                                                 'type' => 'select-dropdown',
                                                 'form_elem' => 'to',
-                                                'placeHolder' => '-- Select the second Item --',
+                                                'placeHolder' => __('cytoscape/index.select_second_item'),
                                                 'associated_list' => $refugees,
+                                                'showError' => false,
+                                                ])
+                                            </div>
+                                            <div class="col-md-12" style="width:100%">
+                                                @php
+                                                    $relations_list = array_column($used_relations, 'name');
+                                                    $relations = array_combine($relations_list, $relations_list);
+                                                @endphp
+                                                @livewire('forms.form', [
+                                                'type' => 'select-dropdown',
+                                                'form_elem' => 'relations',
+                                                'placeHolder' => __('cytoscape/index.select_type_of_relation'),
+                                                'associated_list' => $relations,
                                                 'showError' => false,
                                                 ])
                                             </div>
@@ -120,20 +132,20 @@
                             <div class="col-xl-3 col-lg-4 col-md-12 ">
                                 <div class="row">
                                     <div class="col-12">
-                                        <h3>Actions</h3>
+                                        <h3>{{ __('cytoscape/index.actions') }}</h3>
                                     </div>
                                     <div class="col-12">
                                         <button class="bg-red-200 hover:bg-red-300 text-black hover:text-black font-bold py-2 px-4 rounded mb-2" id="clear">
-                                            Clear
+                                            {{ __('cytoscape/index.clear') }}
                                         </button>
 
                                         <button class="bg-blue-200 hover:bg-blue-300 text-black hover:text-black font-bold py-2 px-4 rounded mb-2"
                                                 id="betweenness_centrality">
-                                            Show centrality
+                                            {{ __('cytoscape/index.show_centrality') }}
                                         </button>
 
                                         <button id="save" class="bg-green-200 hover:bg-green-300 text-black hover:text-black font-bold py-2 px-4 rounded mb-2">
-                                            Save as png
+                                            {{ __('cytoscape/index.save_as_png') }}
                                         </button>
                                     </div>
                                 </div>
@@ -151,4 +163,5 @@
             var persons = {!!  $persons!!};
             var field_list = {!! $field_list !!};
         </script>
+    </div>
 </x-app-layout>

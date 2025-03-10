@@ -1,36 +1,37 @@
-<x-jet-action-section>
+<x-action-section>
     <x-slot name="title">
-        {{ __('GDPR actions') }}
+        {{ __("livewire/gdpr-actions.gdpr_actions")  }}
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Download or delete Item\'s informations.') }}
+        {{ __("livewire/gdpr-actions.description")  }}
     </x-slot>
 
     <x-slot name="content">
         <div>
             @if(!$this->person)
-                {{-- Display a dropdown with all the registered Items, this dropdown is wired to Item --}}
-                <x-jet-label for="person" value="{{ __('Item') }}"/>
-                <select wire:model="person" class="form-input rounded-md shadow-sm mt-1 block w-full" id="person"
+                {{-- Afficher un menu déroulant avec tous les éléments enregistrés, connecté à la personne --}}
+                <x-label for="person" value="{{ __("livewire/gdpr-actions.form_title")  }}"/>
+                <select wire:model.live="person" class="form-input rounded-md shadow-sm mt-1 block w-full" id="person"
                         name="person">
-                    <option value="">-- Select the Item to delete --</option>
+                    <option value="">{{ __("livewire/gdpr-actions.form_placeholder")  }}</option>
                     @foreach($this->persons as $person)
                         <option value="{{ $person->id }}">{{ $person->best_descriptive_value }}</option>
                     @endforeach
                 </select>
             @else
-                {{-- Display the Item's informations --}}
-                <strong>{{ $this->person->best_descriptive_value }}</strong>
+                {{-- Afficher les informations de la personne --}}
+                {{ $this->person->best_descriptive_value }}
                 <div class="mt-2">
-                    <x-jet-button wire:click="export" wire:loading.attr="disabled">
-                        {{ __('Export') }}
-                    </x-jet-button>
-                    <x-jet-button wire:click="delete" wire:loading.attr="disabled">
-                        {{ __('Delete') }}
-                    </x-jet-button>
+                    {{-- Les boutons Exporter et Supprimer apparaîtront si une personne est sélectionnée --}}
+                    <x-button wire:click="export" wire:loading.attr="disabled">
+                        {{ __("livewire/gdpr-actions.export")  }}
+                    </x-button>
+                    <x-button wire:click="delete" wire:loading.attr="disabled">
+                        {{ __("livewire/gdpr-actions.delete")  }}
+                    </x-button>
                 </div>
             @endif
         </div>
     </x-slot>
-</x-jet-action-section>
+</x-action-section>

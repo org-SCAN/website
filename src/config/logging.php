@@ -1,5 +1,8 @@
 <?php
 
+use Elastic\Elasticsearch\ClientBuilder;
+use Monolog\Formatter\ElasticsearchFormatter;
+use Monolog\Handler\ElasticsearchHandler;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -18,7 +21,6 @@ return [
     */
 
     'default' => env('LOG_CHANNEL', 'stack'),
-
     /*
     |--------------------------------------------------------------------------
     | Log Channels
@@ -37,7 +39,11 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'tap' => [\App\Logging\LogContext::class],
+            'channels' => [
+                'single',
+                'elasticsearch',
+            ],
             'ignore_exceptions' => false,
         ],
 
@@ -45,6 +51,7 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
+            'formatter' => Monolog\Formatter\JsonFormatter::class,
         ],
 
         'daily' => [
@@ -100,6 +107,34 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
-    ],
 
+        'api' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/api/api.log'),
+            'level' => 'info',
+            'days' => 28,
+            'tap' => [App\Logging\CustomizeFormatter::class],
+        ],
+
+        'elasticsearch' => [
+            'driver' => 'monolog',
+            'level' => 'debug',
+            'handler' => ElasticsearchHandler::class,
+            'formatter' => ElasticsearchFormatter::class,
+            'formatter_with' => [
+                'index' => sprintf('%s_%s',
+                    env('APP_ENV',
+                        'local'),
+                    env("ELASTICSEARCH_INDEX_PREFIX",
+                        "scan_logs"),),
+                'type' => '_doc',
+            ],
+            'handler_with' => [
+                'client' => ClientBuilder::create()
+                    ->setHosts([env('ELASTICSEARCH_HOST')])
+                    ->setBasicAuthentication(env('ELASTICSEARCH_USERNAME', ""), env('ELASTICSEARCH_PASSWORD', ""))
+                    ->build(),
+            ],
+        ],
+    ],
 ];

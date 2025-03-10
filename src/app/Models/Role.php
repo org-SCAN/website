@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEventsLogs;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Support\Str;
 
 class Role extends Model
 {
-    use HasFactory, Uuids, SoftDeletes;
+    use HasFactory, Uuids, SoftDeletes, ModelEventsLogs;
 
     /**
      * The data type of the auto-incrementing ID.
@@ -98,5 +99,13 @@ class Role extends Model
             }
         }
         return $sorted_permissions;
+    }
+
+    public static function list() {
+        // order by displayed value and pluck it
+        $displayed_value = "name";
+
+        return self::orderBy($displayed_value)->pluck($displayed_value,
+            'id');
     }
 }
