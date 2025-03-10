@@ -29,6 +29,10 @@ jobs:
         working-directory: installer
         run: pkg .
 
+      - name: List generated files
+        working-directory: installer
+        run: ls -la
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
