@@ -16,10 +16,14 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'
-
+      
       - name: Install dependencies
         working-directory: installer
         run: npm install
+
+      - name: Install pkg globally
+        working-directory: installer
+        run: npm install -g pkg
 
       - name: Build executables with pkg
         working-directory: installer
@@ -46,7 +50,7 @@ jobs:
           asset_name: scan-installer-win.exe
           asset_content_type: application/octet-stream
 
-      - name: Upload Release Asset - macOS
+      - name: Upload Release Asset - macOS x64
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -54,6 +58,16 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: installer/scan-installer-macos
           asset_name: scan-installer-macos
+          asset_content_type: application/octet-stream
+
+      - name: Upload Release Asset - macOS arm64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: installer/scan-installer-macos-arm64
+          asset_name: scan-installer-macos-arm64
           asset_content_type: application/octet-stream
 
       - name: Upload Release Asset - Linux
